@@ -1,0 +1,807 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>JENNIFER UI: AdminTool Sample </title>
+<link rel="shortcut icon" href="../../../res/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="../../../res/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../res/index.css" />
+<link rel="stylesheet" href="../../../lib/jui.new/jui.min.css"/>
+<link rel="stylesheet" href="../../../lib/jui.new/jennifer.theme.min.css"/>
+<script src="../../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../../lib/jui/jui.min.js"></script>
+<meta name="title" content="JENNIFER UI: JENNIFER UI: HTML5 components and SVG charts" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+<meta charset="UTF-8">
+<meta property="og:title" content="JENNIFER UI: HTML5 components and SVG charts" />
+<meta property="og:description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://seogi1004.github.io/jui/en/index.html" />
+<meta property="og:image" content="http://seogi1004.github.io/jui/res/img/jui_link.jpg" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style type="text/css">
+
+    html,body {
+        background-color: #a5a5a5;
+        background-image: url('http://blog.jui.io/wp-content/uploads/2015/03/light-noise.png');
+        background-repeat: repeat;
+        background-position: top left;
+        background-attachment: scroll;
+        font-family: Open Sans;
+    }
+
+    .header {
+        margin:0 auto;
+        width:1200px;
+        height: 70px;
+    }
+
+    .header .logo {
+        position: relative;
+        float:left;
+        width: 160px;
+        height:100%;
+        z-index: 1;
+        padding: 0px 20px;
+        font-size: 20pt;
+        font-weight: bold;
+    }
+
+    .header .toolbar {
+        position: relative;
+        height:100%;
+        padding:10px 20px 0px 220px;
+    }
+
+    .container {
+        margin:0 auto;
+        width:1200px;
+        height:100%;
+        position: relative;
+    }
+
+    .container:after {
+        display: table;
+        clear: both;
+        content: "";
+    }
+
+    .container .menu {
+        position:relative;
+        float:left;
+        width: 200px;
+        height:100%;
+        max-height: 100%;
+        min-height: 100%;
+    }
+
+    .container .content {
+        background: #f3f3f3;
+        padding: 0 0 0 200px;
+    }
+
+    .content-list {
+        position: relative;
+        padding:20px;
+        padding-top:0px;
+        background-color: #a5a5a5;
+        background-image: url('http://blog.jui.io/wp-content/uploads/2015/03/light-noise.png');
+        background-repeat: repeat;
+        background-position: top left;
+        background-attachment: scroll;
+    }
+
+    .dashboard-first {
+
+    }
+
+    .dashboard-first .col {
+        text-align:center;
+    }
+
+    .col-3 .card {
+        margin-right:20px;
+    }
+
+    .col-3:last-child .card {
+        margin-right:0px;
+    }
+
+    .card {
+        border:1px solid #ebebeb;
+        height:80px;
+        position: relative;
+        text-align: left;
+        border-bottom:2px solid gray;
+        background: white;
+    }
+
+    .card .img {
+        width:60px;
+        height:60px;
+        position: absolute;
+        left:10px;
+        top:10px;
+    }
+
+    .card .title {
+        position:absolute;
+        left:90px;
+        right:10px;
+        top:10px;
+        height:24px;
+        font-weight: bold;
+    }
+
+    .card .value {
+        position:absolute;
+        left:90px;
+        right:10px;
+        top:40px;
+        bottom:10px;
+        font-size:28px;
+        color:#a9a9a9;
+    }
+
+    .panel>.head,
+    .panel>.body,
+    .panel>.footer {
+        border-radius: 0px !important;
+    }
+
+    .visit_total {
+        font-size:15px;
+    }
+
+    .visit_total .title {
+        font-size:15px;
+        margin-bottom:4px;
+    }
+
+    .visit_total .number {
+        font-size:20px;
+    }
+
+    .visit_total .chart {
+        margin-top:5px;
+        height: 50px;
+        width: 100px;
+    }
+
+    .bargauge {
+        font-size:15px;
+    }
+
+    .bargauge .title {
+        padding: 16px;
+    }
+
+    .bargauge .chart {
+        height: 150px;
+        width: 80%;
+    }
+</style>
+</head>
+<body class="jui">
+<div class="header">
+    <div class="logo">
+        <img src="../../../res/img/favicon.ico" height="100%" align="absmiddle" />
+        <span class="title">Tools</span>
+    </div>
+    <div class="toolbar">
+
+      <div class="navbar flat" style="overflow: hidden;">
+        <div class="inline">
+          <div class="group">
+            <a class="btn large">
+              <i class="icon-new-window"></i> AA
+            </a>
+            <a class="btn large">
+              <i class="icon-gear"></i> BB
+            </a>
+            <a class="btn large">
+              <i class="icon-calendar"></i> CC
+            </a>
+          </div>
+          
+        </div>
+        <div class="inline right">
+          <a class="large">Text1</a> <a class="large">Text2</a> <a class="large">Text3</a>
+        </div>
+      </div>      
+      
+      
+
+    </div>
+</div>
+<div class="container">
+    <div class="menu">
+
+        <div class="vmenu ">
+            <a class="active"><i class="icon-dashboardlist" ></i> Dashboard</a>
+            <a><i class="icon-document"></i> Posts</a>
+            <a><i class="icon-user"></i> Users</a>
+            <a>Media</a>
+            <a><i class="icon-more"></i> Pages</a>
+            <a>Comments</a>
+            <a><i class="icon-edit"></i> Forum</a>
+            <ul class="submenu">
+                <li class="active"><a>Vertical Sub-Menu</a></li>
+                <li><a>Vertical Sub-Menu</a></li>
+                <li><a>Vertical Sub-Menu</a></li>
+            </ul>
+            <a>Topics</a>
+            <a>Replies</a>
+            <a>Appearance</a>
+            <a>Plugins</a>
+            <a>Tools</a>
+            <a>Settings</a>
+        </div>
+
+    </div>
+    <div class="content">
+
+        <div class="content-list">
+            <div class="dashboard-first">
+                <div class="col col-3">
+                    <div class="card">
+                        <img class="img" src="">
+                        <div class="title">Today's visitors</div>
+                        <div class="value">3,352</div>
+                    </div>
+                </div>
+                <div class="col col-3">
+                    <div class="card">
+                        <img class="img" src="">
+                        <div class="title">Today's visitors</div>
+                        <div class="value">3,352</div>
+                    </div>
+
+                </div>
+                <div class="col col-3">
+                    <div class="card">
+                        <img class="img" src="">
+                        <div class="title">Today's visitors</div>
+                        <div class="value">3,352</div>
+                    </div>
+
+                </div>
+                <div class="col col-3">
+                    <div class="card">
+                        <img class="img" src="">
+                        <div class="title">Today's visitors</div>
+                        <div class="value">3,352</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel" style="margin-top:20px;">
+                <div class="head">
+                    <i class="icon-left"></i>
+                    <strong>Traffic</strong>
+                </div>
+                <div class="body" style="height:400px;padding:0px;overflow:hidden;">
+                <div id="traffic_chart" style="width:100%;height:100%;"></div>
+                </div>
+            </div>
+
+            <div class="panel" style="margin-top:20px;">
+                <div class="head">
+                    <i class="icon-left"></i>
+                    <strong>Today's Visits</strong>
+
+                    <div style="float: right;">
+                        <a class="btn small"><i class="icon-close"></i></a>
+                    </div>
+                </div>
+                <div class="body" style="padding:10px;overflow:auto;">
+                    <div class="row" style="height:150px;">
+                        <div class="col col-7">
+                            <div id="visit_chart" style="width:100%;height:100%;"></div>
+                        </div>
+                        <div class="col col-5">
+                            <div id="gauge_chart" style="width:100%;height:100%;"></div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:10px;border-top:1px dashed #dedede;">
+                        <div class="col col-7">
+                            <div style="font-weight: bold;margin-top:10px;margin-bottom:10px;"><strong style="font-size:25px;font-weight:bold;color:#255bff;">1,452,587</strong> people visited this site</div>
+                            <div style="border:1px solid #b5defd;padding:20px;padding-left:40px;">
+                                <div class="row visit_total">
+                                    <div class="col col-4">
+                                        <div class="title">Visits</div>
+                                        <div class="number"><strong>3,352</strong></div>
+                                        <div class="chart" id="line_sample_chart_1"></div>
+                                    </div>
+                                    <div class="col col-4">
+                                        <div class="title">Unique Visitors</div>
+                                        <div class="number"><strong>1,672</strong></div>
+                                        <div class="chart" id="line_sample_chart_2"></div>
+                                    </div>
+                                    <div class="col col-4">
+                                        <div class="title">Previews</div>
+                                        <div class="number"><strong>6,048</strong></div>
+                                        <div class="chart" id="line_sample_chart_3"></div>
+                                    </div>
+                                </div>
+                                <div class="row visit_total">
+                                    <div class="col col-4">
+                                        Pages per visit : <strong>1.78</strong>
+                                    </div>
+                                    <div class="col col-8">
+                                        Average Visit Duration : <strong>00:01:12</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-5">
+                            <div class="row bargauge">
+                                <div class="col col-6">
+                                    <div class="title">Visits by Browser </div>
+                                    <div class="chart" id="bar_gauge_sample_chart_1"></div>
+                                </div>
+                                <div class="col col-6">
+                                    <div class="title">Mobile Overview </div>
+                                    <div class="chart" id="bar_gauge_sample_chart_2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel" style="margin-top:20px;">
+                <div class="head">
+                    <i class="icon-left"></i>
+                    <strong>Recent Order List</strong>
+                </div>
+                <div class="body" style="padding:0px;overflow:hidden;">
+                    <table class="table simple hover">
+                        <thead>
+                        <tr>
+                            <th>From</th><th>Contact</th><th>Amount</th><th>Status</th><th><a class="btn btn-base">All Orders</a></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                              <i class="icon-stop" style="font-size:8.5px;color:red;"></i>
+                              Lion KC
+                            </td><td>Robin Van Persie</td><td>$245.00</td><td><span>Paid</span></td><td><i class="icon-search"></i> View</td>
+                        </tr>
+                        <tr>
+                            <td>
+                              <i class="icon-stop" style="font-size:8.5px;color:#fff860;"></i>
+                              Lion KC
+                            </td><td>Robin Van Persie</td><td>$245.00</td><td><span>Paid</span></td><td><i class="icon-search"></i> View</td>
+                        </tr>
+                        <tr>
+                            <td>
+                              <i class="icon-stop" style="font-size:8.5px;color:#fb32ff;"></i>
+                              Lion KC
+                            </td><td>Robin Van Persie</td><td>$245.00</td><td><span>Paid</span></td><td><i class="icon-search"></i> View</td>
+                        </tr>
+                        <tr>
+                            <td>
+                              <i class="icon-stop" style="font-size:8.5px;color:#68ff41;"></i>
+                              Lion KC
+                            </td><td>Robin Van Persie</td><td>$245.00</td><td><span>Paid</span></td><td><i class="icon-search"></i> View</td>
+                        </tr>
+                        <tr>
+                            <td>
+                              <i class="icon-stop" style="font-size:8.5px;color:#5d9cff;"></i>
+                              Lion KC
+                            </td><td>Robin Van Persie</td><td>$245.00</td><td><span>Paid</span></td><td><i class="icon-search"></i> View</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script>
+    var chart = jui.include("chart.builder");
+
+
+    var dataSource = [
+        { date: "Apr", value1 : 36, value2 : 42 },
+        { date: "May", value1 : 30, value2 : 24 },
+        { date: "Jun", value1 : 20, value2 : 28 },
+        { date: "Jul", value1 : 41, value2 : 36 },
+        { date: "Aug", value1 : 26, value2 : 34 },
+        { date: "Sept", value1 : 21, value2 : 28 }
+    ];
+
+    var dataSource2 = [
+        { mr : "MR 1", value1 : 4470, value2 : 3650 },
+        { mr : "MR 2", value1 : 6300, value2 : 4000 },
+        { mr : "MR 3", value1 : 4590, value2 : 5150 },
+        { mr : "MR 4", value1 : 4500, value2 : 5150 },
+        { mr : "MR 5", value1 : 5550, value2 : 3800 },
+        { mr : "MR 6", value1 : 6500, value2 : 6100 },
+        { mr : "MR 7", value1 : 4775, value2 : 6800 },
+        { mr : "MR 8", value1 : 4950, value2 : 4000 },
+        { mr : "MR 9", value1 : 4400, value2 : 4030 },
+        { mr : "MR 10", value1 : 4100, value2 : 3100 },
+        { mr : "MR 11", value1 : 4800, value2 : 2090 },
+        { mr : "MR 12", value1 : 5100, value2 : 4100 }
+    ];
+
+    chart("#traffic_chart", {
+        padding : { left : 60, right : 80, top : 50, bottom : 30 },
+        axis : [{
+            x : {
+                domain : "date",
+                color : 0
+            },
+            y : {
+                type : "range",
+                domain: [ 0, 100 ],
+                step : 5,
+                color : 0
+            },
+            data : dataSource
+        }, {
+            x : {
+                domain : "mr",
+                color : 0,
+                orient : "top"
+            },
+            y : {
+                type : "range",
+                domain : [ 0, 8000 ],
+                step : 5,
+                color : 1,
+                orient : "right",
+                format : function(d) {
+                    if(typeof(d) == "number")
+                        return (d / 1000) + "K";
+
+                    return d;
+                }
+            },
+            data : dataSource2
+        }],
+        brush : [{
+            type : "column",
+            target : [ "value1", "value2" ],
+            colors : [ 0, 1 ],
+            innerPadding : -20,
+            outerPadding : 20
+        }, {
+            type : "line",
+            target : [ "value1", "value2" ],
+            axis : 1,
+            colors : [ 1, 2  ],
+            symbol : "curve"
+        }, {
+            type : "scatter",
+            target : [ "value1", "value2" ],
+            axis : 1,
+            colors : [ 1, 2  ]
+        }],
+        widget : [{
+            type : "title",
+            text : "Marketing Report",
+            dy : -10
+        }, {
+            type : "title",
+            text : "Number of New Clients Acquired",
+            align : "start",
+            orient : "center",
+            dx : -115,
+            dy : -10
+        }, {
+            type : "title",
+            text : "Marketing Dollars Spent",
+            align : "end",
+            orient : "center",
+            dx : 115,
+            dy : -10
+        }, {
+            type : "tooltip",
+            format : function(k, v) {
+                return v;
+            },
+            brush : [ 0, 2 ]
+        }],
+        style : {
+            gridAxisBorderWidth : 2,
+            titleFontSize : "11px",
+            titleFontWeight : "bold"
+        }
+    });
+
+    // column chart sample
+    var data = [
+        { quarter : "0", sales : 50 },
+        { quarter : "1", sales : 50 },
+        { quarter : "2", sales : 20 },
+        { quarter : "3", sales : 10 },
+        { quarter : "4", sales : 30 },
+        { quarter : "5", sales : 44 },
+        { quarter : "6", sales : 22 },
+        { quarter : "7", sales : 21 },
+        { quarter : "8", sales : 36 },
+        { quarter : "9", sales : 56 },
+        { quarter : "10", sales : 30 },
+        { quarter : "11", sales : 32 },
+        { quarter : "12", sales : 25 },
+        { quarter : "13", sales : 25 },
+        { quarter : "14", sales : 50 },
+        { quarter : "15", sales : 25 },
+        { quarter : "16", sales : 10 },
+        { quarter : "17", sales : 25 },
+        { quarter : "18", sales : 30 },
+        { quarter : "19", sales : 30 },
+        { quarter : "20", sales : 15 },
+        { quarter : "21", sales : 30 },
+        { quarter : "22", sales : 30 },
+        { quarter : "23", sales : 30 },
+        { quarter : "24", sales : 30 },
+        { quarter : "25", sales : 30 },
+        { quarter : "26", sales : 30 },
+        { quarter : "27", sales : 30 },
+        { quarter : "28", sales : 30 },
+        { quarter : "29", sales : 30 },
+        { quarter : "30", sales : 30 },
+        { quarter : "31", sales : 30 },
+        { quarter : "32", sales : 30 },
+        { quarter : "33", sales : 25 },
+        { quarter : "34", sales : 25 },
+        { quarter : "35", sales : 25 },
+        { quarter : "36", sales : 25 }
+    ];
+
+    chart("#visit_chart", {
+        padding: 0,
+        axis : {
+            x : {
+                type : "block",
+                domain : "quarter",
+                line : true,
+                hide : true
+            },
+            y : {
+                type : "range",
+                domain : "sales",
+                step : 10,
+                line : true,
+                hide : true
+            },
+            data : data
+        },
+        brush : {
+            type : "column",
+            target : "sales",
+            active : 5,
+            colors : [0]
+        },
+        style : {
+            barBorderRadius : 0
+        }
+    });
+
+    // donut sample
+    var dataSource2 = [
+        { title : "Overall Visits", value : 192, max : 200, min : 0 },
+        { title : "New Visits", value : 66, max : 100, min : 0 },
+        { title : "Mobile Visits", value : 75, max : 100, min : 0 }
+    ];
+
+    chart("#gauge_chart", {
+        padding : { left : 0, top : 10, right : 0, bottom : 20 } ,
+        axis : {
+            c : {
+                type : "table",
+                rows : 1,
+                columns : 3
+            },
+            data : dataSource2
+        },
+        brush : {
+            type : "fullgauge",
+            size : 10,
+            titleY : 70,
+            format : function(value, index) {
+                if(index == 0) {
+                    return value + "k";
+                }
+
+                return value + "%";
+            }
+        },
+        style : {
+            fontFamily : "Open Sans"
+        }
+    });
+
+    // line sample chart 1
+    var time = jui.include('util.time');
+
+    var stocks = {
+        apple : [ 50, 80.23, 81.23, 91.03, 90.77, 82.98, 79.35, 78.5, 79.34, 81.46, 73.7, 62.02, 55.03, 51.93, 55, 51.81, 52.29, 53.05, 45.61, 47.26, 47.57, 47.35, 47.99, 46.1, 43.83, 42.28, 40.89, 38.55, 33.03, 34.95, 34.18, 34.9, 35.47, 31.93, 27.8, 26.1 ].reverse(),
+        microsoft : [ 25.39,25.31,26.91,28.06,29.06,27.61,28.66,27.34,29.8,30.02,29.54,27.3,24,23.65,24.44,22.84,24.41,24.99,23.71,22.81,23.48,23,24.08,24.97,25.14,22.75,23.87,21.92,21.01,22.98,20.49,22.97,27.07,25.96,25.41,24.86 ].reverse(),
+        oracle : [ 32.78,31.48,30.4,30.71,30.9,29.48,28.93,25.79,28.64,28.35,28.44,27.43,24.88,30.41,31.79,27.82,27.18,29.61,31.81,33.07,34.75,32.25,31.74,30.9,30.15,26.05,28.3,25.81,21,22.73,20.59,21.65,24.82,24.62,23.6,22.08 ].reverse()
+    };
+    var start = new Date("2010/01/01"); // ~2012-12-31
+    var end = new Date("2012/12/31");
+
+    data = [];
+    for(var i = 0; i < stocks.apple.length; i++) {
+        data.push({
+            date : time.add(start, time.months, i),
+            apple : stocks.apple[i],
+            microsoft : stocks.microsoft[i],
+            oracle : stocks.oracle[i]
+        });
+    }
+
+    chart("#line_sample_chart_1", {
+        padding : 0,
+        series : {
+            apple : {
+                color : 0,
+                text : "Apple"
+            },
+            microsoft : {
+                color : 1,
+                text : "Microsoft"
+            },
+            oracle : {
+                color : 2,
+                text : "Oracle"
+            }
+        },
+        axis : {
+            x : {
+                type : "date",
+                domain : [ start, end ],
+                step : [ time.years, 1 ],
+                format : "yyyy",
+                key: "date",
+                hide: true
+            },
+            y : {
+                type : "range",
+                domain : "apple",
+                step : 10,
+                line : true,
+                hide : true
+            },
+            data : data
+        },
+        brush : {
+            type : "line",
+            target : [ "apple" ]
+        }
+    });
+
+    chart("#line_sample_chart_2", {
+        padding : 0,
+        series : {
+            apple : {
+                color : 0,
+                text : "Apple"
+            },
+            microsoft : {
+                color : 1,
+                text : "Microsoft"
+            },
+            oracle : {
+                color : 2,
+                text : "Oracle"
+            }
+        },
+        axis : {
+            x : {
+                type : "date",
+                domain : [ start, end ],
+                step : [ time.years, 1 ],
+                format : "yyyy",
+                key: "date",
+                hide: true
+            },
+            y : {
+                type : "range",
+                domain : "microsoft",
+                step : 10,
+                line : true,
+                hide : true
+            },
+            data : data
+        },
+        brush : {
+            type : "line",
+            target : [ "microsoft" ]
+        }
+    });
+
+    chart("#line_sample_chart_3", {
+        padding : 0,
+        series : {
+            apple : {
+                color : 0,
+                text : "Apple"
+            },
+            microsoft : {
+                color : 1,
+                text : "Microsoft"
+            },
+            oracle : {
+                color : 2,
+                text : "Oracle"
+            }
+        },
+        axis : {
+            x : {
+                type : "date",
+                domain : [ start, end ],
+                step : [ time.years, 1 ],
+                format : "yyyy",
+                key: "date",
+                hide: true
+            },
+            y : {
+                type : "range",
+                domain : "oracle",
+                step : 10,
+                line : true,
+                hide : true
+            },
+            data : data
+        },
+        brush : {
+            type : "line",
+            target : [ "oracle" ]
+        }
+    });
+
+    // bar gauge sample
+    chart("#bar_gauge_sample_chart_1", {
+        padding : { left : 20, top : 0, bottom : 0, right : 0 },
+        axis : {
+            data : [
+                { title : "Chrome", value : 54.1 },
+                { title : "Firefox", value : 26.6 },
+                { title : "Safari", value : 10.2 },
+                { title : "Internet Explorer", value : 5.7 },
+                { title : "Opera", value : 3 }
+            ]
+        },
+        brush : {
+            type: "bargauge",
+            size: 25,
+            format: function(value) {
+                return value + '%';
+            }
+        }
+    });
+
+    // bar gauge sample
+    chart("#bar_gauge_sample_chart_2", {
+        padding : { left : 20, top : 0, bottom : 0, right : 0 },
+        axis : {
+            data : [
+                { title : "Desktop", value : 89 },
+                { title : "Mobile", value : 6 },
+                { title : "Tablet", value : 5 }
+            ]
+        },
+        brush : {
+            type: "bargauge",
+            size: 25,
+            format: function(value) {
+                return value;
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

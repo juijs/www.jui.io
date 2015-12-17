@@ -1,0 +1,10 @@
+# Eclipse
+.project
+.metadata
+.settings
+
+# WebStorm
+.idea/
+
+# NodeJS
+node_modules/

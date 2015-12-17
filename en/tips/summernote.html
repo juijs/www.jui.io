@@ -1,0 +1,77 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>Tips/Summernote</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+
+<!-- jQuery & Bootstrap -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+
+<!-- Codemirror -->
+<link rel="stylesheet" href="../../lib//codemirror-4.5/lib/codemirror.css">
+<link rel="stylesheet" href="../../lib//codemirror-4.5/theme/twilight.css">
+<link rel="stylesheet" href="../../lib//codemirror-4.5/theme/eclipse.css">
+<link rel="stylesheet" href="../../lib//codemirror-4.5/theme/neo.css">
+<script src="../../lib//codemirror-4.5/lib/codemirror.js"></script>
+<script src="../../lib//codemirror-4.5/mode/javascript/javascript.js"></script>
+
+<!-- Summernote -->
+<link href="../../lib//summernote/dist/summernote.css" rel="stylesheet" />
+<script src="../../lib/summernote/dist/summernote.js"></script>
+
+<link rel="stylesheet" href="../../res/manual.css" />
+<link rel="stylesheet" href="../../res/doc/tips.css" />
+<script src="../../lib/jui/jui.js"></script>
+<script src="../../res/manual.js"></script>
+<script src="../../res/doc/tips.js"></script>
+
+<meta name="title" content="JENNIFER UI: Tips/Summernote" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div>
+	<h1>Summernote</h1>
+</div>
+
+<p class="br">
+	Can be used as a chart plug-in for <strong><a href="http://summernote.github.io/summernote/" target="_blank">Summernote</a></strong>, which is one of the most famous open source WYSIWYG editors.<br/> We are scheduled to provide tools in plug-in form, allowing easier creation of JUI charts in other WYSIWYG editors.
+</p>
+
+<div id="summernote"></div>
+
+<div class="modal fade" id="chart-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+				<div class="chart_data">
+					<div id="chart-code">
+						<textarea id="chart-code-text"></textarea>
+					</div>
+				</div>
+				<div class="splitter"></div>
+				<div class="chart_view">
+					<div id="chart-content"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary save-btn">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+</body>
+</html>

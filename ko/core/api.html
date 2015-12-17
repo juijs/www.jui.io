@@ -1,0 +1,178 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Core/API</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: Core/API" />
+<meta name="description" content="JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header">
+	<h1>API</h1>
+	<p class="br">
+		JUI 라이브러리는 글로벌 객체인 <strong>jui</strong>를 제공하고, 이 객체를 사용하여 각각의 컴포넌트들을 생성할 수 있습니다.
+	</p>
+</div>
+
+<section>
+	<h2>Before ready</h2>
+	<p>
+		JUI는 <strong>ready</strong> 시점 이전에 아래와 같은 메소드와 프로퍼티를 제공합니다.<br/>
+		JUI의 포함된 모든 컴포넌트들은 <strong>ready</strong>의 콜백 함수가 호출된 이후에 생성이 가능합니다.
+		
+		<table width="100%" class="table_s" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="120px">Name</td>
+				<td width="120px">Type</td>
+				<td>Description</td>
+			</tr>
+			<tr>
+				<td>ready</td>
+				<td>method</td>
+				<td>컴포넌트 모듈을 사용하기 위해 준비하는 메소드입니다.</td>
+			</tr>
+			<tr>
+				<td>defineUI</td>
+				<td>method</td>
+				<td>컴포넌트 모듈을 정의하는 메소드입니다.</td>
+			</tr>
+            <tr>
+                <td>define</td>
+                <td>method</td>
+                <td>상속이 가능한 클래스나 객체를 정의하는 메소드입니다.</td>
+            </tr>
+			<tr>
+				<td>defineOptions</td>
+				<td>method</td>
+				<td>상속 구조의 모듈에 정의된 옵션을 모두 가져오며 옵션에 대한 기본적인 유효성 체크를 합니다.</td>
+			</tr>
+            <tr>
+                <td>include</td>
+                <td>method</td>
+                <td>'define'이나 'defineUI'로 정의된 클래스나 객체를 가져옵니다.</td>
+            </tr>
+            <tr>
+                <td>includeAll</td>
+                <td>method</td>
+                <td>'define'이나 'defineUI'로 정의된 모든 클래스와 객체를 가져옵니다.</td>
+            </tr>
+			<tr>
+				<td>log</td>
+				<td>method</td>
+				<td>로그를 볼 수 있는 툴을 팝업으로 띄우는 메소드입니다.</td>
+			</tr>
+			<tr>
+				<td>setup</td>
+				<td>method</td>
+				<td>JUI 라이브러리의 기본 설정을 할 수 있으며 대표적으로 로그 URL 및 템플릿 문법 설정을 할 수 있습니다.</td>
+			</tr>
+		</table>
+	</p>
+</section>
+
+<section>
+	<h2>After ready</h2>
+	<p>
+		<table width="100%" class="table_s" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="120px">Name</td>
+			<td width="160px">Parameter</td>
+			<td width="80px">Return</td>
+			<td>Description</td>
+			</tr>
+			<tr>
+				<td>add</td>
+				<td>uiObj</td>
+				<td>none</td>
+				<td>생성한 컴포넌트 객체를 추가합니다.</td>
+			</tr>
+			<tr>
+				<td>emit</td>
+				<td>uiType | uiSelector, eventType, eventArgs</td>
+				<td>none</td>
+				<td>해당 컴포넌트에 커스텀 이벤트를 발생시킵니다.</td>
+			</tr>
+			<tr>
+				<td>get</td>
+				<td>index | uiType | uiSelector</td>
+				<td>object | array</td>
+				<td>현재 생성된 컴포넌트의 객체를 가져옵니다.</td>
+			</tr>
+			<tr>
+				<td>getAll</td>
+				<td>none</td>
+				<td>array</td>
+				<td>현재 생성된 모든 컴포넌트 객체를 가져옵니다.</td>
+			</tr>
+			<tr>
+				<td>remove</td>
+				<td>index</td>
+				<td>uiObj</td>
+				<td>해당 인덱스의 컴포넌트 객체를 리스트에서 제거합니다.</td>
+			</tr>
+			<tr>
+				<td>shift</td>
+				<td>none</td>
+				<td>uiObj</td>
+				<td>마지막 컴포넌트 객체를 리스트에서 제거합니다.</td>
+			</tr>
+			<tr>
+				<td>pop</td>
+				<td>none</td>
+				<td>uiObj</td>
+				<td>첫번째 컴포넌트 객체를 리스트에서 제거합니다.</td>
+			</tr>
+			<tr>
+				<td>size</td>
+				<td>none</td>
+				<td>int</td>
+				<td>현재 생성된 컴포넌트 객체의 개수를 가져옵니다.</td>
+			</tr>
+			<tr>
+				<td>addClass</td>
+				<td>uiCls</td>
+				<td>none</td>
+				<td>컴포넌트 클래스를 추가합니다.</td>
+			</tr>
+			<tr>
+				<td>getClass</td>
+				<td>index or uiType</td>
+				<td>object or array</td>
+				<td>컴포넌트 클래스를 가져옵니다.</td>
+			</tr>
+			<tr>
+				<td>getClassAll</td>
+				<td>none</td>
+				<td>array</td>
+				<td>모든 컴포넌트 클래스를 가져옵니다.</td>
+			</tr>
+			<tr>
+				<td>create</td>
+				<td>uiType, selector, options</td>
+				<td>object</td>
+				<td>ready 시점 이후에 컴포넌트를 동적으로 생성할 수 있습니다.</td>
+			</tr>
+			<tr>
+				<td>debugAll</td>
+				<td>callback</td>
+				<td>none</td>
+				<td>현재 생성된 모든 컴포넌트 객체를 디버깅합니다.</td>
+			</tr>
+		</table>
+	</p>
+</section>
+
+</body>
+</html>

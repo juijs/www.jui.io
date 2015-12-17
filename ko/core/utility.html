@@ -1,0 +1,698 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Core/Custom</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../lib/prism.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../lib/prism.js"></script>
+<script src="../../res/manual.js"></script>
+<script src="../script/api_core.js"></script>
+
+<script>
+var baseApi = {
+	prop: {
+		browser: {
+			detail: "브라우저 타입을 알 수 있습니다. (webkit | mozilla | msie)"
+		},
+		isTouch: {
+			detail: "브라우저의 터치 이벤트 지원 유무를 확인합니다."
+		},
+		scrollSize: {
+			detail: "웹킷 기반의 브라우저일 경우에는 10, 그렇지 않을 경우에는 17을 반환합니다."
+		}
+		
+	},
+	method: {
+		scrollWidth: {
+			param: "none",
+			ret: "integer",
+			detail: "현재 브라우저의 스크롤 가로 크기를 반환합니다."
+		},
+		inherit: {
+			param: "class, superClass",
+			ret: "none",
+			detail: "프로토타입 체인을 통해 클래스를 상속합니다."
+		},
+		extend: {
+			param: "object, mergeObject",
+			ret: "object",
+			detail: "mergeObject의 메소드와 프로퍼티를 object에 추가합니다."
+		},
+		pxToInt: {
+			param: "px",
+			ret: "integer",
+			detail: "픽셀 문자열을 정수형으로 반환합니다."
+		},
+		clone: {
+			param: "object",
+			ret: "object",
+			detail: "객체를 복사하여 반환합니다."
+		},
+        deepClone: {
+            param: "object",
+            ret: "object",
+            detail: "연결된 모든 객체를 복사하여 반환합니다."
+        },
+		sort: {
+			param: "array",
+			ret: "QuickSort",
+			detail: "QuickSort 클래스의 객체를 가져올 수 있으며, setCompare/run 메소드를 사용하여 넘겨준 배열을 정렬합니다."
+		},
+		runtime: {
+			param: "name, callback",
+			ret: "none",
+			detail: "콜백 함수의 실행시간을 로그로 보여줍니다."
+		},
+		template: {
+			param: "html, params",
+			ret: "string",
+			detail: "underscore.js의 템플릿 함수와 동일합니다."
+		},
+		resize: {
+			param: "callback, delay",
+			ret: "none",
+			detail: "개선된 윈도우 리사이징 이벤트를 정의합니다."
+		},
+		index: {
+			param: "none",
+			ret: "IndexParser",
+			detail: "IndexParser 클래스의 객체를 가져옵니다."
+		},
+		chunk: {
+			param: "array, limit",
+			ret: "array",
+			detail: "제한된 개수만큼만 배열을 가져옵니다."
+		},
+		typeCheck: {
+			param: "type, value",
+			ret: "boolean",
+			detail: "해당 값의 타입을 체크합니다. (string | integer | float | number | object | function | array | boolean | undefined | null)"
+		},
+		typeCheckObj: {
+			param: "objects, typeList",
+			ret: "none",
+			detail: "해당 객체들에 대한 타입을 체크합니다."
+		},
+		dataToCsv: {
+			param: "keys, dataList, dataSize",
+			ret: "string",
+			detail: "해당 키를 가지는 데이터를 csv 문자열로 반환합니다."
+		},
+		dataToCsv2: {
+			param: "options",
+			ret: "string",
+			detail: "해당 키를 가지는 데이터를 csv 문자열로 반환합니다."
+		},
+		fileToCsv: {
+			param: "file, callback",
+			ret: "string",
+			detail: "선택된 파일의 내용을 csv 문자열로 반환합니다."
+		},
+		csvToBase64: {
+			param: "csv",
+			ret: "string",
+			detail: "csv 문자열을 base64 형태로 인코딩합니다."
+		},
+		csvToData: {
+			param: "keys, csv",
+			ret: "array",
+			detail: "해당 키를 가지는 csv 문자열을 데이터로 반환합니다."
+		},
+		getCsvFields: {
+			param: "fields, csvFields",
+			ret: "array",
+			detail: "csv에서 보여지는 필드만 필터링합니다."
+		},
+        svgToBase64: {
+            param: "xml",
+            ret: "string",
+            detail: "xml 문자열을 base64 형태로 인코딩합니다."
+        },
+		dateFormat: {
+			param: "date, format, utc",
+			ret: "string",
+			detail: "날짜 객체를 정해진 포맷에 맞는 문자열로 반환합니다."
+		},
+		btoa: {
+			param: "string",
+			ret: "string",
+			detail: "일반 문자열을 base64 형태로 인코딩합니다. (한글 가능)"
+		},
+		atob: {
+			param: "base64",
+			ret: "string",
+			detail: "base64 형태의 문자열을 디코딩합니다."
+		}
+	},
+	event: {},
+	tpl: {},
+	opt: {}
+};
+
+var colorApi = {
+	prop: {
+		regex: {
+			detail: "gradient 문자열 파싱 정규식"
+		}
+	},
+	method: {
+		trim: {
+			param: "string",
+			ret: "string",
+			detail: "문자열 trim "
+		},
+		parse : {
+			param : "color",
+			ret : "object | string",
+			detail : "색상 코드 파싱합니다."
+		},
+		parseGradient : {
+			param : "color",
+			ret : "object | string",
+			detail : "gradient 문자열을 파싱합니다. gradient 아닌 문자열은 그대로 리턴합니다."
+		},
+		parseStop : {
+			param : "color",
+			ret : "object",
+			detail : "gradient의 stops 객체를 파싱합니다."
+		},
+		parseAttr : {
+			param : "color",
+			ret : "object",
+			detail : "gradient의 속성을 파싱합니다."
+		}
+	}
+};
+
+var mathApi = {
+	method: {
+		rotate: {
+			param: "x, y, radian",
+			ret: "object",
+			detail: "x,y 에 대한 2차원 회전 좌표를 반환합니다."
+		},
+		radian : {
+			param : "degee",
+			ret : "double",
+			detail : "radian 으로 변환합니다."
+		},
+		degree : {
+			param : "radian",
+			ret : "double",
+			detail : "degree 로 변환합니다."
+		},
+		interpolateNumber : {
+			param : "a, b",
+			ret : "function",
+			detail : "a와 b 사이의 중간값을 구하는 함수를 리턴합니다."
+		},
+		interpolateRound : {
+			param : "a, b",
+			ret : "function",
+			detail : "a와 b 사이의 중간값을 반올림 하는 함수를 리턴합니다."
+		},
+		nice : {
+			param : "min, max, ticks, isNice",
+			ret : "object",
+			detail : "min, max 사이에서 적당한 간격을 만들어줍니다."
+		}
+	}
+};
+
+var scaleApi = {
+	method: {
+		circle : {
+			param : "none",
+			ret : "object",
+			detail : "원 형태의 영역 위치를 계산해줍니다."
+		},
+		ordinal : {
+			param : "none",
+			ret : "object",
+			detail : "순서가 있는 배열의 위치를 계산해줍니다."
+		},
+		time : {
+			param : "none",
+			ret : "object",
+			detail : "시간 영역에 따른 위치를 계산해줍니다."
+		},
+		linear : {
+			param : "none",
+			ret : "object",
+			detail : "길이 영역에 따른 위치를 계산해줍니다."
+		}
+	}
+};
+
+var timeApi = {
+	prop: {
+		years: {
+			detail: "년"
+		},
+		months: {
+			detail: "월"
+		},
+		days: {
+			detail: "일"
+		},
+		hours: {
+			detail: "시간"
+		},
+		minutes: {
+			detail: "분"
+		},
+		seconds: {
+			detail: "초"
+		},
+		milliseconds: {
+			detail: "밀리초"
+		},
+		weeks: {
+			detail: "주"
+		}
+	},
+	method: {
+		add: {
+			param: "date [, type, step]*",
+			ret: "Date",
+			detail: "특정 시점에서 다른 시점으로 날짜를 구합니다. 예를 들어 오늘부터 하루전이라고 하면  time.add(new Date(), 'days', -1); 형태로 사용할 수 있습니다."
+		},
+		format : {
+			param : "date, format[, utc]",
+			ret : "string",
+			detail : "Date 객체를 format 에 맞는 문자열로 변환합니다."
+		}
+	}
+};
+
+var svgApi = {
+	prop: {
+		root: {
+			detail: "SVG 태그의 엘리먼트 객체를 가져옵니다."
+		}
+	},
+	method: {
+		size: {
+			param: "width, height | none",
+			ret: "none | object",
+			detail: "파라메터가 존재하면 해당 값으로 크기를 설정하고, 없을 경우 SVG 태그의 넓이와 높이를 반환합니다."
+		},
+		clear: {
+			param: "isAll",
+			ret: "none",
+			detail: "'isAll'가 true일 경우에는 모든 자식 노드를 제거하고, 그렇지 않을 경우에는 메인 그룹 엘리먼트의 자식 노드만 제거합니다."
+		},
+		reset: {
+			param: "isAll",
+			ret: "none",
+			detail: "'clear'와 동일하지만 데이터까지 제거하므로 다시 렌더링 할 수 없습니다."
+		},
+		render: {
+			param: "isAll",
+			ret: "none",
+			detail: "구조화 된 데이터에 맞게 엘리먼트를 렌더링합니다."
+		},
+		download: {
+			param: "fileName",
+			ret: "none",
+			detail: "렌더링 된 SVG 태그를 해당 파일 이름으로 다운로드 합니다."
+		},
+		downloadImage: {
+			param: "fileName, fileType",
+			ret: "none",
+			detail: "렌더링 된 SVG 태그를 해당 파일 이름으로 다운로드 합니다."
+		},
+		exportCanvas: {
+			param: "canvasElement",
+			ret: "none",
+			detail: "렌더링 된 SVG 태그를 해당 캔버스 엘리먼트에 그립니다."
+		},
+		toXml: {
+			param: "none",
+			ret: "string",
+			detail: "렌더링 된 SVG 태그를 XML 문자열로 가져옵니다."
+		},
+		toDataURL: {
+			param: "none",
+			ret: "string",
+			detail: "렌더링 된 SVG 태그를 데이터 URL로 가져옵니다."
+		},
+		autoRender: {
+			param: "element, isAuto",
+			ret: "none",
+			detail: "'isAuto'가 true일 경우, 해당 엘리먼트를 렌더링을 해도 변경되지 않습니다."
+		},
+		getTextRect: {
+			param: "text",
+			ret: "object",
+			detail: "해당 텍스트의 넓이와 높이를 가져옵니다."
+		},
+		custom: {
+			param: "name, attributes, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 설정한 이름의 커스텀 엘리먼트를 생성하며, 콜백 함수 내부에서 엘리먼트 생성 메소드를 호출하면 해당 엘리먼트는 자식 노드가 된다."
+		},
+		defs: {
+			param: "callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'defs' 엘리먼트를 생성한다."
+		},
+		symbol: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'symbol' 엘리먼트를 생성한다."
+		},
+		g: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'g' 엘리먼트를 생성한다."
+		},
+		group: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'group' 엘리먼트를 생성한다."
+		},
+		marker: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'marker' 엘리먼트를 생성한다."
+		},
+		a: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'a' 엘리먼트를 생성한다."
+		},
+		switch: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'switch' 엘리먼트를 생성한다."
+		},
+		use: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'use' 엘리먼트를 생성한다."
+		},
+		rect: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'rect' 엘리먼트를 생성한다."
+		},
+		line: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'line' 엘리먼트를 생성한다."
+		},
+		circle: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'circle' 엘리먼트를 생성한다."
+		},
+		text: {
+			param: "attribute, textOrCallback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'text' 엘리먼트를 생성하며, 기본 텍스트를 설정하거나 콜백을 통해 자식 노드를 추가할 수 있다."
+		},
+		textPath: {
+			param: "attribute, text",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'textPath' 엘리먼트를 생성하며, 기본 텍스트를 설정할 수 있다."
+		},
+		tref: {
+			param: "attribute, text",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'tref' 엘리먼트를 생성하며, 기본 텍스트를 설정할 수 있다."
+		},
+		tspan: {
+			param: "attribute, text",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'tspan' 엘리먼트를 생성하며, 기본 텍스트를 설정할 수 있다."
+		},
+		ellipse: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'ellipse' 엘리먼트를 생성한다."
+		},
+		image: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'image' 엘리먼트를 생성한다."
+		},
+		path: {
+			param: "attribute, callback",
+			ret: "PathElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'path' 엘리먼트를 생성한다."
+		},
+		polyline: {
+			param: "attribute, callback",
+			ret: "PolyElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'polyline' 엘리먼트를 생성한다."
+		},
+		polygon: {
+			param: "attribute, callback",
+			ret: "PolyElement",
+			detail: "<strong>[엘리먼트 생성]</strong> 'polygon' 엘리먼트를 생성한다."
+		},
+		pattern: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'pattern' 엘리먼트를 생성한다."
+		},
+		mask: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'mask' 엘리먼트를 생성한다."
+		},
+		clipPath: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'clipPath' 엘리먼트를 생성한다."
+		},
+		linearGradient: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'linearGradient' 엘리먼트를 생성한다."
+		},
+		radialGradient: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'radialGradient' 엘리먼트를 생성한다."
+		},
+		filter: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "<strong>[엘리먼트 생성]</strong> 'filter' 엘리먼트를 생성한다."
+		},
+		stop: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[그라데이션 엘리먼트 생성]</strong> 'stop' 엘리먼트를 생성한다."
+		},
+		animate: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[애니메이션 엘리먼트 생성]</strong> 'animate' 엘리먼트를 생성한다."
+		},
+		animateColor: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[애니메이션 엘리먼트 생성]</strong> 'animateColor' 엘리먼트를 생성한다."
+		},
+		animateMotion: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[애니메이션 엘리먼트 생성]</strong> 'animateMotion' 엘리먼트를 생성한다."
+		},
+		animateTransform: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[애니메이션 엘리먼트 생성]</strong> 'animateTransform' 엘리먼트를 생성한다."
+		},
+		mpath: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[애니메이션 엘리먼트 생성]</strong> 'mpath' 엘리먼트를 생성한다."
+		},
+		set: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[애니메이션 엘리먼트 생성]</strong> 'set' 엘리먼트를 생성한다."
+		},
+		feBlend: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feBlend' 엘리먼트를 생성한다."
+		},
+		feColorMatrix: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feColorMatrix' 엘리먼트를 생성한다."
+		},
+		feComponentTransfer: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feComponentTransfer' 엘리먼트를 생성한다."
+		},
+		feComposite: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feComposite' 엘리먼트를 생성한다."
+		},
+		feConvolveMatrix: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feConvolveMatrix' 엘리먼트를 생성한다."
+		},
+		feDiffuseLighting: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feDiffuseLighting' 엘리먼트를 생성한다."
+		},
+		feDisplacementMap: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feDisplacementMap' 엘리먼트를 생성한다."
+		},
+		feFlood: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feFlood' 엘리먼트를 생성한다."
+		},
+		feGaussianBlur: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feGaussianBlur' 엘리먼트를 생성한다."
+		},
+		feImage: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feImage' 엘리먼트를 생성한다."
+		},
+		feMerge: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feMerge' 엘리먼트를 생성한다."
+		},
+		feMergeNode: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feMergeNode' 엘리먼트를 생성한다."
+		},
+		feMorphology: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feMorphology' 엘리먼트를 생성한다."
+		},
+		feOffset: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feOffset' 엘리먼트를 생성한다."
+		},
+		feSpecularLighting: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feSpecularLighting' 엘리먼트를 생성한다."
+		},
+		feTile: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feTile' 엘리먼트를 생성한다."
+		},
+		feTurbulence: {
+			param: "attribute",
+			ret: "Element",
+			detail: "<strong>[필터 엘리먼트 생성]</strong> 'feTurbulence' 엘리먼트를 생성한다."
+		}
+	}
+};
+
+jui.ready([ "util", "uix.tab" ], function(util, tab) {
+	var tab = tab("#tab", {
+		target: "#tab_contents",
+		event: {
+			change: function(data, e) {
+				if(data.index == 1 && $("#color").html() == "") {
+					juiApi(util.color, colorApi, util.base.template, null, "#color");
+
+				} else if(data.index == 2 && $("#math").html() == "") {
+					juiApi(util.math, mathApi, util.base.template, null, "#math");
+
+				} else if(data.index == 3 && $("#scale").html() == "") {
+					juiApi(util.scale, scaleApi, util.base.template, null, "#scale");
+
+				} else if(data.index == 4 && $("#time").html() == "") {
+					juiApi(util.time, timeApi, util.base.template, null, "#time");
+
+				} else if(data.index == 5 && $("#svg").html() == "") {
+					var svg = new util.svg($("#svgTarget").get(0), { width: 10, height: 10 });
+					juiApi(svg, svgApi, util.base.template, null, "#svg");
+
+				}
+			}
+		}
+	});
+
+	juiApi(util.base, baseApi, util.base.template, null, "#base");
+});
+</script>
+
+<meta name="title" content="JENNIFER UI: Core/Custom" />
+<meta name="description" content="JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui utility">
+
+<div class="page-header">
+	<h1>Utility</h1>
+	<p class="br">
+		JUI 라이브러리는 컴포넌트 개발 및 웹 개발에 필요한 다양한 유틸리티 함수와 프로퍼티를 제공합니다.
+		
+<pre><code class="language-javascript">/* 컴포넌트 모듈을 정의할 때, 가져오는 유틸리티 모듈 */
+jui.define("ui.test", [ "util.base" ], function(_) {
+	//...
+});
+
+/* 컴포넌트 모듈을 사용할 때, 가져오는 유틸리티 모듈 */
+jui.ready([ "jquery", "util.base", "util.svg" ], function($, _, SVGUtil) {
+	if(_.browser.msie) return;
+
+	var elem = $("#svg").get(0),
+		svg = new SVGUtil(elem, { width: 400, height: 300 });
+
+	//...
+});
+</code></pre>
+	</p>
+</div>
+
+<ul id="tab" class="tab tab-top">
+	<li><a href="#base">base</a></li>
+	<li><a href="#color">color</a></li>
+	<li><a href="#math">math</a></li>
+	<li><a href="#scale">scale</a></li>
+	<li><a href="#time">time</a></li>
+	<li><a href="#svg">svg</a></li>
+</ul>
+
+<div id="tab_contents" class="tab-contents">
+	<div id="base"></div>
+	<div id="color"></div>
+	<div id="math"></div>
+	<div id="scale"></div>
+	<div id="time"></div>
+	<div id="svg"></div>
+</div>
+
+<div class="hidden">
+	<span id="svgTarget"></span>
+</div>
+
+</body>
+</html>

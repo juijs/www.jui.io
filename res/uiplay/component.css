@@ -1,0 +1,64 @@
+.splitter-2 {
+    width: 2px;
+    position: absolute;
+    background-color: #ddd;
+    left: 50%;
+    top: 0px;
+    bottom: 0px;
+}
+
+.chart_data {
+    position: absolute;
+    border-left:2px solid #ddd;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    width: 50%;
+    overflow-y: auto;
+    background: white;
+}
+
+.chart_data.dark {
+    background-color: #1c1c1c;
+}
+
+.chart_view {
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    background-color: white;
+    z-index: 10;
+}
+
+.chart_view.dark {
+    background-color: #1c1c1c;
+}
+.chart_view.dark h2 {
+    color: #d5d5d5 !important;
+}
+
+.chart_view.dark #chart-content table:not(.table):not(.xtable):not(.body) tr:first-child td {
+    color: #fff !important;
+}
+
+.chart_view.dark #chart-content table:not(.table):not(.xtable):not(.body) td {
+    color: #666 !important;
+    border: 1px solid #666 !important;
+}
+
+.chart_view.dark #chart-content table:not(.table):not(.xtable):not(.body) tr:nth-child(odd),
+.chart_view.dark #chart-content table:not(.table):not(.xtable):not(.body) tr:first-child td {
+    background-color: #2c2c2c !important;
+}
+
+.chart_view.dark #chart-content table:not(.table):not(.xtable):not(.body) tr:nth-child(even) {
+    background-color: #262626 !important;
+}
+
+.chart_view.dark #chart-content .col {
+    color: #666 !important;
+}

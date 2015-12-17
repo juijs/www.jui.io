@@ -1,0 +1,68 @@
+{
+  "name": "jui-site",
+  "version": "1.0.0",
+  "description": "JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juijs/jui.git"
+  },
+  "keywords": [
+    "HTML5",
+    "CSS",
+    "JS",
+    "JavaScript",
+    "SVG",
+    "chart",
+    "framework",
+    "bootstrap",
+    "front-end",
+    "frontend",
+    "web development",
+    "free",
+    "MIT"
+  ],
+  "author": "seogi1004",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juijs/jui/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "load-grunt-tasks": "~0.2.0"
+  },
+  "categories": [
+    "Frameworks",
+    "UI"
+  ],
+  "maintainers": [
+    {
+      "name": "Alvin",
+      "email": "alvin@jennifersoft.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Jayden",
+      "email": "jayden@jennifersoft.com"
+    },
+    {
+      "name": "Yoha",
+      "email": "yoha@jennifersoft.com"
+    }
+  ],
+  "jam": {
+    "dependencies": {
+      "jquery": ">1.8.0"
+    },
+    "main": "jui.min.js",
+    "shim": {
+      "deps": [
+        "jquery"
+      ],
+      "exports": "jui"
+    }
+  }
+}

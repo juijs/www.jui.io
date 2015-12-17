@@ -1,0 +1,144 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>Getting Started</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+
+<!-- default meta tag -->
+
+<link rel="stylesheet" href="../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../lib/prism.css" />
+<link rel="stylesheet" href="../res/manual.css" />
+
+<script src="../lib/jquery-1.8.0.min.js"></script>
+<script src="../lib/prism.js"></script>
+<script src="../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: Getting Started" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header" style="padding-top: 50px;">
+    <h1>Common</h1>
+</div>
+
+<p>
+    <h2>Minify</h2>
+
+    <p>
+        JUI library only requires the user to load a double package file.<br/>
+        You can use the theme file and otherwise, will provide additional tools to make the theme easily.
+
+		<pre><code class="language-markup">&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/jui.min.css&quot; />
+&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/jennifer.theme.min.css&quot; /></code></pre>
+    </p>
+    <p>
+        Access to the <strong>jui</strong> class must then be configured in the markup.
+		<pre><code class="language-markup">&lt;body class=&quot;jui&quot;&gt;
+    ...
+&lt;/body&gt;</code></pre>
+    </p>
+
+    <p class="br">
+        As the script works only with <strong>jQuery 1.8</strong> or higher, it is necessary to load the jQuery library first.
+		
+		<pre><code class="language-markup">&lt;script src=&quot;lib/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;dist/jui.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+    </p>
+</section>
+
+<section>
+    <h2>Debug</h2>
+
+    <p>
+        The script can be loaded for debugging purposes, which requires the base and core files to be loaded.
+		
+		<pre><code class="language-markup">&lt;script src=&quot;js/base.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/core.js&quot;&gt;&lt;/script&gt;</code></pre>
+    </p>
+
+    <p class="br">
+        Load the util and the ui module first, then load the uix and the chart module in order.
+
+		<pre><code class="language-markup">// base
+&lt;script src=&quot;js/base.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/core.js&quot;&gt;&lt;/script&gt;
+
+// util
+&lt;script src=&quot;js/util/math.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/util/svg.js&quot;&gt;&lt;/script&gt;
+...
+// ui
+&lt;script src=&quot;js/ui/button.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/ui/combo.js&quot;&gt;&lt;/script&gt;
+...
+// uix
+&lt;script src=&quot;js/uix/autocomplete.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/uix/tab.js&quot;&gt;&lt;/script&gt;
+...
+
+// chart base
+&lt;script src=&quot;js/chart/draw.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/chart/builder.js&quot;&gt;&lt;/script&gt;
+
+// chart theme
+&lt;script src=&quot;js/chart/theme/jennifer.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/chart/theme/dark.js&quot;&gt;&lt;/script&gt;
+...
+// chart grid
+&lt;script src=&quot;js/chart/grid/core.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/chart/grid/block.js&quot;&gt;&lt;/script&gt;
+...
+// chart brush
+&lt;script src=&quot;js/chart/brush/core.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/chart/brush/bar.js&quot;&gt;&lt;/script&gt;
+...
+// chart widget
+&lt;script src=&quot;js/chart/widget/core.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/chart/widget/tooltip.js&quot;&gt;&lt;/script&gt;
+...</code></pre>
+    </p>
+
+    <p class="br">
+        Module(s) that you are not  using may be excluded. However, be careful as an error may occur in any module that has a dependency on an excluded file.
+    </p>
+</section>
+
+<section>
+    <h2>NodeJS</h2>
+
+    <p>
+        Now you can use the chart from the server. As follows: <strong>npm</strong> to install it using the command:
+        <pre><code class="language-javascript">npm install jui</code></pre>
+    </p>
+</section>
+
+<section>
+    <h2>Build &amp; Test</h2>
+
+    <p>
+        To test and merge a <strong>.less</strong> file and a <strong>.js</strong> file contained in the package, run the command below.<br/> For reference, the <strong>Grunt</strong> module, which is a build tool, requires the installation of <strong>NodeJS</strong>.
+
+        <span class="label label-gray label-small" style="width: 100%; height: 100px; margin-top: 5px;">
+			npm install grunt-cli -g<br/>
+			cd jui<br/>
+			npm install<br/>
+			grunt
+		</span>
+    </p>
+    <p class="br">
+        The build &amp; test command can be performed for each function as follows.
+    </p>
+    <p>
+        The <strong>grunt.js</strong> command performs merge and minify on a .js file, and <strong>grunt-test</strong> performs a component test.<br/> In addition, the <strong>grunt-class</strong> command converts a .less file into css and performs merge and minify.
+
+		<span class="label label-gray label-small" style="width: 100%; height: 75px; margin-top: 5px;">grunt js<br/> grunt css<br/> grunt test</span>
+    </p>
+</section>
+
+</body>
+</html>

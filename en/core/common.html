@@ -1,0 +1,172 @@
+﻿
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Core</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../lib/prism.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../lib/prism.js"></script>
+<script src="../../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: Core" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header">
+	<h1>Common</h1>
+</div>
+
+<section>
+	<h2>Ready</h2>
+	<p>
+		The JUI library can use a component module inside of the <strong>ready</strong> method callback.
+		
+		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
+	var combo = ui.combo(selector, options),
+		table = uix.table(selector, options);
+		
+	//...
+});</code></pre>
+	</p>
+	
+	<p class="br">
+		The ui, uix and _object, which can be received as parameters of the callback method, provide the following functions.
+	
+		<table width="100%" class="table_s" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="120px">Name</td>
+				<td>Description</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>A component whose independence from  other components is guaranteed.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>A component that provides more complex and varied functions because it is created using combinations of other components.</td>
+			</tr>
+			<tr>
+				<td>_</td>
+				<td>Provides a standardized utility method that can be used inside and outside the component.</td>
+			</tr>
+		</table>
+	</p>
+
+	<p class="br">
+		ui and uix objects, which can be received as parameters of the callback function, can create the following components.
+	
+		<table width="100%" class="table_s" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="80px">Package</td>
+				<td width="120px">Type</td>
+				<td>Description</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>button</td>
+				<td>Component that provides checkbox and radio button functions.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>combo</td>
+				<td>Component that implements the select box appearance.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>dropdown</td>
+				<td>Component that can display a menu-type list.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>tooltip</td>
+				<td>A visualization component that contributes to the definition of a specific area.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>modal</td>
+				<td>Component that displays the screen of a specific object more clearly.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>paging</td>
+				<td>Component that generalizes and provides the paging which is frequently used in a service such as a bulletin board or a guest book.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>datepicker</td>
+				<td>Component for selecting date/month/year.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>notify</td>
+				<td>Component that shows a notice message when a significant error or event occurs in the service.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>window</td>
+				<td>Component with a typical Windows format.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>table</td>
+				<td>Component that specializes in adding, modifying and deleting data and is able to display data in a tree structure.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>xtable</td>
+				<td>Specializes in retrieving data, unlike the table component. It can retrieve over 1 million records.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>tab</td>
+				<td>Component that can display multiple sections of content using tabs.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>tree</td>
+				<td>Component that can display hierarchical data such as directories.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>autocomplete</td>
+				<td>Component that helps with text completion when writing in a text box</td>
+			</tr>
+		</table>
+	</p>
+	
+	<p class="br">
+		If a module name is supplied in thefirst parameter , it is possible to load only the module concerned. However, the module name is usually omitted.
+		
+		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
+	var combo = ui.combo(selector, options),
+		table = uix.table(selector, options);
+		
+	//...
+});</code></pre>
+	</p>
+</section>
+
+<section>
+	<h2>create</h2>
+	<p>
+		A method for creating a component object dynamically, even outside of the callback of the <strong>ready</strong> method. OHowever, the <strong>create</strong> method can only be used once the callback of the <strong>ready</strong> method is complete.
+		
+<pre><code class="language-javascript">var combo = jui.create(&quot;combo&quot;, selector, options),
+	table = jui.create(&quot;table&quot;, selector, options);
+	
+//...</code></pre>
+	</p>
+</section>
+
+</body>
+</html>

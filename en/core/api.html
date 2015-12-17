@@ -1,0 +1,178 @@
+﻿
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Core/API</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: Core/API" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header">
+	<h1>API</h1>
+	<p class="br">
+		The JUI library provides a global object jui. Each component is created using this object.
+	</p>
+</div>
+
+<section>
+	<h2>Before the ready point</h2>
+	<p>
+		JUI provides the following methods and properties for use prior to the <strong>ready</strong> point. <br/> All of the components in the JUI can be created once the callback function of <strong>ready</strong> has been called.
+		
+		<table width="100%" class="table_s" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="120px">Name</td>
+				<td width="120px">Type</td>
+				<td>Description</td>
+			</tr>
+			<tr>
+				<td>ready</td>
+				<td>method</td>
+				<td>Method provided for use of a component module.</td>
+			</tr>
+			<tr>
+				<td>defineUI</td>
+				<td>method</td>
+				<td>Method that defines a component module.</td>
+			</tr>
+            <tr>
+                <td>define</td>
+                <td>method</td>
+                <td>Method that defines a class or object which is heritable</td>
+            </tr>
+			<tr>
+				<td>defineOptions</td>
+				<td>method</td>
+				<td>Gets options defined in a module in a heritable structure and checks option validity.</td>
+			</tr>
+            <tr>
+                <td>include</td>
+                <td>method</td>
+                <td>Gets a class or object identified as 'define' or 'defineUI'</td>
+            </tr>
+            <tr>
+                <td>includeAll</td>
+                <td>method</td>
+                <td>Gets all classes and objects that are identified as 'define' or 'defineUI'</td>
+            </tr>
+			<tr>
+				<td>log</td>
+				<td>method</td>
+				<td>Method that displays a pop-up on which the user can view the log.</td>
+			</tr>
+			<tr>
+				<td>setup</td>
+				<td>method</td>
+				<td>Configures the basic settings of the JUI library, for example the log URL and template grammar settings.</td>
+			</tr>
+		</table>
+	</p>
+</section>
+
+<section>
+	<h2>After ready</h2>
+	<p>
+		<table width="100%" class="table_s" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="120px">Name</td>
+			<td width="160px">Parameter</td>
+			<td width="80px">Return</td>
+			<td>Description</td>
+			</tr>
+			<tr>
+				<td>add</td>
+				<td>uiObj</td>
+				<td>none</td>
+				<td>Adds a component object created.</td>
+			</tr>
+			<tr>
+				<td>emit</td>
+				<td>uiType | uiSelector, eventType, eventArgs</td>
+				<td>none</td>
+				<td>Generates a custom event to an applicable component</td>
+			</tr>
+			<tr>
+				<td>get</td>
+				<td>index | uiType | uiSelector</td>
+				<td>object | array</td>
+				<td>Brings a component currently created</td>
+			</tr>
+			<tr>
+				<td>getAll</td>
+				<td>none</td>
+				<td>array</td>
+				<td>Brings all components currently created</td>
+			</tr>
+			<tr>
+				<td>remove</td>
+				<td>index</td>
+				<td>uiObj</td>
+				<td>Removes a component object in an applicable index from the list</td>
+			</tr>
+			<tr>
+				<td>shift</td>
+				<td>none</td>
+				<td>uiObj</td>
+				<td>Removes the last component object from the list.</td>
+			</tr>
+			<tr>
+				<td>pop</td>
+				<td>none</td>
+				<td>uiObj</td>
+				<td>Removes the first component object from the list.</td>
+			</tr>
+			<tr>
+				<td>size</td>
+				<td>none</td>
+				<td>int</td>
+				<td>Gets the number of objects currently created</td>
+			</tr>
+			<tr>
+				<td>addClass</td>
+				<td>uiCls</td>
+				<td>none</td>
+				<td>Adds a component class</td>
+			</tr>
+			<tr>
+				<td>getClass</td>
+				<td>index or uiType</td>
+				<td>object or array</td>
+				<td>Gets a component class</td>
+			</tr>
+			<tr>
+				<td>getClassAll</td>
+				<td>none</td>
+				<td>array</td>
+				<td>Gets all component classes</td>
+			</tr>
+			<tr>
+				<td>create</td>
+				<td>uiType, selector, options</td>
+				<td>object</td>
+				<td>It is possible to create a component dynamically after the ready point.</td>
+			</tr>
+			<tr>
+				<td>debugAll</td>
+				<td>callback</td>
+				<td>none</td>
+				<td>debugs all component objects currently existing</td>
+			</tr>
+		</table>
+	</p>
+</section>
+
+</body>
+</html>

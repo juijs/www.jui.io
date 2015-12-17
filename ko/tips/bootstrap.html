@@ -1,0 +1,810 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Tips/Bootstrap</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+
+<link rel="stylesheet" href="../../lib/bootstrap.min.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<link rel="stylesheet" href="../../res/doc/tips.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../res/manual.js"></script>
+<script src="../../res/doc/tips.js"></script>
+
+<meta name="title" content="JENNIFER UI: Tips/Bootstrap" />
+<meta name="description" content="JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div>
+	<h1>Bootstrap</h1>
+</div>
+
+<section>
+	<h2>Button</h2>
+		
+	<h3><span>Radio</span></h3>
+	<p>
+		버튼 컴포넌트는 하나만 선택할 수 있는 라디오 타입을 제공합니다.
+	</p>
+	<div>
+		<div id="btn_1" class="btn-group btn-group-lg">
+			<button type="button" class="btn btn-success">Java</button>
+			<button type="button" class="btn btn-success">.NET</button>
+			<button type="button" class="btn btn-success">C++</button>
+			<button type="button" class="btn btn-success">JSP</button>
+			<button type="button" class="btn btn-success">PHP</button>
+			<button type="button" class="btn btn-success">ASP</button>
+			<button type="button" class="btn btn-success">Ruby</button>
+			<button type="button" class="btn btn-success">Python</button>
+		</div>
+
+		<h3><span>Check</span></h3>
+		<p>
+			버튼 컴포넌트는 다수를 선택할 수 있는 체크 타입을 제공합니다.
+		</p>
+		<div id="btn_2" class="btn-group btn-group-lg">
+			<button type="button" class="btn btn-info">Java</button>
+			<button type="button" class="btn btn-info">.NET</button>
+			<button type="button" class="btn btn-info">C++</button>
+			<button type="button" class="btn btn-info">JSP</button>
+			<button type="button" class="btn btn-info">PHP</button>
+			<button type="button" class="btn btn-info">ASP</button>
+			<button type="button" class="btn btn-info">Ruby</button>
+			<button type="button" class="btn btn-info">Python</button>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h2>Paging</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		페이징 UI를 사용하는 가장 기본적인 방법입니다.
+	</p>
+	<div>
+		<ul id="paging_1" class="pagination pagination-lg"></ul>
+
+		<script data-jui="#paging_1" data-tpl="pages" type="text/template">
+			<li class="prev"><a href="#">&laquo;</a></li>
+			<! for(var i = 0; i < pages.length; i++) { !>
+			<li class="page"><a href="#"><!= pages[i] !></a></li>
+			<! } !>
+			<li class="next"><a href="#">&raquo;</a></li>
+		</script>
+
+		<h3><span>Table & Paging</span></h3>
+		<p>
+			<a class="btn btn-default btn-xs" href="javascript:pagingRun();">Run</a> -
+			좌측 버튼을 클릭하면 100만 건의 데이터를 테이블에 입력합니다.
+		</p>
+		<div id="paging_2_xtable">
+			<table class="table table-condensed table-bordered">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Location</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<ul id="paging_2" class="pagination pagination-sm" style="margin-top: 5px"></ul>
+
+		<script data-jui="#paging_2_xtable" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#paging_2_xtable" data-tpl="none" type="text/template">
+			<tr>
+				<td colspan="3" class="none">Data does not exist.</td>
+			</tr>
+		</script>
+
+		<script data-jui="#paging_2" data-tpl="pages" type="text/template">
+			<li class="prev"><a href="#">&laquo;</a></li>
+			<! for(var i = 0; i < pages.length; i++) { !>
+			<li class="page"><a href="#"><!= pages[i] !></a></li>
+			<! } !>
+			<li class="next"><a href="#">&raquo;</a></li>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Dropdown</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		드롭다운 컴포넌트의 기본이며, 각각의 요소에는 <strong>value</strong>를 지정할 수 있습니다. (숫자 형태만 가능)
+	</p>
+	<div class="dd-1">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle">Default <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary dropdown-toggle">Primary <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-success dropdown-toggle">Success <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info dropdown-toggle">Info <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-warning dropdown-toggle">Warning <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-danger dropdown-toggle">Danger <span class="caret"></span></button>
+		</div>
+
+		<ul id="dd_1" class="dropdown-menu">
+			<li><a href="#">Action</a></li>
+			<li><a href="#">Another action</a></li>
+			<li><a href="#">Something else here</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Separated link</a></li>
+		</ul>
+	</div>
+
+	<h3><span>Keydown</span></h3>
+	<p>
+		<strong>keydown</strong> 옵션을 <strong>true</strong>로 주면 키보드 방향키를 통해서도 리스트를 선택할 수 있습니다.
+	</p>
+	<div class="dd-2">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default">Default</button>
+			<button type="button" class="btn btn-default dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary">Primary</button>
+			<button type="button" class="btn btn-primary dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-success">Success</button>
+			<button type="button" class="btn btn-success dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info">Info</button>
+			<button type="button" class="btn btn-info dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-warning">Warning</button>
+			<button type="button" class="btn btn-warning dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-danger">Danger</button>
+			<button type="button" class="btn btn-danger dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+
+		<ul id="dd_2" class="dropdown-menu">
+			<li><a href="#" value="100">Action</a></li>
+			<li><a href="#">Another action</a></li>
+			<li><a href="#">Something else here</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Separated link</a></li>
+		</ul>
+	</div>
+</section>
+
+<section>
+	<h2>Auto Complete</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		아래 키워드 중에 입력한 문자가 포함되어 있으면, 드롭다운 메뉴에 키워드 목록이 나타납니다.
+		<span class="label label-gray label-small" style="width: 100%; margin-top: 5px;">
+			<i>BASIC, JavaScript, Python, 자바의 정석, 열혈강의 C++</i>
+		</span>
+	</p>
+	<div>
+		<input id="ac_1" type="text" class="form-control" placeholder="Text input">
+
+		<script data-jui="#ac_1" data-tpl="words" type="text/template">
+			<ul class="dropdown-menu">
+				<! for(var i = 0; i < words.length; i++) { !>
+				<li><a href="#"><!= words[i] !></a></li>
+				<! } !>
+			</ul>
+		</script>
+	</div>
+
+	<h3><span>Input Group</span></h3>
+	<p>
+		그룹 형태의 스타일에서도 자동 완성 기능을 사용할 수 있습니다.
+		<span class="label label-gray label-small" style="width: 100%; margin-top: 5px;">
+			<i>BASIC, JavaScript, Python, 자바의 정석, 열혈강의 C++</i>
+		</span>
+	</p>
+	<div>
+		<div id="ac_2" class="input-group">
+			<span class="input-group-addon">@</span>
+			<input type="text" class="form-control" placeholder="Text input">
+		</div>
+
+		<script data-jui="#ac_2" data-tpl="words" type="text/template">
+			<ul class="dropdown-menu">
+				<! for(var i = 0; i < words.length; i++) { !>
+				<li><a href="#"><!= words[i] !></a></li>
+				<! } !>
+			</ul>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Tab</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		탭 컨텐츠 영역은 이벤트를 통해서 설정할 수 있으며 관련된 옵션도 제공합니다.
+	</p>
+	<p>
+		<ul id="tab_2" class="nav nav-pills">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="#">Profile</a></li>
+			<li><a href="#">Messages</a></li>
+		</ul>
+	</p>
+
+	<h3><span>Menu</span></h3>
+	<p>
+		메뉴 탭 설정을 할 수 있으며 관련된 마크업은 드롭다운과 동일합니다.
+	</p>
+	<div>
+		<ul id="tab_1" class="nav nav-tabs">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Profile</a></li>
+			<li><a href="#">Messages</a></li>
+			<li class="menu">
+				<a href="#">Dropdown <span class="caret"></span></a>
+			</li>
+		</ul>
+
+		<div data-index="0" class="tab-contents"><div class="msg">Home</div></div>
+		<div data-index="1" class="tab-contents"><div class="msg">Profile</div></div>
+		<div data-index="2" class="tab-contents"><div class="msg">Messages</div></div>
+
+		<script data-jui="#tab_1" data-tpl="menu" type="text/template">
+			<ul class="dropdown-menu">
+				<li><a href="#">Action</a></li>
+				<li><a href="#">Another action</a></li>
+				<li><a href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li><a href="#">Separated link</a></li>
+			</ul>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Modal & Notify</h2>
+
+	<h3><span>Modal</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:modalNotifyRun(1);">Run</a> -
+		전체 화면의 중앙에 위치하는 글로벌 모달 기능을 제공합니다.
+	</p>
+
+	<h3><span>Notify</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:modalNotifyRun(2);">Run</a> -
+		심각한 문제가 발생하거나 이벤트 등이 발생하였을 때, 알림 메시지를 보여줄 수 있습니다.
+	</p>
+
+	<div>
+		<img id="modal" src="../../res/img/jui_info_3.jpg" />
+
+		<script id="tpl_alarm" type="text/template">
+			<div class="alert alert-<!= color !>" style="width: 300px;"><!= msg !></div>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Table</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		데이터 목록을 템플릿을 활용하여 적용한 기본적인 테이블 예제입니다.
+	</p>
+	<div>
+		<table id="table_1" class="table">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_1" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Expand (+Update)</span></h3>
+	<p>
+		확장 영역을 사용하고 관련된 값을 데이터 바인딩을 통해 변경하는 예제입니다.
+	</p>
+	<div>
+		<table id="table_2" class="table table-hover">
+			<thead>
+			<tr>
+				<th style="width: 20px"></th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_2" data-tpl="row" type="text/template">
+			<tr>
+				<td>+</td>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#table_2" data-tpl="expand" type="text/template">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="input-group">
+						<span class="input-group-addon">Name</span>
+						<input id="table_2_name" type="text" class="form-control" value="<!= name !>">
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="input-group">
+						<span class="input-group-addon">Age</span>
+						<input id="table_2_age" type="text" class="form-control" value="<!= age !>">
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="input-group">
+						<span class="input-group-addon">Location</span>
+						<input id="table_2_location" type="text" class="form-control" value="<!= location !>">
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="btn-group">
+						<button onclick="table2Submit(<!= row.index !>)" type="button" class="btn btn-default">Submit</button>
+						<button onclick="table_2.remove(<!= row.index !>); table_2.hideExpand();" type="button" class="btn btn-default">Delete</button>
+					</div>
+				</div>
+			</div>
+		</script>
+	</div>
+
+	<h3><span>Scroll</span></h3>
+	<p>
+		테이블 내부에서 스크롤 기능을 사용하는 예제입니다.
+	</p>
+	<div>
+		<table id="table_3" class="table table-striped">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_3" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Mouse Right-Click (+Resize)</span></h3>
+	<p>
+		로우를 마우스 오른쪽 클릭하면 rowmenu 이벤트가 발생합니다.<br/>
+		이 이벤트를 활용하면 로우를 컨트롤할 수 있는 메뉴 등을 구현하는데 활용할 수 있습니다.
+	</p>
+	<div>
+		<table id="table_4" class="table table-condensed table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<ul id="table_4_dd" class="dropdown-menu">
+			<li><a href="#">Action</a></li>
+			<li><a href="#">Another action</a></li>
+			<li><a href="#">Something else here</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Separated link</a></li>
+		</ul>
+
+		<script data-jui="#table_4" data-tpl="row" type="text/template">
+			<tr class="<! if(parseInt(row.index) % 2 == 0) { !>info<! } !>">
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Sorting (+Resize)</span></h3>
+	<p>
+		정렬 기능을 사용하기 위해서는 <strong>th</strong> 태그 순서대로 데이터 키 값을 넣어주고, 정렬 대상이 아닐 경우에는 <strong>null</strong>로 대체하면 됩니다.<br/>
+		또한 정렬 중임을 보여주는 UI는 별도로 구현할 수 있도록 관련된 인터페이스를 제공합니다.
+	</p>
+	<div>
+		<table id="table_5" class="table table-condensed table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_5" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Edit Row (+Resize, +Sort)</span></h3>
+	<p>
+		특정 로우를 더블클릭하면 모든 셀의 값을 수정할 수 있습니다. <br/>
+		수정이 완료되면 <strong>editend</strong> 이벤트가 발생하는데, 이 때 <strong>false</strong>를 리턴하면 수정된 값이 반영되지 않습니다.
+	</p>
+	<div>
+		<table id="table_6" class="table">
+			<thead>
+			<tr>
+				<th width="50px">No</th>
+				<th>Name</th>
+				<th width="33%">Age</th>
+				<th width="33%">Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_6" data-tpl="row" type="text/template">
+			<tr class="<! if(parseInt(row.index) % 2 == 0) { !>warning<! } !>">
+				<td><!= row.index !></td>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Append Data (+Scroll)</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:table7Run();">Run</a> -
+		좌측의 버튼을 클릭하면, 1000개의 로우를 추가합니다.
+	</p>
+	<div>
+		<table id="table_7" class="table table-striped table-condensed">
+			<thead>
+			<tr>
+				<th>No</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_7" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= row.index !></td>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Insert Data (+Scroll)</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:table8Run();">Run</a> -
+		좌측의 버튼을 클릭하면, 3번째 인덱스에 100개의 로우를 추가합니다.
+	</p>
+	<div>
+		<table id="table_8" class="table table-striped table-condensed">
+			<thead>
+			<tr>
+				<th>No</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_8" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= row.index !></td>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Hide/Show Column (+Resize)</span></h3>
+	<p>
+		컬럼에 마우스 오른쪽을 클릭하면 숨기기/보이기 기능을 제공하는 메뉴가 보여집니다.
+	</p>
+	<div>
+		<table id="table_9" class="table table-condensed table-bordered">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_9" data-tpl="row" type="text/template">
+			<tr class="<! if(parseInt(row.index) % 2 == 0) { !>success<! } !>">
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#table_9" data-tpl="menu" type="text/template">
+			<ul class="dropdown-menu">
+				<! for(var i = 0; i < columns.length; i++) { !>
+				<li>
+					<a href="#"><input type="checkbox" />&nbsp; <!= columns[i] !></a>
+				</li>
+				<! } !>
+			</ul>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Tree Table</h2>
+
+	<h3><span>Append/Insert Data</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:table10Run();">Run</a> -
+		뎁스 구조의 키 값으로 데이터를 입력 및 특정 인덱스에 추가할 수 있습니다.
+	</p>
+	<div>
+		<table id="table_tree_1" class="table table-striped table-condensed">
+			<thead>
+			<tr>
+				<th style="width: 200px;">Index</th>
+				<th>Column. Name</th>
+				<th style="width: 100px;">Column. Age</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_tree_1" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= row.index !></td>
+				<td style="padding-left: <!= 5 + (5 + (row.depth * 20)) !>px">
+					<! if(row.depth > 0) { !>
+					L&nbsp;
+					<! } !>
+					<!= name !>
+				</td>
+				<td><!= age !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Move/Remove/Update Row</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:table11Run(1);">Move</a>
+		<a class="btn btn-default btn-xs" href="javascript:table11Run(2);">Remove</a>
+		<a class="btn btn-default btn-xs" href="javascript:table11Run(3);">Update</a> -
+		로우를 조작할 수 있은 기능을 제공합니다.
+	</p>
+	<div>
+		<table id="table_tree_2" class="table table-condensed table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_tree_2" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= row.index !></td>
+				<td style="padding-left: <!= 5 + (5 + (row.depth * 20)) !>px">
+					<! if(row.depth > 0) { !>
+					L&nbsp;
+					<! } !>
+					<!= name !>
+				</td>
+				<td><!= age !></td>
+			</tr>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>X Table</h2>
+
+	<h3><span>Scroll (+Loading)</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:xtableRun();">Run</a> -
+		100만건의 데이터를 추가하는 데모이며, 스크롤이 맨 밑으로 내려갔을 경우에 로우를 추가적으로 렌더링합니다.
+	</p>
+	<div>
+		<div id="xtable_1">
+			<table class="table table-condensed table-bordered">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Location</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<script data-jui="#xtable_1" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_1" data-tpl="none" type="text/template">
+			<tr>
+				<td colspan="3" class="none">Data does not exist.</td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_1" data-tpl="loading" type="text/template">
+			<div class="loading"></div>
+		</script>
+	</div>
+
+	<h3><span>Page</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:xtable2Run();">Run</a> -
+		100만건의 데이터를 추가하는 데모이며, 스크롤이 없는 페이징 형태로 추가 데이터를 렌더링합니다.
+	</p>
+	<div>
+		<div id="xtable_2">
+			<table class="table table-condensed table-bordered ">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Location</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div class="btn-group" style="margin-top: 5px;">
+			<button type="button" class="btn btn-default" onclick="xtable2Page(-1)">Prev</button>
+			<button type="button" class="btn btn-default" onclick="xtable2Page(1)">Next</button>
+		</div>
+
+		<script data-jui="#xtable_2" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_2" data-tpl="none" type="text/template">
+			<tr>
+				<td colspan="3" class="none">Data does not exist.</td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_2" data-tpl="loading" type="text/template">
+			<div class="loading"></div>
+		</script>
+	</div>
+
+	<h3><span>Page-Scroll</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:xtable3Run();">Run</a> -
+		100만건의 데이터를 추가하는 데모이며, 스크롤이 있는 페이징 형태로 추가 데이터를 렌더링합니다.
+	</p>
+	<div>
+		<div id="xtable_3">
+			<table class="table table-condensed table-bordered ">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Location</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div class="btn-group" style="margin-top: 5px;">
+			<button type="button" class="btn btn-default" onclick="xtable3Page(-1)">Prev</button>
+			<button type="button" class="btn btn-default" onclick="xtable3Page(1)">Next</button>
+		</div>
+
+		<script data-jui="#xtable_3" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_3" data-tpl="none" type="text/template">
+			<tr>
+				<td colspan="3" class="none">Data does not exist.</td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_3" data-tpl="loading" type="text/template">
+			<div class="loading"></div>
+		</script>
+	</div>
+</section>
+
+</body>
+</html>

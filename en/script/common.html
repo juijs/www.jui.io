@@ -1,0 +1,132 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>JavaScript</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+	
+<link rel="stylesheet" href="../../res/manual.css" />
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../lib/prism.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../lib/prism.js"></script>
+<script src="../../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: JavaScript" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header">
+	<h1>Common</h1>
+</div>
+
+<section>
+	<h2>Ready</h2>
+	<p>
+		The JUI library can use a component module inside of the callback of the ready method.<br/> If a module to be loaded to the first array is not specified, the ui and uix component group and a utility module are loaded.
+		
+		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
+	var combo = ui.combo(selector, options),
+		table = uix.table(selector, options);
+		
+	//...
+});
+
+jui.ready([ &quot;ui&quot;, &quot;uix&quot;, &quot;uix.xtable&quot; ], function(ui, uix, xtable) {
+    var combo = ui.combo(selector, options),
+        table = uix.table(selector, options),
+        xtable = xtable(selector, options);
+
+    //...
+});</code></pre>
+	</p>
+</section>
+
+<section>
+	<h2>Object</h2>
+	<p>
+		When creating a component object, if there are multiple selectors rather than a single selector, the result value is retrieved as an array, not an object. 
+		
+		
+<pre><code class="language-markup">&lt;span class=&quot;tooltip&quot; title=&quot;Tooltip Message&quot;&gt;Tooltip 1&lt;/span&gt;
+&lt;span class=&quot;tooltip&quot; title=&quot;Tooltip Message&quot;&gt;Tooltip 2&lt;/span&gt;</code></pre>
+
+		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
+	var tips = ui.tooltip(&quot;.tooltip&quot;);
+		
+	tips[0].show();
+	tips[1].show();
+});</code></pre>
+	</p>
+</section>
+
+<section>
+	<h2>Template</h2>
+	<p>
+		JUI is a template-based UI library. To set a template, there are two methods, as follows.<br/> First, input the selector of the target table in the <strong>data-jui</strong> property of the template script tag, then configure the template type in the <strong>data-tpl</strong> property.
+		
+<pre><code class="language-markup">&lt;table id=&quot;table&quot; class=&quot;table table-classic&quot;&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th&gt;Name&lt;/th&gt;
+			&lt;th&gt;Age&lt;/th&gt;
+			&lt;th&gt;Location&lt;/th&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+		<pre><code class="language-markup">&lt;script data-jui=&quot;#table&quot; data-tpl=&quot;row&quot; type=&quot;text/template&quot;&gt;
+		&lt;tr&gt;
+			&lt;td&gt;&lt;!= name !&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;!= age !&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;!= location !&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+&lt;/script&gt;</code></pre>
+
+		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
+	var table = uix.table(&quot;#table&quot;);
+	
+	table.update([
+		{ name: &quot;Hong&quot;, age: 29, location: &quot;Ilsan&quot; },
+		{ name: &quot;Jung&quot;, age: 25, location: &quot;Dangsan&quot; }
+	]);
+});</code></pre>
+
+		<p class="br">
+		As shown above, the method of adding as a tpl option when creating a table object after getting the content of an applicable template script tag is also provided. Configuring a template using this method minimizes code redundancy as the template can be commonly used in multiple table objects.
+			
+		<pre><code class="language-markup">&lt;script id=&quot;tpl_table&quot; type=&quot;text/template&quot;&gt;
+		&lt;tr&gt;
+			&lt;td&gt;&lt;!= name !&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;!= age !&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;!= location !&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+&lt;/script&gt;</code></pre>
+
+		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
+	var table = uix.table(&quot;#table&quot;, {
+		tpl: {
+			row: $(&quot;#tpl_table&quot;).html();
+		}	
+	});
+	
+	table.update([
+		{ name: &quot;Hong&quot;, age: 29, location: &quot;Ilsan&quot; },
+		{ name: &quot;Jung&quot;, age: 25, location: &quot;Dangsan&quot; }
+	]);
+});</code></pre>
+		</p>
+		
+		<p class="br">
+			In the JUI library, a total of 10 types of UI component use a template.<br/> <span class="label label-gray label-small" style="width: 100%; margin-top: 5px;"><i>table, xtable, tree-table, dropdown, tab, tree, paging, autocomplete, datepicker, notify</i></span>
+		</p>
+	</p>
+</section>
+
+</body>
+</html>

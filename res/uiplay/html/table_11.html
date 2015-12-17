@@ -1,0 +1,24 @@
+<button class="btn small" onclick="table_11.remove(1)">
+    <i class="icon-play"></i> Run
+</button>
+
+<table id="table_11" class="table classic" style="margin-top: 7px;">
+    <thead>
+    <tr>
+        <th width="50px">No</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Location</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script data-jui="#table_11" data-tpl="row" type="text/template">
+    <tr>
+        <td><!= row.index !></td>
+        <td><!= name !></td>
+        <td><!= age !></td>
+        <td><!= location !></td>
+    </tr>
+</script>

@@ -1,0 +1,151 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Getting Started</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+
+<!-- default meta tag -->
+
+<link rel="stylesheet" href="../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../lib/prism.css" />
+<link rel="stylesheet" href="../res/manual.css" />
+
+<script src="../lib/jquery-1.8.0.min.js"></script>
+<script src="../lib/prism.js"></script>
+<script src="../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: Getting Started" />
+<meta name="description" content="JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header" style="padding-top: 50px;">
+    <h1>Common</h1>
+</div>
+
+<p>
+    <h2>Minify</h2>
+
+    <p>
+        JUI 라이브러리는 스타일만 별도로 사용할 수 있으며, 아래 두개의 CSS 파일을 로드하면 됩니다.<br/>
+        그리고 테마 파일은 다르게 사용할 수 있으며, 테마를 쉽게 만들 수 있는 별도의 툴을 제공할 예정입니다.
+
+		<pre><code class="language-markup">&lt;link rel="stylesheet" href="dist/jui.min.css" />
+&lt;link rel="stylesheet" href="dist/jennifer.theme.min.css" /></code></pre>
+    </p>
+    <p>
+        <strong>jui</strong> 클래스가 설정되어 있는 마크업의 하위에서만 사용할 수 있습니다.
+		<pre><code class="language-markup">&lt;body class="jui">
+    ...
+&lt;/body></code></pre>
+    </p>
+
+    <p class="br">
+        스크립트는 <strong>jQuery 1.8</strong> 이상에서만 동작하므로 해당 라이브러리를 먼저 로드해야 합니다.
+		
+		<pre><code class="language-markup">&lt;script src="lib/jquery.min.js">&lt;/script>
+&lt;script src="dist/jui.min.js">&lt;/script></code></pre>
+    </p>
+</section>
+
+<section>
+    <h2>Debug</h2>
+
+    <p>
+        스크립트는 디버깅 용도로 각각 별도로 로드할 수 있으며 <strong>base</strong>와 <strong>core</strong>는 필수 로드 파일입니다.
+		
+		<pre><code class="language-markup">&lt;script src="js/base.js"&gt;&lt;/script&gt;
+&lt;script src="js/core.js"&gt;&lt;/script&gt;</code></pre>
+    </p>
+
+    <p class="br">
+        그 다음에는 <strong>util</strong>과 <strong>ui</strong> 모듈을 먼저 로드하고, 순서대로 <strong>uix</strong>와 <strong>chart</strong> 모듈을 로드하면 됩니다.
+
+		<pre><code class="language-markup">// base
+&lt;script src="js/base.js"&gt;&lt;/script&gt;
+&lt;script src="js/core.js"&gt;&lt;/script&gt;
+
+// util
+&lt;script src="js/util/math.js"&gt;&lt;/script&gt;
+&lt;script src="js/util/svg.js"&gt;&lt;/script&gt;
+...
+// ui
+&lt;script src="js/ui/button.js"&gt;&lt;/script&gt;
+&lt;script src="js/ui/combo.js"&gt;&lt;/script&gt;
+...
+// uix
+&lt;script src="js/uix/autocomplete.js"&gt;&lt;/script&gt;
+&lt;script src="js/uix/tab.js"&gt;&lt;/script&gt;
+...
+
+// chart base
+&lt;script src="js/chart/draw.js"&gt;&lt;/script&gt;
+&lt;script src="js/chart/builder.js"&gt;&lt;/script&gt;
+
+// chart theme
+&lt;script src="js/chart/theme/jennifer.js"&gt;&lt;/script&gt;
+&lt;script src="js/chart/theme/dark.js"&gt;&lt;/script&gt;
+...
+// chart grid
+&lt;script src="js/chart/grid/core.js"&gt;&lt;/script&gt;
+&lt;script src="js/chart/grid/block.js"&gt;&lt;/script&gt;
+...
+// chart brush
+&lt;script src="js/chart/brush/core.js"&gt;&lt;/script&gt;
+&lt;script src="js/chart/brush/bar.js"&gt;&lt;/script&gt;
+...
+// chart widget
+&lt;script src="js/chart/widget/core.js"&gt;&lt;/script&gt;
+&lt;script src="js/chart/widget/tooltip.js"&gt;&lt;/script&gt;
+...</code></pre>
+    </p>
+
+    <p class="br">
+        필요에 따라 사용하지 않는 모듈은 로드하지 않아도 되지만 종속 관계가 있는 모듈에서 에러가 발생할 수 있으니 유의하시기 바랍니다.
+    </p>
+</section>
+
+<section>
+    <h2>NodeJS</h2>
+
+    <p>
+        이제는 서버에서도 차트를 사용할 수 있습니다. 아래와 같이 <strong>npm</strong> 명령어를 사용해서 설치합니다.
+        <pre><code class="language-javascript">npm install jui</code></pre>
+    </p>
+</section>
+
+<section>
+    <h2>Build & Test</h2>
+
+    <p>
+        테스트를 수행하고 패키지에 포함된 <strong>.less</strong>와 <strong>.js</strong> 파일을 하나의 파일로 합치기 위해서는 아래와 같은 명령어를 실행하면 됩니다.<br/>
+        참고로 빌드 도구인 <strong>Grunt</strong> 모듈은 <strong>NodeJS</strong>가 설치되어 있어야 합니다.
+
+		<span class="label label-gray label-small" style="width: 100%; height: 100px; margin-top: 5px;">
+			npm install grunt-cli -g<br/>
+			cd jui<br/>
+			npm install<br/>
+			grunt
+		</span>
+    </p>
+    <p class="br">
+        빌드 및 테스트 명령어는 아래와 같이 기능 별로 따로 수행할 수 있습니다.
+    </p>
+    <p>
+        <strong>grunt js</strong> 명령어는 js 파일의 merge와 minify를 수행하고, <strong>grunt test</strong>는 컴포넌트의 테스트를 수행합니다.<br/>
+        또한 <strong>grunt css</strong> 명령어는 less 파일을 css로 변환하고, merge와 minify를 수행합니다.
+
+		<span class="label label-gray label-small" style="width: 100%; height: 75px; margin-top: 5px;">
+			grunt js<br/>
+            grunt css<br/>
+            grunt test
+		</span>
+    </p>
+</section>
+
+</body>
+</html>

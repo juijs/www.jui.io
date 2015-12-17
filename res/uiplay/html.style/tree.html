@@ -1,0 +1,203 @@
+﻿<section>
+	<h2>Default</h2>
+	<p>
+		Tree provides a total of 4 styles and, for each list tag, it is possible to define a class in accordance with the state.
+
+		<table>
+			<tr>
+				<td width="230px">Class</td>
+				<td width="250px">Description</td>
+				<td>Code</td>
+			</tr>
+			<tr>
+				<td>
+					<code>tree arrow</code>
+				</td>
+				<td>Simple style in an arrow shape</td>
+				<td>&lt;span&gt;ROOT&lt;/span&gt;</td>
+			</tr>
+			<tr>
+				<td>
+					<code>tree arrow-file</code>
+				</td>
+				<td>Composite style in an arrow + file shape</td>
+				<td>&lt;span&gt;<b>&lt;i&gt;&lt;/i&gt;</b> ROOT&lt;/span&gt;</td>
+			</tr>
+			<tr>
+				<td>
+					<code>tree line</code>
+				</td>
+				<td>Simple style in a line shape</td>
+				<td>&lt;div&gt;ROOT&lt;/div&gt;</td>
+			</tr>
+			<tr>
+				<td>
+					<code>tree line-file</code>
+				</td>
+				<td>Composite style in a line + file shape</td>
+				<td>&lt;div&gt;<b>&lt;i&gt;&lt;/i&gt;</b> ROOT&lt;/div&gt;</td>
+			</tr>
+		</table>
+	</p>
+	
+	<p class="br">
+		<div class="row row-tree">
+			<div class="col col-3">
+				<ul class="tree arrow">
+					<li class="open root">
+						<i></i><a href="#">ROOT</a>
+						<ul>
+							<li class="open">
+								<i></i><a href="#">Item 1</a>
+								<ul>
+									<li class="leaf">
+										<i></i><a href="#">Item 1.1</a>
+										<ul></ul>
+									</li>
+									<li class="leaf">
+										<i></i><a href="#">Item 1.2</a>
+										<ul></ul>
+									</li>
+									<li class="fold last">
+										<i></i><a href="#">Item 1.3</a>
+										<ul></ul>
+									</li>
+								</ul>
+							</li>
+							<li class="open">
+								<i></i><a href="#">Item 2</a>
+								<ul>
+									<li class="leaf">
+										<i></i><a href="#">Item 2.1</a>
+										<ul></ul>
+									</li>
+								</ul>
+							</li>
+							<li class="leaf last">
+								<i></i><a href="#">Item 3</a>
+								<ul></ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="col col-3">
+				<ul class="tree line">
+					<li class="open root">
+						<i></i><a href="#">ROOT</a>
+						<ul>
+							<li class="open">
+								<i></i><a href="#">Item 1</a>
+								<ul>
+									<li class="leaf">
+										<i></i><a href="#">Item 1.1</a>
+										<ul></ul>
+									</li>
+									<li class="leaf">
+										<i></i><a href="#">Item 1.2</a>
+										<ul></ul>
+									</li>
+									<li class="fold last">
+										<i></i><a href="#">Item 1.3</a>
+										<ul></ul>
+									</li>
+								</ul>
+							</li>
+							<li class="open">
+								<i></i><a href="#">Item 2</a>
+								<ul>
+									<li class="leaf last">
+										<i></i><a href="#">Item 2.1</a>
+										<ul></ul>
+									</li>
+								</ul>
+							</li>
+							<li class="leaf last">
+								<i></i><a href="#">Item 3</a>
+								<ul></ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="col col-3">
+				<ul class="tree arrow-file">
+					<li class="open root">
+						<i></i><span><i></i> ROOT</span>
+						<ul>
+							<li class="open">
+								<i></i><span><i></i> Item 1</span>
+								<ul>
+									<li class="leaf">
+										<i></i><span><i></i> Item 1.1</span>
+										<ul></ul>
+									</li>
+									<li class="leaf">
+										<i></i><span><i></i> Item 1.2</span>
+										<ul></ul>
+									</li>
+									<li class="fold last">
+										<i></i><span><i></i> Item 1.3</span>
+										<ul></ul>
+									</li>
+								</ul>
+							</li>
+							<li class="open">
+								<i></i><span><i></i> Item 2</span>
+								<ul>
+									<li class="leaf last">
+										<i></i><span><i></i> Item 2.1</span>
+										<ul></ul>
+									</li>
+								</ul>
+							</li>
+							<li class="leaf last">
+								<i></i><span><i></i> Item 3</span>
+								<ul></ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="col col-3">
+				<ul class="tree line-file">
+					<li class="open root">
+						<i></i><div><i></i> ROOT</div>
+						<ul>
+							<li class="open">
+								<i></i><div><i></i> Item 1</div>
+								<ul>
+									<li class="leaf">
+										<i></i><div><i></i> Item 1.1</div>
+										<ul></ul>
+									</li>
+									<li class="leaf">
+										<i></i><div><i></i> Item 1.2</div>
+										<ul></ul>
+									</li>
+									<li class="fold last">
+										<i></i><div><i></i> Item 1.3</div>
+										<ul></ul>
+									</li>
+								</ul>
+							</li>
+							<li class="open">
+								<i></i><a href="#"><i></i> Item 2</a>
+								<ul>
+									<li class="leaf last">
+										<i></i><div><i></i> Item 2.1</div>
+										<ul></ul>
+									</li>
+								</ul>
+							</li>
+							<li class="leaf last">
+								<i></i><div><i></i> Item 3</div>
+								<ul></ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</p>
+</section>

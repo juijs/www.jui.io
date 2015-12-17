@@ -1,0 +1,33 @@
+<button class="btn small" onclick="table_19_submit(10)">
+    <i class="icon-play"></i> Run
+</button>
+
+<table id="table_19" class="table classic nowrap" style="margin-top: 7px;">
+    <thead>
+    <tr>
+        <th style="width: 200px;">Index</th>
+        <th>Column. Name</th>
+        <th style="width: 100px;">Column. Age</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script data-jui="#table_19" data-tpl="row" type="text/template">
+    <tr>
+        <td><!= row.index !></td>
+        <td style="padding-left: <!= 5 + (row.depth * 20) !>px">
+            <! if(row.depth > 0) { !>
+            <i class="icon-left"></i>&nbsp;
+            <! } !>
+            <!= name !>
+        </td>
+        <td><!= age !></td>
+    </tr>
+</script>
+
+<script data-jui="#table_19" data-tpl="none" type="text/template">
+    <tr>
+        <td colspan="3" class="none" align="center">Data does not exist.</td>
+    </tr>
+</script>

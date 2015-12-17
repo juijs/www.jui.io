@@ -1,0 +1,117 @@
+﻿
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Core/Custom</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../lib/prism.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../lib/prism.js"></script>
+<script src="../../res/manual.js"></script>
+<script src="../script/api_core.js"></script>
+
+<script>
+var uiApi = {
+	prop: {},
+	method: {},
+	event: {},
+	tpl: {},
+	opt: {}
+};
+
+jui.defineUI('ui.test', [], function() {
+	var UI = function() {
+		this.init = function() {
+			return this;
+		}
+	}
+	
+	return UI;
+}, 'core');
+
+jui.ready(function(ui, uix, _) {
+	var ui = ui.test("#ui");
+	
+	juiApi(ui, uiApi, _.template, function() {
+		$("#api_event").hide();
+		$("#api_tpl").hide();
+	});
+});
+</script>
+
+<meta name="title" content="JENNIFER UI: Core/Custom" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header">
+	<h1>Custom</h1>
+	<p class="br">
+		JUI library provides a send box method that facilitates the development of UI components. There are two types of UIs that can be added. A file is created in the <strong>js/ui </strong>or <strong>js/uix</strong> folder depending on the characteristics of the new component. That is to say, a <strong>ui</strong> component is not dependent on other components, while a <strong>uix</strong> component  is created using combinations of other components.
+	</p>
+</div>
+
+<section>
+	<h2>Define</h2>
+	<p>
+		Assuming a component file exists in the js/ui or js/ui folder, use the method as follows.
+		<pre><code class="language-javascript">jui.defineUI(&quot;ui.test&quot;, [ &quot;util.base&quot; ], function(_) {
+	var UI = function() {
+		this.init = function() {
+			// initially implemented part
+		}
+		
+		this.func1 = function(val) {
+			// open method 1
+		}
+	}
+
+    UI.setup = function() {
+        return { // default UI option settings
+			option1: 1000,
+			option2: true
+        }
+    }
+	
+	return UI;
+}, &quot;core&quot;);</code></pre>
+	</p>
+	
+	<p class="br">
+		The setting imethod defines the option(s) to be used in connection with a component, and init is a method that is initially run when a component object is created. These two methods must be defined when adding a new UI component.<br/><br/>
+		
+		If a user wants to add a new uix component that uses the dropdown component, configure the component as follows;
+		<pre><code class="language-javascript">jui.defineUI(&quot;uix.test&quot;, [ &quot;ui.dropdown&quot;, &quot;util.base&quot; ], function(dropdown, _) {
+	var UI = function() {
+		// same as above
+	}
+	
+	return UI;
+}, &quot;core&quot;);</code></pre>
+	</p>
+</section>
+
+<section>
+	<h2>core</h2>
+	<p>
+		In the class returned by the <strong>define</strong> method, the basic methods and properties required by a UI component can be called using <strong>this</strong>. For example, a custom method can be created with the <strong>edit</strong> method. If you are using the applicable component you can listen for a custom event using the <strong>on</strong> method or the component event option.<br/>
+		
+		<br/> The following is the basic API provided by the <strong>Core</strong> of the JUI library.
+
+	</p>
+</section>
+
+<div class="hidden">
+	<span id="ui"></span>
+</div>
+
+</body>
+</html>

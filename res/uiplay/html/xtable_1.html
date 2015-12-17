@@ -1,0 +1,48 @@
+<button class="btn small" onclick="xtable_1_submit()">
+    <i class="icon-play"></i> Run
+</button>
+
+<div id="xtable_1" class="xtable" style="margin-top: 7px;">
+    <table class="table simple headline">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script data-jui="#xtable_1" data-tpl="row" type="text/template">
+    <tr>
+        <td><!= name !></td>
+        <td><!= age !></td>
+        <td><!= location !></td>
+    </tr>
+</script>
+
+<script data-jui="#xtable_1" data-tpl="none" type="text/template">
+    <tr>
+        <td colspan="3" class="none" align="center">Data does not exist.</td>
+    </tr>
+</script>
+
+<script data-jui="#xtable_1" data-tpl="menu" type="text/template">
+    <div class="dropdown">
+        <div class="anchor"></div>
+
+        <ul style="width: 150px">
+            <! for(var i = 0; i < columns.length; i++) { !>
+            <li>
+                <input type="checkbox" />&nbsp; <!= columns[i] !>
+            </li>
+            <! } !>
+        </ul>
+    </div>
+</script>
+
+<script data-jui="#xtable_1" data-tpl="loading" type="text/template">
+    <div class="loading"></div>
+</script>

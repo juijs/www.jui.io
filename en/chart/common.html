@@ -1,0 +1,168 @@
+<!-- resources -->
+<script src="../res/doc/chart.js"></script>
+
+<!-- contents -->
+<div class="main-chart main-chart-1">
+    <nav class="navbar navbar-fixed-top">
+        <div class="center">
+            <div class="box">
+                <div class="img img-logo"></div>
+                <div class="message">
+                    JUI Chart provides a variety of brushes, axis and widgets.<br/>
+                    You can represent data in conjunction with the table component.
+                </div>
+                <div class="img img-play" onclick="window.open('../res/chartplay/index.html', 'jui.chartplay');"></div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="main-chart main-chart-2">
+    <nav class="navbar navbar-fixed-top">
+        <div class="center">
+            <div class="message">
+                You can use the JUI chart in server as well as client.<br/>
+                Get started right now in NodeJS.
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="main-chart main-chart-3">
+    <nav class="navbar navbar-fixed-top">
+        <div class="center">
+            <div class="img img-logo"></div>
+            <div class="title"></div>
+            <div class="message">
+                You can easily use more real-time data.<br/>
+                And other brushes can also be used.
+            </div>
+            <div class="chart"></div>
+        </div>
+    </nav>
+</div>
+
+<div class="main-chart main-chart-4">
+    <nav class="navbar navbar-fixed-top">
+        <div class="center">
+            <div class="img img-logo"></div>
+            <div class="message">
+                Dashboard can represent different types of data in a single chart.<br/>
+                Create the dashboard right now.
+            </div>
+            <div class="chart"></div>
+        </div>
+    </nav>
+</div>
+
+<div class="main-chart main-chart-5">
+    <nav class="navbar navbar-fixed-top">
+        <div class="center">
+            <div class="box">
+                <div class="img img-logo"></div>
+                <div class="message">
+                    JUI chart can represent the topology.<br/>
+                    Create your own links.
+                </div>
+                <div class="chart"></div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div id="modal_1" class="msgbox msgbox-white window-white" style="display: none;">
+    <div class="head">
+        <h2 class='title'>Chart Play</h2>
+		<span>
+			Themes
+			<select onchange="changeTheme(this.value)">
+                <option value="jennifer">Jennifer</option>
+                <option value="dark">Dark</option>
+                <option value="pastel">Pastel</option>
+                <option value="gradient">Gradient</option>
+                <option value="pattern">Pattern</option>
+            </select>
+        </span>
+        <div>
+            <a href="#" class="close"><i class="icon-close"></i></a>
+        </div>
+    </div>
+    <div class="body">
+        <div class="contents">
+            <div class="chart_list"></div>
+            <div class="splitter"></div>
+            <div class="chart_data">
+                <div class="chart_data_main">
+                    <ul id="tab_1" class="tab tab-top">
+                        <li>
+                            <a href="#chart-code">Code</a>
+                        </li>
+                        <li>
+                            <a href="#chart-data">Data</a>
+                        </li>
+                        <li>
+                            <a href="#chart-style">Style</a>
+                        </li>
+                    </ul>
+
+                    <div id="tab_contents_1" class="tab-contents">
+                        <div id="chart-code">
+                            <textarea id="chart-code-text"></textarea>
+                        </div>
+                        <div id="chart-data">
+                            <table id="table_1" class="table table-simple table-nowrap">
+                                <thead>
+                                <tr></tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div id="chart-style">
+                            <table id="table_2" class="table table-simple table-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="splitter splitter-2"></div>
+            <div class="chart_view">
+                <div class="chart-main">
+                    <div id="chart-content-title">
+                        <h2>
+                            Result
+
+                            <div class="group">
+                                <a class='btn btn-flat btn-rect btn-api' title="Chart API">API</a>
+                            </div>
+
+                            <div class="group">
+                                <a class='btn btn-flat btn-rect btn-style' title="Show Styles"><i class='icon-edit'></i></a>
+                                <a class='btn btn-flat btn-rect btn-image' title="Download Image"><i class='icon-image'></i></a>
+                                <a class='btn btn-flat btn-rect btn-fullscreen' title="Full Screen"><i class='icon-new-window'></i></a>
+                            </div>
+                        </h2>
+                    </div>
+                    <div id="chart-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="tpl_compare" type="text/template">
+    <div class="row" style="height: 100%;">
+        <div class="col col-6">
+            <div id="chart-left"></div>
+        </div>
+        <div class="col col-6" style="margin-left: -65px;">
+            <div id="chart-right"></div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,37 @@
+<button class="btn small" onclick="xtable_3_submit()">
+    <i class="icon-play"></i> Run
+</button>
+
+<div id="xtable_3" class="xtable" style="margin-top: 7px;">
+    <table class="table simple headline">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div class="row" align="right" style="text-align: right; margin-top: 3px;">
+    <div class="group">
+        <button onclick="xtable_3_page(-1);" class="btn mini">Prev</button>
+        <button onclick="xtable_3_page(1);" class="btn mini">Next</button>
+    </div>
+</div>
+
+<script data-jui="#xtable_3" data-tpl="row" type="text/template">
+    <tr>
+        <td><!= name !></td>
+        <td><!= age !></td>
+        <td><!= location !></td>
+    </tr>
+</script>
+
+<script data-jui="#xtable_3" data-tpl="none" type="text/template">
+    <tr>
+        <td colspan="3" class="none" align="center">Data does not exist.</td>
+    </tr>
+</script>

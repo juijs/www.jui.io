@@ -1,0 +1,172 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Core</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../lib/prism.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../lib/prism.js"></script>
+<script src="../../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: Core" />
+<meta name="description" content="JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header">
+	<h1>Common</h1>
+</div>
+
+<section>
+	<h2>Ready</h2>
+	<p>
+		JUI 라이브러리는 <strong>ready</strong> 메소드의 콜백 내부에서 컴포넌트 모듈을 사용할 수 있습니다.
+		
+		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
+	var combo = ui.combo(selector, options),
+		table = uix.table(selector, options);
+		
+	//...
+});</code></pre>
+	</p>
+	
+	<p class="br">
+		먼저 콜백 함수의 인자로 받을 수 있는 <strong>ui</strong>와 <strong>uix</strong> 그리고 <strong>_</strong> 객체는 다음과 같은 기능을 제공합니다.
+	
+		<table width="100%" class="table_s" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="120px">Name</td>
+				<td>Description</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>다른 컴포넌트에 종속적이지 않는 독립성이 보장된 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>다른 컴포넌트와 조합하여 좀 더 복합적이고 다양한 기능을 제공하는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>_</td>
+				<td>컴포넌트 내부와 그 밖에 외부에서도 사용할 수 있도록 정형화된 유틸 메소드를 제공합니다.</td>
+			</tr>
+		</table>
+	</p>
+
+	<p class="br">
+		콜백 함수의 인자로 받을 수 있는 <strong>ui</strong>와 <strong>uix</strong> 객체는 다음과 같은 컴포넌트를 생성할 수 있습니다.
+	
+		<table width="100%" class="table_s" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="80px">Package</td>
+				<td width="120px">Type</td>
+				<td>Description</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>button</td>
+				<td>체크 및 라디오 버튼의 기능을 제공하는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>combo</td>
+				<td>셀렉트 박스를 좀 더 시각화하여 구현한 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>dropdown</td>
+				<td>메뉴 형태의 리스트를 보여줄 수 있는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>tooltip</td>
+				<td>특정 영역에 대한 설명을 좀 더 시각화하여 보여주는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>modal</td>
+				<td>특정 대상 화면을 더 뚜렷하게 보여주기 위한 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>paging</td>
+				<td>게시판이나 방명록과 같은 서비스에서 자주 사용되는 페이징을 일반화하여 제공하는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>datepicker</td>
+				<td>일/월/년의 날짜를 선택할 수 있는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>ui</td>
+				<td>notify</td>
+				<td>서비스에서 심각한 문제나 이벤트 등이 발생하였을 경우에 알림 메시지를 보여주는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>window</td>
+				<td>일반적인 윈도우 형태의 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>table</td>
+				<td>데이터를 추가 및 수정, 삭제에 특화되어 있으며 트리 구조의 데이터도 표현할 수 있는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>xtable</td>
+				<td>table 컴포넌트와는 달리 데이터 조회에 특화되어 있으며, 백만건 이상의 데이터를 조회할 수 있습니다.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>tab</td>
+				<td>다수의 영역을 탭으로 분리하여 표현할 수 있는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>tree</td>
+				<td>디렉토리와 같은 계층형 데이터를 표현할 수 있는 컴포넌트입니다.</td>
+			</tr>
+			<tr>
+				<td>uix</td>
+				<td>autocomplete</td>
+				<td>텍스트박스에 입력하였을 경우, 문장의 완성을 도와주는 컴포넌트입니다.</td>
+			</tr>
+		</table>
+	</p>
+	
+	<p class="br">
+		그리고 첫번째 매개변수에 정의된 모듈 명을 배열 형태로 설정한다면 해당 모듈만 로드하여 사용할 수 있지만 보통 생략하여 사용합니다.
+		
+		<pre><code class="language-javascript">jui.ready([ "ui.combo", "uix" ], function(combo, uix) {
+	var combo = combo(selector, options),
+		table = uix.table(selector, options);
+		
+	//...
+});</code></pre>
+	</p>
+</section>
+
+<section>
+	<h2>Create</h2>
+	<p>
+		<strong>ready</strong> 메소드의 콜백 외부에서도 컴포넌트 객체를 동적으로 생성할 수 있는 기능을 제공합니다. 
+		한가지 주의해야 할 사항은 <strong>create</strong> 메소드는 <strong>ready</strong> 메소드의 콜백이 실행된 이후에 사용할 수 있습니다.
+		
+<pre><code class="language-javascript">var combo = jui.create("combo", selector, options),
+	table = jui.create("table", selector, options);
+	
+//...</code></pre>
+	</p>
+</section>
+
+</body>
+</html>

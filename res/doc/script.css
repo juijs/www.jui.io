@@ -1,0 +1,25 @@
+#container {
+    border: 1px solid #dcdcdc;
+}
+
+#container .title {
+    position: absolute;
+    left: 40%;
+    top: 43%;
+}
+
+.tooltip_1, .tooltip_2, .tooltip_3, .tooltip_4 {
+    font-weight: bold;
+}
+
+#table_2 tbody > tr {
+    cursor: pointer;
+}
+
+.table .none {
+    text-align: center;
+}
+
+.xtable .none {
+    text-align: center;
+}

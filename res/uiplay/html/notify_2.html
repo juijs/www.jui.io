@@ -1,0 +1,29 @@
+<div class="group">
+    <button class="btn small" onclick="notify_bottom_submit(4, 'success')">
+        Bottom
+    </button>
+    <button class="btn small" onclick="notify_bottom_submit(5, 'info')">
+        Bottom-Left
+    </button>
+    <button class="btn small" onclick="notify_bottom_submit(6, 'warning')">
+        Bottom-Right
+    </button>
+</div>
+
+<div id="notify_target"></div>
+
+<style>
+    #notify_target {
+        margin-top: 10px;
+        width: 100%;
+        height: 500px;
+        background: #dcdcdc;
+    }
+</style>
+
+<script id="tpl_alarm" type="text/template">
+    <div class="notify <!= color !>">
+        <div class="title"><!= title !></div>
+        <div class="message"><!= message !></div>
+    </div>
+</script>

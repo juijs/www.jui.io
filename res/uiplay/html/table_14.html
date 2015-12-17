@@ -1,0 +1,32 @@
+<table id="table_14" class="table simple headline">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Location</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script id="tpl_row" type="text/template">
+    <tr>
+        <td><!= name !></td>
+        <td><!= age !></td>
+        <td><!= location !></td>
+    </tr>
+</script>
+
+<script id="tpl_menu" type="text/template">
+    <div class="dropdown">
+        <div class="anchor"></div>
+
+        <ul style="width: 150px">
+            <! for(var i = 0; i < columns.length; i++) { !>
+            <li>
+                <input type="checkbox" />&nbsp; <!= columns[i] !>
+            </li>
+            <! } !>
+        </ul>
+    </div>
+</script>

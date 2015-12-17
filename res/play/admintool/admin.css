@@ -1,0 +1,174 @@
+
+html, body {
+    background-color: #a5a5a5;
+    background-image: url('http://blog.jui.io/wp-content/uploads/2015/03/light-noise.png');
+    background-repeat: repeat;
+    background-position: top left;
+    background-attachment: scroll;
+    font-family: Open Sans;
+}
+
+.header {
+    margin: 0 auto;
+    height: 58px;
+    background: #2d363e;
+    color: white;
+}
+
+.header .logo {
+    position: relative;
+    float: left;
+    width: 98px;
+    height: 48px;
+    z-index: 1;
+    font-size: 25px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.header .toolbar {
+    position: relative;
+    padding:20px;
+    padding-left:120px;
+}
+
+.container {
+    margin: 0 auto;
+    height: 100%;
+    position: relative;
+}
+
+.container:after {
+    display: table;
+    clear: both;
+    content: "";
+}
+
+.vmenu > a > i {
+    display: block !important;
+    float: none !important;
+    font-size: 24px;
+}
+
+.vmenu > a {
+    display: block;
+    text-align: center !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    color: #2d363e;
+    border-right: 0px !important;
+    border-radius: 0px !important;
+}
+
+.content-list {
+    position: relative;
+    border: 1px solid #e5e5e5;
+}
+
+.container > .menu {
+    position: relative;
+    float: left;
+    width: 98px;
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+}
+
+.container > .content {
+    background: #f3f3f3;
+    padding: 0 0 0 98px;
+}
+
+.dashboard-first {
+    overflow: auto;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.dashboard-first .col {
+    text-align: center;
+}
+
+.col-3 .card {
+    height: 98px;
+}
+
+.card {
+    border-right: 1px solid #ebebeb;
+    height: 80px;
+    position: relative;
+    text-align: left;
+
+    background-color: #fff;
+    background-image: -moz-linear-gradient(top, #fff 0, #f7f7f7 100%);
+    background-image: linear-gradient(top, #fff 0, #f7f7f7 100%);
+    background-image: -webkit-linear-gradient(top, #fff 0, #f7f7f7 100%);
+    background-image: -o-linear-gradient(top, #fff 0, #f7f7f7 100%);
+    background-image: -ms-linear-gradient(top, #fff 0, #f7f7f7 100%);
+
+}
+
+.col-3:last-child .card {
+    border-right: 0px;
+}
+
+.card .img {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.card .title {
+    position: absolute;
+    left: 30px;
+    right: 10px;
+    top: 10px;
+    height: 24px;
+    color: #333;
+    font-size: 12px;
+}
+
+.card .value {
+    position: absolute;
+    left: 30px;
+    right: 10px;
+    top: 40px;
+    bottom: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #6836c4;
+}
+
+.panel {
+    padding: 0px !important;
+    margin: 0px !important;
+    display: block !important;
+}
+
+.panel > .body > .title {
+    margin-left: 36px;
+    margin-top: 48px;
+
+}
+
+.panel > .body .view {
+    padding: 20px;
+
+}
+
+.content-list > .panel > .body {
+    border: 0px !important;
+}
+
+
+.container.hidden-menu {
+
+}
+.container.hidden-menu .menu{
+    display:none;
+}
+
+.container.hidden-menu .content {
+    padding: 0px;
+}

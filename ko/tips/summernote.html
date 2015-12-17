@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Tips/Summernote</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+
+<!-- jQuery & Bootstrap -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+
+<!-- Codemirror -->
+<link rel="stylesheet" href="../../lib//codemirror-4.5/lib/codemirror.css">
+<link rel="stylesheet" href="../../lib//codemirror-4.5/theme/twilight.css">
+<link rel="stylesheet" href="../../lib//codemirror-4.5/theme/eclipse.css">
+<link rel="stylesheet" href="../../lib//codemirror-4.5/theme/neo.css">
+<script src="../../lib//codemirror-4.5/lib/codemirror.js"></script>
+<script src="../../lib//codemirror-4.5/mode/javascript/javascript.js"></script>
+
+<!-- Summernote -->
+<link href="../../lib//summernote/dist/summernote.css" rel="stylesheet" />
+<script src="../../lib/summernote/dist/summernote.js"></script>
+
+<link rel="stylesheet" href="../../res/manual.css" />
+<link rel="stylesheet" href="../../res/doc/tips.css" />
+<script src="../../lib/jui/jui.js"></script>
+<script src="../../res/manual.js"></script>
+<script src="../../res/doc/tips.js"></script>
+
+<meta name="title" content="JENNIFER UI: Tips/Summernote" />
+<meta name="description" content="JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div>
+	<h1>Summernote</h1>
+</div>
+
+<p class="br">
+	국내의 유명 오픈소스 위지윅 에디터인 <strong><a href="http://summernote.github.io/summernote/" target="_blank">Summernote</a></strong>의 차트 플러그인으로 사용할 수 있습니다.<br/>
+	향후에는 다른 위지윅 에디터에서도 JUI 차트를 쉽게 생성할 수 있는 도구를 플러그인 형태로 제공할 예정입니다.
+</p>
+
+<div id="summernote"></div>
+
+<div class="modal fade" id="chart-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+				<div class="chart_data">
+					<div id="chart-code">
+						<textarea id="chart-code-text"></textarea>
+					</div>
+				</div>
+				<div class="splitter"></div>
+				<div class="chart_view">
+					<div id="chart-content"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary save-btn">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+</body>
+</html>

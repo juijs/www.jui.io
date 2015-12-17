@@ -1,0 +1,18 @@
+<div id="ac_2" class="group">
+    <label class="label small"><i class="icon-search"></i></label>
+    <input type="text" class="input small" style="width: 150px" />
+</div>
+
+<button class="btn small" onclick="ac_2_submit()">
+    <i class="icon-play"></i> Run
+</button>
+
+<script data-jui="#ac_2" data-tpl="words" type="text/template">
+    <div class="dropdown">
+        <ul>
+            <! for(var i = 0; i < words.length; i++) { !>
+            <li><!= words[i] !></li>
+            <! } !>
+        </ul>
+    </div>
+</script>

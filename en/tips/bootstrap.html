@@ -1,0 +1,800 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>Tips/Bootstrap</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+
+<link rel="stylesheet" href="../../lib/bootstrap.min.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<link rel="stylesheet" href="../../res/doc/tips.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../res/manual.js"></script>
+<script src="../../res/doc/tips.js"></script>
+
+<meta name="title" content="JENNIFER UI: Tips/Bootstrap" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div>
+	<h1>Bootstrap</h1>
+</div>
+
+<section>
+	<h2>Button</h2>
+		
+	<h3><span>Radio</span></h3>
+	<p>
+		The button component is a radio type in which only a single choice is available.
+	</p>
+	<div>
+		<div id="btn_1" class="btn-group btn-group-lg">
+			<button type="button" class="btn btn-success">Java</button>
+			<button type="button" class="btn btn-success">.NET</button>
+			<button type="button" class="btn btn-success">C++</button>
+			<button type="button" class="btn btn-success">JSP</button>
+			<button type="button" class="btn btn-success">PHP</button>
+			<button type="button" class="btn btn-success">ASP</button>
+			<button type="button" class="btn btn-success">Ruby</button>
+			<button type="button" class="btn btn-success">Python</button>
+		</div>
+
+		<h3><span>Check</span></h3>
+		<p>
+			The button component is a check type in which multiple choices are available.
+		</p>
+		<div id="btn_2" class="btn-group btn-group-lg">
+			<button type="button" class="btn btn-info">Java</button>
+			<button type="button" class="btn btn-info">.NET</button>
+			<button type="button" class="btn btn-info">C++</button>
+			<button type="button" class="btn btn-info">JSP</button>
+			<button type="button" class="btn btn-info">PHP</button>
+			<button type="button" class="btn btn-info">ASP</button>
+			<button type="button" class="btn btn-info">Ruby</button>
+			<button type="button" class="btn btn-info">Python</button>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h2>Paging</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		The basic method of using the paging UI
+	</p>
+	<div>
+		<ul id="paging_1" class="pagination pagination-lg"></ul>
+
+		<script data-jui="#paging_1" data-tpl="pages" type="text/template">
+			<li class="prev"><a href="#">&laquo;</a></li>
+			<! for(var i = 0; i < pages.length; i++) { !>
+			<li class="page"><a href="#"><!= pages[i] !></a></li>
+			<! } !>
+			<li class="next"><a href="#">&raquo;</a></li>
+		</script>
+
+		<h3><span>Table &amp; Paging</span></h3>
+		<p>
+			<a class="btn btn-default btn-xs" href="javascript:pagingRun();">Run</a> - Inputs 1 million data records to the table when you click the left button.
+		</p>
+		<div id="paging_2_xtable">
+			<table class="table table-condensed table-bordered">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Location</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<ul id="paging_2" class="pagination pagination-sm" style="margin-top: 5px"></ul>
+
+		<script data-jui="#paging_2_xtable" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#paging_2_xtable" data-tpl="none" type="text/template">
+			<tr>
+				<td colspan="3" class="none">Data does not exist.</td>
+			</tr>
+		</script>
+
+		<script data-jui="#paging_2" data-tpl="pages" type="text/template">
+			<li class="prev"><a href="#">&laquo;</a></li>
+			<! for(var i = 0; i < pages.length; i++) { !>
+			<li class="page"><a href="#"><!= pages[i] !></a></li>
+			<! } !>
+			<li class="next"><a href="#">&raquo;</a></li>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Dropdown</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		Default for the dropdown component. It is possible to specify a value for each component (only numerical characters can be entered).
+	</p>
+	<div class="dd-1">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle">Default <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary dropdown-toggle">Primary <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-success dropdown-toggle">Success <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info dropdown-toggle">Info <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-warning dropdown-toggle">Warning <span class="caret"></span></button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-danger dropdown-toggle">Danger <span class="caret"></span></button>
+		</div>
+
+		<ul id="dd_1" class="dropdown-menu">
+			<li><a href="#">Action</a></li>
+			<li><a href="#">Another action</a></li>
+			<li><a href="#">Something else here</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Separated link</a></li>
+		</ul>
+	</div>
+
+	<h3><span>Keydown</span></h3>
+	<p>
+		It is possible to choose from a list using the keyboard direction keys when the value of the keydown option is set to true.
+	</p>
+	<div class="dd-2">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default">Default</button>
+			<button type="button" class="btn btn-default dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary">Primary</button>
+			<button type="button" class="btn btn-primary dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-success">Success</button>
+			<button type="button" class="btn btn-success dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info">Info</button>
+			<button type="button" class="btn btn-info dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-warning">Warning</button>
+			<button type="button" class="btn btn-warning dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-danger">Danger</button>
+			<button type="button" class="btn btn-danger dropdown-toggle">
+				<span class="caret"></span>
+			</button>
+		</div>
+
+		<ul id="dd_2" class="dropdown-menu">
+			<li><a href="#" value="100">Action</a></li>
+			<li><a href="#">Another action</a></li>
+			<li><a href="#">Something else here</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Separated link</a></li>
+		</ul>
+	</div>
+</section>
+
+<section>
+	<h2>Auto Complete</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		If the input text appears among the keywords below, the relevant keyword is displayed in the list. <span class="label label-gray label-small" style="width: 100%; margin-top: 5px;"><i>BASIC, JavaScript, Python, Standard Procedures for JAVA, Passionate Lecture for C++</i></span>
+	</p>
+	<div>
+		<input id="ac_1" type="text" class="form-control" placeholder="Text input">
+
+		<script data-jui="#ac_1" data-tpl="words" type="text/template">
+			<ul class="dropdown-menu">
+				<! for(var i = 0; i < words.length; i++) { !>
+				<li><a href="#"><!= words[i] !></a></li>
+				<! } !>
+			</ul>
+		</script>
+	</div>
+
+	<h3><span>Input Group</span></h3>
+	<p>
+		The autofill function can be applied to a group. <span class="label label-gray label-small" style="width: 100%; margin-top: 5px;"><i>BASIC, JavaScript, Python, Standard Procedures for JAVA, Passionate Lecture for C++</i></span>
+	</p>
+	<div>
+		<div id="ac_2" class="input-group">
+			<span class="input-group-addon">@</span>
+			<input type="text" class="form-control" placeholder="Text input">
+		</div>
+
+		<script data-jui="#ac_2" data-tpl="words" type="text/template">
+			<ul class="dropdown-menu">
+				<! for(var i = 0; i < words.length; i++) { !>
+				<li><a href="#"><!= words[i] !></a></li>
+				<! } !>
+			</ul>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Tab</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		The tab content area can be configured using events. It provides related options.
+	</p>
+	<p>
+		<ul id="tab_2" class="nav nav-pills">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="#">Profile</a></li>
+			<li><a href="#">Messages</a></li>
+		</ul>
+	</p>
+
+	<h3><span>Menu</span></h3>
+	<p>
+		It is possible to configure the menu tab. Related markup is the same as for the dropdown.
+	</p>
+	<div>
+		<ul id="tab_1" class="nav nav-tabs">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Profile</a></li>
+			<li><a href="#">Messages</a></li>
+			<li class="menu">
+				<a href="#">Dropdown <span class="caret"></span></a>
+			</li>
+		</ul>
+
+		<div data-index="0" class="tab-contents"><div class="msg">Home</div></div>
+		<div data-index="1" class="tab-contents"><div class="msg">Profile</div></div>
+		<div data-index="2" class="tab-contents"><div class="msg">Messages</div></div>
+
+		<script data-jui="#tab_1" data-tpl="menu" type="text/template">
+			<ul class="dropdown-menu">
+				<li><a href="#">Action</a></li>
+				<li><a href="#">Another action</a></li>
+				<li><a href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li><a href="#">Separated link</a></li>
+			</ul>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Modal &amp; Notify</h2>
+
+	<h3><span>Modal</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:modalNotifyRun(1);">Run</a> - Provides a global modal function located in the center of the screen.
+	</p>
+
+	<h3><span>Notify</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:modalNotifyRun(2);">Run</a> - displays a notification message when a serious problem or event occurs.
+	</p>
+
+	<div>
+		<img id="modal" src="../../res/img/jui_info_3.jpg" />
+
+		<script id="tpl_alarm" type="text/template">
+			<div class="alert alert-<!= color !>" style="width: 300px;"><!= msg !></div>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Table</h2>
+
+	<h3><span>Default</span></h3>
+	<p>
+		Basic table example where a data list is applied by utilizing a template.
+	</p>
+	<div>
+		<table id="table_1" class="table">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_1" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Expand (+Update)</span></h3>
+	<p>
+		Example of using an expansion area and changing related values through data binding.
+	</p>
+	<div>
+		<table id="table_2" class="table table-hover">
+			<thead>
+			<tr>
+				<th style="width: 20px"></th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_2" data-tpl="row" type="text/template">
+			<tr>
+				<td>+</td>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#table_2" data-tpl="expand" type="text/template">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="input-group">
+						<span class="input-group-addon">Name</span>
+						<input id="table_2_name" type="text" class="form-control" value="<!= name !>">
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="input-group">
+						<span class="input-group-addon">Age</span>
+						<input id="table_2_age" type="text" class="form-control" value="<!= age !>">
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="input-group">
+						<span class="input-group-addon">Location</span>
+						<input id="table_2_location" type="text" class="form-control" value="<!= location !>">
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="btn-group">
+						<button onclick="table2Submit(<!= row.index !>)" type="button" class="btn btn-default">Submit</button>
+						<button onclick="table_2.remove(<!= row.index !>); table_2.hideExpand();" type="button" class="btn btn-default">Delete</button>
+					</div>
+				</div>
+			</div>
+		</script>
+	</div>
+
+	<h3><span>Scroll</span></h3>
+	<p>
+		This is an example of using the scroll function in the table.
+	</p>
+	<div>
+		<table id="table_3" class="table table-striped">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_3" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Mouse Right-Click (+Resize)</span></h3>
+	<p>
+		A rowmenu event occurs when right clicking on a row.<br/> This event can be used to implement a menu for controlling rows.
+	</p>
+	<div>
+		<table id="table_4" class="table table-condensed table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<ul id="table_4_dd" class="dropdown-menu">
+			<li><a href="#">Action</a></li>
+			<li><a href="#">Another action</a></li>
+			<li><a href="#">Something else here</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Separated link</a></li>
+		</ul>
+
+		<script data-jui="#table_4" data-tpl="row" type="text/template">
+			<tr class="<! if(parseInt(row.index) % 2 == 0) { !>info<! } !>">
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Sorting (+Resize)</span></h3>
+	<p>
+		To use the sort function, enter data key values in the <strong>th</strong> tag order, or enter <strong>null</strong> if the data is not subject to sorting. <br/>
+        In addition, the UI element that shows when data have been sorted provides a related interface that can be implemented separately.
+	</p>
+	<div>
+		<table id="table_5" class="table table-condensed table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_5" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Edit Row (+Resize, +Sort)</span></h3>
+	<p>
+		The user can modify the value of any cell by double clicking on a specific row. <br/>
+        When the modification is completed, an <strong>editend</strong> event occurs. If <strong>false</strong> is returned at this time, the modification is not applied.
+	</p>
+	<div>
+		<table id="table_6" class="table">
+			<thead>
+			<tr>
+				<th width="50px">No</th>
+				<th>Name</th>
+				<th width="33%">Age</th>
+				<th width="33%">Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_6" data-tpl="row" type="text/template">
+			<tr class="<! if(parseInt(row.index) % 2 == 0) { !>warning<! } !>">
+				<td><!= row.index !></td>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Append Data (+Scroll)</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:table7Run();">Run</a> -
+        If you click the left mouse button, 1,000 rows are added.
+	</p>
+	<div>
+		<table id="table_7" class="table table-striped table-condensed">
+			<thead>
+			<tr>
+				<th>No</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_7" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= row.index !></td>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Insert Data (+Scroll)</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:table8Run();">Run</a> -
+        If you click the left mouse button, 100 rows are added to the third index.
+	</p>
+	<div>
+		<table id="table_8" class="table table-striped table-condensed">
+			<thead>
+			<tr>
+				<th>No</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_8" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= row.index !></td>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Hide/Show Column (+Resize)</span></h3>
+	<p>
+		If you right click the column, a menu providing a Hide/Show function is displayed.
+	</p>
+	<div>
+		<table id="table_9" class="table table-condensed table-bordered">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_9" data-tpl="row" type="text/template">
+			<tr class="<! if(parseInt(row.index) % 2 == 0) { !>success<! } !>">
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#table_9" data-tpl="menu" type="text/template">
+			<ul class="dropdown-menu">
+				<! for(var i = 0; i < columns.length; i++) { !>
+				<li>
+					<a href="#"><input type="checkbox" />&nbsp; <!= columns[i] !></a>
+				</li>
+				<! } !>
+			</ul>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>Tree Table</h2>
+
+	<h3><span>Append/Insert Data</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:table10Run();">Run</a> -
+        It is possible to input and add data to a key value at a specific index in a depth structure.
+	</p>
+	<div>
+		<table id="table_tree_1" class="table table-striped table-condensed">
+			<thead>
+			<tr>
+				<th style="width: 200px;">Index</th>
+				<th>Column. Name</th>
+				<th style="width: 100px;">Column. Age</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_tree_1" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= row.index !></td>
+				<td style="padding-left: <!= 5 + (5 + (row.depth * 20)) !>px">
+					<! if(row.depth > 0) { !>
+					L&nbsp;
+					<! } !>
+					<!= name !>
+				</td>
+				<td><!= age !></td>
+			</tr>
+		</script>
+	</div>
+
+	<h3><span>Move/Remove/Update Row</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:table11Run(1);">Move</a>
+        <a class="btn btn-default btn-xs" href="javascript:table11Run(2);">Remove</a>
+        <a class="btn btn-default btn-xs" href="javascript:table11Run(3);">Update</a> -
+        provides function(s) for controlling a row.
+	</p>
+	<div>
+		<table id="table_tree_2" class="table table-condensed table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Location</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_tree_2" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= row.index !></td>
+				<td style="padding-left: <!= 5 + (5 + (row.depth * 20)) !>px">
+					<! if(row.depth > 0) { !>
+					L&nbsp;
+					<! } !>
+					<!= name !>
+				</td>
+				<td><!= age !></td>
+			</tr>
+		</script>
+	</div>
+</section>
+
+<section>
+	<h2>X Table</h2>
+
+	<h3><span>Scroll (+Loading)</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:xtableRun();">Run</a> -
+        Demo of adding 1 million records of data and performing additional rendering when the scroll is located at the lowest position.
+	</p>
+	<div>
+		<div id="xtable_1">
+			<table class="table table-condensed table-bordered">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Location</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<script data-jui="#xtable_1" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_1" data-tpl="none" type="text/template">
+			<tr>
+				<td colspan="3" class="none">Data does not exist.</td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_1" data-tpl="loading" type="text/template">
+			<div class="loading"></div>
+		</script>
+	</div>
+
+	<h3><span>Page</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:xtable2Run();">Run</a> -
+        Demo of adding 1 million records of data and rendering additional data in paging form with no scroll.
+	</p>
+	<div>
+		<div id="xtable_2">
+			<table class="table table-condensed table-bordered ">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Location</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div class="btn-group" style="margin-top: 5px;">
+			<button type="button" class="btn btn-default" onclick="xtable2Page(-1)">Prev</button>
+			<button type="button" class="btn btn-default" onclick="xtable2Page(1)">Next</button>
+		</div>
+
+		<script data-jui="#xtable_2" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_2" data-tpl="none" type="text/template">
+			<tr>
+				<td colspan="3" class="none">Data does not exist.</td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_2" data-tpl="loading" type="text/template">
+			<div class="loading"></div>
+		</script>
+	</div>
+
+	<h3><span>Page-Scroll</span></h3>
+	<p>
+		<a class="btn btn-default btn-xs" href="javascript:xtable3Run();">Run</a> -
+        Demo of adding 1 million records of data and rendering additional data in paging form with a scroll.
+	</p>
+	<div>
+		<div id="xtable_3">
+			<table class="table table-condensed table-bordered ">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Location</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div class="btn-group" style="margin-top: 5px;">
+			<button type="button" class="btn btn-default" onclick="xtable3Page(-1)">Prev</button>
+			<button type="button" class="btn btn-default" onclick="xtable3Page(1)">Next</button>
+		</div>
+
+		<script data-jui="#xtable_3" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= name !></td>
+				<td><!= age !></td>
+				<td><!= location !></td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_3" data-tpl="none" type="text/template">
+			<tr>
+				<td colspan="3" class="none">Data does not exist.</td>
+			</tr>
+		</script>
+
+		<script data-jui="#xtable_3" data-tpl="loading" type="text/template">
+			<div class="loading"></div>
+		</script>
+	</div>
+</section>
+
+</body>
+</html>

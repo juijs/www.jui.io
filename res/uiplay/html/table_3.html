@@ -1,0 +1,45 @@
+<table id="table_3" class="table expand" style="width: 100%;">
+    <thead>
+    <tr>
+        <th style="width: 30px"></th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Location</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script data-jui="#table_3" data-tpl="row" type="text/template">
+    <tr>
+        <td><i class='icon-left'></i></td>
+        <td><!= name !></td>
+        <td><!= age !></td>
+        <td><!= location !></td>
+    </tr>
+</script>
+
+<script data-jui="#table_3" data-tpl="expand" type="text/template">
+    <div class="row">
+        <div class="group">
+            <label class="label small">Name</label>
+            <input type="text" class="input small name" value="<!= name !>" style="width: 80px" />
+        </div>
+        <div class="group">
+            <label class="label small">Age</label>
+            <input type="text" class="input small age" value="<!= age !>" style="width: 80px" />
+        </div>
+        <div class="group">
+            <label class="label small">Location</label>
+            <input type="text" class="input small location" value="<!= location !>" style="width: 80px" />
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="group">
+            <button onclick="table_3_submit(<!= row.index !>)" class="btn small">Submit</button>
+            <button onclick="table_3.remove(<!= row.index !>); table_3.hideExpand();" class="btn small">Delete</button>
+            <button onclick="table_3.hideExpand();" class="btn small">Cancel</button>
+        </div>
+    </div>
+</script>

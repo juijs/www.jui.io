@@ -1,0 +1,699 @@
+﻿
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Core/Custom</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../lib/prism.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../lib/prism.js"></script>
+<script src="../../res/manual.js"></script>
+<script src="../script/api_core.js"></script>
+
+<script>
+var baseApi = {
+	prop: {
+		browser: {
+			detail: "Can report the browser type (webkit | mozilla | msie)."
+		},
+		isTouch: {
+			detail: "Checks whether the touch event is supported by the browser."
+		},
+		scrollSize: {
+			detail: "Returns 10 in the case of a WebKit-based browsers, otherwise, returns 17."
+		}
+		
+	},
+	method: {
+		scrollWidth: {
+			param: "none",
+			ret: "integer",
+			detail: "Returns the horizontal scroll size of the current browser."
+		},
+		inherit: {
+			param: "class, superClass",
+			ret: "none",
+			detail: "Inherits the class through the prototype chain."
+		},
+		extend: {
+			param: "object, mergeObject",
+			ret: "object",
+			detail: "Adds methods and properties of mergeObject to an object."
+		},
+		pxToInt: {
+			param: "px",
+			ret: "integer",
+			detail: "Returns a pixel string in integer form."
+		},
+		clone: {
+			param: "object",
+			ret: "object",
+			detail: "Copies and returns an object."
+		},
+        deepClone: {
+            param: "object",
+            ret: "object",
+            detail: "Copies and returns all objects connected."
+        },
+		sort: {
+			param: "array",
+			ret: "QuickSort",
+			detail: "Getsg an object of QuickSort class, which sorts an array using the setCompare/run methods."
+		},
+		runtime: {
+			param: "name, callback",
+			ret: "none",
+			detail: "Reports the run time of the callback function from logs."
+		},
+		template: {
+			param: "html, params",
+			ret: "string",
+			detail: "Same as the template function of underscore.js"
+		},
+		resize: {
+			param: "callback, delay",
+			ret: "none",
+			detail: "Defines an improved window resizing event."
+		},
+		index: {
+			param: "none",
+			ret: "IndexParser",
+			detail: "Gets an object of the IndexParser class."
+		},
+		chunk: {
+			param: "array, limit",
+			ret: "array",
+			detail: "Gets a limited number of arrays."
+		},
+		typeCheck: {
+			param: "type, value",
+			ret: "boolean",
+			detail: "Checks the type of a value (string | integer | float | number | object | function | array | boolean | undefined | null)."
+		},
+		typeCheckObj: {
+			param: "objects, typeList",
+			ret: "none",
+			detail: "checks the type of an object."
+		},
+		dataToCsv: {
+			param: "keys, dataList, dataSize",
+			ret: "string",
+			detail: "Returns data associated with a particular key - provided as a csv string."
+		},
+		dataToCsv2: {
+			param: "options",
+			ret: "string",
+			detail: "Returns data associated with a particular key - provided as a csv string."
+		},
+		fileToCsv: {
+			param: "file, callback",
+			ret: "string",
+			detail: "Returns the contents of a selected file as a csv string."
+		},
+		csvToBase64: {
+			param: "csv",
+			ret: "string",
+			detail: "Encodes a csv string in base64 format."
+		},
+		csvToData: {
+			param: "keys, csv",
+			ret: "array",
+			detail: "Returns a csv string associated with a particular key as data."
+		},
+		getCsvFields: {
+			param: "fields, csvFields",
+			ret: "array",
+			detail: "Filters only the specified fields from the csv."
+		},
+        svgToBase64: {
+            param: "xml",
+            ret: "string",
+            detail: "Encodes an xml string in base64 format."
+        },
+		dateFormat: {
+			param: "date, format, utc",
+			ret: "string",
+			detail: "Returns the date object as a string that fits a predetermined format."
+		},
+		btoa: {
+			param: "string",
+			ret: "string",
+			detail: "Encodes a general string in base64 format (Korean supported)."
+		},
+		atob: {
+			param: "base64",
+			ret: "string",
+			detail: "Decodes a string in base64 format."
+		}
+	},
+	event: {},
+	tpl: {},
+	opt: {}
+};
+
+var colorApi = {
+	prop: {
+		regex: {
+			detail: "Regular gradient string parsing formula"
+		}
+	},
+	method: {
+		trim: {
+			param: "string",
+			ret: "string",
+			detail: "String trim "
+		},
+		parse : {
+			param : "color",
+			ret : "object | string",
+			detail : "Parses a color code."
+		},
+		parseGradient : {
+			param : "color",
+			ret : "object | string",
+			detail : "Parses gradient string. Non-gradient string is returned as it is."
+		},
+		parseStop : {
+			param : "color",
+			ret : "object",
+			detail : "Parses the stops object of the gradient."
+		},
+		parseAttr : {
+			param : "color",
+			ret : "object",
+			detail : "Parses the gradient properties."
+		}
+	}
+};
+
+var mathApi = {
+	method: {
+		rotate: {
+			param: "x, y, radian",
+			ret: "object",
+			detail: "Returns the 2 dimensional rotation coordinates."
+		},
+		radian : {
+			param : "degree",
+			ret : "double",
+			detail : "Converts into radians."
+		},
+		degree : {
+			param : "radian",
+			ret : "double",
+			detail : "Converts into degrees."
+		},
+		interpolateNumber : {
+			param : "a, b",
+			ret : "function",
+			detail : "Returns a function that calculates the median value between a and b."
+		},
+		interpolateRound : {
+			param : "a, b",
+			ret : "function",
+			detail : "Returns a function that rounds off the median value between a and b."
+		},
+		nice : {
+			param : "min, max, ticks, isNice",
+			ret : "object",
+			detail : "Secures an appropriate space between min and max."
+		}
+	}
+};
+
+var scaleApi = {
+	method: {
+		circle : {
+			param : "none",
+			ret : "object",
+			detail : "Calculates the area location of a circular form."
+		},
+		ordinal : {
+			param : "none",
+			ret : "object",
+			detail : "Determines the position in the array."
+		},
+		time : {
+			param : "none",
+			ret : "object",
+			detail : "Calculates the location in terms of  time zone."
+		},
+		linear : {
+			param : "none",
+			ret : "object",
+			detail : "Calculates the location in terms of longitude."
+		}
+	}
+};
+
+var timeApi = {
+	prop: {
+		years: {
+			detail: "Year"
+		},
+		months: {
+			detail: "Month"
+		},
+		days: {
+			detail: "Date"
+		},
+		hours: {
+			detail: "Hour"
+		},
+		minutes: {
+			detail: "Minute"
+		},
+		seconds: {
+			detail: "Second"
+		},
+		milliseconds: {
+			detail: "Millisecond"
+		},
+		weeks: {
+			detail: "주"
+		}
+	},
+	method: {
+		add: {
+			param: "date [, type, step]*",
+			ret: "Date",
+			detail: "Calculates the date a specific time before or after a given date. For example, one daybefore today is queried using time.add(new Data(), 'days', -1);."
+		},
+		format : {
+			param : "date, format[, utc]",
+			ret : "string",
+			detail : "Converts a data object into a string that fits the format."
+		}
+	}
+};
+
+var svgApi = {
+	prop: {
+		root: {
+			detail: "Gets an element object of an SVG tag."
+		}
+	},
+	method: {
+		size: {
+			param: "width, height | none",
+			ret: "none | object",
+			detail: "Sets the size to the applicable value if a parameter exists, or returns the area and height of an SVG tag if a parameter does not exist."
+		},
+		clear: {
+			param: "isAll",
+			ret: "none",
+			detail: "Removes all child nodes if 'isAll' is true, otherwise, removes only the child nodes of a main group element."
+		},
+		reset: {
+			param: "isAll",
+			ret: "none",
+			detail: "Same as 'clear'. However, as it even removes data, it is not possible to perform rendering again."
+		},
+		render: {
+			param: "isAll",
+			ret: "none",
+			detail: "Renders an element so that it fits structured data."
+		},
+		download: {
+			param: "fileName",
+			ret: "none",
+			detail: "Downloads an SVG tag rendered as the name of the file concerned."
+		},
+		downloadImage: {
+			param: "fileName, fileType",
+			ret: "none",
+			detail: "Downloads an SVG tag rendered as the name of the file concerned."
+		},
+		exportCanvas: {
+			param: "canvasElement",
+			ret: "none",
+			detail: "Draws an SVG tag rendered on the canvas element."
+		},
+		toXml: {
+			param: "none",
+			ret: "string",
+			detail: "Gets an SVG tag rendered as an XML string."
+		},
+		toDataURL: {
+			param: "none",
+			ret: "string",
+			detail: "Gets an SVG tag rendered as a data URL."
+		},
+		autoRender: {
+			param: "element, isAuto",
+			ret: "none",
+			detail: "If 'isAuto' is true, no change is made even if the element concerned is rendered."
+		},
+		getTextRect: {
+			param: "text",
+			ret: "object",
+			detail: "Gets the area and height of a text."
+		},
+		custom: {
+			param: "name, attributes, callback",
+			ret: "Element",
+			detail: "Creates a custom element with a name that is set in <strong>[create an element]</strong>. If an element creation method is called inside the callback function, the element in question becomes a child node."
+		},
+		defs: {
+			param: "callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'defs' element."
+		},
+		symbol: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'symbol' element."
+		},
+		g: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'g' element."
+		},
+		group: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'group' element."
+		},
+		marker: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'group' element."
+		},
+		a: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'a' element."
+		},
+		switch: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'switch' element."
+		},
+		use: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'use' element."
+		},
+		rect: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'rect' element."
+		},
+		line: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'line' element."
+		},
+		circle: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'circle' element."
+		},
+		text: {
+			param: "attribute, textOrCallback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'text' element. It is possible to set the basic text or add a child node through the callback."
+		},
+		textPath: {
+			param: "attribute, text",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'textPath' element. It is possible to set the basic text."
+		},
+		tref: {
+			param: "attribute, text",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'tref' element. It is possible to set the basic text."
+		},
+		tspan: {
+			param: "attribute, text",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'tspan' element. It is possible to set the basic text."
+		},
+		ellipse: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'ellipse' element."
+		},
+		image: {
+			param: "attribute, callback",
+			ret: "TransElement",
+			detail: "Creates a <strong>[create an element]</strong> 'image' element."
+		},
+		path: {
+			param: "attribute, callback",
+			ret: "PathElement",
+			detail: "Creates a <strong>[create an element]</strong> 'path' element."
+		},
+		polyline: {
+			param: "attribute, callback",
+			ret: "PolyElement",
+			detail: "Creates a <strong>[create an element]</strong> 'polyline' element."
+		},
+		polygon: {
+			param: "attribute, callback",
+			ret: "PolyElement",
+			detail: "Creates a <strong>[create an element]</strong> 'polygon' element."
+		},
+		pattern: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'pattern' element."
+		},
+		mask: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'mask' element."
+		},
+		clipPath: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'clipPath' element."
+		},
+		linearGradient: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'linearGradient' element."
+		},
+		radialGradient: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'radialGradient' element."
+		},
+		filter: {
+			param: "attribute, callback",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'filter' element."
+		},
+		stop: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'stop' element."
+		},
+		animate: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'animate' element."
+		},
+		animateColor: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'animateColor' element."
+		},
+		animateMotion: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'animateMotion' element."
+		},
+		animateTransform: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'animateTransform' element."
+		},
+		mpath: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'mpath' element."
+		},
+		set: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'set' element."
+		},
+		feBlend: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feBlend' element."
+		},
+		feColorMatrix: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feColorMatrix' element."
+		},
+		feComponentTransfer: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feComponentTransfer' element."
+		},
+		feComposite: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feComposite' element."
+		},
+		feConvolveMatrix: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feConvolveMatrix' element."
+		},
+		feDiffuseLighting: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feDiffuseLighting' element."
+		},
+		feDisplacementMap: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feDisplacementMap' element."
+		},
+		feFlood: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feFlood' element."
+		},
+		feGaussianBlur: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feGaussianBlur' element."
+		},
+		feImage: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feImage' element."
+		},
+		feMerge: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feMerge' element."
+		},
+		feMergeNode: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feMergeNode' element."
+		},
+		feMorphology: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feMorphology' element."
+		},
+		feOffset: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feOffset' element."
+		},
+		feSpecularLighting: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feSpecularLighting' element."
+		},
+		feTile: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feTile' element."
+		},
+		feTurbulence: {
+			param: "attribute",
+			ret: "Element",
+			detail: "Creates a <strong>[create an element]</strong> 'feTurbulence' element."
+		}
+	}
+};
+
+jui.ready([ "util", "uix.tab" ], function(util, tab) {
+	var tab = tab("#tab", {
+		target: "#tab_contents",
+		event: {
+			change: function(data, e) {
+				if(data.index == 1 && $("#color").html() == "") {
+					juiApi(util.color, colorApi, util.base.template, null, "#color");
+
+				} else if(data.index == 2 && $("#math").html() == "") {
+					juiApi(util.math, mathApi, util.base.template, null, "#math");
+
+				} else if(data.index == 3 && $("#scale").html() == "") {
+					juiApi(util.scale, scaleApi, util.base.template, null, "#scale");
+
+				} else if(data.index == 4 && $("#time").html() == "") {
+					juiApi(util.time, timeApi, util.base.template, null, "#time");
+
+				} else if(data.index == 5 && $("#svg").html() == "") {
+					var svg = new util.svg($("#svgTarget").get(0), { width: 10, height: 10 });
+					juiApi(svg, svgApi, util.base.template, null, "#svg");
+
+				}
+			}
+		}
+	});
+
+	juiApi(util.base, baseApi, util.base.template, null, "#base");
+});
+</script>
+
+<meta name="title" content="JENNIFER UI: Core/Custom" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui utility">
+
+<div class="page-header">
+	<h1>Utility</h1>
+	<p class="br">
+		The JUI library provides various utility methods and properties necessary for component development and web development.
+		
+<pre><code class="language-javascript">/* Utility module that is brought when defining a component module */
+jui.define(&quot;ui.test&quot;, [ &quot;util.base&quot; ], function(_) {
+	//...
+});
+
+/* Utility module that is brought when using a component module */
+jui.ready([ &quot;jquery&quot;, &quot;util.base&quot;, &quot;util.svg&quot; ], function($, _, SVGUtil) {
+	if(_.browser.msie) return;
+
+	var elem = $(&quot;#svg&quot;).get(0),
+		svg = new SVGUtil(elem, { width: 400, height: 300 });
+
+	//...
+});
+</code></pre>
+	</p>
+</div>
+
+<ul id="tab" class="tab tab-top">
+	<li><a href="#base">base</a></li>
+	<li><a href="#color">color</a></li>
+	<li><a href="#math">math</a></li>
+	<li><a href="#scale">scale</a></li>
+	<li><a href="#time">time</a></li>
+	<li><a href="#svg">svg</a></li>
+</ul>
+
+<div id="tab_contents" class="tab-contents">
+	<div id="base"></div>
+	<div id="color"></div>
+	<div id="math"></div>
+	<div id="scale"></div>
+	<div id="time"></div>
+	<div id="svg"></div>
+</div>
+
+<div class="hidden">
+	<span id="svgTarget"></span>
+</div>
+
+</body>
+</html>

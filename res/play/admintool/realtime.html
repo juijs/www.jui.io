@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>JENNIFER UI: AdminTool Sample - Realtime </title>
+<link rel="shortcut icon" href="../../../res/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="../../../res/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../res/index.css"/>
+<link rel="stylesheet" href="../../../lib/jui.new/jui.min.css"/>
+<link id="jui_theme" rel="stylesheet" href="../../../lib/jui.new/jennifer.theme.min.css"/>
+<script src="../../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../../lib/jui/jui.min.js"></script>
+<script src="admin.js" type="text/javascript"></script>
+<meta name="title" content="JENNIFER UI: JENNIFER UI: HTML5 components and SVG charts"/>
+<meta name="description"
+      content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components."/>
+<meta name="keywords"
+      content="HTML, CSS, JS, JavaScript, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT"/>
+<meta name="author" content="Alvin, Jayden and Yoha"/>
+<meta charset="UTF-8">
+<meta property="og:title" content="JENNIFER UI: HTML5 components and SVG charts"/>
+<meta property="og:description"
+      content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://seogi1004.github.io/jui/en/index.html"/>
+<meta property="og:image" content="http://seogi1004.github.io/jui/res/img/jui_link.jpg"/>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="admin.css" type="text/css" />
+</head>
+<body class="jui">
+<div class="header">
+  <div class="logo">
+    <i class="icon-menu"></i>
+  </div>
+  <div class="toolbar">
+
+    <span>Realtime</span>
+    <span >
+        Themes
+        <select onchange="changeTheme(this.value)">
+          <option value="jennifer">Jennifer</option>
+          <option value="dark">Dark</option>
+        </select>
+    </span>
+    <span style="float:right">
+      Sample <i class="icon-check"></i>
+    </span>
+
+  </div>
+</div>
+<div class="container">
+  <div class="menu">
+
+    <div class="vmenu ">
+      <a href="index.html"><i class="icon-monitoring"></i> Dashboard</a>
+      <a class="active"><i class="icon-realtime"></i> Realtime</a>
+      <a href="analysis.html"><i class="icon-profile"></i> Analysis</a>
+      <a><i class="icon-chart"></i> Statistics</a>
+      <a><i class="icon-document"></i> Document</a>
+      <a><i class="icon-gear"></i> Management</a>
+      <a><i class="icon-user"></i> User</a>
+    </div>
+
+  </div>
+  <div class="content">
+
+    <div class="content-list">
+      <div class="dashboard-first">
+        <div class="col col-3">
+          <div class="card">
+            <div class="title">Today's visitors</div>
+            <div class="value">3,352</div>
+          </div>
+        </div>
+        <div class="col col-3">
+          <div class="card">
+            <div class="title">Time of operation of call</div>
+            <div class="value">2,364,806</div>
+          </div>
+
+        </div>
+        <div class="col col-3">
+          <div class="card">
+            <div class="title">Time of operation Number of EVENT</div>
+            <div class="value">15,610</div>
+          </div>
+
+        </div>
+        <div class="col col-3">
+          <div class="card">
+            <div class="title">Peak Time</div>
+            <div class="value">10:00 ~ 11:00</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="panel">
+
+        <div class="body">
+          <h2 class="title">Analysis</h2>
+
+          <div class="view">
+            <div id="realtime_chart_1" style="height:400px;"></div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div class="panel dashed">
+        <div class="body">
+          <h2 class="title">Clock</h2>
+
+          <div class="row view" style="height:150px;">
+            <div class="col col-4">
+              <div id="clock" style="height:100%;"></div>
+            </div>
+            <div class="col col-8">
+              <div id="gauge" style="height:100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+<script>
+var chart = jui.include("chartx.realtime");
+var chartbuilder = jui.include("chart.builder");
+var time = jui.include("util.time");
+var realtimeIndex = 0;
+var realtimeInterval = null;
+
+function getRealtimeData(min) {
+  var start = time.add(new Date(), time.minutes, -5),
+          data = [];
+
+  for(var i = 0; i < min * 60; i++) {
+    data.push(getRealtimeRowData(time.add(start, time.seconds, i + 1)));
+
+    realtimeIndex++;
+  }
+
+  return data;
+}
+
+
+function getRealtimeRowData(time) {
+  var sin = Math.sin(realtimeIndex / 10);
+
+  return {
+    time : time,
+    s1 : sin - 4,
+    s2 : sin * 2.5,
+    s3 : sin + 5
+  }
+}
+
+
+function runRealtimeData(realtime) {
+  if(realtimeInterval != null) {
+    clearInterval(realtimeInterval);
+  }
+
+  realtimeInterval = setInterval(function() {
+    realtime.append(getRealtimeRowData(new Date()));
+
+    realtimeIndex++;
+  }, 1000);
+}
+var chart_list = [];
+
+var c = chart("#realtime_chart_1", {
+  axis : {
+    data : getRealtimeData(5)
+  },
+  brush : {
+    type : "line",
+    target : [ "s1", "s2", "s3" ]
+  },
+  widget : [{
+    type : "title",
+    text : "Realtime Sample"
+  }, {
+    type : "legend"
+  }, {
+    type : "cross",
+    xFormat : function(d) {
+      return time.format(d, "hh:mm:ss");
+    },
+    yFormat : function(d) {
+      return Math.round(d);
+    }
+  }, {
+    type : "tooltip"
+  }]
+});
+chart_list[chart_list.length] = c;
+runRealtimeData(c);
+
+
+var clock_chart = chartbuilder("#clock", {
+  padding : 0,
+  axis : {
+    data : [
+      { hour : 12, minute : 0, second : 12 },
+    ]
+  },
+  brush : {
+    type : 'clock'
+  },
+  style : {
+    barBorderWidth : 1,
+    barBorderColor : "black",
+    barBorderOpacity : 0.3
+  }
+});
+chart_list[chart_list.length] = clock_chart;
+function step(timestamp) {
+  var d = new Date();
+  clock_chart.axis(0).update([{ hour : d.getHours(), minute : d.getMinutes(), second : d.getSeconds(), millisecond : d.getMilliseconds() }]);
+  //c.render();
+}
+
+setInterval(step, 100);
+
+
+// donut sample
+var dataSource2 = [
+  { title: "Overall Visits", value: 192, max: 200, min: 0 },
+  { title: "New Visits", value: 66, max: 100, min: 0 },
+  { title: "Mobile Visits", value: 75, max: 100, min: 0 },
+  { title: "Sample", value: Math.floor(Math.random() * 100), max: 100, min: 0 }
+];
+
+var gauge_chart = chartbuilder("#gauge", {
+  padding: { left: 0, top: 10, right: 0, bottom: 20 },
+  axis: {
+    c: {
+      type: "table",
+      rows: 1,
+      columns: 4
+    },
+    data: dataSource2
+  },
+  brush: {
+    type: "fullgauge",
+    size: 10,
+    titleY: 70,
+    format: function (value, index) {
+      if (index == 0) {
+        return value + "k";
+      }
+
+      return value + "%";
+    }
+  },
+  style: {
+    fontFamily: "Open Sans"
+  }
+});
+chart_list[chart_list.length] = gauge_chart;
+
+function stepGauge(timestamp) {
+  gauge_chart.axis(0).update([
+      { title: "Overall Visits", value: Math.floor(Math.random() * 200), max: 200, min: 0 },
+      { title: "New Visits", value: Math.floor(Math.random() * 100), max: 100, min: 0 },
+      { title: "Mobile Visits", value: Math.floor(Math.random() * 100), max: 100, min: 0 },
+      { title: "Sample", value: Math.floor(Math.random() * 100), max: 100, min: 0 }
+  ]);
+  //c.render();
+}
+
+setInterval(stepGauge, 2000);
+
+
+function changeTheme(theme) {
+  // change ui
+  $("#jui_theme").attr("href", "../../../lib/jui.new/" + theme + ".theme.min.css");
+
+  // change chart
+
+  for(var i = 0, len = chart_list.length; i < len; i++) {
+    if (chart_list[i].setTheme) {
+      chart_list[i].setTheme(theme);
+    } else {
+      chart_list[i].chart.setTheme(theme);
+    }
+  }
+}
+
+
+</script>
+</body>
+</html>

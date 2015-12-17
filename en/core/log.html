@@ -1,0 +1,84 @@
+﻿
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Core/Log</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../lib/prism.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../lib/prism.js"></script>
+<script src="../../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: Core/Log" />
+<meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header">
+	<h1>Log</h1>
+	<p class="br">
+		The JUI library provides a tool for viewing the basic information about the component object on the screen and checking in real time the time when a particular method of a component object was called. This also shows additional information such as the method implementation time. 
+	</p>
+</div>
+
+<section>
+	
+	<h2>Summary</h2>
+	<p>
+		A tab that displays the basic information about the components on the current page. <strong>UI Caller</strong> shows the number of component creating methods that have been called. The number of objects that were actually created can be seen using the <strong>UI Object</strong>. In more detail, as there is only one markup which has the <strong>tooltip_1</strong> ID, the number of <strong>UI Caller</strong>s is displayed to be identical to that of the <strong>UI Object</strong>s.
+		
+		<pre><code class="language-markup">&lt;span id=&quot;tooltip&quot; title=&quot;Tooltip Message&quot;&gt;Run&lt;/span&gt;</code></pre>
+		<pre><code class="language-javascript">tooltip = ui.tooltip(&quot;#tooltip&quot;);
+tooltip.show();</code></pre>
+	</p>
+	<p class="br">
+		 However, if the code is as shown below, the number of <strong>UI Caller</strong>s is 1 and the number of <strong>UI Object</strong>s is 2 as there are 2 markups with a <strong>tooltip</strong> class. 
+		 
+		<pre><code class="language-markup">&lt;span class=&quot;tooltip&quot; title=&quot;Tooltip Message 1&quot;&gt;Run&lt;/span&gt;
+&lt;span class=&quot;tooltip&quot; title=&quot;Tooltip Message 2&quot;&gt;Run&lt;/span&gt;</code></pre>
+
+		<pre><code class="language-javascript">tooltip = ui.tooltip(&quot;.tooltip&quot;);
+tooltip[0].show();
+tooltip[1].show();</code></pre>
+
+	</p>
+	<p class="br">
+		It is possible to find out how many DOM events and custom events provided by JUI are configured, also the number of objects created for each component.
+	</p>
+	<p>
+		<img src="../../res/img/logtool_1.png" width="100%" />
+	</p>
+</section>
+
+<section>
+	<h2>Information</h2>
+	
+	<p>
+		It is possible to view detailed information such as the component creation type and options. <strong>Obj Cnt</strong> is the number of <strong>UI Object</strong>s mentioned above.
+	</p>
+	<p>
+		<img src="../../res/img/logtool_2.png" width="100%" />
+	</p>
+</section>
+
+<section>
+	<h2>Log</h2>
+	
+	<p>
+		A log that is displayed in real time when calling an method exposed by UI Object. It is possible to find out which methods have been called most commonly and how long they took to run.
+	</p>
+	<p>
+		<img src="../../res/img/logtool_3.png" width="100%" />
+	</p>
+</section>
+
+</body>
+</html>

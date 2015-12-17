@@ -1,0 +1,16 @@
+<div class="group">
+    <button class="btn small" onclick="tree_2.move('3', '2.1')">Move</button>
+    <button class="btn small" onclick="tree_2.remove('1')">Remove</button>
+    <button class="btn small" onclick="tree_2.update('2', { title: 'Applications' })">Update</button>
+</div>
+
+<div class="row" style="margin-top: 15px;">
+    <ul id="tree_2" class="tree line-file"></ul>
+</div>
+
+<script data-jui="#tree_2" data-tpl="node" type="text/template">
+    <li>
+        <div><i></i> <!= title !></div>
+        <ul></ul>
+    </li>
+</script>

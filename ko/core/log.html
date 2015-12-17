@@ -1,0 +1,86 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Core/Log</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+
+<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../lib/prism.css" />
+<link rel="stylesheet" href="../../res/manual.css" />
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jquery.binder.js"></script>
+<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../lib/prism.js"></script>
+<script src="../../res/manual.js"></script>
+
+<meta name="title" content="JENNIFER UI: Core/Log" />
+<meta name="description" content="JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다." />
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
+<meta name="author" content="Alvin, Jayden and Yoha" />
+</head>
+<body class="jui">
+
+<div class="page-header">
+	<h1>Log</h1>
+	<p class="br">
+		JUI 라이브러리는 화면에 생성된 컴포넌트 객체에 대한 기본적인 정보를 볼 수 있는 도구를 제공하며, 
+		컴포넌트 객체의 메소드가 호출되는 시점을 실시간으로 체크하여 메소드 실행 시간과 같은 부가적인 정보도 알 수 있습니다.
+	</p>
+</div>
+
+<section>
+	
+	<h2>Summary</h2>
+	<p>
+		현재 페이지에서 생성된 컴포넌트들에 대한 기본적인 정보를 보여주는 탭입니다. 
+		<strong>UI Caller</strong>는 컴포넌트 생성 메소드를 호출한 횟수이며, 실제로 생성된 객체 수는 <strong>UI Object</strong>를 통해 알 수 있습니다. 
+		좀 더 설명을 하자면 <strong>tooltip_1</strong> 아이디를 가진 마크업이 하나이기 때문에 <strong>UI Caller</strong>와 <strong>UI Object</strong> 개수가 동일하게 나옵니다.
+		
+		<pre><code class="language-markup">&lt;span id="tooltip" title="Tooltip Message"&gt;Run&lt;/span&gt;</code></pre>
+		<pre><code class="language-javascript">tooltip = ui.tooltip("#tooltip");
+tooltip.show();</code></pre>
+	</p>
+	<p class="br">
+		 하지만 아래 코드와 같은 경우에는 <strong>tooltip</strong> 클래스를 가진 마크업이 하나가 아닌 두 개가 존재하기 때문에 <strong>UICaller</strong>는 1개가 되며, <strong>UI Object</strong>는 2개가 됩니다. 
+		 
+		<pre><code class="language-markup">&lt;span class="tooltip" title="Tooltip Message 1"&gt;Run&lt;/span&gt;
+&lt;span class="tooltip" title="Tooltip Message 2"&gt;Run&lt;/span&gt;</code></pre>
+
+		<pre><code class="language-javascript">tooltip = ui.tooltip(".tooltip");
+tooltip[0].show();
+tooltip[1].show();</code></pre>
+
+	</p>
+	<p class="br">
+		그 밖에 DOM 이벤트와 JUI에서 제공하는 커스텀 이벤트가 얼마나 설정되어 있는지를 알 수 있고, 각각의 컴포넌트 별로 생성된 객체 수를 알 수 있습니다.
+	</p>
+	<p>
+		<img src="../../res/img/logtool_1.png" width="100%" />
+	</p>
+</section>
+
+<section>
+	<h2>Information</h2>
+	
+	<p>
+		컴포넌트 생성 타입과 옵션 등의 자세한 정보를 볼 수 있습니다. 그리고 <strong>Obj Cnt</strong>는 앞서 설명한 <strong>UI Object</strong>의 개수입니다.
+	</p>
+	<p>
+		<img src="../../res/img/logtool_2.png" width="100%" />
+	</p>
+</section>
+
+<section>
+	<h2>Log</h2>
+	
+	<p>
+		<strong>UI Object</strong>의 공개된 메소드를 호출할 경우에 실시간으로 보여지는 로그입니다. 주로 어떤 메소드가 호출되었으며 얼마만큼의 실행 시간이 걸렸는지 알 수 있습니다.
+	</p>
+	<p>
+		<img src="../../res/img/logtool_3.png" width="100%" />
+	</p>
+</section>
+
+</body>
+</html>

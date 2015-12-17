@@ -1,0 +1,42 @@
+<button class="btn small" onclick="paging_2_submit()">
+    <i class="icon-play"></i> Run
+</button>
+
+<div id="paging_2_xtable" class="xtable" style="margin-top: 7px;">
+    <table class="table classic">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div id="paging_2" class="paging" style="margin-top: 3px;">
+    <a href="#" class="prev">Previous</a>
+    <div class="list"></div>
+    <a href="#" class="next">Next</a>
+</div>
+
+<script id="tpl_row" type="text/template">
+    <tr>
+        <td><!= name !></td>
+        <td><!= age !></td>
+        <td><!= location !></td>
+    </tr>
+</script>
+
+<script id="tpl_none" type="text/template">
+    <tr>
+        <td colspan="3" class="none" align="center">Data does not exist.</td>
+    </tr>
+</script>
+
+<script id="tpl_pages" type="text/template">
+    <! for(var i = 0; i < pages.length; i++) { !>
+    <a href="#" class="page"><!= pages[i] !></a>
+    <! } !>
+</script>
