@@ -216,7 +216,7 @@ function initSubMenuUrl(hash) {
 			if( (hash[0] == "script" && src.indexOf("script/common") == -1) ||
 				(hash[0] == "style" && src.indexOf("style/common") == -1) ) {
 
-				var popup = window.open("../res/uiplay/index.html" + src, "jui.uiplay");
+				var popup = window.open("../res/uiplay/index.php" + src, "jui.uiplay");
 				popup.focus();
 			} else {
 				loadIframe($target.find("iframe"), src);
