@@ -187,7 +187,7 @@ module.exports = function(grunt) {
                     title : "JENNIFER UI: HTML5 components and SVG charts (Node.js support)",
                     description : "JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components.",
                     type : "website",
-                    url : "http://jui.io/en/index.html",
+                    url : "http://jui.io/en/index.php",
                     image: "http://jui.io/res/img/jui_link.jpg"
                 }
             },
@@ -202,7 +202,7 @@ module.exports = function(grunt) {
                     title : "JENNIFER UI: HTML5 기반의 컴포넌트 및 SVG 차트 (Node.js 지원)",
                     description : "JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다.",
                     type : "website",
-                    url : "http://jui.io/ko/index.html",
+                    url : "http://jui.io/ko/index.php",
                     image: "http://jui.io/res/img/jui_link.jpg"
                 }
             }
