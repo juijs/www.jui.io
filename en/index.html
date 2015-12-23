@@ -31,9 +31,18 @@
 	<div class="center" style="position: relative;">
 		<span class="img img-logo-top" onclick="location.href = 'index.html';"></span>
 		
-		<span class="menu menu-left"><a href="#install">Getting Started</a> <a href="#style">CSS</a> <a href="#core">Framework</a> <a href="#script">Components</a> <a href="#chart">Charts</a> <a href="#tips/bootstrap">Third Party</a></span>
+		<span class="menu menu-left">
+			<a href="#install">Getting Started</a>
+			<a href="#style">CSS</a>
+			<a href="#core">Framework</a>
+			<a href="#script">Components</a>
+			<a href="#chart">Charts</a>
+		</span>
 
-		<span class="menu menu-right"><a href="https://github.com/juijs/jui" target="_blank"><div class="img img-download1"></div></a>&nbsp; <a href="https://github.com/juijs/jui/archive/master.zip"><div class="img img-download2"></div></a></span>
+		<span class="menu menu-right">
+			<a href="https://github.com/juijs/" target="_blank"><div class="img img-download1"></div></a>&nbsp;
+			<a id="btn_download_menu"><div class="img img-download2"></div></a>
+		</span>
 	</div>
 	
 </header>
@@ -49,10 +58,12 @@
                     It offers bootstrap support, style &amp; script components and SVG-based chart components.<br/> All components are free, including JUI Chart.
 				</div>
 
-				<a href="https://github.com/juijs/jui" target="_blank"><div class="img img-download-main"></div></a>
+				<a href="https://github.com/juijs/" target="_blank"><div class="img img-download-main"></div></a>
 			</div>
 		</div>
-	</nav> <nav class="navbar navbar-fixed-top">
+	</nav>
+	<!--
+	<nav class="navbar navbar-fixed-top">
 		<div class="center">
 			<div class="container-2">
 				<div class="img img-logo"></div>
@@ -63,19 +74,11 @@
 				</div>
 			</div>
 		</div>
-	</nav> <nav class="navbar navbar-fixed-top">
+	</nav>
+	-->
+	<nav class="navbar navbar-fixed-top">
 		<div class="center">
 			<div class="container-3">
-				<div class="img img-logo"></div>
-
-				<div class="detail">
-					JENNIFER UI is a really smart library.<br/> It can be used bootstrap style and with JUI script.<br/> It offers a large selection of components.
-				</div>
-			</div>
-		</div>
-	</nav> <nav class="navbar navbar-fixed-top">
-		<div class="center">
-			<div class="container-4">
 				<div class="img img-logo"></div>
 
 				<div class="detail">
@@ -94,7 +97,9 @@
 				<li><a class="current" href="#"></a></li>
 				<li><a href="#"></a></li>
 				<li><a href="#"></a></li>
+				<!--
 				<li><a href="#"></a></li>
+				-->
 			</ul>
 		</div>
 	</div>
@@ -293,7 +298,7 @@
 		</div>
 		<div class="col col-4 link">
 			<span id="btn_about">ABOUT US</span> |
-            <span onclick="window.open('https://github.com/juijs/jui');">GitHub</span> |
+            <span onclick="window.open('https://github.com/juijs/');">GitHub</span> |
             <span onclick="window.open('http://api.jui.io');">API</span> |
             <span onclick="window.open('http://blog.jui.io');">Blog</span> |
             <span onclick="window.open('http://store.jui.io');">Store</span> |
@@ -305,7 +310,7 @@
 
 	<div class="center">
 		<div class="col col-8 msg">
-			Code licensed under MIT License.<br/> Copyright © 2015 JenniferSoft Inc. All rights reserved.
+			Code licensed under MIT License.<br/> Copyright © 2016 JenniferSoft Inc. All rights reserved.
 		</div>
 		<div class="col col-4 link">
 			<strong>Supported languages:</strong> <span onclick="changeLanguage('en', 'ko');">Korean</span>
@@ -314,6 +319,16 @@
 </footer>
 
 <div id="fb-root"></div>
+
+<div id="download_menu" class="dropdown dropdown-large" style="z-index: 10000;">
+	<div class="anchor" style="left: 100px;"></div>
+	<ul>
+		<li value="1">Core</li>
+		<li value="2">UI</li>
+		<li value="3">Grid</li>
+		<li value="4">Chart</li>
+	</ul>
+</div>
 
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

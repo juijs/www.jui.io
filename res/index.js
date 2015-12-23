@@ -407,7 +407,23 @@ function changeLanguage(from, to) {
 	location.href = location.href.split("/" + from + "/").join("/" + to + "/");
 }
 
-jui.ready([ "ui.modal" ], function(modal) {
+jui.ready([ "ui.modal", "ui.dropdown" ], function(modal, dropdown) {
+	var download_link = {
+		1: "https://github.com/juijs/jui-core/archive/master.zip",
+		2: "https://github.com/juijs/jui/archive/master.zip",
+		3: "https://github.com/juijs/jui-grid/archive/master.zip",
+		4: "https://github.com/juijs/jui-chart/archive/master.zip"
+	}
+
+	var download_menu = dropdown("#download_menu", {
+		width: 135,
+		event: {
+			change: function(data) {
+				window.open(download_link[data.value]);
+			}
+		}
+	});
+
 	loading = modal("#floatingBarsG", {
 		color: "black"
 	});
@@ -418,6 +434,13 @@ jui.ready([ "ui.modal" ], function(modal) {
 
 	$("#btn_about").on("click", function(e) {
 		location.hash = "#about";
+		return false;
+	});
+
+	$("#btn_download_menu").on("click", function(e) {
+		var btn_offset = $("#btn_download_menu").offset();
+		download_menu.show(btn_offset.left, btn_offset.top + 12);
+
 		return false;
 	});
 });

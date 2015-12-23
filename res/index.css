@@ -49,14 +49,16 @@ nav {
 	display: none;
 }
 
+/*
 .main > nav:nth-child(3) {
 	background-color: #040d14 !important;
 	background-image: url("img/headline3.png") !important;
 	background-repeat: repeat-x !important;
 	display: none;
 }
+*/
 
-.main > nav:nth-child(4) {
+.main > nav:nth-child(3) {
 	background-color: #cfcfcf !important;
 	background-image: url("img/headline4.png") !important;
 	background-repeat: repeat-x !important;

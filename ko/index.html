@@ -37,12 +37,11 @@
             <a href="#core">Framework</a>
 			<a href="#script">Components</a>
 			<a href="#chart">Charts</a>
-			<a href="#tips/bootstrap">Third Party</a>
 		</span>
 
 		<span class="menu menu-right">
-			<a href="https://github.com/juijs/jui" target="_blank"><div class="img img-download1"></div></a>&nbsp;
-			<a href="https://github.com/juijs/jui/archive/master.zip"><div class="img img-download2"></div></a>
+			<a href="https://github.com/juijs/" target="_blank"><div class="img img-download1"></div></a>&nbsp;
+			<a id="btn_download_menu"><div class="img img-download2"></div></a>
 		</span>
 	</div>
 	
@@ -59,7 +58,7 @@
 					사용되는 UI 컴포넌트를 정리한 라이브러리입니다.
 				</div>
 
-				<a href="https://github.com/juijs/jui" target="_blank"><div class="img img-download-main"></div></a>
+				<a href="https://github.com/juijs/" target="_blank"><div class="img img-download-main"></div></a>
 			</div>
 		</div>
 	</nav>
@@ -76,6 +75,7 @@
 			</div>
 		</div>
 	</nav>
+	<!--
 	<nav class="navbar navbar-fixed-top">
 		<div class="center">
 			<div class="container-3">
@@ -89,6 +89,7 @@
 			</div>
 		</div>
 	</nav>
+	-->
 	<nav class="navbar navbar-fixed-top">
 		<div class="center">
 			<div class="container-4">
@@ -112,7 +113,9 @@
 				<li><a class="current" href="#"></a></li>
 				<li><a href="#"></a></li>
 				<li><a href="#"></a></li>
+				<!--
 				<li><a href="#"></a></li>
+				-->
 			</ul>
 		</div>
 	</div>
@@ -314,7 +317,7 @@
 		</div>
 		<div class="col col-4 link">
 			<span id="btn_about">ABOUT US</span> |
-			<span onclick="window.open('https://github.com/juijs/jui');">GitHub</span> |
+			<span onclick="window.open('https://github.com/juijs/');">GitHub</span> |
             <span onclick="window.open('http://api.jui.io');">API</span> |
             <span onclick="window.open('http://blog.jui.io');">Blog</span> |
             <span onclick="window.open('http://store.jui.io');">Store</span> |
@@ -327,7 +330,7 @@
 	<div class="center">
 		<div class="col col-8 msg">
 			Code licensed under MIT License.<br/>
-			Copyright © 2015 JenniferSoft Inc. All rights reserved.
+			Copyright © 2016 JenniferSoft Inc. All rights reserved.
 		</div>
 		<div class="col col-4 link">
 			<strong>Supported languages:</strong>
@@ -337,6 +340,16 @@
 </footer>
 
 <div id="fb-root"></div>
+
+<div id="download_menu" class="dropdown dropdown-large" style="z-index: 10000;">
+	<div class="anchor" style="left: 100px;"></div>
+	<ul>
+		<li value="1">Core</li>
+		<li value="2">UI</li>
+		<li value="3">Grid</li>
+		<li value="4">Chart</li>
+	</ul>
+</div>
 
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
