@@ -324,7 +324,7 @@ function updateComponent(isCode) {
 function changeTheme(theme) {
     $(".chart_view").attr("class", "chart_view " + theme);
     $(".chart_data").attr("class", "chart_data " + theme);
-    $("#jui_theme").attr("href", "../../lib/jui.new/" + theme + ".theme.min.css");
+    $("#jui_theme").attr("href", "../../jui/css/ui-" + theme + ".min.css");
 
     if(theme == "jennifer") {
         $(".CodeMirror.cm-s-neo").css({
@@ -339,14 +339,14 @@ function changeTheme(theme) {
     }
 }
 
-jui.ready([ "util.base", "uix.window" ], function(_, uiWin) {
+jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     editor = null;
 
     loadChartList();
     setFunctions();
 
     // 탭 생성
-    types = jui.create("uix.tab", "#types", {
+    types = jui.create("ui.tab", "#types", {
         target: "#types_contents",
         index: 0
     });

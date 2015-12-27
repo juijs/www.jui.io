@@ -1,4 +1,4 @@
-jui.ready([ "uix.tab" ], function(tab) {
+jui.ready([ "ui.tab" ], function(tab) {
     tab_4 = tab("#tab_4", {
         drag: true,
         target: "#tab_contents_4"

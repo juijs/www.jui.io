@@ -118,7 +118,7 @@ window.coreApi = {
         animate: {
         	detail: "UI의 애니메이션 효과를 사용유무를 설정합니다."
         },
-        vo: {
+         vo: {
             detail: "마크업 바인딩 객체를 설정합니다. (@Deprecated)"
         }
     },

@@ -1,4 +1,4 @@
-jui.ready([ "uix.tab" ], function(tab) {
+jui.ready([ "ui.tab" ], function(tab) {
     var count = 3;
 
     tab_3 = tab("#tab_3", {

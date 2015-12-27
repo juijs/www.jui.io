@@ -5,12 +5,14 @@
 <title>Core</title>
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
 
-<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../jui/css/ui.min.css" />
+<link rel="stylesheet" href="../../jui/css/ui-jennifer.min.css" />
 <link rel="stylesheet" href="../../lib/prism.css" />
 <link rel="stylesheet" href="../../res/manual.css" />
 <script src="../../lib/jquery-1.8.0.min.js"></script>
 <script src="../../lib/jquery.binder.js"></script>
-<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../jui/js/core.min.js"></script>
+<script src="../../jui/js/ui.min.js"></script>
 <script src="../../lib/prism.js"></script>
 <script src="../../res/manual.js"></script>
 
@@ -30,9 +32,9 @@
 	<p>
 		JUI 라이브러리는 <strong>ready</strong> 메소드의 콜백 내부에서 컴포넌트 모듈을 사용할 수 있습니다.
 		
-		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
-	var combo = ui.combo(selector, options),
-		table = uix.table(selector, options);
+		<pre><code class="language-javascript">jui.ready([ "ui.combo", "grid.table" ], function(combo, table) {
+	var combo = combo(selector, options),
+		table = table(selector, options);
 		
 	//...
 });</code></pre>
@@ -146,9 +148,9 @@
 	<p class="br">
 		그리고 첫번째 매개변수에 정의된 모듈 명을 배열 형태로 설정한다면 해당 모듈만 로드하여 사용할 수 있지만 보통 생략하여 사용합니다.
 		
-		<pre><code class="language-javascript">jui.ready([ "ui.combo", "uix" ], function(combo, uix) {
+		<pre><code class="language-javascript">jui.ready([ "ui.combo", "grid" ], function(combo, grid) {
 	var combo = combo(selector, options),
-		table = uix.table(selector, options);
+		table = grid.table(selector, options);
 		
 	//...
 });</code></pre>
@@ -161,8 +163,8 @@
 		<strong>ready</strong> 메소드의 콜백 외부에서도 컴포넌트 객체를 동적으로 생성할 수 있는 기능을 제공합니다. 
 		한가지 주의해야 할 사항은 <strong>create</strong> 메소드는 <strong>ready</strong> 메소드의 콜백이 실행된 이후에 사용할 수 있습니다.
 		
-<pre><code class="language-javascript">var combo = jui.create("combo", selector, options),
-	table = jui.create("table", selector, options);
+<pre><code class="language-javascript">var combo = jui.create("ui.combo", selector, options),
+	table = jui.create("grid.table", selector, options);
 	
 //...</code></pre>
 	</p>

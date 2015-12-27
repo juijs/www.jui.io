@@ -6,11 +6,14 @@
 <link rel="shortcut icon" href="../res/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="../res/img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="../res/index.css" />
-<link rel="stylesheet" href="../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../jui/css/ui.min.css" />
+<link rel="stylesheet" href="../jui/css/ui-jennifer.min.css" />
 
 <script src="../lib/jquery-1.8.0.min.js"></script>
 <script src="../lib/jquery.ba-hashchange.min.js"></script>
-<script src="../lib/jui/jui.js"></script>
+<script src="../jui/js/core.min.js"></script>
+<script src="../jui/js/ui.min.js"></script>
+<script src="../jui/js/chart.min.js"></script>
 <script src="../res/index.js"></script>
 <meta name="title" content="JENNIFER UI: JENNIFER UI: HTML5 components and SVG charts" />
 <meta name="description" content="JENNIFER UI는 완전 무료입니다. 심플하며 빠르고 다양한 JUI는 올인원 데스크탑 UI 프레임워크입니다. 부트스트랩을 지원하고, 독립적으로 동작하는 스크립트와 스타일 컴포넌트 그리고 SVG 차트와 맵을 제공합니다." />
@@ -25,7 +28,7 @@
 </head>
 <body class="jui ko">
 	
-<header class="navbar navbar-fixed-top">
+<header class="navbar fixed top">
 	<div class="center" style="position: relative;">
 		<span class="img img-logo-top" onclick="location.href = 'index.html';"></span>
 		
@@ -46,7 +49,7 @@
 </header>
 
 <div class="main">
-	<nav class="navbar navbar-fixed-top">
+	<nav class="navbar fixed top">
 		<div class="center">
 			<div class="container">
 				<div class="img img-logo"></div>
@@ -62,7 +65,7 @@
 			</div>
 		</div>
 	</nav>
-	<nav class="navbar navbar-fixed-top">
+	<nav class="navbar fixed top">
 		<div class="center">
 			<div class="container-2">
 				<div class="img img-logo"></div>
@@ -90,7 +93,7 @@
 		</div>
 	</nav>
 	-->
-	<nav class="navbar navbar-fixed-top">
+	<nav class="navbar fixed top">
 		<div class="center">
 			<div class="container-4">
 				<div class="img img-logo"></div>
@@ -121,7 +124,7 @@
 	</div>
 </div>
 
-<nav class="navbar navbar-fixed-top about">
+<nav class="navbar fixed top about">
     <div class="center">
         <div class="notice">
             <div class="title">About Us</div>
@@ -136,7 +139,7 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-fixed-top sub">
+<nav class="navbar fixed top sub">
 	<div class="center">
 		<span class="title"></span>
 		<span class="msg"></span>
@@ -177,7 +180,7 @@
 <article id="core">
 	<div class="center row">
 		<div class="col col-left">
-			<div class="vmenu vmenu-flat">
+			<div class="vmenu flat">
 				<a href="#core/api">API</a>
 				<a href="#core/log">Log</a>
 				<a href="#core/custom">Custom</a>
@@ -195,7 +198,7 @@
 <article id="script">
 	<div class="center row">
 		<div class="col col-left">
-			<div class="vmenu vmenu-flat">
+			<div class="vmenu flat">
 				<a href="#script/button">Button</a>
 				<a href="#script/switch">Switch</a>
 				<a href="#script/progress">Progress Bar</a>
@@ -234,7 +237,7 @@
 <article id="style">
 	<div class="center row">
 		<div class="col col-left">
-			<div class="vmenu vmenu-flat">
+			<div class="vmenu flat">
 				<a href="#style/typography">Typography</a>
 				<a href="#style/form">Forms</a>
 				<a href="#style/icon">Icons</a>
@@ -277,7 +280,7 @@
 <article id="tips">
 	<div class="center row">
 		<div class="col col-left">
-			<div class="vmenu vmenu-flat">
+			<div class="vmenu flat">
 				<a href="#tips/bootstrap">Bootstrap</a>
                 <a href="../res/play/admintool/index.html" target="_blank">JUI Admin Tool</a>
                 <!--
@@ -294,7 +297,7 @@
 </article>
 <!-- Tips, End -->
 
-<nav class="navbar navbar-fixed-top bg-sub">
+<nav class="navbar fixed top bg-sub">
 	<div class="center">
 		<div class="bs-social">
 			<ul class="bs-social-buttons">
@@ -309,7 +312,7 @@
 	</div>
 </nav>
 
-<footer class="navbar navbar-fixed-bottom" style="position: relative;">
+<footer class="navbar fixed bottom" style="position: relative;">
 	<div class="center row">
 		<div class="col col-8 msg">
 			JENNIFER UI encapsulates the UI expertise of JenniferSoft.<br />
@@ -341,7 +344,7 @@
 
 <div id="fb-root"></div>
 
-<div id="download_menu" class="dropdown dropdown-large" style="z-index: 10000;">
+<div id="download_menu" class="dropdown large" style="z-index: 10000;">
 	<div class="anchor" style="left: 100px;"></div>
 	<ul>
 		<li value="1">Core</li>
@@ -358,16 +361,5 @@
   js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=672755082759473";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-56393761-1', 'auto');
-	ga('send', 'pageview');
-</script>
-
 </body>
 </html>

@@ -6,12 +6,14 @@
 <title>Core/Custom</title>
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" />
 
-<link rel="stylesheet" href="../../lib/jui/jui.min.css" />
+<link rel="stylesheet" href="../../jui/css/ui.min.css" />
+<link rel="stylesheet" href="../../jui/css/ui-jennifer.min.css" />
 <link rel="stylesheet" href="../../lib/prism.css" />
 <link rel="stylesheet" href="../../res/manual.css" />
 <script src="../../lib/jquery-1.8.0.min.js"></script>
 <script src="../../lib/jquery.binder.js"></script>
-<script src="../../lib/jui/jui.min.js"></script>
+<script src="../../jui/js/core.min.js"></script>
+<script src="../../jui/js/ui.min.js"></script>
 <script src="../../lib/prism.js"></script>
 <script src="../../res/manual.js"></script>
 <script src="../script/api_core.js"></script>
@@ -613,7 +615,7 @@ var svgApi = {
 	}
 };
 
-jui.ready([ "util", "uix.tab" ], function(util, tab) {
+jui.ready([ "util", "ui.tab" ], function(util, tab) {
 	var tab = tab("#tab", {
 		target: "#tab_contents",
 		event: {

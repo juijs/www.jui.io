@@ -15,7 +15,7 @@ var charts = [
     { type: "full3d", title : "Full 3D Chart" },
     { type: "3d", title : "3D Chart" },
     { type: "mixed", title : "Combination Chart" },
-    { type: "realtime", title : "Realtime Chart" },
+    //{ type: "realtime", title : "Realtime Chart" },
     { type: "dashboard", title : "Dashboard" },
     { type: "topology", title : "Topology Map" },
     { type: "bar", title : "Bar Chart" },
@@ -102,9 +102,9 @@ var code_list = [
     { type: "mixed", title : "Sales Comparison", code : "mixed5.js" },
 
     // realtime chart
-    { type: "realtime", title : "Realtime Line",  code : "realtime_line.js" },
-    { type: "realtime", title : "Realtime Area",  code : "realtime_area.js" },
-    { type: "realtime", title : "Realtime Complex Line",  code : "realtime_line_complex.js" },
+    //{ type: "realtime", title : "Realtime Line",  code : "realtime_line.js" },
+    //{ type: "realtime", title : "Realtime Area",  code : "realtime_area.js" },
+    //{ type: "realtime", title : "Realtime Complex Line",  code : "realtime_line_complex.js" },
 
     // dashboard
     { type: "dashboard", title : "Stock Dashboard", code : "mixed3_axis.js" },
@@ -318,7 +318,7 @@ function createTable() {
 
     var tpl = ["<tr>", list.join("") ,"</tr>"].join("");
 
-    table_1 = jui.create("uix.table", "#table_1", {
+    table_1 = jui.create("grid.table", "#table_1", {
         fields: fields,
         data: data,
         editRow: true,
@@ -338,7 +338,7 @@ function createTableStyle() {
 
     var themes = window.currentChart.theme();
 
-    table_2 = jui.create("uix.table", "#table_2", {
+    table_2 = jui.create("grid.table", "#table_2", {
         fields: [ "key", "value" ],
         editRow: [ 1 ],
         resize: true,
@@ -377,7 +377,7 @@ function createTableStyle() {
 function createTab() {
     if(jui.include("util.base").browser.msie) return;
 
-    tab_1 = jui.create("uix.tab", "#tab_1", {
+    tab_1 = jui.create("ui.tab", "#tab_1", {
         event: {
             change: function(data) {
                 if(data.index == 1) {
@@ -597,7 +597,7 @@ function setFunctions() {
     });
 }
 
-jui.ready([ "util.base", "uix.window" ], function(_, uiWin) {
+jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     editor = null;
 
     loadChartList();

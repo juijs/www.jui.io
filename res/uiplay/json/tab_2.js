@@ -1,4 +1,4 @@
-jui.ready([ "uix.tab" ], function(tab) {
+jui.ready([ "ui.tab" ], function(tab) {
     tab_2 = tab("#tab_2", {
         event: {
             change: function(data) {

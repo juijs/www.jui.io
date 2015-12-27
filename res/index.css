@@ -567,8 +567,8 @@ footer .row {
 footer .line {
 	margin-top: 18px !important;
 	margin-bottom: 18px !important;
-	height: 1px;
-	background: #414853;
+	height: 1px !important;
+	background: #414853 !important;
 }
 
 .center {
