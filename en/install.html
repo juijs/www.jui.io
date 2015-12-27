@@ -22,19 +22,20 @@
 </head>
 <body class="jui">
 
-<div class="page-header" style="padding-top: 50px;">
-    <h1>Common</h1>
-</div>
-
 <p>
-    <h2>Minify</h2>
+    <h2>Resources</h2>
 
     <p>
         JUI library only requires the user to load a double package file.<br/>
         You can use the theme file and otherwise, will provide additional tools to make the theme easily.
 
-		<pre><code class="language-markup">&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/jui.min.css&quot; />
-&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/jennifer.theme.min.css&quot; /></code></pre>
+		<pre><code class="language-markup">&lt;!-- Basic style components --&gt;
+&lt;link rel="stylesheet" href="/jui/dist/ui.min.css" />
+&lt;link rel="stylesheet" href="/jui/dist/ui-jennifer.min.css" />
+
+&lt;!-- Grid style components --&gt;
+&lt;link rel="stylesheet" href="/jui-grid/dist/grid.min.css" />
+&lt;link rel="stylesheet" href="/jui-grid/dist/grid-jennifer.min.css" /></code></pre>
     </p>
     <p>
         Access to the <strong>jui</strong> class must then be configured in the markup.
@@ -44,76 +45,36 @@
     </p>
 
     <p class="br">
-        As the script works only with <strong>jQuery 1.8</strong> or higher, it is necessary to load the jQuery library first.
+        All components except the chart, you must first load the jQuery 1.8 or later.<br/>
+        And because the JUI-core and separate utility in the project must be loaded separately.
 		
-		<pre><code class="language-markup">&lt;script src=&quot;lib/jquery.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;dist/jui.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+		<pre><code class="language-markup">&lt;!-- Required script files -->
+&lt;script src="jquery.min.js">&lt;/script>
+&lt;script src="/jui-core/dist/core.min.js">&lt;/script>
+
+&lt;!-- Basic script components -->
+&lt;script src="/jui/dist/ui.min.js">&lt;/script>
+
+&lt;!-- Grid script components -->
+&lt;script src="/jui-grid/dist/grid.min.js">&lt;/script></code></pre>
+    </p>
+
+    <p class="br">
+    Below is the script file need to first load the chart.
+        <pre><code class="language-markup">&lt;script src="/jui-core/dist/core.min.js">&lt;/script>
+&lt;script src="/jui-chart/dist/chart.min.js">&lt;/script></code></pre>
     </p>
 </section>
 
 <section>
-    <h2>Debug</h2>
+    <h2>Command</h2>
 
     <p>
-        The script can be loaded for debugging purposes, which requires the base and core files to be loaded.
-		
-		<pre><code class="language-markup">&lt;script src=&quot;js/base.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/core.js&quot;&gt;&lt;/script&gt;</code></pre>
-    </p>
-
-    <p class="br">
-        Load the util and the ui module first, then load the uix and the chart module in order.
-
-		<pre><code class="language-markup">// base
-&lt;script src=&quot;js/base.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/core.js&quot;&gt;&lt;/script&gt;
-
-// util
-&lt;script src=&quot;js/util/math.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/util/svg.js&quot;&gt;&lt;/script&gt;
-...
-// ui
-&lt;script src=&quot;js/ui/button.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/ui/combo.js&quot;&gt;&lt;/script&gt;
-...
-// uix
-&lt;script src=&quot;js/uix/autocomplete.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/uix/tab.js&quot;&gt;&lt;/script&gt;
-...
-
-// chart base
-&lt;script src=&quot;js/chart/draw.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/chart/builder.js&quot;&gt;&lt;/script&gt;
-
-// chart theme
-&lt;script src=&quot;js/chart/theme/jennifer.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/chart/theme/dark.js&quot;&gt;&lt;/script&gt;
-...
-// chart grid
-&lt;script src=&quot;js/chart/grid/core.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/chart/grid/block.js&quot;&gt;&lt;/script&gt;
-...
-// chart brush
-&lt;script src=&quot;js/chart/brush/core.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/chart/brush/bar.js&quot;&gt;&lt;/script&gt;
-...
-// chart widget
-&lt;script src=&quot;js/chart/widget/core.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/chart/widget/tooltip.js&quot;&gt;&lt;/script&gt;
-...</code></pre>
-    </p>
-
-    <p class="br">
-        Module(s) that you are not  using may be excluded. However, be careful as an error may occur in any module that has a dependency on an excluded file.
-    </p>
-</section>
-
-<section>
-    <h2>NodeJS</h2>
-
-    <p>
-        Now you can use the chart from the server. As follows: <strong>npm</strong> to install it using the command:
-        <pre><code class="language-javascript">npm install jui</code></pre>
+        JUI library can be installed via the package manager like <strong>npm</strong> or <strong>bower</strong>.
+        <pre><code class="language-javascript">npm install jui
+npm install jui-core
+npm install jui-grid
+npm install jui-chart</code></pre>
     </p>
 </section>
 

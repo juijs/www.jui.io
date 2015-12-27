@@ -4,7 +4,6 @@
 <head>
 <title>Getting Started</title>
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
-<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" />
 
 <!-- default meta tag -->
 
@@ -23,19 +22,20 @@
 </head>
 <body class="jui">
 
-<div class="page-header" style="padding-top: 50px;">
-    <h1>Common</h1>
-</div>
-
 <p>
-    <h2>Minify</h2>
+    <h2>Resources</h2>
 
     <p>
-        JUI 라이브러리는 스타일만 별도로 사용할 수 있으며, 아래 두개의 CSS 파일을 로드하면 됩니다.<br/>
-        그리고 테마 파일은 다르게 사용할 수 있으며, 테마를 쉽게 만들 수 있는 별도의 툴을 제공할 예정입니다.
+        JUI 라이브러리는 스타일만 별도로 사용할 수 있으며, 이번에 프로젝트가 분리되어 기존의 UI와 그리드를 따로 로드해야 합니다.<br/>
+        그리고 테마 파일은 다르게 사용할 수 있으며, 테마를 쉽게 만들 수 있는 JUI 스토어 서비스를 제공합니다. (<a href="http://store.jui.io" target="_blank">Link</a>)
 
-		<pre><code class="language-markup">&lt;link rel="stylesheet" href="dist/jui.min.css" />
-&lt;link rel="stylesheet" href="dist/jennifer.theme.min.css" /></code></pre>
+		<pre><code class="language-markup">&lt;!-- Basic style components --&gt;
+&lt;link rel="stylesheet" href="/jui/dist/ui.min.css" />
+&lt;link rel="stylesheet" href="/jui/dist/ui-jennifer.min.css" />
+
+&lt;!-- Grid style components --&gt;
+&lt;link rel="stylesheet" href="/jui-grid/dist/grid.min.css" />
+&lt;link rel="stylesheet" href="/jui-grid/dist/grid-jennifer.min.css" /></code></pre>
     </p>
     <p>
         <strong>jui</strong> 클래스가 설정되어 있는 마크업의 하위에서만 사용할 수 있습니다.
@@ -45,76 +45,35 @@
     </p>
 
     <p class="br">
-        스크립트는 <strong>jQuery 1.8</strong> 이상에서만 동작하므로 해당 라이브러리를 먼저 로드해야 합니다.
-		
-		<pre><code class="language-markup">&lt;script src="lib/jquery.min.js">&lt;/script>
-&lt;script src="dist/jui.min.js">&lt;/script></code></pre>
+        차트를 제외한 모든 컴포넌트들은 <strong>jQuery 1.8</strong> 이상에서만 동작하므로 해당 라이브러리를 먼저 로드해야 합니다.<br/>
+        그리고 이번 JUI 코어와 유틸리티가 별도의 프로젝트로 분리되었기 때문에 별도로 로드해야 합니다.
+		<pre><code class="language-markup">&lt;!-- Required script files -->
+&lt;script src="jquery.min.js">&lt;/script>
+&lt;script src="/jui-core/dist/core.min.js">&lt;/script>
+
+&lt;!-- Basic script components -->
+&lt;script src="/jui/dist/ui.min.js">&lt;/script>
+
+&lt;!-- Grid script components -->
+&lt;script src="/jui-grid/dist/grid.min.js">&lt;/script></code></pre>
+    </p>
+
+    <p class="br">
+        아래는 차트를 사용하기 위해 로드해야할 스크립트 파일입니다.
+        <pre><code class="language-markup">&lt;script src="/jui-core/dist/core.min.js">&lt;/script>
+&lt;script src="/jui-chart/dist/chart.min.js">&lt;/script></code></pre>
     </p>
 </section>
 
 <section>
-    <h2>Debug</h2>
+    <h2>Command</h2>
 
     <p>
-        스크립트는 디버깅 용도로 각각 별도로 로드할 수 있으며 <strong>base</strong>와 <strong>core</strong>는 필수 로드 파일입니다.
-		
-		<pre><code class="language-markup">&lt;script src="js/base.js"&gt;&lt;/script&gt;
-&lt;script src="js/core.js"&gt;&lt;/script&gt;</code></pre>
-    </p>
-
-    <p class="br">
-        그 다음에는 <strong>util</strong>과 <strong>ui</strong> 모듈을 먼저 로드하고, 순서대로 <strong>uix</strong>와 <strong>chart</strong> 모듈을 로드하면 됩니다.
-
-		<pre><code class="language-markup">// base
-&lt;script src="js/base.js"&gt;&lt;/script&gt;
-&lt;script src="js/core.js"&gt;&lt;/script&gt;
-
-// util
-&lt;script src="js/util/math.js"&gt;&lt;/script&gt;
-&lt;script src="js/util/svg.js"&gt;&lt;/script&gt;
-...
-// ui
-&lt;script src="js/ui/button.js"&gt;&lt;/script&gt;
-&lt;script src="js/ui/combo.js"&gt;&lt;/script&gt;
-...
-// uix
-&lt;script src="js/uix/autocomplete.js"&gt;&lt;/script&gt;
-&lt;script src="js/uix/tab.js"&gt;&lt;/script&gt;
-...
-
-// chart base
-&lt;script src="js/chart/draw.js"&gt;&lt;/script&gt;
-&lt;script src="js/chart/builder.js"&gt;&lt;/script&gt;
-
-// chart theme
-&lt;script src="js/chart/theme/jennifer.js"&gt;&lt;/script&gt;
-&lt;script src="js/chart/theme/dark.js"&gt;&lt;/script&gt;
-...
-// chart grid
-&lt;script src="js/chart/grid/core.js"&gt;&lt;/script&gt;
-&lt;script src="js/chart/grid/block.js"&gt;&lt;/script&gt;
-...
-// chart brush
-&lt;script src="js/chart/brush/core.js"&gt;&lt;/script&gt;
-&lt;script src="js/chart/brush/bar.js"&gt;&lt;/script&gt;
-...
-// chart widget
-&lt;script src="js/chart/widget/core.js"&gt;&lt;/script&gt;
-&lt;script src="js/chart/widget/tooltip.js"&gt;&lt;/script&gt;
-...</code></pre>
-    </p>
-
-    <p class="br">
-        필요에 따라 사용하지 않는 모듈은 로드하지 않아도 되지만 종속 관계가 있는 모듈에서 에러가 발생할 수 있으니 유의하시기 바랍니다.
-    </p>
-</section>
-
-<section>
-    <h2>NodeJS</h2>
-
-    <p>
-        이제는 서버에서도 차트를 사용할 수 있습니다. 아래와 같이 <strong>npm</strong> 명령어를 사용해서 설치합니다.
-        <pre><code class="language-javascript">npm install jui</code></pre>
+        JUI 라이브러리는 <strong>npm</strong>이나 <strong>bower</strong>와 같은 패키지 매니저를 통해서도 설치할 수 있습니다.
+        <pre><code class="language-javascript">npm install jui
+npm install jui-core
+npm install jui-grid
+npm install jui-chart</code></pre>
     </p>
 </section>
 
