@@ -31,16 +31,9 @@
 	<p>
 		The JUI library can use a component module inside of the callback of the ready method.<br/> If a module to be loaded to the first array is not specified, the ui and uix component group and a utility module are loaded.
 		
-		<pre><code class="language-javascript">jui.ready(function(ui, uix, _) {
-	var combo = ui.combo(selector, options),
-		table = uix.table(selector, options);
-		
-	//...
-});
-
-jui.ready([ &quot;ui&quot;, &quot;uix&quot;, &quot;uix.xtable&quot; ], function(ui, uix, xtable) {
+		<pre><code class="language-javascript">jui.ready([ &quot;ui&quot;, &quot;grid&quot;, &quot;grid.xtable&quot; ], function(ui, grid, xtable) {
     var combo = ui.combo(selector, options),
-        table = uix.table(selector, options),
+        table = grid.table(selector, options),
         xtable = xtable(selector, options);
 
     //...
