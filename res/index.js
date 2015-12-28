@@ -39,8 +39,6 @@ function initHashEvent() {
 			}
 			
 			initMenuUrl(hash);
-			initIFrameResize();				
-
 		} else {
 			initMenuUrl([ "home" ]);
 		}
