@@ -136,7 +136,7 @@ for(var i = 0; i < charts.length; i++) {
 }
 
 function loadChartList() {
-    var $menu = $("<div />").addClass("vmenu vmenu-rect");
+    var $menu = $("<div />").addClass("vmenu rect");
 
     for(var  i = 0; i < charts.length; i++) {
         var chart = charts[i];
@@ -324,7 +324,7 @@ function updateComponent(isCode) {
 function changeTheme(theme) {
     $(".chart_view").attr("class", "chart_view " + theme);
     $(".chart_data").attr("class", "chart_data " + theme);
-    $("#jui_theme").attr("href", "../../jui/css/ui-" + theme + ".min.css");
+    $("#jui_theme").attr("href", "../../lib/jui/css/ui-" + theme + ".min.css");
 
     if(theme == "jennifer") {
         $(".CodeMirror.cm-s-neo").css({

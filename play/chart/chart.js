@@ -415,7 +415,7 @@ function resetChart() {
 }
 
 function loadChartList() {
-    var $menu = $("<div />").addClass("vmenu vmenu-rect");
+    var $menu = $("<div />").addClass("vmenu rect");
 
     for(var  i = 0; i < charts.length; i++) {
         var chart = charts[i];
