@@ -15,90 +15,14 @@ var menuInfo = {
         msg: "JUI library is very easy to install and use."
     },
     core: {
-        title: "Framework",
-        msg: "To make it easier to develop a user interface provides many core functions.",
-        menu: {
-            common: "core/common",
-            api: "core/api",
-            log: "core/log",
-            custom: "core/custom",
-            util: "core/utility"
-        }
-    },
-    script: {
-        title: "Components",
-        msg: "To represent data provides a variety of UI components.",
-        menu: {
-            common: "script/common",
-            button: "#button_1",
-            "switch": "#switch_1",
-            progress: "#progress_1",
-            slider: "#slider_1",
-            colorpicker: "#colorpicker_1",
-            combo: "#combo_1",
-            window: "#win_1",
-            table: "#table_1",
-            xtable: "#xtable_1",
-            dropdown: "#dropdown_1",
-            tab: "#tab_1",
-            tooltip: "#tooltip_1",
-            modal: "#modal_1",
-            tree: "#tree_1",
-            paging: "#paging_1",
-            autocomplete: "#ac_1",
-            datepicker: "#datepicker_1",
-            notify: "#notify_1",
-            layout: "#layout_1",
-            accordion: "#accordion_1"
-        }
-    },
-    style: {
-        title: "CSS",
-        msg: "Fundamental HTML Elements styled and enhanced with extensible classes.",
-        menu: {
-            common: "style/common",
-            typography: "#typography",
-            form: "#forms",
-            icon: "#icons",
-            button: "#buttons",
-            "switch": "#switch",
-            progress: "#progress",
-            slider: "#slider",
-            vmenu: "#vmenu",
-            dropdown: "#dropdown",
-            navbar: "#navbar",
-            table: "#tables",
-            tab: "#tabs",
-            window: "#window",
-            msgbox: "#msgbox",
-            grid: "#grid",
-            tree: "#tree",
-            paging: "#paging",
-            panel: "#panel",
-            bargraph: "#bargraph",
-            datepicker: "#datepicker",
-            calendar: "#calendar",
-            notify: "#notify",
-            tooltip: "#tooltip",
-            popover: "#popover",
-            accordion: "#accordion"
-        }
+		src: "core.html",
+        title: "Basic",
+        msg: "To make it easier to develop a user interface provides many core functions."
     },
     chart: {
         title: "Charts",
         msg: "Provides a variety of data visualization components.",
-        src : "chart/common.html"
-    },
-    tips: {
-    	title: "Third Party",
-    	msg: "Bootstrap support, Provides JUI Administrator Tool Samples.",
-    	menu: {
-    		common: "tips/common",
-    		bootstrap: "tips/bootstrap",
-            pure: "tips/pure",
-            skeleton: "tips/skeleton",
-			summernote: "tips/summernote"
-    	}
+        src : "chart.html"
     }
 };
 
@@ -180,105 +104,25 @@ function initMenuUrl(hash) {
 	
 	// 상단 메뉴바 선택 효과 처리
 	$("[href*=" + hash[0] + "]").addClass("active");
-	
-	// 자바스크립트 및 스타일 처리
-	if(hash[0] == "core" || hash[0] == "script" || hash[0]  == "style" || hash[0]  == "tips") {
-		for(var key in menuInfo[hash[0]].menu) {
-			initSubMenuUrl(hash);
-			break;
-		}
-	} else if(hash[0] == "chart") {
+
+	// 화면 비동기 로드
+	if(hash[0] == "chart") {
 		if(src) {
-			loadPage(src);
+			$("#chart").load(src);
 		}
 	} else {
 		if(src) {
-			loadIframe($("#" + hash[0]).find("iframe"), src);
+			$("#" + hash[0]).find(".col").load(src, function() {
+				Prism.highlightAll();
+			});
 		}
 	}
-}
-
-function initSubMenuUrl(hash) {
-	// 초기값 처리...
-	hash[1] = (hash[1]) ? hash[1] : "common";
-	
-	var src = menuInfo[hash[0]].menu[hash[1]];
-	var $target = $("#" + hash[0]),
-		$menu = $target.find(".vmenu a[href='#" + hash[0] + "/" + hash[1] + "']");
-		
-	$target.find("a").removeClass("active");
-	$menu.addClass("active");
-	
-	if(src) {
-		if (hash[0] == "chart") {
-			loadPage(src);
-		} else {
-			if( (hash[0] == "script" && src.indexOf("script/common") == -1) ||
-				(hash[0] == "style" && src.indexOf("style/common") == -1) ) {
-
-				var popup = window.open("../res/uiplay/index.php" + src, "jui.uiplay");
-				popup.focus();
-			} else {
-				loadIframe($target.find("iframe"), src);
-			}
-		}
-	}
-}
-
-function initIFrameResize() {
-	setInterval(function() {
-		if(iframe.obj != null) {
-			if(iframe.height != getIFrameheight(iframe.obj)) {
-				setIFrameHeight(iframe.obj);
-			}
-		}
-	}, 3000);
-}
-
-function getIFrameheight(obj) {
-	var height = 0;
-	
-	if(obj.contentDocument && obj.contentDocument.body) {
-        height = obj.contentDocument.body.offsetHeight + 40;
-    } else if(obj.contentWindow.document.body) {
-        height = obj.contentWindow.document.body.scrollHeight;
-    }
-    
-    return height;
-}
-
-function setIFrameHeight(obj, id) {
-    if($("#" + id).find("iframe")[0] != obj && id) return;
-
-    if(obj.contentDocument && obj.contentDocument.body) {
-        obj.height = obj.contentDocument.body.offsetHeight + 40;
-    } else if(obj.contentWindow.document.body) {
-        obj.height = obj.contentWindow.document.body.scrollHeight;
-    }
-    
-	iframe.obj = obj;
-	iframe.height = obj.height;
 }
 
 function checkIeVersion() {
 	if(document.all && !document.addEventListener) {
 	    alert("This page is only supported browser than IE 9+");
 	}
-}
-
-function loadIframe($iframe, src) {
-	//loading.show();
-	
-	$iframe.attr("src", src + ((src.indexOf(".html") != -1) ? "" : ".html"));
-	$iframe.unbind("load");
-	
-	$iframe.on("load", function(e) {
-		//loading.hide();
-	});
-}
-
-function loadPage(src) {
-	$("#chart").load(src);
 }
 
 function initAnimation() {

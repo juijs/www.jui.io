@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../res/index.css" />
 <link rel="stylesheet" href="../jui/css/ui.min.css" />
 <link rel="stylesheet" href="../jui/css/ui-jennifer.min.css" />
+<link rel="stylesheet" href="../lib/prism.css" />
 
 <script src="../lib/jquery-1.8.0.min.js"></script>
 <script src="../lib/jquery.ba-hashchange.min.js"></script>
@@ -15,6 +16,8 @@
 <script src="../jui/js/ui.min.js"></script>
 <script src="../jui/js/chart.min.js"></script>
 <script src="../res/index.js"></script>
+<script src="../lib/prism.js"></script>
+
 <meta name="title" content="JENNIFER UI: JENNIFER UI: HTML5 components and SVG charts" />
 <meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart and map components." />
 <meta name="keywords" content="HTML, CSS, JS, JavaScript, Node.js, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
@@ -34,10 +37,10 @@
 
 		<span class="menu menu-left">
 			<a href="#install">Getting Started</a>
-			<a href="#style">CSS</a>
-			<a href="#core">Framework</a>
-			<a href="#script">Components</a>
+            <a href="#core">Basic</a>
 			<a href="#chart">Charts</a>
+			<a href="../res/uiplay/index.php" target="_blank">Components</a>
+			<a href="http://api.jui.io" target="_blank">API</a>
 		</span>
 
 		<span class="menu menu-right">
@@ -63,20 +66,6 @@
 			</div>
 		</div>
 	</nav>
-	<!--
-	<nav class="navbar fixed top">
-		<div class="center">
-			<div class="container-2">
-				<div class="img img-logo"></div>
-
-				<div class="detail">
-                    JUI Chart provides a variety of brushes, axis and widgets.<br/>
-                    You can represent data in conjunction with the table component.
-				</div>
-			</div>
-		</div>
-	</nav>
-	-->
 	<nav class="navbar fixed top">
 		<div class="center">
 			<div class="container-3">
@@ -128,8 +117,7 @@
 <!-- Intro, Start -->
 <article id="home">
 	<div class="center row">
-		<div class="col col-12">
-			<iframe frameborder="0" src="home.html" height="750"></iframe>
+		<div class="col col-12 home">
 		</div>
 	</div>
 </article>
@@ -138,8 +126,7 @@
 <!-- About, Start -->
 <article id="about">
     <div class="center row">
-        <div class="col col-12">
-            <iframe frameborder="0" src="about.html" height="400"></iframe>
+        <div class="col col-12 about">
         </div>
     </div>
 </article>
@@ -148,8 +135,7 @@
 <!-- Install, Start -->
 <article id="install">
 	<div class="center row">
-		<div class="col col-12">
-			<iframe frameborder="0" scrolling="no" onload="setIFrameHeight(this, 'install')"></iframe>
+		<div class="col col-12 manual">
 		</div>
 	</div>
 </article>
@@ -158,123 +144,15 @@
 <!-- Core, Start -->
 <article id="core">
 	<div class="center row">
-		<div class="col col-left">
-			<div class="vmenu vmenu-flat">
-				<a href="#core/api">API</a>
-                <a href="#core/log">Log</a>
-                <a href="#core/custom">Custom</a>
-                <a href="#core/util">Utility</a>
-			</div>
-		</div>
-		<div class="col col-right">
-			<iframe frameborder="0" scrolling="no" onload="setIFrameHeight(this, 'core')"></iframe>
+		<div class="col col-12 manual">
 		</div>
 	</div>
 </article>
 <!-- Core, End -->
 
-<!-- Script, Start -->
-<article id="script">
-	<div class="center row">
-		<div class="col col-left">
-			<div class="vmenu vmenu-flat">
-				<a href="#script/button">Button</a>
-				<a href="#script/switch">Switch</a>
-				<a href="#script/progress">Progress Bar</a>
-				<a href="#script/slider">Slider</a>
-				<a href="#script/colorpicker">Color Picker</a>
-                <a href="#script/combo">Combo</a>
-                <a href="#script/window">Window</a>
-                <a href="#script/table">Table</a>
-                <a href="#script/xtable">X Table</a>
-                <a href="#script/dropdown">Dropdown</a>
-                <a href="#script/tab">Tab</a>
-                <a href="#script/tooltip">Tooltip</a>
-                <a href="#script/modal">Modal</a>
-                <a href="#script/tree">Tree</a>
-                <a href="#script/paging">Paging</a>
-                <a href="#script/autocomplete">Auto Complete</a>
-                <a href="#script/datepicker">Date Picker</a>
-                <a href="#script/notify">Notify</a>
-                <a href="#script/layout">Layout</a>
-                <a href="#script/accordion">Accordion</a>
-				<ul class="submenu" style="display: none;">
-					<li data-subkey="">Basic</li>
-					<li data-subkey="_api">API</li>
-					<!--<li data-subkey="_markup">Markup</li>-->
-				</ul>
-			</div>
-		</div>
-		<div class="col col-right">
-			<iframe frameborder="0" scrolling="no" onload="setIFrameHeight(this, 'script')"></iframe>
-		</div>
-	</div>
-</article>
-<!-- Script, End -->
-
-<!-- CSS, Start -->
-<article id="style">
-	<div class="center row">
-		<div class="col col-left">
-			<div class="vmenu vmenu-flat">
-				<a href="#style/typography">Typography</a>
-				<a href="#style/form">Forms</a>
-				<a href="#style/icon">Icons</a>
-				<a href="#style/button">Buttons</a>
-				<a href="#style/switch">Switch</a>
-				<a href="#style/progress">Progress Bar</a>
-				<a href="#style/slider">Slider</a>
-				<a href="#style/vmenu">Vertical Menu</a>
-				<a href="#style/dropdown">Dropdown Menu</a>
-				<a href="#style/navbar">Navigation Bar</a>
-				<a href="#style/table">Tables</a>
-				<a href="#style/tab">Tabs</a>
-				<a href="#style/window">Window</a>
-				<a href="#style/msgbox">Message Box</a>
-				<a href="#style/tree">Tree Menu</a>
-				<a href="#style/paging">Paging</a>
-				<a href="#style/panel">Panel</a>
-				<a href="#style/bargraph">Bar Graph</a>
-				<a href="#style/datepicker">Date Picker</a>
-				<a href="#style/calendar">Calendar</a>
-				<a href="#style/notify">Notify</a>
-				<a href="#style/tooltip">Tooltip</a>
-				<a href="#style/popover">Popover</a>
-				<a href="#style/accordion">Accordion</a>
-				<a href="#style/grid">Grid</a>
-			</div>
-		</div>
-		<div class="col col-right">
-			<iframe frameborder="0" scrolling="no" onload="setIFrameHeight(this, 'style')"></iframe>
-		</div>
-	</div>
-</article>
-<!-- CSS, End -->
-
 <!-- Chart, Start -->
 <article id="chart"></article>
 <!-- Chart, End -->
-
-<!-- Tips, Start -->
-<article id="tips">
-	<div class="center row">
-		<div class="col col-left">
-			<div class="vmenu vmenu-flat">
-                <a href="#tips/bootstrap">Bootstrap</a>
-                <a href="../res/play/admintool/index.html" target="_blank">JUI Admin Tool</a>
-                <!--
-                <a href="#tips/pure">Pure</a>
-                <a href="#tips/skeleton">Skeleton</a>
-                <a href="#tips/summernote">Summernote</a>
-                -->
-			</div>
-		</div>
-		<div class="col col-right">
-			<iframe frameborder="0" scrolling="no" onload="setIFrameHeight(this, 'tips')"></iframe>
-		</div>
-	</div>
-</article>
-<!-- Tips, End -->
 
 <nav class="navbar fixed top bg-sub">
 	<div class="center">
@@ -300,7 +178,6 @@
 		<div class="col col-5 link">
 			<span id="btn_about">ABOUT US</span> |
             <span onclick="window.open('https://github.com/juijs/');">GitHub</span> |
-            <span onclick="window.open('http://api.jui.io');">API</span> |
             <span onclick="window.open('http://blog.jui.io');">Blog</span> |
             <span onclick="window.open('http://store.jui.io');">Store</span> |
 			<span onclick="window.open('https://www.facebook.com/groups/815675585191885/');">Facebook</span>
