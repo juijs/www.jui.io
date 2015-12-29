@@ -2,8 +2,8 @@
 <html>
 <head>
     <?php include("../tpl/header.html"); ?>
-    <title>JUI is HTML5 based UI Framework. Support many components, SVG charts and fast grid.</title>
-    <meta name="title" content="JUI is HTML5 based UI Framework. Support many components, SVG charts and fast grid." />
+    <title>JENNIFER UI: HTML5 based UI Framework, Support many components, SVG charts and fast grid.</title>
+    <meta name="title" content="JENNIFER UI: HTML5 based UI Framework, Support many components, SVG charts and fast grid." />
     <?php include("../tpl/description_en.html") ?>
 </head>
 <body class="jui">

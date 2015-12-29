@@ -2,8 +2,8 @@
 <html>
 <head>
 	<?php include("../tpl/header.html"); ?>
-	<title>JUI는 HTML5 기반의 UI 프레임워크입니다. 수많은 컴포넌트와 SVG 차트 그리고 고성능 그리드를 제공합니다.</title>
-	<meta name="title" content="JUI는 HTML5 기반의 UI 프레임워크입니다. 수많은 컴포넌트와 SVG 차트 그리고 고성능 그리드를 제공합니다." />
+	<title>JENNIFER UI: HTML5 기반의 UI 프레임워크이며, 수많은 컴포넌트와 SVG 차트 그리고 고성능 그리드를 제공합니다.</title>
+	<meta name="title" content="JENNIFER UI: HTML5 기반의 UI 프레임워크이며, 수많은 컴포넌트와 SVG 차트 그리고 고성능 그리드를 제공합니다." />
 	<?php include("../tpl/description_ko.html") ?>
 </head>
 <body class="jui ko">
