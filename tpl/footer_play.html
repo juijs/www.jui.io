@@ -1,0 +1,38 @@
+<div id="comments" class="window">
+    <div class="head">
+        <div class="left">Leave a comment</div>
+        <div class="right">
+            <a href="#" class="close"><i class="icon-exit"></i></a>
+        </div>
+    </div>
+    <div class="body">
+        <section class="disqus">
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                window.disqus_shortname = 'jui'; // required: replace example with your forum shortname
+                window.disqus_identifier = window.location.hash;
+
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </section>
+    </div>
+</div>
+
+<script id="tpl_compare" type="text/template">
+    <div class="row" style="height: 100%;">
+        <div class="col col-6">
+            <div id="chart-left"></div>
+        </div>
+        <div class="col col-6" style="margin-left: -65px;">
+            <div id="chart-right"></div>
+        </div>
+    </div>
+</script>
