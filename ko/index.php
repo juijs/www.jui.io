@@ -13,7 +13,9 @@
 	<nav class="navbar fixed top">
 		<div class="center">
 			<div class="container">
-				<div class="img img-logo"></div>
+				<div class="title">
+					What is JUI Framework?
+				</div>
 
 				<div class="detail">
 					JENNIFER UI는 웹 페이지를 구성하는 모든 종류의 컴포넌트를 <br/>
@@ -29,7 +31,10 @@
 	<nav class="navbar fixed top">
 		<div class="center">
 			<div class="container-2">
-				<div class="img img-logo"></div>
+				<div class="title">
+					Simple & Easy<br/>
+					JUI Chart
+				</div>
 
 				<div class="detail">
 					JENNIFER UI 차트는 다양한 브러쉬와 그리드, 위젯을 제공하며<br/>
@@ -42,7 +47,10 @@
 	<nav class="navbar fixed top">
 		<div class="center">
 			<div class="container-4">
-				<div class="img img-logo"></div>
+				<div class="title">
+					Manipulating SVG Icons<br/>
+					With Simple CSS
+				</div>
 
 				<div class="detail">
 					JENNIFER UI는 다양한 벡터 타입 아이콘을 제공합니다.<br/>

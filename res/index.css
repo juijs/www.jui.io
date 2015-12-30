@@ -311,6 +311,13 @@ nav .detail {
 	line-height: 1.4;
 }
 
+nav .container .title {
+	color: #fff;
+	font-size: 4.25em;
+	font-weight: bold;
+	letter-spacing: -0.5px;
+	text-shadow: 0px 1px rgba(0,0,0,0.5);
+}
 nav .container .detail {
 	padding-top: 40px;
 	color: #fff;
@@ -318,18 +325,34 @@ nav .container .detail {
 	text-shadow: 0px 1px rgba(0,0,0,0.5);
 }
 
+nav .container-2 .title {
+	color: #8A65C5;
+	font-size: 4.6em;
+	font-weight: bold;
+	letter-spacing: -0.5px;
+	text-shadow: 0px 1px rgba(255,255,255,0.5);
+}
 nav .container-2 .detail {
 	padding-top: 36px;
 	color: #666;
 	text-shadow: 0px 1px rgba(255,255,255,0.5);
 }
 
+/*/
 nav .container-3 .detail {
 	padding-top: 40px;
 	color: #666;
 	text-shadow: 0px 1px rgba(255,255,255,0.5);
 }
+/**/
 
+nav .container-4 .title {
+	color: #8A65C5;
+	font-size: 4.6em;
+	font-weight: bold;
+	letter-spacing: -0.5px;
+	text-shadow: 1px 0px rgba(0,0,0,2);
+}
 nav .container-4 .detail {
 	padding-top: 44px;
 	color: #fff;

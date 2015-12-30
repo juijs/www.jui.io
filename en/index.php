@@ -13,7 +13,9 @@
     <nav class="navbar fixed top">
         <div class="center">
             <div class="container">
-                <div class="img img-logo"></div>
+                <div class="title">
+                    What is JUI Framework?
+                </div>
 
                 <div class="detail">
                     Simple, and fast, JUI is an all-in-one desktop UI framework.<br/>
@@ -26,8 +28,26 @@
     </nav>
     <nav class="navbar fixed top">
         <div class="center">
-            <div class="container-3">
-                <div class="img img-logo"></div>
+            <div class="container-2">
+                <div class="title">
+                    Simple & Easy<br/>
+                    JUI Chart
+                </div>
+
+                <div class="detail">
+                    JUI Chart provides a variety of brushes, axis and widgets.<br/>
+                    You can represent data in conjunction with the table component.
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar fixed top">
+        <div class="center">
+            <div class="container-4">
+                <div class="title">
+                    Manipulating SVG Icons<br/>
+                    With Simple CSS
+                </div>
 
                 <div class="detail">
                     JENNIFER UI includes a variety of vector-type icons.<br/> That means they can be used at any size.
