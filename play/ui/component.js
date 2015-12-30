@@ -362,19 +362,20 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     $("#chart-list-0").click();
 
     // 모바일 버전 이벤트
-    $("#sidemenu").on("click", function(e) {
+    $("#sidemenu").on("mousedown", function(e) {
         if($("body").hasClass("menu-open")) {
             $("body").removeClass("menu-open");
         } else {
             $("body").addClass("menu-open");
         }
     });
-    $(document).on("click", function(e) {
-        if($("body").hasClass("menu-open")) {
-            var tag = e.target.tagName.toUpperCase();
-            if(tag == "I" || tag == "A") return;
+    $("#chart-content").on("mousedown", function(e) {
+        $("body").removeClass("menu-open");
+    });
+    $(document).on("mousedown", function(e) {
+        var tag = e.target.tagName.toUpperCase();
+        if(tag == "I" || tag == "A" || tag == "LI") return;
 
-            $("body").removeClass("menu-open");
-        }
+        $("body").removeClass("menu-open");
     });
 });
