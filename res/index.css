@@ -16,11 +16,19 @@ header {
 	background-image: none !important;
 }
 
+header #sidemenu {
+	display: none;
+}
+
 nav {
 	margin-top: 56px;
 	height: 160px;
 	background-image: none !important;
 	position: relative !important;
+}
+
+.menu-window {
+	display: none;
 }
 
 .main {

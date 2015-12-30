@@ -285,4 +285,17 @@ jui.ready([ "ui.modal", "ui.dropdown" ], function(modal, dropdown) {
 
 		return false;
 	});
+
+	// 모바일 버전 이벤트
+	$("#sidemenu").on("click", function(e) {
+		if($("body").hasClass("menu-open")) {
+			$("body").removeClass("menu-open");
+		} else {
+			$("body").addClass("menu-open");
+		}
+	});
+	$("#sidemenu-close").on("click", function(e) {
+		$("body").removeClass("menu-open");
+	});
+
 });

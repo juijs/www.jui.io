@@ -26,6 +26,61 @@
 		display: none;
 	}
 
+	header #sidemenu {
+		position: absolute;
+		display: block;
+		right: 0px;
+		top: 18px;
+		font-size: 22px;
+		color: white;
+	}
+
+	body.menu-open .menu-window {
+		right: 0px;
+	}
+	.menu-window {
+		display: block;
+		position: fixed;
+		right: -240px;
+		top: 0px;
+		bottom: 0px;
+		width: 240px;
+		background: #28303d;
+		color: #ffffff;
+		-webkit-transition: all 0.3s ease;
+		-moz-transition: all 0.3s ease;
+		-o-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+		z-index: 99999;
+	}
+	.menu-window .nav {
+		position: relative;
+		padding: 30px 20px;
+		overflow: auto;
+	}
+	.menu-window .nav #sidemenu-close {
+		position: absolute;
+		top: 26px;
+		font-size: 18px;
+		color: white;
+	}
+	.menu-window .menu {
+		list-style: none;
+		padding: 0px;
+	}
+	.menu-window .menu li {
+		padding: 0px;
+		margin: 0px;
+		text-align: center;
+		padding: 10px 0px;
+		border-bottom: 1px solid #474a52;
+	}
+	.menu-window .menu li a {
+		text-decoration: none;
+		color: white;
+		font-size: 16px;
+	}
+
 	.main .img-control-left, .main .img-control-right {
 		display: none !important;
 	}
