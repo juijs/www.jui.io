@@ -148,7 +148,7 @@
 	}
 
 	.main-chart nav {
-		background-position: -300px -70px !important;
+		background-position: -330px -70px !important;
 	}
 	.main-chart .message {
 		font-size: 1.2em !important;
@@ -162,6 +162,9 @@
 	.main-chart-1 .title {
 		font-size: 3.7em !important;
 		margin-top: 100px !important;
+	}
+	.main-chart-1 .img-play {
+		margin-top: 30px !important;
 	}
 	.main-chart-2 .center {
 		background-position: -610px 30px;
