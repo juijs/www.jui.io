@@ -369,7 +369,7 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
             $("body").addClass("menu-open");
         }
     });
-    $("body").on("click", function(e) {
+    $(document).on("click", function(e) {
         if($("body").hasClass("menu-open")) {
             var tag = e.target.tagName.toUpperCase();
             if(tag == "I" || tag == "A" || tag == "LI") return;
