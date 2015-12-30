@@ -166,6 +166,12 @@
 	.main-chart-2 .center {
 		background-position: -610px 30px;
 	}
+	.main-chart-3 .chart {
+		margin-top: 30px !important;
+	}
+	.main-chart-4 .chart {
+		margin-top: 30px !important;
+	}
 	.main-chart-5 .chart {
 		width: 320px !important;
 	}
@@ -173,7 +179,7 @@
 		height: 570px !important;
 	}
 	.main-chart-3 {
-		height: 550px !important;
+		height: 480px !important;
 	}
 	.main-chart-4 {
 		height: 820px !important;
