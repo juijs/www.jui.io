@@ -1,0 +1,68 @@
+@media screen and (max-device-width: 700px) {
+	.header a {
+		display: none;
+	}
+	.header span {
+		position: absolute;
+		display: block;
+		right: 55px;
+		top: 20px;
+	}
+	.header #sidemenu {
+		position: absolute;
+		display: block;
+		right: 15px;
+		top: 20px;
+		font-size: 22px;
+		color: white;
+	}
+
+	body.menu-open .menu {
+		right: 0px;
+	}
+	.menu {
+		display: block !important;
+		position: fixed !important;
+		left: auto !important;
+		right: -250px;
+		top: 0px !important;
+		bottom: 0px !important;
+		background: #28303d !important;
+		color: #ffffff !important;
+		-webkit-transition: all 0.3s ease !important;
+		-moz-transition: all 0.3s ease !important;
+		-o-transition: all 0.3s ease !important;
+		transition: all 0.3s ease !important;
+		z-index: 99999 !important;
+	}
+
+	.content {
+		left: 0px !important;
+	}
+	.content .chart_data {
+		display: none;
+	}
+	.content .chart_view {
+		left: 0%;
+		width: 100%;
+	}
+	.content .chart_view #chart-content-title {
+		display: none;
+	}
+	.content .chart_view #chart-content {
+		top: 20px !important;
+	}
+	.content .splitter {
+		display: none;
+	}
+}
+
+@media screen and (max-device-width: 400px) {
+	.menu {
+		width: 200px !important;
+	}
+
+	.menu a {
+		font-size: 11px !important;
+	}
+}

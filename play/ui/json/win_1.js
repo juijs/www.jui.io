@@ -1,4 +1,4 @@
-jui.ready([ "uix.window" ], function(win) {
+jui.ready([ "ui.window" ], function(win) {
     win_1 = win("#win_1", {
         width: 500,
         height: 300,

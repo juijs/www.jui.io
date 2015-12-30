@@ -1,4 +1,4 @@
-jui.ready([ "uix.table" ], function(table) {
+jui.ready([ "grid.table" ], function(table) {
     table_4 = table("#table_4", {
         scroll: true,
         scrollHeight: 150,

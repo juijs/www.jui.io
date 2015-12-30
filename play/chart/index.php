@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
     <link rel="stylesheet" href="chart.css">
+    <link rel="stylesheet" href="responsive.css">
     <script src="chart.js" type="text/javascript"></script>
 </head>
 <body class="jui">
@@ -17,7 +18,7 @@
         <img src="../../res/img/play_logo.png" align="absmiddle" onclick="window.open('../../index.html', 'jui.site')" />
     </div>
     <div class="toolbar">
-        <span >
+        <span>
 			Themes
 			<select onchange="changeTheme(this.value)">
                 <option value="jennifer">Jennifer</option>
@@ -29,6 +30,8 @@
         </span>
 
         <a href="javascript:comments.show();" class="chart_comments">Leave a comment</a>
+
+        <i id="sidemenu" class="icon-menu"></i>
     </div>
 </div>
 <div class="container">

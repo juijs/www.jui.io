@@ -6,16 +6,8 @@
     <meta property="og:title" content="JENNIFER UI: UI Play" />
     <?php include("../../tpl/description_en.html") ?>
 
-    <meta property="og:description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://jui.io/ko/index.php" />
-    <meta property="og:image" content="http://jui.io/res/img/jui_link.jpg" />
-    <meta name="title" content="JENNIFER UI: UI Play" />
-    <meta name="description" content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components." />
-    <meta name="keywords" content="HTML, CSS, JS, JavaScript, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT" />
-    <meta name="author" content="Alvin, Jayden and Yoha" />
-
     <link rel="stylesheet" href="../chart/chart.css">
+    <link rel="stylesheet" href="../chart/responsive.css">
     <link rel="stylesheet" href="component.css">
     <link rel="stylesheet" href="style.css" />
     <script src="component.js" type="text/javascript"></script>
@@ -36,6 +28,8 @@
         </span>
 
         <a href="javascript:comments.show();" class="chart_comments">Leave a comment</a>
+
+        <i id="sidemenu" class="icon-menu"></i>
     </div>
 </div>
 <div class="container">
@@ -81,7 +75,8 @@
     </div>
 </div>
 
-<link id="jui_theme" rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
+<link id="jui_theme_ui" rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
+<link id="jui_theme_grid" rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" />
 <?php include("../../tpl/footer_play.html"); ?>
 
 </body>

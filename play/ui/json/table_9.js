@@ -1,4 +1,4 @@
-jui.ready([ "ui.dropdown", "uix.table" ], function(dropdown, table) {
+jui.ready([ "ui.dropdown", "grid.table" ], function(dropdown, table) {
     var dd = dropdown("#table_9_dd", {
         event: {
             change: function(data) {

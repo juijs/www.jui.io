@@ -1,4 +1,4 @@
-jui.ready([ "uix.table" ], function(table) {
+jui.ready([ "grid.table" ], function(table) {
     table_5 = table("#table_5", {
         event: {
             click: function(row, e) {

@@ -1,4 +1,4 @@
-jui.ready([ "uix.xtable" ], function(xtable) {
+jui.ready([ "grid.xtable" ], function(xtable) {
     var page = 1;
 
     xtable_2 = xtable("#xtable_2", {

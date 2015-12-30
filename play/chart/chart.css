@@ -216,3 +216,7 @@ body > .container > .content {
     top: 80px;
     bottom: 20px;
 }
+
+#sidemenu {
+    display: none;
+}

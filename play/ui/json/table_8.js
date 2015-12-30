@@ -1,4 +1,4 @@
-jui.ready([ "uix.table" ], function(table) {
+jui.ready([ "grid.table" ], function(table) {
     table_8 = table("#table_8", {
         fields: [ null, "name", "age", "location" ],
         data: [

@@ -1,4 +1,4 @@
-jui.ready([ "uix.table" ], function(table) {
+jui.ready([ "grid.table" ], function(table) {
     table_3 = table("#table_3", {
         event: {
             expand: function(row, e) {

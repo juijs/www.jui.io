@@ -1,4 +1,4 @@
-jui.ready([ "uix.autocomplete" ], function(autocomplete) {
+jui.ready([ "ui.autocomplete" ], function(autocomplete) {
     ac_1 = autocomplete("#ac_1", {
         target: "input[type=text]",
         words: [

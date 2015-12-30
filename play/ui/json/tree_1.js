@@ -1,4 +1,4 @@
-jui.ready([ "uix.tree" ], function(tree) {
+jui.ready([ "ui.tree" ], function(tree) {
     tree_1 = tree("#tree_1 .tree", {
         root: { title: "C:\\" },
         event: {

@@ -1,4 +1,4 @@
-jui.ready([ "uix.xtable" ], function(xtable) {
+jui.ready([ "grid.xtable" ], function(xtable) {
     xtable_4 = xtable("#xtable_4", {
         fields: [ "name", "age", "location" ],
         data: [

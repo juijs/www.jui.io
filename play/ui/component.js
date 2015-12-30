@@ -324,7 +324,8 @@ function updateComponent(isCode) {
 function changeTheme(theme) {
     $(".chart_view").attr("class", "chart_view " + theme);
     $(".chart_data").attr("class", "chart_data " + theme);
-    $("#jui_theme").attr("href", "../../lib/jui/css/ui-" + theme + ".min.css");
+    $("#jui_theme_ui").attr("href", "../../lib/jui/css/ui-" + theme + ".min.css");
+    $("#jui_theme_grid").attr("href", "../../lib/jui/css/grid-" + theme + ".min.css");
 
     if(theme == "jennifer") {
         $(".CodeMirror.cm-s-neo").css({
@@ -359,4 +360,21 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     });
 
     $("#chart-list-0").click();
+
+    // 모바일 버전 이벤트
+    $("#sidemenu").on("click", function(e) {
+        if($("body").hasClass("menu-open")) {
+            $("body").removeClass("menu-open");
+        } else {
+            $("body").addClass("menu-open");
+        }
+    });
+    $("body").on("click", function(e) {
+        if($("body").hasClass("menu-open")) {
+            var tag = e.target.tagName.toUpperCase();
+            if(tag == "I" || tag == "A" || tag == "LI") return;
+
+            $("body").removeClass("menu-open");
+        }
+    });
 });

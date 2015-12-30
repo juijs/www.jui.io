@@ -1,4 +1,4 @@
-jui.ready([ "uix.table" ], function(table) {
+jui.ready([ "grid.table" ], function(table) {
     table_2 = table("#table_2", {
         tpl: {
             row: $("#tpl_row").html()

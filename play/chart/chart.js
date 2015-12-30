@@ -632,4 +632,21 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     }
 
     $("#chart-list-0").click();
+
+    // 모바일 버전 이벤트
+    $("#sidemenu").on("click", function(e) {
+        if($("body").hasClass("menu-open")) {
+            $("body").removeClass("menu-open");
+        } else {
+            $("body").addClass("menu-open");
+        }
+    });
+    $("body").on("click", function(e) {
+        if($("body").hasClass("menu-open")) {
+            var tag = e.target.tagName.toUpperCase();
+            if(tag == "I" || tag == "A" || tag == "LI") return;
+
+            $("body").removeClass("menu-open");
+        }
+    });
 });
