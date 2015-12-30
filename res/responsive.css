@@ -24,7 +24,9 @@
 		padding: 15px !important;
 		margin-top: 30px !important;
 	}
-
+	.main-chart-1 {
+		height: 610px !important;
+	}
 	.main-chart-1 .box {
 		margin: 50px 0px !important;
 	}
@@ -37,10 +39,6 @@
 	}
 	.main-chart-5 .chart {
 		width: 550px !important;
-	}
-
-	.main-chart-1 {
-		height: 570px !important;
 	}
 
 	.center {
@@ -153,7 +151,7 @@
 		background-position: -300px -70px !important;
 	}
 	.main-chart .message {
-		font-size: 1.1em !important;
+		font-size: 1.2em !important;
 		padding: 10px !important;
 		text-align: center !important;
 		margin-top: 20px !important;
@@ -162,7 +160,7 @@
 		margin: 50px 0px !important;
 	}
 	.main-chart-1 .title {
-		font-size: 4em !important;
+		font-size: 3.8em !important;
 		margin-top: 80px !important;
 	}
 	.main-chart-2 .center {
@@ -172,7 +170,7 @@
 		width: 320px !important;
 	}
 	.main-chart-1 {
-		height: 500px !important;
+		height: 550px !important;
 	}
 	.main-chart-3 {
 		height: 523px !important;
@@ -181,7 +179,7 @@
 		height: 800px !important;
 	}
 	.main-chart-5 {
-		height: 586px !important;
+		height: 620px !important;
 	}
 
 	.center {
