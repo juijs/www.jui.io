@@ -160,8 +160,8 @@
 		margin: 50px 0px !important;
 	}
 	.main-chart-1 .title {
-		font-size: 3.6em !important;
-		margin-top: 80px !important;
+		font-size: 3.7em !important;
+		margin-top: 100px !important;
 	}
 	.main-chart-2 .center {
 		background-position: -610px 30px;
@@ -177,6 +177,9 @@
 	}
 	.main-chart-1 {
 		height: 570px !important;
+	}
+	.main-chart-2 {
+		height: 280px !important;
 	}
 	.main-chart-3 {
 		height: 480px !important;
