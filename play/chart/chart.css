@@ -78,8 +78,8 @@ body > .container > .content {
 
 .menu > .vmenu > a {
     display: inline-block;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: left !important;
 }
 

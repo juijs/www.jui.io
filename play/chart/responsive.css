@@ -34,6 +34,21 @@
 		-o-transition: all 0.3s ease !important;
 		transition: all 0.3s ease !important;
 		z-index: 99999 !important;
+		width: 200px !important;
+	}
+	.menu a {
+		padding-top: 7px !important;
+		padding-bottom: 7px !important;
+		font-size: 0.85em !important;
+	}
+	.menu .submenu {
+		padding: 5px 0px !important;
+	}
+	.menu .submenu li {
+		padding: 3px 10px !important;
+	}
+	.menu .submenu li a {
+		font-size: 0.8em !important;
 	}
 
 	.content {
@@ -54,15 +69,5 @@
 	}
 	.content .splitter {
 		display: none;
-	}
-}
-
-@media screen and (max-device-width: 400px) {
-	.menu {
-		width: 200px !important;
-	}
-
-	.menu a {
-		font-size: 11px !important;
 	}
 }
