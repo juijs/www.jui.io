@@ -231,7 +231,7 @@ function viewCodeEditor() {
 
     if(!editor2) {
         editor2 = CodeMirror.fromTextArea($("#chart-html-text")[0], {
-            mode: "htmlmixed",
+            mode: "xml",
             lineNumbers: true,
             theme : "neo"
         });
