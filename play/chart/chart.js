@@ -641,10 +641,7 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
             $("body").addClass("menu-open");
         }
     });
-    $(document).on("mousedown", function(e) {
-        var tag = e.target.tagName.toUpperCase();
-        if(tag == "I" || tag == "A" || tag == "LI") return;
-
+    $("#chart-content").on("mousedown", function(e) {
         $("body").removeClass("menu-open");
     });
 });

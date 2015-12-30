@@ -372,10 +372,4 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     $("#chart-content").on("mousedown", function(e) {
         $("body").removeClass("menu-open");
     });
-    $(document).on("mousedown", function(e) {
-        var tag = e.target.tagName.toUpperCase();
-        if(tag == "I" || tag == "A" || tag == "LI") return;
-
-        $("body").removeClass("menu-open");
-    });
 });
