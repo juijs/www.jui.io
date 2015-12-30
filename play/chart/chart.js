@@ -563,7 +563,7 @@ function setFunctions() {
         var $el = $(".chart_view");
 
         if ($el.hasClass("fullscreen")) {
-            $el.removeClass("fullscreen").animate({ left : "30%" }, viewCodeEditor);
+            $el.removeClass("fullscreen").animate({ left : "40%" }, viewCodeEditor);
         } else {
             $el.addClass("fullscreen").animate({ left : "0%" }, viewCodeEditor);
         }
