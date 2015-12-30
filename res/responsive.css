@@ -16,8 +16,58 @@
 		padding-top: 85px;
 	}
 
+	.main-chart .box {
+		width: 100% !important;
+	}
+	.main-chart .message {
+		font-size: 1.3em !important;
+		padding: 15px !important;
+		margin-top: 30px !important;
+	}
+
+	.main-chart-1 .box {
+		margin: 50px 0px !important;
+	}
+	.main-chart-1 .title {
+		font-size: 4em !important;
+		margin-top: 80px !important;
+	}
+	.main-chart-2 .center {
+		background-position: -500px 15px;
+	}
+	.main-chart-5 .chart {
+		width: 550px !important;
+	}
+
+	.main-chart-1 {
+		height: 570px !important;
+	}
+
 	.center {
 		width: 600px;
+	}
+
+	nav.about img {
+		width: 100%;
+		margin-top: 50px;
+	}
+	nav.about .msg {
+		font-size: 24px !important;
+		line-height: 32px !important;
+	}
+
+	#about .hr {
+		display: block;
+	}
+	#about .col-4 {
+		float: none;
+		width: 100%;
+		margin-bottom: 30px;
+		padding-top: 30px;
+		text-align: center;
+	}
+	#about .col-4 p {
+		width: 100% !important;
 	}
 }
 
@@ -30,7 +80,7 @@
 		position: absolute;
 		display: block;
 		right: 0px;
-		top: 18px;
+		top: 20px;
 		font-size: 22px;
 		color: white;
 	}
@@ -60,7 +110,7 @@
 	}
 	.menu-window .nav #sidemenu-close {
 		position: absolute;
-		top: 26px;
+		top: 28px;
 		font-size: 18px;
 		color: white;
 	}
@@ -95,8 +145,47 @@
 		display: none;
 	}
 
+	nav.sub .msg {
+		display: none;
+	}
+
+	.main-chart nav {
+		background-position: -300px -70px !important;
+	}
+	.main-chart .message {
+		font-size: 1.1em !important;
+		padding: 10px !important;
+		text-align: center !important;
+		margin-top: 20px !important;
+	}
+	.main-chart-1 .box {
+		margin: 50px 0px !important;
+	}
+	.main-chart-1 .title {
+		font-size: 4em !important;
+		margin-top: 80px !important;
+	}
+	.main-chart-2 .center {
+		background-position: -610px 30px;
+	}
+	.main-chart-5 .chart {
+		width: 320px !important;
+	}
+	.main-chart-1 {
+		height: 500px !important;
+	}
+	.main-chart-3 {
+		height: 523px !important;
+	}
+	.main-chart-4 {
+		height: 800px !important;
+	}
+	.main-chart-5 {
+		height: 586px !important;
+	}
+
 	.center {
-		width: 350px;
+		width: 360px;
 	}
 
 	.home .row-line {
@@ -111,11 +200,31 @@
 		font-size: 13px;
 	}
 
+	nav.about {
+		margin-top: 20px !important;
+		padding-top: 80px !important;
+		height: 424px !important;
+	}
+	nav.about img {
+		width: 100%;
+		margin-top: 50px;
+	}
+	nav.about .msg {
+		font-size: 24px !important;
+		line-height: 30px !important;
+	}
+
+	#about .col-4 img {
+		width: 100% !important;
+	}
+	#about .col-12 {
+		margin-top: 30px !important;
+	}
+
 	footer .msg {
 		font-size: 10px;
 		line-height: 1.5em;
 	}
-
 	footer .link {
 		font-size: 12px;
 	}

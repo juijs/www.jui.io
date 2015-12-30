@@ -170,6 +170,12 @@ nav {
     height: 121px;
     margin: 94px 0px 40px 0px;
 }
+.main-chart-1 > nav > .center > .box > .title {
+	font-size: 4.25em;
+	font-weight: bold;
+	color: white;
+	margin: 94px 0px 40px 0px;
+}
 .main-chart-1 > nav > .center > .box > .message {
     margin-bottom: 40px;
     font-size: 1.4em;
@@ -871,8 +877,17 @@ footer .line {
 	width: 307px;
 }
 
+.about .hr {
+	display: none;
+}
+
 
 /* Manual */
+.manual pre {
+	text-overflow: ellipsis;
+	overflow: auto;
+	white-space: nowrap;
+}
 
 .manual p {
 	color: #666;
