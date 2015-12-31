@@ -247,6 +247,7 @@ function viewCodeEditor() {
 
     if(code.type == "style") {
         $("#types").find("li:first-child").hide();
+        editor.setValue(""); // 스타일일 때, 스크립트 코드는 공백으로
 
         $.ajax({
             url : "html.style/" + code.code + ".html",
@@ -322,12 +323,19 @@ function updateComponent(isCode) {
     }
     /**/
 
-    $("#chart-form").find("input[name=html]").val(html);
-    $("#chart-form").find("input[name=code]").val(code);
+    $("#chart-content").find("iframe").height("100%");
+
+    $("#chart-form").find("input[name=html]").val(html ? html : "");
+    $("#chart-form").find("input[name=code]").val(code ? code : "");
     $("#chart-form").find("input[name=theme]").val($("select").find("option:selected").val());
 
-    $("#chart-form")[0].action = "loader.php";
-    $("#chart-form")[0].submit();
+    setTimeout(function() {
+        $("#chart-form").submit();
+    }, 100);
+}
+
+function resizeComponent(iframe) {
+    $(iframe).height($(iframe).contents().height());
 }
 
 function changeTheme(theme) {
@@ -347,6 +355,8 @@ function changeTheme(theme) {
             color: "#d5d5d5"
         });
     }
+
+    updateComponent(true);
 }
 
 jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {

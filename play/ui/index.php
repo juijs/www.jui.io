@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../chart/chart.css">
     <link rel="stylesheet" href="../chart/responsive.css">
     <link rel="stylesheet" href="component.css">
-    <link rel="stylesheet" href="style.css" />
     <script src="component.js" type="text/javascript"></script>
 </head>
 <body class="jui">
@@ -70,8 +69,8 @@
                     </h2>
                 </div>
                 <div id="chart-content">
-                    <iframe name="chart-iframe" width="100%" height="100%" frameborder="0"></iframe>
-                    <form id="chart-form" target="chart-iframe" method="post">
+                    <iframe name="chart-iframe" width="100%" height="100%" frameborder="0" scrolling="no" onload="resizeComponent(this);"></iframe>
+                    <form id="chart-form" target="chart-iframe" method="post" action="loader.php">
                         <input type="hidden" name="html" />
                         <input type="hidden" name="code" />
                         <input type="hidden" name="theme" />
