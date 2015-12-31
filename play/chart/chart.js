@@ -643,7 +643,7 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     });
 
     ontouch($(".menu")[0], function(evt, dir, phase, swipetype, distance) {
-        if(dir == "right" && phase == "end" && distance > 30) {
+        if(dir == "right" && phase == "end") {
             $("body").removeClass("menu-open");
         }
     });
