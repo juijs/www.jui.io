@@ -312,6 +312,7 @@ function updateComponent(isCode) {
     var code = editor.getValue(),
         html = editor2.getValue();
 
+    /*/
     if(!isCode && html != "") {
         $("#chart-content").html(html);
     }
@@ -319,6 +320,14 @@ function updateComponent(isCode) {
     if(isCode && code != "") {
         eval(code);
     }
+    /**/
+
+    $("#chart-form").find("input[name=html]").val(html);
+    $("#chart-form").find("input[name=code]").val(code);
+    $("#chart-form").find("input[name=theme]").val($("select").find("option:selected").val());
+
+    $("#chart-form")[0].action = "loader.php";
+    $("#chart-form")[0].submit();
 }
 
 function changeTheme(theme) {

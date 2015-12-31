@@ -69,7 +69,14 @@
                         </div>
                     </h2>
                 </div>
-                <div id="chart-content"></div>
+                <div id="chart-content">
+                    <iframe name="chart-iframe" width="100%" height="100%" frameborder="0"></iframe>
+                    <form id="chart-form" target="chart-iframe" method="post">
+                        <input type="hidden" name="html" />
+                        <input type="hidden" name="code" />
+                        <input type="hidden" name="theme" />
+                    </form>
+                </div>
             </div>
         </div>
     </div>
