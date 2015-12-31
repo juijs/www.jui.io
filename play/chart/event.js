@@ -22,7 +22,7 @@ function ontouch(el, callback) {
         startY = touchobj.pageY
         startTime = new Date().getTime() // record time when finger first makes contact with surface
         handletouch(e, 'none', 'start', swipeType, 0) // fire callback function with params dir="none", phase="start", swipetype="none" etc
-        //e.preventDefault()
+        e.preventDefault()
     }, false);
 
     touchsurface.addEventListener('touchmove', function(e){
@@ -37,7 +37,7 @@ function ontouch(el, callback) {
             dir = (distY < 0)? 'up' : 'down'
             handletouch(e, dir, 'move', swipeType, distY) // fire callback function with params dir="up|down", phase="move", swipetype="none" etc
         }
-        //e.preventDefault() // prevent scrolling when inside DIV
+        e.preventDefault() // prevent scrolling when inside DIV
     }, false);
 
     touchsurface.addEventListener('touchend', function(e){
@@ -53,6 +53,6 @@ function ontouch(el, callback) {
         }
         // Fire callback function with params dir="left|right|up|down", phase="end", swipetype=dir etc:
         handletouch(e, dir, 'end', swipeType, (dir =='left' || dir =='right')? distX : distY)
-        //e.preventDefault()
+        e.preventDefault()
     }, false);
 }
