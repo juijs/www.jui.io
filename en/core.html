@@ -112,7 +112,9 @@
 <section>
 	<h2>Module Definition</h2>
 	<p>
-		Assuming a component file exists in the js/ui or js/ui folder, use the method as follows.
+		In order to define a new component module to set the module name to the list to create a load module name and parameters for the method.
+		And a module object is loaded through the callback function can be the last in the order.
+
 		<pre><code class="language-javascript">jui.defineUI(&quot;ui.test&quot;, [ &quot;util.base&quot; ], function(_) {
 	var UI = function() {
 		this.init = function() {
@@ -132,19 +134,11 @@
     }
 
 	return UI;
-}, &quot;core&quot;);</code></pre>
+});</code></pre>
 	</p>
 
 	<p class="br">
-		The setting imethod defines the option(s) to be used in connection with a component, and init is a method that is initially run when a component object is created. These two methods must be defined when adding a new UI component.<br/><br/>
-
-		If a user wants to add a new uix component that uses the dropdown component, configure the component as follows;
-		<pre><code class="language-javascript">jui.defineUI(&quot;uix.test&quot;, [ &quot;ui.dropdown&quot;, &quot;util.base&quot; ], function(dropdown, _) {
-	var UI = function() {
-		// same as above
-	}
-
-	return UI;
-}, &quot;core&quot;);</code></pre>
+		<strong>UI.setup</strong> is a method to define the options available in the component, <strong>init</strong> is a method that is executed first when an object is created components.
+		To define a new component therefore it must implement essential.
 	</p>
 </section>
