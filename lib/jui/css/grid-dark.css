@@ -1,0 +1,405 @@
+.jui table.table > tbody::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.jui table.table > tbody::-webkit-scrollbar-corner {
+  background: transparent;
+  border-right: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+}
+.jui table.table > tbody::-webkit-scrollbar-track {
+  background-color: #000;
+  background-image: -moz-linear-gradient(left, #000 0%, #272727 100%);
+  background-image: linear-gradient(left, #000 0%, #272727 100%);
+  background-image: -webkit-linear-gradient(left, #000 0%, #272727 100%);
+  background-image: -o-linear-gradient(left, #000 0%, #272727 100%);
+  background-image: -ms-linear-gradient(left, #000 0%, #272727 100%);
+  border: 1px solid #404040;
+}
+.jui table.table > tbody::-webkit-scrollbar-thumb {
+  background: #545454;
+  border: 1px solid #5d5d5d;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.jui table.table > tbody::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+  border: 1px solid #737373;
+}
+.jui .table.classic {
+  border-bottom: 1px solid #404040;
+}
+.jui .table.classic > thead th {
+  color: #D5D5D5;
+  border-left: 1px solid #353535;
+  border-right: 1px solid #151515;
+  border-top: 1px solid #404040;
+  background-color: #272727;
+  background-image: -moz-linear-gradient(top, #272727 0%, #111111 100%);
+  background-image: linear-gradient(top, #272727 0%, #111111 100%);
+  background-image: -webkit-linear-gradient(top, #272727 0%, #111111 100%);
+  background-image: -o-linear-gradient(top, #272727 0%, #111111 100%);
+  background-image: -ms-linear-gradient(top, #272727 0%, #111111 100%);
+}
+.jui .table.classic > thead th:first-child {
+  border-left: 1px solid #404040;
+}
+.jui .table.classic > thead th:last-child {
+  border-right: 1px solid #404040;
+}
+.jui .table.classic > tbody > tr {
+  background: #2C2C2C;
+}
+.jui .table.classic > tbody > tr > td {
+  color: #D5D5D5;
+  border-top: 1px solid #3B3B3B;
+  border-bottom: 1px solid #000000;
+  border-left: 1px solid #000000;
+}
+.jui .table.classic > tbody > tr > td:first-child {
+  border-left: 1px solid #404040;
+}
+.jui .table.classic > tbody > tr > td:last-child {
+  border-right: 1px solid #404040;
+}
+.jui .table.classic > tbody > tr > td.none {
+  background: #1E1E1E;
+}
+.jui .table.classic > tbody > tr > td.none > .msg {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.jui .table.classic > tbody > tr:last-child > td {
+  border-bottom-width: 0px;
+}
+.jui .table.classic > tbody > tr.selected {
+  background: #624499;
+}
+.jui .table.classic > tbody > tr.selected > td {
+  color: #D5D5D5;
+}
+.jui .table.classic > tbody > tr.checked {
+  background: #624499;
+}
+.jui .table.classic > tbody > tr.checked > td {
+  color: #D5D5D5;
+}
+.jui .table.classic > tbody tr.open,
+.jui .table.classic > tbody tr.expand {
+  background-color: #1E1E1E !important;
+  background-image: -moz-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -webkit-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -o-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -ms-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+}
+.jui .table.classic > tbody tr.open:hover,
+.jui .table.classic > tbody tr.expand:hover {
+  background-color: #1E1E1E !important;
+  background-image: -moz-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -webkit-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -o-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -ms-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+}
+.jui .table.classic > tbody tr.open > td {
+  font-weight: bold;
+}
+.jui .table.classic > tbody tr.expand > td {
+  background: #1E1E1E;
+}
+.jui .table.classic > tbody tr.expand > td:hover {
+  background: #1E1E1E;
+}
+.jui .table.classic.table.stripe tr:nth-child(even) {
+  background: #262626;
+}
+.jui .table.classic.table.stripeless tr {
+  background: #2C2C2C !important;
+}
+.jui .table.classic tr:nth-child(even) {
+  background: #262626;
+}
+.jui .table.classic.hover > tbody > tr:hover {
+  background: #393939;
+}
+.jui .table.expand {
+  border-bottom: 1px solid #404040;
+}
+.jui .table.expand > thead th {
+  color: #D5D5D5;
+  border-left: 1px solid #353535;
+  border-right: 1px solid #151515;
+  border-top: 1px solid #404040;
+  background-color: #272727;
+  background-image: -moz-linear-gradient(top, #272727 0%, #111111 100%);
+  background-image: linear-gradient(top, #272727 0%, #111111 100%);
+  background-image: -webkit-linear-gradient(top, #272727 0%, #111111 100%);
+  background-image: -o-linear-gradient(top, #272727 0%, #111111 100%);
+  background-image: -ms-linear-gradient(top, #272727 0%, #111111 100%);
+}
+.jui .table.expand > thead th:first-child {
+  border-left: 1px solid #404040;
+}
+.jui .table.expand > thead th:last-child {
+  border-right: 1px solid #404040;
+}
+.jui .table.expand > tbody > tr {
+  background: #2C2C2C;
+}
+.jui .table.expand > tbody > tr > td {
+  color: #D5D5D5;
+  border-top: 1px solid #3B3B3B;
+  border-bottom: 1px solid #000000;
+  border-left: 1px solid #000000;
+}
+.jui .table.expand > tbody > tr > td:first-child {
+  border-left: 1px solid #404040;
+}
+.jui .table.expand > tbody > tr > td:last-child {
+  border-right: 1px solid #404040;
+}
+.jui .table.expand > tbody > tr > td.none {
+  background: #1E1E1E;
+}
+.jui .table.expand > tbody > tr > td.none > .msg {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.jui .table.expand > tbody > tr:last-child > td {
+  border-bottom-width: 0px;
+}
+.jui .table.expand > tbody > tr.selected {
+  background: #624499;
+}
+.jui .table.expand > tbody > tr.selected > td {
+  color: #D5D5D5;
+}
+.jui .table.expand > tbody > tr.checked {
+  background: #624499;
+}
+.jui .table.expand > tbody > tr.checked > td {
+  color: #D5D5D5;
+}
+.jui .table.expand > tbody tr.open,
+.jui .table.expand > tbody tr.expand {
+  background-color: #1E1E1E !important;
+  background-image: -moz-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -webkit-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -o-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -ms-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+}
+.jui .table.expand > tbody tr.open:hover,
+.jui .table.expand > tbody tr.expand:hover {
+  background-color: #1E1E1E !important;
+  background-image: -moz-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -webkit-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -o-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -ms-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+}
+.jui .table.expand > tbody tr.open > td {
+  font-weight: bold;
+}
+.jui .table.expand > tbody tr.expand > td {
+  background: #1E1E1E;
+}
+.jui .table.expand > tbody tr.expand > td:hover {
+  background: #1E1E1E;
+}
+.jui .table.expand.table.stripe tr:nth-child(even) {
+  background: #262626;
+}
+.jui .table.expand.table.stripeless tr {
+  background: #2C2C2C !important;
+}
+.jui .table.expand tr:nth-child(even) {
+  background: #262626;
+}
+.jui .table.expand > tbody > tr {
+  background-color: #2F2F2F !important;
+  background-image: -moz-linear-gradient(top, #2F2F2F 0%, #292929 100%) !important;
+  background-image: linear-gradient(top, #2F2F2F 0%, #292929 100%) !important;
+  background-image: -webkit-linear-gradient(top, #2F2F2F 0%, #292929 100%) !important;
+  background-image: -o-linear-gradient(top, #2F2F2F 0%, #292929 100%) !important;
+  background-image: -ms-linear-gradient(top, #2F2F2F 0%, #292929 100%) !important;
+}
+.jui .table.expand > tbody > tr.selected {
+  background-color: #2C2C2C !important;
+  background-image: -moz-linear-gradient(top, #2C2C2C 0%, #262626 100%) !important;
+  background-image: linear-gradient(top, #2C2C2C 0%, #262626 100%) !important;
+  background-image: -webkit-linear-gradient(top, #2C2C2C 0%, #262626 100%) !important;
+  background-image: -o-linear-gradient(top, #2C2C2C 0%, #262626 100%) !important;
+  background-image: -ms-linear-gradient(top, #2C2C2C 0%, #262626 100%) !important;
+}
+.jui .table.expand > tbody > tr.selected > td {
+  color: #D5D5D5 !important;
+}
+.jui .table.expand > tbody > tr.checked {
+  background-color: #624499 !important;
+  background-image: -moz-linear-gradient(top, #624499 0%, #4D3280 100%) !important;
+  background-image: linear-gradient(top, #624499 0%, #4D3280 100%) !important;
+  background-image: -webkit-linear-gradient(top, #624499 0%, #4D3280 100%) !important;
+  background-image: -o-linear-gradient(top, #624499 0%, #4D3280 100%) !important;
+  background-image: -ms-linear-gradient(top, #624499 0%, #4D3280 100%) !important;
+}
+.jui .table.expand > tbody > tr.checked > td {
+  color: #000 !important;
+}
+.jui .table.expand.hover > tbody > tr:hover {
+  background-color: #3C3C3C !important;
+  background-image: -moz-linear-gradient(top, #3C3C3C 0%, #2F2F2F 100%) !important;
+  background-image: linear-gradient(top, #3C3C3C 0%, #2F2F2F 100%) !important;
+  background-image: -webkit-linear-gradient(top, #3C3C3C 0%, #2F2F2F 100%) !important;
+  background-image: -o-linear-gradient(top, #3C3C3C 0%, #2F2F2F 100%) !important;
+  background-image: -ms-linear-gradient(top, #3C3C3C 0%, #2F2F2F 100%) !important;
+}
+.jui .table.simple {
+  border-bottom: 1px solid #313131 !important;
+}
+.jui .table.simple > thead th {
+  color: #D5D5D5;
+  background: #151515;
+  border-top: 1px solid #4B4B4B;
+  border-bottom: 1px solid #4B4B4B;
+}
+.jui .table.simple > tbody > tr {
+  background: #2C2C2C;
+}
+.jui .table.simple > tbody > tr > td {
+  color: #D5D5D5;
+  border-bottom: 1px solid #404040;
+  border-left: 1px solid #404040;
+}
+.jui .table.simple > tbody > tr > td:first-child {
+  border-left-width: 0px;
+}
+.jui .table.simple > tbody > tr > td.none {
+  border-bottom-width: 0px !important;
+  background: #292929;
+}
+.jui .table.simple > tbody > tr > td.none > .msg {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.jui .table.simple > tbody > tr:last-child > td {
+  border-bottom-width: 0px;
+}
+.jui .table.simple > tbody > tr.selected {
+  background: #624499;
+}
+.jui .table.simple > tbody > tr.selected > td {
+  color: #FFFFFF;
+}
+.jui .table.simple > tbody > tr.checked {
+  background: #624499;
+}
+.jui .table.simple > tbody > tr.checked > td {
+  color: #FFFFFF;
+}
+.jui .table.simple > tbody tr.open,
+.jui .table.simple > tbody tr.expand {
+  background-color: #1E1E1E !important;
+  background-image: -moz-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -webkit-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -o-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -ms-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+}
+.jui .table.simple > tbody tr.open:hover,
+.jui .table.simple > tbody tr.expand:hover {
+  background-color: #1E1E1E !important;
+  background-image: -moz-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -webkit-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -o-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+  background-image: -ms-linear-gradient(top, #1E1E1E 0%, #1E1E1E 100%) !important;
+}
+.jui .table.simple > tbody tr.open > td {
+  font-weight: bold;
+}
+.jui .table.simple > tbody tr.expand > td {
+  background: #1E1E1E;
+}
+.jui .table.simple > tbody tr.expand > td:hover {
+  background: #1E1E1E;
+}
+.jui .table.simple.table.stripe tr:nth-child(even) {
+  background: #262626;
+}
+.jui .table.simple.table.stripeless tr {
+  background: #232323 !important;
+}
+.jui .table.simple.table.headline > thead tr > th:not(:first-child) {
+  border-left: 1px solid #5C5C5C;
+}
+.jui .table.simple tr:nth-child(even) {
+  background: #262626;
+}
+.jui .table.simple.hover > tbody > tr:hover {
+  background: #3C3C3C;
+}
+.jui .table > tbody td > .edit {
+  background-color: #1A1A1A;
+  border: 1px solid #6C6C6C;
+  -webkit-box-shadow: "0 4px 5px -5px rgba(0,0,0,0.6) inset";
+  -moz-box-shadow: "0 4px 5px -5px rgba(0,0,0,0.6) inset";
+  box-shadow: "0 4px 5px -5px rgba(0,0,0,0.6) inset";
+  color: #D5D5D5;
+}
+.jui .table > tbody td > .edit:focus {
+  border-color: #9358FF;
+  outline: 0;
+  -webkit-box-shadow: inset 0 4px 5px -5px rgba(0,0,0,0.3), 0 0 1px 1px rgba(136,74,228,.095);
+  -moz-box-shadow: inset 0 4px 5px -5px rgba(0,0,0,0.3), 0 0 1px 1px rgba(136,74,228,.095);
+  box-shadow: inset 0 4px 5px -5px rgba(0,0,0,0.3), 0 0 1px 1px rgba(136,74,228,.095);
+  -webkit-transition: border linear .2s, box-shadow linear .2s;
+  -moz-transition: border linear .2s, box-shadow linear .2s;
+  -o-transition: border linear .2s, box-shadow linear .2s;
+  transition: border linear .2s, box-shadow linear .2s;
+}
+.jui .table > tbody td > .edit[disabled],
+.jui .table > tbody td > .edit[readonly] {
+  cursor: not-allowed;
+  background-color: #2A2A2A;
+  color: #D5D5D5;
+}
+.jui .xtable > .loading {
+  background-image: url("../img/theme/dark/xtable-loading.gif");
+}
+.jui .xtable > .body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.jui .xtable > .body::-webkit-scrollbar-corner {
+  background: transparent;
+  border-right: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+}
+.jui .xtable > .body::-webkit-scrollbar-track {
+  background-color: #000;
+  background-image: -moz-linear-gradient(left, #000 0%, #272727 100%);
+  background-image: linear-gradient(left, #000 0%, #272727 100%);
+  background-image: -webkit-linear-gradient(left, #000 0%, #272727 100%);
+  background-image: -o-linear-gradient(left, #000 0%, #272727 100%);
+  background-image: -ms-linear-gradient(left, #000 0%, #272727 100%);
+  border: 1px solid #404040;
+}
+.jui .xtable > .body::-webkit-scrollbar-thumb {
+  background: #545454;
+  border: 1px solid #5d5d5d;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.jui .xtable > .body::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+  border: 1px solid #737373;
+}
+.jui .xtable.scroll > .head {
+  border-left: 1px solid #5d5d5d;
+  border-right: 1px solid #5d5d5d;
+}
+.jui .xtable.scroll > .body {
+  border-left: 1px solid #5d5d5d;
+  border-bottom: 1px solid #5d5d5d;
+}
