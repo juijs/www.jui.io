@@ -304,4 +304,8 @@ jui.ready([ "ui.modal", "ui.dropdown" ], function(modal, dropdown) {
 			$("body").removeClass("menu-open");
 		}
 	});
+
+	$(".menu-window").find("a").on("click", function(e) {
+		$("body").removeClass("menu-open");
+	});
 });

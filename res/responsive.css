@@ -138,6 +138,7 @@
 	}
 	.main nav .detail {
 		font-size: 1.2em;
+		text-align: center;
 	}
 	.main nav .detail .desktop-br {
 		display: none;
