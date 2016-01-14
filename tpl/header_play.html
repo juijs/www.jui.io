@@ -16,3 +16,13 @@
 <script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
+<script type="text/javascript" src="../../res/event.js" ></script>
+<script>
+    $(function() {
+        ontouch($(".menu")[0], function(evt, dir, phase, swipetype, distance) {
+            if(dir == "right" && phase == "end" && distance > 30) {
+                $("body").removeClass("menu-open");
+            }
+        });
+    });
+</script>

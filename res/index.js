@@ -298,4 +298,10 @@ jui.ready([ "ui.modal", "ui.dropdown" ], function(modal, dropdown) {
 		$("body").removeClass("menu-open");
 	});
 
+	// 모바일 버전 터치 이벤트
+	ontouch($(".menu-window")[0], function(evt, dir, phase, swipetype, distance) {
+		if(dir == "right" && phase == "end" && distance > 30) {
+			$("body").removeClass("menu-open");
+		}
+	});
 });

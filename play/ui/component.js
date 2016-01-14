@@ -388,10 +388,4 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
             $("body").addClass("menu-open");
         }
     });
-
-    ontouch($(".menu")[0], function(evt, dir, phase, swipetype, distance) {
-        if(dir == "right" && phase == "end" && distance > 30) {
-            $("body").removeClass("menu-open");
-        }
-    });
 });

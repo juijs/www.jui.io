@@ -139,6 +139,9 @@
 	.main nav .detail {
 		font-size: 1.2em;
 	}
+	.main nav .detail .desktop-br {
+		display: none;
+	}
 	.main nav .container > a {
 		display: none;
 	}

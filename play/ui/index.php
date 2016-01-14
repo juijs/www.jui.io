@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="../chart/responsive.css">
     <link rel="stylesheet" href="component.css">
     <script src="component.js" type="text/javascript"></script>
-    <script src="../chart/event.js" type="text/javascript"></script>
 </head>
 <body class="jui">
 
