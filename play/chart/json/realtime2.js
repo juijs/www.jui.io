@@ -105,7 +105,8 @@ var chart = builder("#chart", {
     render : false
 });
 
-setInterval(function() {
+clearInterval(window.interval);
+window.interval = setInterval(function() {
     var domain = getDomain();
 
     appendTxData(txData, domain[1]);
