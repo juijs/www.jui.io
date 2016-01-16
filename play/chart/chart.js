@@ -11,11 +11,11 @@ var charts = [
     { type: "grid", title : "Grid Basic" },
     { type: "grid2", title : "Grid Style" },
     { type: "grid3", title : "Grid Type" },
+    { type: "realtime", title : "Realtime Chart" },
     { type: "map", title : "Map Chart" },
     { type: "full3d", title : "Full 3D Chart" },
     { type: "3d", title : "3D Chart" },
     { type: "mixed", title : "Combination Chart" },
-    //{ type: "realtime", title : "Realtime Chart" },
     { type: "dashboard", title : "Dashboard" },
     { type: "topology", title : "Topology Map" },
     { type: "bar", title : "Bar Chart" },
@@ -66,6 +66,9 @@ var code_list = [
     { type: "grid3", title : "Date + Range", code : "grid_date_range.js" },
     { type: "grid3", title : "Block + Log", code : "grid_block_log.js" },
 
+    // timeline chart
+    { type: "realtime", title : "TPS & Memory Monitor", code : "realtime1.js" },
+
     // map chart
     { type: "map", title : "Population Status",  code : "worldmap1.js" },
     { type: "map", title : "Population growth rate",  code : "worldmap6.js" },
@@ -100,11 +103,6 @@ var code_list = [
     { type: "mixed", title : "Compare Data", code : "bar_compare_layout.js" },
     { type: "mixed", title : "Mixed daily and intra-day", code : "mixed4_linebar.js" },
     { type: "mixed", title : "Sales Comparison", code : "mixed5.js" },
-
-    // realtime chart
-    //{ type: "realtime", title : "Realtime Line",  code : "realtime_line.js" },
-    //{ type: "realtime", title : "Realtime Area",  code : "realtime_area.js" },
-    //{ type: "realtime", title : "Realtime Complex Line",  code : "realtime_line_complex.js" },
 
     // dashboard
     { type: "dashboard", title : "Stock Dashboard", code : "mixed3_axis.js" },
