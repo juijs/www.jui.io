@@ -34,7 +34,8 @@ var chart = builder("#chart", {
         y : {
             type : "range",
             domain : [ 0, 1024 ],
-            step : 4
+            step : 4,
+            line : "solid"
         },
         area : {
             y : "60%",

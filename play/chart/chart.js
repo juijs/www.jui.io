@@ -68,6 +68,7 @@ var code_list = [
 
     // timeline chart
     { type: "realtime", title : "TPS & Memory Monitor", code : "realtime1.js" },
+    { type: "realtime", title : "Transaction View", code : "realtime2.js" },
 
     // map chart
     { type: "map", title : "Population Status",  code : "worldmap1.js" },
