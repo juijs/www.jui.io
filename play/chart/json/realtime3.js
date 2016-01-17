@@ -42,6 +42,7 @@ var chart = builder("#chart", {
         type : "polygon.scatter",
         target : [ "delay" ],
         size : 7,
+        clip : true,
         zkey : function(d) {
             if(d.level == "fatal") return 0;
             else if(d.level == "warning") return 1;

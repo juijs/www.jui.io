@@ -58,11 +58,12 @@ var chart = builder("#chart", {
 
             return "#4692ca";
         },
-        clip : false,
+        clip : true,
         axis : 0
     }, {
         type : "line",
         target : [ "count" ],
+        clip : true,
         axis : 1
     }, {
         type : "pie",
