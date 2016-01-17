@@ -61,7 +61,7 @@ var chart = builder("#chart", {
         type : "polygon.rotate"
     }, {
         type : "title",
-        text : "Full-3D Monitoring"
+        text : "3D Transaction View"
     }],
     style : {
         gridXAxisBorderWidth: 1,
