@@ -11,6 +11,7 @@ var charts = [
     { type: "grid", title : "Grid Basic" },
     { type: "grid2", title : "Grid Style" },
     { type: "grid3", title : "Grid Type" },
+    { type: "timeline", title : "Timeline Chart" },
     { type: "realtime", title : "Realtime Chart" },
     { type: "map", title : "Map Chart" },
     { type: "full3d", title : "Full 3D Chart" },
@@ -67,8 +68,12 @@ var code_list = [
     { type: "grid3", title : "Block + Log", code : "grid_block_log.js" },
 
     // timeline chart
+    { type: "timeline", title : "Requests done to load page", code : "timeline1.js" },
+
+    // realtime chart
     { type: "realtime", title : "TPS & Memory Monitor", code : "realtime1.js" },
     { type: "realtime", title : "Transaction View", code : "realtime2.js" },
+    { type: "realtime", title : "3D Transaction View", code : "realtime3.js" },
 
     // map chart
     { type: "map", title : "Population Status",  code : "worldmap1.js" },
