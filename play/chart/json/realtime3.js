@@ -76,22 +76,30 @@ clearInterval(window.interval);
 window.interval = setInterval(function() {
     var domain = getDomain();
 
-    appendTxData(txData, domain[1]);
+    appendTxData(txData, domain);
     chart.axis(0).update(txData);
     chart.axis(0).updateGrid("x", { domain : domain });
 
     chart.render();
 }, 1000);
 
-function appendTxData(list, end) {
+function appendTxData(list, domain) {
     var count = Math.floor(Math.random() * 20);
+
+    for(var i = 0; i < list.length; i++) {
+        if(list[i].time < domain[0]){
+            list.shift();
+        } else {
+            break;
+        }
+    }
 
     for(var i = 0; i < count; i++) {
         var type = Math.floor(Math.random() * 6),
             data = {
                 delay: Math.floor(Math.random() * 10000),
                 level: "normal",
-                time: end
+                time: domain[1]
             };
 
         if(type > 2 && type < 5) {
@@ -105,5 +113,5 @@ function appendTxData(list, end) {
 }
 
 function getDomain() {
-    return [ new Date() - time.MINUTE * 5, new Date() ];
+    return [ new Date() - time.MINUTE * 5, new Date().getTime() ];
 }
