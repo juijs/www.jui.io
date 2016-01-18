@@ -399,20 +399,13 @@ function createTab() {
 function resetChart() {
     var charts = jui.getAll();
 
-    for(var i = 0; i < charts.length; i++) {
-        if(charts[i].type == "chartx.realtime") {
-            var list = charts[i];
-
-            for(var j = 0; j < list.length; j++) {
-                list[j].stop();
-            }
-
-            realtimeIndex = 0;
-        }
+    if(window.interval != null) {
+        clearInterval(window.interval);
+        window.interval = null;
     }
 
     for(var i = 0; i < charts.length; i++) {
-        if(charts[i].type == "chart.builder" || charts[i].type == "chartx.realtime") {
+        if(charts[i].type == "chart.builder") {
             jui.remove(i);
         }
     }

@@ -106,7 +106,6 @@ var chart = builder("#chart", {
     render : false
 });
 
-clearInterval(window.interval);
 window.interval = setInterval(function() {
     var domain = getDomain();
 
@@ -125,7 +124,7 @@ function appendTxData(list, domain) {
     var count = Math.floor(Math.random() * 20);
 
     for(var i = 0; i < list.length; i++) {
-        if(list[i].time < domain[0]){
+        if(list[i].time.getTime() < domain[0].getTime()) {
             list.shift();
         } else {
             break;
@@ -155,7 +154,7 @@ function getStatusData() {
         cache = {};
 
     for(var i = 0; i < txData.length; i++) {
-        var time = txData[i].time;
+        var time = txData[i].time.getTime();
 
         if(!cache[time]) {
             cache[time] = 1;
@@ -195,5 +194,5 @@ function getLevelData() {
 }
 
 function getDomain() {
-    return [ new Date() - time.MINUTE * 5, new Date().getTime() ];
+    return [ new Date(new Date() - time.MINUTE * 5), new Date() ];
 }

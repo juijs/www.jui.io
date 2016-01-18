@@ -88,7 +88,6 @@ var chart = builder("#chart", {
     render : false
 });
 
-clearInterval(window.interval);
 window.interval = setInterval(function() {
     updateTPS();
     updateMemory();
