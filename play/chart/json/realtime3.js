@@ -84,7 +84,7 @@ window.interval = setInterval(function() {
 }, 1000);
 
 function appendTxData(list, domain) {
-    var count = Math.floor(Math.random() * 20);
+    var count = Math.floor(Math.random() * 10);
 
     for(var i = 0; i < list.length; i++) {
         if(list[i].time < domain[0]){
