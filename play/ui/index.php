@@ -3,8 +3,16 @@
 <head>
     <?php include("../../tpl/header_play.html"); ?>
     <title>JENNIFER UI: UI Play</title>
+
+    <meta name="title" content="JENNIFER UI: UI Play" />
+    <meta name="description" content="JUI provide all kinds of UI components that are used in web pages. Grid can handle millions of data, and can display the data in a hierarchical structure." />
+    <meta name="keywords" content="swich, progress bar, color picker, combo box, window, dropdown, tab, tree, paging, modal, auto complete, grid, tree grid, bigdata grid, free, MIT" />
+    <meta name="author" content="Alvin, Jayden and Yoha" />
     <meta property="og:title" content="JENNIFER UI: UI Play" />
-    <?php include("../../tpl/description_en.html") ?>
+    <meta property="og:description" content="JUI provide all kinds of UI components that are used in web pages. Grid can handle millions of data, and can display the data in a hierarchical structure." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://chart.jui.io/" />
+    <meta property="og:image" content="http://jui.io/res/img/jui_info_4.jpg" />
 
     <link rel="stylesheet" href="../chart/chart.css">
     <link rel="stylesheet" href="../chart/responsive.css">
