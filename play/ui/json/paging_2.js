@@ -1,4 +1,4 @@
-jui.ready([ "ui.paging", "uix.xtable" ], function(paging, xtable) {
+jui.ready([ "ui.paging", "grid.xtable" ], function(paging, xtable) {
     paging_2 = paging("#paging_2", {
         pageCount: 100,
         event: {
