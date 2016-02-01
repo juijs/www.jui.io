@@ -7,14 +7,16 @@
   width: 100%;
   font-size: 12px;
 }
-.jui table.table > thead th {
-  font-weight: bold;
-  text-align: left;
+.jui table.table > thead {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+.jui table.table > thead th {
+  font-weight: bold;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

@@ -120,7 +120,7 @@
 .jui .table.classic tr:nth-child(even) {
   background: #262626;
 }
-.jui .table.classic.hover > tbody > tr:hover {
+.jui .table.classic.hover > tbody > tr:hover:not(.selected):not(.dragtarget) {
   background: #393939;
 }
 .jui .table.expand {
@@ -246,7 +246,7 @@
 .jui .table.expand > tbody > tr.checked > td {
   color: #000 !important;
 }
-.jui .table.expand.hover > tbody > tr:hover {
+.jui .table.expand.hover > tbody > tr:hover:not(.selected):not(.dragtarget) {
   background-color: #3C3C3C !important;
   background-image: -moz-linear-gradient(top, #3C3C3C 0%, #2F2F2F 100%) !important;
   background-image: linear-gradient(top, #3C3C3C 0%, #2F2F2F 100%) !important;
@@ -335,7 +335,7 @@
 .jui .table.simple tr:nth-child(even) {
   background: #262626;
 }
-.jui .table.simple.hover > tbody > tr:hover {
+.jui .table.simple.hover > tbody > tr:hover:not(.selected):not(.dragtarget) {
   background: #3C3C3C;
 }
 .jui .table > tbody td > .edit {
@@ -362,6 +362,50 @@
   cursor: not-allowed;
   background-color: #2A2A2A;
   color: #D5D5D5;
+}
+.jui .table.layer {
+  z-index: 5001;
+  border-bottom-width: 0px !important;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+}
+.jui .table > tbody > tr.dragtarget {
+  background-color: #3f3f3f !important;
+  background-image: none !important;
+}
+.jui .table > tbody > tr.dragclone {
+  background-color: rgba(41, 41, 41, 0.5) !important;
+  background-image: none !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid #666 !important;
+}
+.jui .table > tbody > tr.dragclone > td {
+  border-top: 1px solid #666 !important;
+  border-bottom: 1px solid #666 !important;
+}
+.jui .table > tbody > tr.dragclone > td:first-child {
+  border-left: 1px solid #666 !important;
+  -webkit-border-bottom-left-radius: 0px !important;
+  -moz-border-radius-bottomleft: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+.jui .table > tbody > tr.dragclone > td:last-child {
+  border-right: 1px solid #666 !important;
+  -webkit-border-bottom-right-radius: 0px !important;
+  -moz-border-radius-bottomright: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+.jui .table > tbody > tr.dragclone > td:not(:first-child) {
+  border-left-width: 0px !important;
+}
+.jui .table > tbody > tr.dragclone > td:not(:last-child) {
+  border-right-width: 0px !important;
+}
+.jui .table > tbody > tr.dragline > td {
+  padding: 0px !important;
+  height: 2px !important;
+  background: #8945ee !important;
 }
 .jui .xtable > .loading {
   background-image: url("../img/theme/dark/xtable-loading.gif");

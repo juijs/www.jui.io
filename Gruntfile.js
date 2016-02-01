@@ -52,6 +52,15 @@ module.exports = function(grunt) {
 					"https://raw.githubusercontent.com/juijs/jui-grid/develop/dist/grid-dark.min.css"
 				],
 				dest: webapp_path + "jui/css"
+			},
+			"jui.img.icon": {
+				src: [
+					"https://raw.githubusercontent.com/juijs/jui/develop/img/icon/icomoon.eot",
+					"https://raw.githubusercontent.com/juijs/jui/develop/img/icon/icomoon.svg",
+					"https://raw.githubusercontent.com/juijs/jui/develop/img/icon/icomoon.ttf",
+					"https://raw.githubusercontent.com/juijs/jui/develop/img/icon/icomoon.woff"
+				],
+				dest: webapp_path + "jui/img/icon"
 			}
 		},
 

@@ -62,6 +62,7 @@ var code_list = [
     { type: "table", title: "Append/Insert tree rows", code: "table_17" },
     { type: "table", title: "Move/Remove/Modify tree rows", code: "table_18" },
     { type: "table", title: "Update tree rows", code: "table_19" },
+    { type: "table", title: "Changing the row position via drag events", code: "table_20" },
     { type: "xtable", title: "Data scrolling", code: "xtable_1" },
     { type: "xtable", title: "Data paging", code: "xtable_2" },
     { type: "xtable", title: "Data paging & scrolling", code: "xtable_3" },
