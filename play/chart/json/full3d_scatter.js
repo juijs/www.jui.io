@@ -37,7 +37,7 @@ chart("#chart", {
         perspective: 0.9
     },
     brush : {
-        type: "polygon.scatter",
+        type: "polygon.scatter3d",
         target : [ "sales", "profit", "total" ],
         size : 10,
         zkey: function(data) {
@@ -45,7 +45,7 @@ chart("#chart", {
         }
     },
     widget : [{
-        type : "polygon.rotate"
+        type : "polygon.rotate3d"
     }, {
         type : "tooltip"
     }],

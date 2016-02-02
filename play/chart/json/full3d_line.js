@@ -36,12 +36,12 @@ chart("#chart", {
         perspective: 0.8
     },
     brush : {
-        type: "polygon.line",
+        type: "polygon.line3d",
         target : [ "sales", "profit", "total" ],
         padding : 15
     },
     widget : [{
-        type : "polygon.rotate"
+        type : "polygon.rotate3d"
     }, {
         type : "tooltip"
     }],

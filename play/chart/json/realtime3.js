@@ -39,7 +39,7 @@ var chart = builder("#chart", {
         perspective : 0.7
     }],
     brush : [{
-        type : "polygon.scatter",
+        type : "polygon.scatter3d",
         target : [ "delay" ],
         size : 7,
         clip : true,
@@ -59,7 +59,7 @@ var chart = builder("#chart", {
         }
     }],
     widget : [{
-        type : "polygon.rotate"
+        type : "polygon.rotate3d"
     }, {
         type : "title",
         text : "3D Transaction View"
