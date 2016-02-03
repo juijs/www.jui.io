@@ -1,0 +1,15 @@
+{
+  "name": "apm",
+  "version": "1.0.0",
+  "description": "Dashboard for APM",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "apm", "dashboard"
+  ],
+  "author": "alvin",
+  "license": "MIT",
+  "height" : "1000px"
+}

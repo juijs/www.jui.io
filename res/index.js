@@ -17,6 +17,9 @@ var menuInfo = {
 	gallery: {
 		src: "../gallery/list.html"
 	},
+	'gallery-view': {
+		src: "../gallery/view.html"
+	},
     core: {
 		src: "core.html",
         title: "Basic",
@@ -57,8 +60,13 @@ function initMenuUrl(hash) {
 	if(hash[0] != "home") {
 		$("header .menu").find("a").removeClass("active");
 	}
-	
-	var src = menuInfo[hash[0]].src;
+
+	if (hash[0].indexOf('gallery-view-') > -1) {
+		var src = menuInfo['gallery-view'].src;
+	} else {
+		var src = menuInfo[hash[0]].src;
+	}
+
 
     // 타이틀 & 메시지 처리
     if(hash == "chart") {
@@ -92,7 +100,9 @@ function initMenuUrl(hash) {
             $(".main, nav.download, nav.sub").hide();
             $("nav.about").show();
         } else if(hash == "gallery") {
-			$(".main, nav.download, nav.about, nav.sub").hide();
+			$(".main, nav.download, nav.about, nav.sub, #gallery-view").hide();
+		} else if (hash[0].indexOf('gallery-view') > -1) {
+			$(".main, nav.download, nav.about, nav.sub, #gallery").hide();
 		} else {
             $(".main, nav.download, nav.about").hide();
             $("nav.sub").show();
@@ -112,6 +122,8 @@ function initMenuUrl(hash) {
 	if(src) {
 		if (hash[0] == "chart" || hash[0] == "gallery") {
 			$("#" + hash[0]).load(src);
+		} else if (hash[0].indexOf('gallery-view') > -1 ) {
+			$("#gallery-view").load(src  + "#" + hash[0].replace('gallery-view-', '')).show();
 		} else {
 			$("#" + hash[0]).find(".col").load(src, function () {
 				Prism.highlightAll();
