@@ -40,6 +40,8 @@
     position:absolute;
     top:0px;
     left:0px;
+    z-index:1000;
+    display:none;
     right:0px;
     height: 40px;
     padding:10px;
@@ -60,7 +62,7 @@
 
 .item .body {
     position: absolute;
-    top:40px;
+    top:0px;
     bottom:40px;
     left:0px;
     right:0px;
