@@ -2,13 +2,18 @@
 <html>
 <head>
 <title>JENNIFER UI: AdminTool Sample - Realtime </title>
-<link rel="shortcut icon" href="../../../res/img/favicon.ico" type="image/x-icon">
-<link rel="icon" href="../../../res/img/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="../../../res/index.css"/>
-<link rel="stylesheet" href="../../../lib/jui.new/jui.min.css"/>
-<link rel="stylesheet" href="../../../lib/jui.new/jennifer.theme.min.css"/>
-<script src="../../../lib/jquery-1.8.0.min.js"></script>
-<script src="../../../lib/jui/jui.min.js"></script>
+<link rel="shortcut icon" href="/res/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/res/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="/res/index.css"/>
+  <link rel="stylesheet" href="/lib/jui/css/ui.min.css"/>
+  <link id="jui_theme" rel="stylesheet" href="/lib/jui/css/ui-jennifer.min.css"/>
+  <link rel="stylesheet" href="/lib/jui/css/grid.min.css"/>
+  <link rel="stylesheet" href="/lib/jui/css/grid-jennifer.min.css"/>
+  <script src="/lib/jquery-1.8.0.min.js"></script>
+  <script src="/lib/jui/js/core.min.js"></script>
+  <script src="/lib/jui/js/ui.min.js"></script>
+  <script src="/lib/jui/js/grid.min.js"></script>
+  <script src="/lib/jui/js/chart.min.js"></script>
 <script src="admin.js" type="text/javascript"></script>
 <meta name="title" content="JENNIFER UI: JENNIFER UI: HTML5 components and SVG charts"/>
 <meta name="description"
@@ -122,7 +127,7 @@
   </div>
 </div>
 <script>
-var chart = jui.include("chartx.realtime");
+  var chart = jui.include("chart.builder");
 var chartbuilder = jui.include("chart.builder");
 var time = jui.include("util.time");
 var realtimeIndex = 0;
