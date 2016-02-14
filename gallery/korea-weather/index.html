@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
 
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="/gallery/korea-weather/style.css" />
 
 <script>
 function windowResize() {
@@ -27,6 +27,7 @@ function windowResize() {
 
 jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
     windowResize();
+    addForecastData();
 
     var weatherMapData = [{
         id: "서울",
@@ -103,12 +104,50 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
         Object.keys(englishProvincesData).map(function(key){
             data.push({
                 name: englishProvincesData[key],
-                Average: Math.floor(Math.random() * 10) + 30,
+                Average: Math.floor(Math.random() * 5) + 30,
                 Maximum: Math.floor(Math.random() * 10) + 35,
             });
         });
 
         return data;
+    }
+
+    function addForecastData() {
+        var data = [];
+        var descriptions = ['Rainy', 'Sunny', 'Snowy', 'Windy', 'Foggy', 'Mostly Sunny', 'PM Light Rain', 'AM Shower', 'Cloudy', 'Snow'];
+
+        for (var i = 0; i < 3; i++) {
+            data.push({
+                day: getDateString(),
+                highLow: (Math.floor(Math.random() * 5) + 30) + '°C / ' + (Math.floor(Math.random() * 10) + 35) + '°C',
+                description: descriptions[Math.floor(Math.random() * descriptions.length)],
+                precip: Math.floor(Math.random() * 100) + '%'
+            })
+        }
+
+        var table = $('#forecast-table');
+
+        for (var i = 0; i < data.length; i++) {
+            table.append('<tr>' +
+                            '<td>'+data[i].day+'</td>' +
+                            '<td>'+data[i].highLow+'</td>' +
+                            '<td>'+data[i].description+'</td>' +
+                            '<td>'+data[i].precip+'</td>' +
+                        '</tr>');
+        }
+    }
+
+    function getDateString(numOfAddDate) {
+        if (typeof numOfAddDate === 'undefined') numOfAddDate = 0;
+
+        var now = new Date().getTime();
+        var date = new Date(now + (1000 * 60 * 60 * 24) * numOfAddDate);
+        var parsedDate = (date.getMonth() + 1) +
+                         '/' +
+                         date.getDate();
+        var suffix = numOfAddDate == 0 ? ' (Today)' : '';
+
+        return parsedDate + suffix;
     }
 
     var weatherMap = builder('#weather-map', {
@@ -148,7 +187,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             },
             y : {
                 type : "range",
-                domain : [0, 50],
+                domain : [30, 50],
                 step : 5,
                 line : true,
                 min: 0,
@@ -168,8 +207,6 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             { type : "legend" }
         ],
     });
-
-
 
     _.resize(windowResize, 100);
 });
@@ -198,14 +235,30 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="panel">
-                <div class="head">
-                    <strong>Visitor status</strong>
+        <div class="panel">
+            <div class="head">
+               <strong>Detailed weather information</strong>
+
+                <div style="float: right;">
+                    <div class="combo">
+                        <a class="btn small" style="width: 150px;">Select...</a>
+                        <a class="btn small toggle"><i class="icon-arrow2"></i></a>
+                    </div>
                 </div>
-                <div class="body">
-                    <div id="status"></div>
-                </div>
+            </div>
+            <div class="body" style="height: 480px;">
+                <section>
+                    <h3>3 Day Forecast</h3>
+                    <table class="table expand large">
+                        <thead>
+                            <tr>
+                                <th>Day</th><th>High / Low</th><th>Description</th><th>PRECIP</th>
+                            </tr>
+                        </thead>
+                        <tbody id="forecast-table">
+                        </tbody>
+                    </table>
+                </section>
             </div>
         </div>
     </div>
