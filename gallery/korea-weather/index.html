@@ -118,7 +118,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 
         for (var i = 0; i < 3; i++) {
             data.push({
-                day: getDateString(),
+                day: getDateString(i),
                 highLow: (Math.floor(Math.random() * 5) + 30) + '°C / ' + (Math.floor(Math.random() * 10) + 35) + '°C',
                 description: descriptions[Math.floor(Math.random() * descriptions.length)],
                 precip: Math.floor(Math.random() * 100) + '%'
@@ -140,14 +140,23 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
     function getDateString(numOfAddDate) {
         if (typeof numOfAddDate === 'undefined') numOfAddDate = 0;
 
-        var now = new Date().getTime();
-        var date = new Date(now + (1000 * 60 * 60 * 24) * numOfAddDate);
+        var date = getDateFromToday(numOfAddDate);
         var parsedDate = (date.getMonth() + 1) +
                          '/' +
                          date.getDate();
         var suffix = numOfAddDate == 0 ? ' (Today)' : '';
 
         return parsedDate + suffix;
+    }
+
+    function getDateFromToday(numOfAddDate) {
+        if (typeof numOfAddDate === 'undefined') numOfAddDate = 0;
+
+        var now = new Date();
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var calculatedDate = new Date(today.getTime() + (1000 * 60 * 60 * 24) * numOfAddDate);
+
+        return calculatedDate;
     }
 
     var weatherMap = builder('#weather-map', {
@@ -188,7 +197,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             y : {
                 type : "range",
                 domain : [30, 50],
-                step : 5,
+                step : 4,
                 line : true,
                 min: 0,
                 orient : "right"
@@ -205,6 +214,57 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
         widget : [
             { type : "tooltip" },
             { type : "legend" }
+        ],
+    });
+
+    var temperatureLineConfig = {
+        startDate: getDateFromToday(0),
+        endDate: getDateFromToday(2),
+        interval: 1000 * 60 * 60 * 4,
+    };
+
+    function generateTemperatureData(startDate, endDate, interval) {
+        var data = [];
+        for(var i = startDate.getTime(); i <= endDate.getTime(); i+=interval) {
+            data.push({
+                date : i,
+                temperature : (Math.floor(Math.random() * 15) + 25),
+            });
+        }
+        return data;
+    }
+
+    var temperatureLine = builder("#temperature-line", {
+        padding: {
+            left: 30,
+            right: 20,
+            top: 20,
+            bottom: 30
+        },
+        axis : [{
+            x : {
+                type : "date",
+                domain : [ temperatureLineConfig.startDate, temperatureLineConfig.endDate ],
+                interval : 1000 * 60 * 60 * 8, // 8 hours
+                format : "dd HH:mm",
+                key: "date",
+            },
+            y : {
+                type : "range",
+                domain : [0, 50],
+                step : 5,
+                line : true
+            },
+            data : generateTemperatureData(temperatureLineConfig.startDate,
+                                           temperatureLineConfig.endDate, temperatureLineConfig.interval)
+        }],
+        brush : [{
+            type : "line",
+            target : [ "temperature" ],
+            animate : true
+        }],
+        widget : [
+            { type : "tooltip" },
         ],
     });
 
@@ -258,6 +318,10 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                         <tbody id="forecast-table">
                         </tbody>
                     </table>
+                </section>
+                <section>
+                    <h3 style="margin-bottom: 0px;">Temperature</h3>
+                    <div id="temperature-line" style="width: 49%; height: 150px"></div>
                 </section>
             </div>
         </div>
