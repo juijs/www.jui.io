@@ -1,0 +1,15 @@
+{
+  "name": "korea-weather",
+  "version": "1.0.0",
+  "description": "Weather of the Korea",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "weather", "dashboard", "korea"
+  ],
+  "author": "hyeonsu",
+  "license": "MIT",
+  "height" : "750px"
+}
