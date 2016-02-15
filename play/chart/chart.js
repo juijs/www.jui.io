@@ -11,6 +11,7 @@ var charts = [
     { type: "grid", title : "Grid Basic" },
     { type: "grid2", title : "Grid Style" },
     { type: "grid3", title : "Grid Type" },
+    { type: "equalizer", title : "Equalizer Chart" },
     { type: "timeline", title : "Timeline Chart" },
     { type: "realtime", title : "Realtime Chart" },
     { type: "map", title : "Map Chart" },
@@ -43,7 +44,8 @@ var code_list = [
     { type: "basic", title : "Update axis data", code : "brush_axis_value.js" },
     { type: "basic", title : "Update axis grid", code : "update_axis_grid.js" },
     { type: "basic", title : "Set chart brushes", code : "update_brush.js" },
-    { type: "basic", title : "Use SVG Icons", code : "use_svg_icons.js" },
+    { type: "basic", title : "Using SVG icons", code : "use_svg_icons.js" },
+    { type: "basic", title : "Using dashboard-style", code : "use_dashboard_style.js" },
 
     // grid basic
     { type: "grid", title : "Set domain", code : "grid_set_domain.js" },
@@ -66,6 +68,10 @@ var code_list = [
     { type: "grid3", title : "Date Block + Range", code : "grid_dateblock_range.js" },
     { type: "grid3", title : "Date + Range", code : "grid_date_range.js" },
     { type: "grid3", title : "Block + Log", code : "grid_block_log.js" },
+
+    // equalizer chart
+    { type: "equalizer", title : "Equalizer Bar", code : "equalizer_bar.js" },
+    { type: "equalizer", title : "Equalizer Column", code : "equalizer_column.js" },
 
     // timeline chart
     { type: "timeline", title : "Requests done to load page", code : "timeline1.js" },
@@ -151,7 +157,6 @@ var code_list = [
     { type: "column", title : "Active Column (+Focus)", code : "active_column.js" },
     { type: "column", title : "Mini Column", code : "mini_column.js", hide : true },
     { type: "column", title : "Range Column", code : "rangecolumn.js" },
-    { type: "column", title : "Equalizer", code : "equalizer.js" },
     { type: "column", title : "Waterfall", code : "waterfall.js" },
     { type: "column", title : "Image Column", code : "imagecolumn.js" },
     { type: "column", title : "Fixed Image Column", code : "fixed_imagecolumn.js" },

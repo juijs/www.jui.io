@@ -9,7 +9,9 @@ chart("#chart-content", {
         },
         y : {
             type: "range",
-            domain : function(d) { return [d.sales, d.profit, d.dept]; },
+            domain : function(d) {
+                return Math.max(d.sales, d.profit, d.dept);
+            },
             step: 10
         },
         data : [
@@ -20,13 +22,13 @@ chart("#chart-content", {
         ]
     },
 	brush : [{
+		type : "area",
+        line : true
+	}, {
         type : "focus",
         start : 1,
         end : 2
-    }, {
-		type : "area",
-        line : false
-	}],
+    }],
     widget : [{
         type : "title",
         text : "Area Sample"
