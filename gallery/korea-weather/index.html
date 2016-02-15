@@ -284,9 +284,16 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
             target : "value",
             animate : true,
             axis: 1,
+        },{
+            type : "scatter",
+            hide : true
+        },{
+            type : "scatter",
+            hide : true,
+            axis: 1
         }],
         widget : [
-            { type : "tooltip" },
+            { type : "tooltip", brush:[2, 3] },
         ],
     });
 
@@ -361,9 +368,12 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
         brush: [{
             type : "line",
             target : [ "value" ],
+        }, {
+            type : "scatter",
+            hide : true
         }],
         widget : [
-            { type : "tooltip" },
+            { type : "tooltip", brush: 1 },
         ],
     });
 
