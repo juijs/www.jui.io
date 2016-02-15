@@ -1,0 +1,445 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/grid.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" />
+<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/core.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
+
+<link rel="stylesheet" href="/gallery/korea-weather/style.css" />
+
+<script>
+function windowResize() {
+    var container = $('.jui');
+    var $panel = $(".panel > .body");
+
+    $(container).height(740);
+    $('#weather-map').height(670);
+}
+
+jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_, time, builder, combo) {
+    var weatherMapData = [{
+        id: "서울",
+        temperature: 25,
+        weather: "cloudy",
+        dx: 10
+    }, {
+        id: "인천",
+        temperature: 28,
+        weather: "sunny",
+        dx: -50,
+        dy: -25
+    }, {
+        id: "강원",
+        temperature: 25,
+        weather: "rain"
+    }, {
+        id: "충북",
+        temperature: 26,
+        weather: "rain",
+        dx: 15
+    }, {
+        id: "충남",
+        temperature: 22,
+        weather: "sunny"
+    }, {
+        id: "전북",
+        temperature: 26,
+        weather: "murky"
+    }, {
+        id: "전남",
+        temperature: 25,
+        weather: "cloudy",
+        dx: -20
+    }, {
+        id: "경북",
+        temperature: 25,
+        weather: "sunny"
+    }, {
+        id: "경남",
+        temperature: 26,
+        weather: "cloudy"
+    }, {
+        id: "제주",
+        temperature: 24,
+        weather: "murky",
+        dx: -30,
+        dy: -30
+    }, {
+        id: "울릉",
+        temperature: 25,
+        weather: "murky",
+        dx: -40,
+        dy: -20
+    }];
+
+    var englishProvincesData = {
+        '서울': 'Seoul',
+        '인천': 'Incheon',
+        '강원': 'Gangwon',
+        '충북': 'North Chungcheong',
+        '충남': 'South Chungcheong',
+        '전북': 'North Jeolla',
+        '전남': 'South Jeolla',
+        '경북': 'North Gyeongsang',
+        '경남': 'South Gyeongsang',
+        '제주': 'Jeju',
+        '울릉': 'Ulleung',
+    };
+
+    windowResize();
+    addForecastData();
+    addComboboxData();
+
+    function generateProvincesTemperature() {
+        var data = [];
+
+        Object.keys(englishProvincesData).map(function(key){
+            data.push({
+                name: englishProvincesData[key],
+                Average: Math.floor(Math.random() * 5) + 30,
+                Maximum: Math.floor(Math.random() * 10) + 35,
+            });
+        });
+
+        return data;
+    }
+
+    function addForecastData() {
+        var data = [];
+        var descriptions = ['Rainy', 'Sunny', 'Snowy', 'Windy', 'Foggy', 'Mostly Sunny', 'PM Light Rain', 'AM Shower', 'Cloudy', 'Snow'];
+
+        for (var i = 0; i < 3; i++) {
+            data.push({
+                day: getDateString(i),
+                highLow: (Math.floor(Math.random() * 5) + 30) + '°C / ' + (Math.floor(Math.random() * 10) + 35) + '°C',
+                description: descriptions[Math.floor(Math.random() * descriptions.length)],
+                precip: Math.floor(Math.random() * 100) + '%'
+            })
+        }
+
+        var table = $('#forecast-table');
+
+        for (var i = 0; i < data.length; i++) {
+            table.append('<tr>' +
+                            '<td>'+data[i].day+'</td>' +
+                            '<td>'+data[i].highLow+'</td>' +
+                            '<td>'+data[i].description+'</td>' +
+                            '<td>'+data[i].precip+'</td>' +
+                        '</tr>');
+        }
+    }
+
+    function getDateString(numOfAddDate) {
+        if (typeof numOfAddDate === 'undefined') numOfAddDate = 0;
+
+        var date = getDateFromToday(numOfAddDate);
+        var parsedDate = (date.getMonth() + 1) +
+                         '/' +
+                         date.getDate();
+        var suffix = numOfAddDate == 0 ? ' (Today)' : '';
+
+        return parsedDate + suffix;
+    }
+
+    function getDateFromToday(numOfAddDate) {
+        if (typeof numOfAddDate === 'undefined') numOfAddDate = 0;
+
+        var now = new Date();
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var calculatedDate = new Date(today.getTime() + (1000 * 60 * 60 * 24) * numOfAddDate);
+
+        return calculatedDate;
+    }
+
+    var weatherMap = builder('#weather-map', {
+        padding : 0,
+        axis : [{
+            map : {
+                path : "../../lib/jui/img/map/korea-500x650.svg",
+                width : 500,
+                height : 650
+            },
+            data : weatherMapData
+        }],
+        brush : [{
+            type : "map.weather",
+            format : function(id) {
+                return englishProvincesData[id];
+            }
+        }],
+        style : {
+            mapPathBackgroundColor : "white",
+            mapPathBorderColor : "#a9a9a9"
+        }
+    });
+
+    var weatherBar = builder("#weather-bar", {
+        padding: {
+            left: 0,
+            right: 20,
+            top: 20,
+            bottom: 40
+        },
+        axis : {
+            x : {
+                type : "block",
+                domain : "name",
+                line : true
+            },
+            y : {
+                type : "range",
+                domain : [30, 50],
+                step : 4,
+                line : true,
+                min: 0,
+                orient : "right"
+            },
+            area: {
+                // height: '100%',
+            },
+            data: generateProvincesTemperature()
+        },
+        brush : {
+            type : "column",
+            target : [ "Average", "Maximum" ]
+        },
+        widget : [
+            { type : "tooltip" },
+            { type : "legend" }
+        ],
+    });
+
+    var detailChartConfig = {
+        startDate: getDateFromToday(0),
+        endDate: getDateFromToday(2),
+        interval: 1000 * 60 * 60 * 4,
+    };
+
+    function generateDetailChartData(startDate, endDate, interval, valueStart, valueEnd) {
+        var data = [];
+        for(var i = startDate.getTime(); i <= endDate.getTime(); i+=interval) {
+            data.push({
+                date : i,
+                value : (Math.floor(Math.random() * (valueEnd - valueStart)) + valueStart),
+            });
+        }
+        console.log(data);
+        return data;
+    }
+
+    var temperatureLine = builder("#temperature-line", {
+        padding: {
+            left: 30,
+            right: 20,
+            top: 20,
+            bottom: 30
+        },
+        axis : [{
+            x : {
+                type : "date",
+                domain : [ detailChartConfig.startDate, detailChartConfig.endDate ],
+                interval : 1000 * 60 * 60 * 8, // 8 hours
+                format : "dd HH:mm",
+                key: "date",
+            },
+            y : {
+                type : "range",
+                domain : [20, 50],
+                step : 6,
+                line : true
+            },
+            data : generateDetailChartData(detailChartConfig.startDate, detailChartConfig.endDate,
+                                           detailChartConfig.interval, 30, 45),
+            area : {
+                width: '43%'
+            },
+        }, {
+            extend : 0,
+            area: {
+                x: '50%',
+            },
+            y : {
+                type : "range",
+                domain : [0, 100],
+                step : 5,
+            },
+            data : generateDetailChartData(detailChartConfig.startDate, detailChartConfig.endDate,
+                                           detailChartConfig.interval, 0, 100),
+        }],
+        brush : [{
+            type : "line",
+            target : [ "value" ],
+            animate : true
+        },{
+            type : "line",
+            target : [ "value" ],
+            animate : true,
+            axis: 1,
+        }],
+        widget : [
+            { type : "tooltip" },
+        ],
+    });
+
+    function addComboboxData() {
+
+        var combobox = $('#province-combobox');
+
+        Object.keys(englishProvincesData).map(function(key, i) {
+            combobox.append('<li value=' + i + '>' +
+                            englishProvincesData[key] +
+                            '</li>');
+        });
+
+    }
+
+    var combobox = combo("#province-combobox", {
+    });
+
+    function generateAirQualityData() {
+        var currentTime = new Date().getTime();
+        var startTime = currentTime - 1000 * 60 * 5;
+
+        var data =[];
+        for (var i = startTime; i <= currentTime; i+= 1000) {
+            data.push({
+                date: i,
+                value: Math.floor(Math.random() * 40)
+            })
+        }
+
+        return data;
+    }
+
+    function updateData(currentData) {
+        currentData.shift();
+
+        var latestDate = currentData[currentData.length - 1].date;
+        currentData.push({
+            date: latestDate + 1000,
+            value: Math.floor(Math.random() * 40)
+        })
+
+        return currentData;
+    }
+
+    var airQualityLine = builder("#air-quality-line", {
+        padding: {
+            left: 30,
+            right: 20,
+            top: 20,
+            bottom: 20
+        },
+        axis : [{
+            x : {
+                type : "date",
+                domain : [ new Date() - 1000 * 60 * 5, new Date() ],
+                interval : 1, // 8 hours
+                realtime : "minutes",
+                format : "hh:mm",
+                key: "date",
+            },
+            y : {
+                type : "range",
+                domain : [0, 100],
+                step : 4,
+                line : true
+            },
+            data: generateAirQualityData(),
+            area : {
+                width: '100%'
+            },
+        }],
+        brush: [{
+            type : "line",
+            target : [ "value" ],
+        }],
+        widget : [
+            { type : "tooltip" },
+        ],
+    });
+
+    setInterval(function() {
+        airQualityLine.axis(0).updateGrid("x", {
+            domain : [new Date() - 1000 * 60 * 5, new Date()]
+        });
+        airQualityLine.axis(0).update(updateData(airQualityLine.axis(0).data));
+    }, 1000);
+
+    _.resize(windowResize, 100);
+});
+</script>
+</head>
+<body class="jui">
+<div class="row">
+    <div class="col" style="width: 550px; float:left;">
+        <div class="panel">
+            <div class="head">
+                <strong>Korea Weather Map</strong>
+            </div>
+            <div class="body">
+                <div id="weather-map"></div>
+            </div>
+        </div>
+    </div>
+    <div style="left: 2%; width: auto; overflow: hidden;">
+        <div class="row">
+            <div class="panel" style="width: 100%; ">
+                <div class="head">
+                    <strong>Temperature in each province</strong>
+                </div>
+                <div class="body" >
+                    <div id="weather-bar" style="height: 120px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="head">
+               <strong>Detailed weather information</strong>
+
+                <div style="float: right;">
+                    <div class="combo">
+                        <a class="btn small" style="width: 150px;">Select...</a>
+                        <a class="btn small toggle"><i class="icon-arrow2"></i></a>
+                          <ul id="province-combobox">
+
+                          </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="body" style="height: 480px;">
+                <section>
+                    <h3 style="margin-top: 0px;">3 Day Forecast</h3>
+                    <table class="table expand large">
+                        <thead>
+                            <tr>
+                                <th>Day</th><th>High / Low</th><th>Description</th><th>PRECIP</th>
+                            </tr>
+                        </thead>
+                        <tbody id="forecast-table">
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3 style="margin: 5 0 0 0;">Temperature & Precipitation</h3>
+                    <div id="temperature-line" style="width: 100%; height: 130px"></div>
+                </section>
+                <section>
+                    <h3 style="margin: 0px;">Realtime Air Quality</h3>
+                    <div id="air-quality-line" style="width: 100%; height: 130px"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

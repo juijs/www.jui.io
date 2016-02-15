@@ -1,0 +1,4 @@
+- brush format function 파라미터로 id값만 넘겨주는게 아니라 데이터 오브젝트 전체를 넘겨주었으면 좋겠음
+- Chart Play 페이지에 검색 기능
+- column brush width 설정
+- x axis 내용이 rangeBand 너비보다 넓으면  ... 표시
