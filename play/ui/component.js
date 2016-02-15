@@ -88,6 +88,7 @@ var code_list = [
     { type: "autocomplete", title: "Default auto complete", code: "ac_1" },
     { type: "autocomplete", title: "Update word list", code: "ac_2" },
     { type: "datepicker", title: "Daily date picker", code: "datepicker_1" },
+    { type: "datepicker", title: "Set the date range", code: "datepicker_5" },
     { type: "datepicker", title: "Monthly date picker", code: "datepicker_2" },
     { type: "datepicker", title: "Yearly date picker", code: "datepicker_3" },
     { type: "datepicker", title: "Daily calendar", code: "datepicker_4" },
@@ -340,7 +341,9 @@ function resizeComponent(iframe) {
 }
 
 function changeTheme(theme) {
-    $(".chart_view").attr("class", "chart_view " + theme);
+    var isFullscreen = $(".chart_view").hasClass("fullscreen");
+
+    $(".chart_view").attr("class", "chart_view " + theme + (isFullscreen ? " fullscreen" : ""));
     $(".chart_data").attr("class", "chart_data " + theme);
     $("#jui_theme_ui").attr("href", "../../lib/jui/css/ui-" + theme + ".min.css");
     $("#jui_theme_grid").attr("href", "../../lib/jui/css/grid-" + theme + ".min.css");
