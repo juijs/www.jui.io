@@ -277,11 +277,11 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
         }],
         brush : [{
             type : "line",
-            target : [ "value" ],
+            target : "value",
             animate : true
         },{
             type : "line",
-            target : [ "value" ],
+            target : "value",
             animate : true,
             axis: 1,
         }],
@@ -292,14 +292,13 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
 
     function addComboboxData() {
 
-        var combobox = $('#province-combobox');
+        var combobox = $('#province-combobox > ul');
 
         Object.keys(englishProvincesData).map(function(key, i) {
             combobox.append('<li value=' + i + '>' +
                             englishProvincesData[key] +
                             '</li>');
         });
-
     }
 
     var combobox = combo("#province-combobox", {
@@ -407,10 +406,10 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
                <strong>Detailed weather information</strong>
 
                 <div style="float: right;">
-                    <div class="combo">
+                    <div id="province-combobox" class="combo">
                         <a class="btn small" style="width: 150px;">Select...</a>
                         <a class="btn small toggle"><i class="icon-arrow2"></i></a>
-                          <ul id="province-combobox">
+                          <ul>
 
                           </ul>
                     </div>
