@@ -39,7 +39,6 @@ var chart = builder("#chart", {
         left : 0,
         right : 25
     },
-    theme : "jennifer",
     axis : {
         padding : {
             left : 300
