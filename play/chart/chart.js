@@ -80,6 +80,8 @@ var code_list = [
     { type: "realtime", title : "TPS & Memory Monitor", code : "realtime1.js" },
     { type: "realtime", title : "Transaction View", code : "realtime2.js" },
     { type: "realtime", title : "3D Transaction View", code : "realtime3.js" },
+    { type: "realtime", title : "Transaction View (Canvas)", code : "realtime_canvas1.js" },
+    { type: "realtime", title : "3D Transaction View (Canvas)", code : "realtime_canvas2.js" },
 
     // map chart
     { type: "map", title : "Population Status",  code : "worldmap1.js" },

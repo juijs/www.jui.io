@@ -3,6 +3,7 @@ var builder = jui.include("chart.builder"),
     txData = [];
 
 var chart = builder("#chart", {
+    canvas : true,
     padding : {
         top : 50,
         bottom : 100,
@@ -36,10 +37,11 @@ var chart = builder("#chart", {
             y : -45,
             z : 0
         },
-        perspective : 0.7
+        perspective : 0.7,
+        buffer : 1000000
     }],
     brush : [{
-        type : "polygon.scatter3d",
+        type : "canvas.scatter3d",
         target : [ "delay" ],
         size : 7,
         clip : true,
@@ -82,7 +84,7 @@ window.interval = setInterval(function() {
 }, 1000);
 
 function appendTxData(list, domain) {
-    var count = Math.floor(Math.random() * 20);
+    var count = Math.floor(Math.random() * 200);
 
     for(var i = 0; i < list.length; i++) {
         if(list[i].time < domain[0]){
