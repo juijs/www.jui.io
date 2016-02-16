@@ -13,8 +13,7 @@ chart("#chart", {
             type : "range",
             domain : "total",
             step : 5,
-            line : true,
-            orient : "left"
+            hide : true
         },
         z : {
             type : "block",
