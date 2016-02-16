@@ -23,7 +23,8 @@ var chart = builder("#chart", {
         area : {
             width : "60%",
             height : "60%"
-        }
+        },
+        buffer : 1000000
     }, {
         extend : 0,
         y : {
