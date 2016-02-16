@@ -33,7 +33,12 @@ var data = [
 
 var chart = builder("#chart", {
     height : 300,
-    padding : 0,
+    padding : {
+        top : 0,
+        bottom : 0,
+        left : 0,
+        right : 25
+    },
     theme : "jennifer",
     axis : {
         padding : {
