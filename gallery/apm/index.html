@@ -102,6 +102,35 @@ function getDataForTPS(count) {
     return data;
 }
 
+function setTransactionData(list, domain) {
+    var count = Math.floor(Math.random() * 20);
+
+    for(var i = 0; i < list.length; i++) {
+        if(list[i].time.getTime() < domain[0].getTime()) {
+            list.shift();
+        } else {
+            break;
+        }
+    }
+
+    for(var i = 0; i < count; i++) {
+        var type = Math.floor(Math.random() * 6),
+            data = {
+                delay: Math.floor(Math.random() * 10000),
+                level: "normal",
+                time: domain[1]
+            };
+
+        if(type > 2 && type < 5) {
+            data.level = "warning";
+        } else if(type > 4) {
+            data.level = "fatal";
+        }
+
+        list.push(data);
+    }
+}
+
 jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
     windowResize();
 
@@ -245,7 +274,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             extend : 1,
             x : {
                 type : "date",
-                domain : [ new Date(new Date() - time.MINUTE * 5), new Date() ],
+                domain : fiveMinBeforeTime(),
                 interval : 1,
                 realtime : "minutes",
                 format : "hh:mm",
@@ -253,7 +282,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             },
             y : {
                 type : "range",
-                domain : [ 0, 100 ],
+                domain : [ 0, 8000 ],
                 step : 2
             },
             area : {
@@ -279,6 +308,30 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             type : "scatter",
             target : [ "w1", "w2", "w3", "w4", "w5" ],
             axis : 2
+        }, {
+            type : "column",
+            target : [ "sales" ],
+            axis : 5
+        }, {
+            type : "column",
+            target : [ "sales" ],
+            axis : 6
+        }, {
+            type : "canvas.scatter",
+            symbol : "cross",
+            target : [ "delay" ],
+            size : 5,
+            colors : function(d) {
+                if(d.level == "fatal") {
+                    return "#ff0000"
+                } else if(d.level == "warning") {
+                    return "#f2ab14";
+                }
+
+                return "#4692ca";
+            },
+            clip : true,
+            axis : 7
         }],
         widget : [{
             type : "title",
@@ -347,7 +400,8 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             titleFontSize : 12,
             titleFontWeight : 700
         },
-        render : false
+        render : false,
+        canvas : true
     });
 
     var map = builder("#map", {
@@ -464,12 +518,14 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 
     // Data update
     setInterval(function() {
+        var domain = fiveMinBeforeTime();
+
         // 1. Active Service
         dashboard.axis(0).update(getDataForActiveService());
 
         // 2. Response Time
         var responseTimeData = dashboard.axis(1).data;
-        dashboard.axis(1).set("x", { domain: fiveMinBeforeTime() });
+        dashboard.axis(1).set("x", { domain: domain });
 
         if(responseTimeData.length == 0) {
             dashboard.axis(1).update(getDataForResponseTime(300));
@@ -481,7 +537,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 
         // 3. TPS
         var tpsData = dashboard.axis(2).data;
-        dashboard.axis(2).set("x", { domain: fiveMinBeforeTime() });
+        dashboard.axis(2).set("x", { domain: domain });
 
         if(tpsData.length == 0) {
             dashboard.axis(2).update(getDataForTPS(300));
@@ -490,6 +546,10 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             tpsData.push(getDataForTPS(1)[0]);
             dashboard.axis(2).update(tpsData);
         }
+
+        // 6. Transaction
+        setTransactionData(dashboard.axis(7).data, domain);
+        dashboard.axis(7).set("x", { domain: domain });
 
         dashboard.render();
     }, 1000);
