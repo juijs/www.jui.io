@@ -1,6 +1,7 @@
 {
   "name": "apm",
   "version": "1.0.0",
+  "title": "Dashboard for APM",
   "description": "Dashboard for APM",
   "main": "index.html",
   "scripts": {

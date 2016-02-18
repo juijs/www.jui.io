@@ -17,7 +17,7 @@ $(function() {
 
         $body.append($iframe);
         $body.append($a);
-        $footer.append(item.info.description);
+        $footer.append(item.info.title);
 
 
         var $wrap = $("<div class='wrap' />");

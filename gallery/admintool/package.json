@@ -1,6 +1,7 @@
 {
   "name": "admintool",
   "version": "1.0.0",
+  "title": "Admin Tool Sample",
   "description": "Admin Tool Sample",
   "main": "index.html",
   "scripts": {

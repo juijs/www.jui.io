@@ -1,6 +1,7 @@
 {
   "name": "korea-weather",
   "version": "1.0.0",
+  "title": "Weather of the Korea",
   "description": "Weather of the Korea",
   "main": "index.html",
   "scripts": {

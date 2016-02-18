@@ -59,7 +59,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             },
             y : {
                 type : "range",
-                domain : "cpu",
+                domain : [ 0, 20 ],
                 step : 2,
                 line : true
             },
@@ -73,14 +73,14 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                 height: "19%"
             },
             data : [
-                { server : "W1", cpu : 10 },
-                { server : "W2", cpu : 2 },
-                { server : "W3", cpu : 12 },
-                { server : "W4", cpu : 22 },
-                { server : "W5", cpu : 15 },
-                { server : "W6", cpu : 11 },
-                { server : "W7", cpu : 5 },
-                { server : "W8", cpu : 3 }
+                { server : "W1", normal : 10, warning : 5, fatal : 1 },
+                { server : "W2", normal : 2, warning : 3, fatal : 0 },
+                { server : "W3", normal : 5, warning : 3, fatal : 3 },
+                { server : "W4", normal : 0, warning : 3, fatal : 0 },
+                { server : "W5", normal : 7, warning : 4, fatal : 0 },
+                { server : "W6", normal : 5, warning : 3, fatal : 2 },
+                { server : "W7", normal : 8, warning : 5, fatal : 5 },
+                { server : "W8", normal : 10, warning : 1, fatal : 0 }
             ]
         }, {
             extend : 0,
@@ -213,12 +213,11 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             }
         }],
         brush : [{
-            type : "equalizer",
-            target : "cpu",
+            type : "equalizercolumn",
+            target : [ "normal", "warning", "fatal" ],
             innerPadding : 1,
             outerPadding : 3,
-            gap : 3,
-            unit : 3
+            unit : 10
         }],
         widget : [{
             type : "title",
