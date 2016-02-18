@@ -46,6 +46,62 @@ function windowResize() {
     $($panel.get(2)).parent().css("top", 5);
 }
 
+function randomValue(start, limit) {
+    return Math.floor(Math.random() * limit) + start;
+}
+
+function fiveMinBeforeTime() {
+    var time = jui.include("util.time");
+    return [ new Date(new Date() - time.MINUTE * 5), new Date() ];
+}
+
+function getDataForActiveService() {
+    var data = [];
+
+    for(var i = 1; i <= 5; i++) {
+        data.push({
+            server: "W" + i,
+            normal: randomValue(0, 20),
+            warning: randomValue(0, 10),
+            fatal: randomValue(0, 5)
+        });
+    }
+
+    return data;
+}
+
+function getDataForResponseTime(count) {
+    var data = [];
+
+    for(var i = 0; i < count; i++) {
+        data.push({
+            w1: randomValue(4000, 1000),
+            w2: randomValue(3000, 1500),
+            w3: randomValue(6000, 500),
+            w4: randomValue(2000, 750),
+            w5: randomValue(7000, 250)
+        });
+    }
+
+    return data;
+}
+
+function getDataForTPS(count) {
+    var data = [];
+
+    for(var i = 0; i < count; i++) {
+        data.push({
+            w1: randomValue(50, 5),
+            w2: randomValue(70, 5),
+            w3: randomValue(60, 10),
+            w4: randomValue(50, 10),
+            w5: randomValue(70, 20)
+        });
+    }
+
+    return data;
+}
+
 jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
     windowResize();
 
@@ -59,7 +115,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             },
             y : {
                 type : "range",
-                domain : [ 0, 20 ],
+                domain : [ 0, 40 ],
                 step : 2,
                 line : true
             },
@@ -71,30 +127,20 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             },
             area : {
                 height: "19%"
-            },
-            data : [
-                { server : "W1", normal : 10, warning : 5, fatal : 1 },
-                { server : "W2", normal : 2, warning : 3, fatal : 0 },
-                { server : "W3", normal : 5, warning : 3, fatal : 3 },
-                { server : "W4", normal : 0, warning : 3, fatal : 0 },
-                { server : "W5", normal : 7, warning : 4, fatal : 0 },
-                { server : "W6", normal : 5, warning : 3, fatal : 2 },
-                { server : "W7", normal : 8, warning : 5, fatal : 5 },
-                { server : "W8", normal : 10, warning : 1, fatal : 0 }
-            ]
+            }
         }, {
             extend : 0,
             x : {
-                type : "date",
-                domain : [ new Date(new Date() - time.MINUTE * 5), new Date() ],
+                type : "dateblock",
+                domain : fiveMinBeforeTime(),
                 interval : 1,
                 realtime : "minutes",
                 format : "hh:mm",
-                key : "time"
+                line : false
             },
             y : {
                 type : "range",
-                domain : [ 0, 100 ],
+                domain : [ 0, 8000 ],
                 step : 2
             },
             area : {
@@ -103,6 +149,11 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             }
         }, {
             extend : 1,
+            y : {
+                type : "range",
+                domain : [ 0, 100 ],
+                step : 2
+            },
             area : {
                 x : "50%",
                 width : "50%"
@@ -216,8 +267,18 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             type : "equalizercolumn",
             target : [ "normal", "warning", "fatal" ],
             innerPadding : 1,
-            outerPadding : 3,
-            unit : 10
+            outerPadding : 20,
+            unit : 20,
+            colors : [ "#7BBAE7", "#FFC000", "#FF0000" ],
+            axis : 0
+        }, {
+            type : "line",
+            target : [ "w1", "w2", "w3", "w4", "w5" ],
+            axis : 1
+        }, {
+            type : "scatter",
+            target : [ "w1", "w2", "w3", "w4", "w5" ],
+            axis : 2
         }],
         widget : [{
             type : "title",
@@ -275,6 +336,9 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             dy : -7,
             axis : 7,
             align : "start"
+        }, {
+            type : "tooltip",
+            brush : [ 1 ]
         }],
         style : {
             axisBorderColor : "#dcdcdc",
@@ -282,7 +346,8 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             axisBorderRadius : 5,
             titleFontSize : 12,
             titleFontWeight : 700
-        }
+        },
+        render : false
     });
 
     var map = builder("#map", {
@@ -395,8 +460,39 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
         }]
     });
 
-
     _.resize(windowResize, 100);
+
+    // Data update
+    setInterval(function() {
+        // 1. Active Service
+        dashboard.axis(0).update(getDataForActiveService());
+
+        // 2. Response Time
+        var responseTimeData = dashboard.axis(1).data;
+        dashboard.axis(1).set("x", { domain: fiveMinBeforeTime() });
+
+        if(responseTimeData.length == 0) {
+            dashboard.axis(1).update(getDataForResponseTime(300));
+        } else if(responseTimeData.length == 300) {
+            responseTimeData.shift();
+            responseTimeData.push(getDataForResponseTime(1)[0]);
+            dashboard.axis(1).update(responseTimeData);
+        }
+
+        // 3. TPS
+        var tpsData = dashboard.axis(2).data;
+        dashboard.axis(2).set("x", { domain: fiveMinBeforeTime() });
+
+        if(tpsData.length == 0) {
+            dashboard.axis(2).update(getDataForTPS(300));
+        } else if(tpsData.length == 300) {
+            tpsData.shift();
+            tpsData.push(getDataForTPS(1)[0]);
+            dashboard.axis(2).update(tpsData);
+        }
+
+        dashboard.render();
+    }, 1000);
 });
 </script>
 </head>
