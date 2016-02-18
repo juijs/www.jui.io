@@ -1,0 +1,12 @@
+.gallery-view-container {
+    display:block;
+    margin:0 auto;
+    margin-top:100px;
+    width: 90%;
+    max-width:90%;
+}
+
+.gallery-view-container iframe {
+    border:1px solid #eee;
+
+}

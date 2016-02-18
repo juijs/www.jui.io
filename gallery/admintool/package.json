@@ -1,0 +1,16 @@
+{
+  "name": "admintool",
+  "version": "1.0.0",
+  "title": "Admin Tool Sample",
+  "description": "Admin Tool Sample",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "admintool"
+  ],
+  "author": "easylogic",
+  "license": "MIT",
+  "height" : "1024px"
+}

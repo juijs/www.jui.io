@@ -14,6 +14,12 @@ var menuInfo = {
         title: "Getting Started",
         msg: "JUI library is very easy to install and use."
     },
+	gallery: {
+		src: "../gallery/list.html"
+	},
+	'gallery-view': {
+		src: "../gallery/view.html"
+	},
     core: {
 		src: "core.html",
         title: "Basic",
@@ -54,8 +60,13 @@ function initMenuUrl(hash) {
 	if(hash[0] != "home") {
 		$("header .menu").find("a").removeClass("active");
 	}
-	
-	var src = menuInfo[hash[0]].src;
+
+	if (hash[0].indexOf('gallery-view-') > -1) {
+		var src = menuInfo['gallery-view'].src;
+	} else {
+		var src = menuInfo[hash[0]].src;
+	}
+
 
     // 타이틀 & 메시지 처리
     if(hash == "chart") {
@@ -88,7 +99,11 @@ function initMenuUrl(hash) {
         } else if(hash == "about") {
             $(".main, nav.download, nav.sub").hide();
             $("nav.about").show();
-        } else {
+        } else if(hash == "gallery") {
+			$(".main, nav.download, nav.about, nav.sub, #gallery-view").hide();
+		} else if (hash[0].indexOf('gallery-view') > -1) {
+			$(".main, nav.download, nav.about, nav.sub, #gallery").hide();
+		} else {
             $(".main, nav.download, nav.about").hide();
             $("nav.sub").show();
             $("nav.sub .title").html(menuInfo[hash[0]].title);
@@ -104,13 +119,13 @@ function initMenuUrl(hash) {
 	$("[href*=" + hash[0] + "]").addClass("active");
 
 	// 화면 비동기 로드
-	if(hash[0] == "chart") {
-		if(src) {
-			$("#chart").load(src);
-		}
-	} else {
-		if(src) {
-			$("#" + hash[0]).find(".col").load(src, function() {
+	if(src) {
+		if (hash[0] == "chart" || hash[0] == "gallery") {
+			$("#" + hash[0]).load(src);
+		} else if (hash[0].indexOf('gallery-view') > -1 ) {
+			$("#gallery-view").load(src  + "#" + hash[0].replace('gallery-view-', '')).show();
+		} else {
+			$("#" + hash[0]).find(".col").load(src, function () {
 				Prism.highlightAll();
 			});
 		}
