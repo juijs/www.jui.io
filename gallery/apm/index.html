@@ -93,9 +93,9 @@ function getDataForTPS(count) {
         data.push({
             w1: randomValue(50, 5),
             w2: randomValue(70, 5),
-            w3: randomValue(60, 10),
-            w4: randomValue(50, 10),
-            w5: randomValue(70, 20)
+            w3: randomValue(60, 5),
+            w4: randomValue(50, 5),
+            w5: randomValue(30, 5)
         });
     }
 
@@ -129,6 +129,24 @@ function setTransactionData(list, domain) {
 
         list.push(data);
     }
+}
+
+function getDataForToday(count) {
+    var data = [];
+
+    for(var i = 0; i < count; i++) {
+        data.push({
+            tps: randomValue(50, 5),
+            user: randomValue(1000, 100)
+        });
+    }
+
+    return data;
+}
+
+function getTimeToIndex() {
+    var now = new Date();
+    return now.getHours() * 60 + now.getMinutes();
 }
 
 jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
@@ -209,6 +227,11 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             }
         }, {
             extend : 3,
+            y : {
+                domain : function(d) {
+                    return d.user * 1.3;
+                }
+            },
             area : {
                 x : "50%",
                 width : "50%"
@@ -305,9 +328,29 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             target : [ "w1", "w2", "w3", "w4", "w5" ],
             axis : 1
         }, {
-            type : "scatter",
+            type : "line",
             target : [ "w1", "w2", "w3", "w4", "w5" ],
             axis : 2
+        }, {
+            type : "splitarea",
+            target : [ "tps" ],
+            axis : 3
+        }, {
+            type : "pin",
+            axis : 3,
+            format : function(d) {
+                return time.format(d, "HH:mm");
+            }
+        }, {
+            type : "splitarea",
+            target : [ "user" ],
+            axis : 4
+        }, {
+            type : "pin",
+            axis : 4,
+            format : function(d) {
+                return time.format(d, "HH:mm");
+            }
         }, {
             type : "column",
             target : [ "sales" ],
@@ -547,10 +590,39 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             dashboard.axis(2).update(tpsData);
         }
 
+        // 4. Today's TPS & User
+        var todaysTpsData = dashboard.axis(3).data,
+            todaysUserData = dashboard.axis(4).data,
+            splitIndex = getTimeToIndex();
+
+        if(todaysTpsData.length == 0) {
+            dashboard.axis(3).update(getDataForToday(1440));
+            dashboard.axis(4).update(getDataForToday(1440));
+        } else if(todaysTpsData.length == 1440) {
+            if(domain[1].getSeconds() == 0) {
+                var data = getDataForToday(1)[0];
+
+                todaysTpsData.shift();
+                todaysTpsData.push(data);
+                todaysUserData.shift();
+                todaysUserData.push(data);
+
+                dashboard.axis(3).update(todaysTpsData);
+                dashboard.axis(4).update(todaysUserData);
+            }
+        }
+
+        dashboard.updateBrush(3, { split: splitIndex });
+        dashboard.updateBrush(4, { split: splitIndex });
+        dashboard.updateBrush(5, { split: splitIndex });
+        dashboard.updateBrush(6, { split: splitIndex });
+
         // 6. Transaction
         setTransactionData(dashboard.axis(7).data, domain);
         dashboard.axis(7).set("x", { domain: domain });
 
+
+        // Chart rendering
         dashboard.render();
     }, 1000);
 });
