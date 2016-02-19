@@ -228,7 +228,6 @@ body > .container > .content {
     padding: 3px;
     right: 5px;
     top: 13px;
-    display: none;
 }
 
 .import_csv_form > #import_csv_input {
@@ -236,8 +235,8 @@ body > .container > .content {
     width: 0px;
     height: 24px;
     opacity: 0;
-    left: 0px;
+    right: 0px;
     top: 0px;
     cursor: pointer;
-    padding-left: 80px;
+    padding-left: 35px;
 }

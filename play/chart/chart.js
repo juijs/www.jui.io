@@ -42,11 +42,11 @@ var code_list = [
     { type: "basic", title : "Set theme styles", code : "change_theme.js" },
     { type: "basic", title : "Set chart padding", code : "chart_padding.js" },
     { type: "basic", title : "Update axis data", code : "brush_axis_value.js" },
-    { type: "basic", title : "Update axis grid", code : "update_axis_grid.js" },
+    { type: "basic", title : "Update axis grid", code : "update_axis_grid.js", csv : false },
     { type: "basic", title : "Set chart brushes", code : "update_brush.js" },
     { type: "basic", title : "Using SVG icons", code : "use_svg_icons.js" },
-    { type: "basic", title : "Using dashboard-style", code : "use_dashboard_style.js" },
-    { type: "basic", title : "Import CSV File (+Cached)", code : "import_csv_file.js", csv : true },
+    { type: "basic", title : "Using dashboard-style", code : "use_dashboard_style.js", csv : false },
+    { type: "basic", title : "Import CSV File (+Cached)", code : "import_csv_file.js", hide : true },
 
     // grid basic
     { type: "grid", title : "Set domain", code : "grid_set_domain.js" },
@@ -78,19 +78,19 @@ var code_list = [
     { type: "timeline", title : "Requests done to load page", code : "timeline1.js" },
 
     // realtime chart
-    { type: "realtime", title : "TPS & Memory Monitor", code : "realtime1.js" },
-    { type: "realtime", title : "Transaction View", code : "realtime2.js" },
-    { type: "realtime", title : "3D Transaction View", code : "realtime3.js" },
-    { type: "realtime", title : "Transaction View (Canvas)", code : "realtime_canvas1.js" },
-    { type: "realtime", title : "3D Transaction View (Canvas)", code : "realtime_canvas2.js" },
+    { type: "realtime", title : "TPS & Memory Monitor", code : "realtime1.js", csv : false },
+    { type: "realtime", title : "Transaction View", code : "realtime2.js", csv : false },
+    { type: "realtime", title : "3D Transaction View", code : "realtime3.js", csv : false },
+    { type: "realtime", title : "Transaction View (Canvas)", code : "realtime_canvas1.js", csv : false },
+    { type: "realtime", title : "3D Transaction View (Canvas)", code : "realtime_canvas2.js", csv : false },
 
     // map chart
-    { type: "map", title : "Population Status",  code : "worldmap1.js" },
-    { type: "map", title : "Population growth rate",  code : "worldmap6.js" },
-    { type: "map", title : "Airplane Routes",  code : "worldmap2.js" },
-    { type: "map", title : "Use External Markup",  code : "worldmap3.js" },
-    { type: "map", title : "Market growth comparison",  code : "worldmap4.js" },
-    { type: "map", title : "Today's Weather",  code : "koreamap_weather.js" },
+    { type: "map", title : "Population Status",  code : "worldmap1.js", csv : false },
+    { type: "map", title : "Population growth rate",  code : "worldmap6.js", csv : false },
+    { type: "map", title : "Airplane Routes",  code : "worldmap2.js", csv : false },
+    { type: "map", title : "Use External Markup",  code : "worldmap3.js", csv : false },
+    { type: "map", title : "Market growth comparison",  code : "worldmap4.js", csv : false },
+    { type: "map", title : "Today's Weather",  code : "koreamap_weather.js", csv : false },
 
     // full 3d chart
     { type: "full3d", title : "Full 3D Scatter",  code : "full3d_scatter.js" },
@@ -114,20 +114,20 @@ var code_list = [
 
     // combination chart
     { type: "mixed", title : "Basic Combination",  code : "mixed1.js", hide : true },
-    { type: "mixed", title : "Multi Axis", code : "mixed2_multi_axis.js" },
-    { type: "mixed", title : "Compare Data", code : "bar_compare_layout.js" },
-    { type: "mixed", title : "Mixed daily and intra-day", code : "mixed4_linebar.js" },
+    { type: "mixed", title : "Multi Axis", code : "mixed2_multi_axis.js", csv : false },
+    { type: "mixed", title : "Compare Data", code : "bar_compare_layout.js", csv : false },
+    { type: "mixed", title : "Mixed daily and intra-day", code : "mixed4_linebar.js", csv : false },
     { type: "mixed", title : "Sales Comparison", code : "mixed5.js" },
 
     // dashboard
-    { type: "dashboard", title : "Stock Dashboard", code : "mixed3_axis.js" },
-    { type: "dashboard", title : "Candle Stick Dashboard", code : "mixed3_axis_2.js" },
-    { type: "dashboard", title : "Candle Stick Dashboard (+Scroll)", code : "mixed3_axis_3.js" },
+    { type: "dashboard", title : "Stock Dashboard", code : "mixed3_axis.js", csv : false },
+    { type: "dashboard", title : "Candle Stick Dashboard", code : "mixed3_axis_2.js", csv : false },
+    { type: "dashboard", title : "Candle Stick Dashboard (+Scroll)", code : "mixed3_axis_3.js", csv : false },
     { type: "dashboard", title : "Multi Brushes", code : "dashboard.js", hide : true },
-    { type: "dashboard", title : "Beautiful Dashboard", code : "dashboard2.js" },
-    { type: "dashboard", title : "Company Performance", code : "dashboard3.js" },
-    { type: "dashboard", title : "Sales Overview", code : "dashboard4.js" },
-    { type: "dashboard", title : "Charts in the World Map",  code : "chart_in_worldmap.js" },
+    { type: "dashboard", title : "Beautiful Dashboard", code : "dashboard2.js", csv : false },
+    { type: "dashboard", title : "Company Performance", code : "dashboard3.js", csv : false },
+    { type: "dashboard", title : "Sales Overview", code : "dashboard4.js", csv : false },
+    { type: "dashboard", title : "Charts in the World Map",  code : "chart_in_worldmap.js", csv : false },
 
     // topology map
     { type: "topology", title : "Server Topologies", code : "topology.js" },
@@ -322,11 +322,12 @@ function createTableFields(fields) {
 function createTable() {
     if(jui.include("util.base").browser.msie) return;
 
-    var chart = window.currentChart;
-    var data = chart.get("axis", 0).data;
-    var obj = data[0];
+    var chart = window.currentChart,
+        code = code_list[currentChartIndex],
+        data = chart.get("axis", 0).data,
+        obj = data[0],
+        fields = [];
 
-    var fields = [];
     for(var key in obj) {
         if (typeof obj[key] == 'function') continue;
         fields.push(key);
@@ -344,16 +345,26 @@ function createTable() {
             editend: function(d, e) {
                 var code = code_list[currentChartIndex];
 
-                if(code.csv) {
-                    localStorage.setItem("jui.chartplay.csv", getCsvToObject(this.getCsv()));
-                }
+                // 로컬 스토리지에 저장
+                localStorage.setItem("jui.chartplay.data." + code.code, getCsvToObject(this.getCsv()));
+
+                // 내보내기 버튼 갱신
+                $("#export_csv_btn").attr({
+                    download: code.code + ".csv",
+                    href: this.getCsvBase64()
+                });
             }
         }
     });
 
     table_1.resize();
-
     window.currentChart.bindUI(0, table_1);
+
+    // 내보내기 버튼 갱신
+    $("#export_csv_btn").attr({
+        download: code.code + ".csv",
+        href: table_1.getCsvBase64()
+    });
 }
 
 function createTableStyle() {
@@ -488,27 +499,20 @@ function loadChartList() {
         $group.addClass("active");
         $(".container > .menu").scrollTop($group.position().top);
 
-        // 리얼타임일 경우, 테마와 데이터 탭 제거
-        if(code.type == "realtime") {
-            $("#tab_1").find("li:not(:first-child)").hide();
-            /*/
-        } else if(code.type == "map") {
-            $("#tab_1").find("li:last-child").hide();
-            $("#tab_1").find("li:not(:last-child)").show();
-            /**/
-        } else {
-            $("#tab_1").find("li").show();
-
-            if(realtimeInterval != null) {
-                clearInterval(realtimeInterval);
-            }
+        // 리얼타임 핸들러 제거
+        if(realtimeInterval != null) {
+            clearInterval(realtimeInterval);
         }
 
-        // Import CSV 파일 모드
-        if(code.csv) {
-            $(".import_csv_form").show();
+        // CSV 내보내기/가져오기 상태처리
+        if(code.csv === false) {
+            $(".import_csv_form").find(".group").hide();
+            $(".import_csv_form").find("#import_csv_input").hide();
+            $("#tab_1").find("li:eq(1)").hide();
         } else {
-            $(".import_csv_form").hide();
+            $(".import_csv_form").find(".group").show();
+            $(".import_csv_form").find("#import_csv_input").show();
+            $("#tab_1").find("li:eq(1)").show();
         }
     });
 
@@ -549,17 +553,12 @@ function viewCodeEditor() {
 
                 var chart = jui.get("chart.builder").pop();
                 window.currentChart = chart[chart.length -1];
-
                 changeTheme($("select").find("option:selected").val());
 
                 // CSV 파일 로드 상태일 때
-                if(code.csv) {
-                    var csv = localStorage.getItem("jui.chartplay.csv");
-                    localStorage.setItem("jui.chartplay." + code.code, cm.getValue());
-
-                    if(csv != null) {
-                        window.currentChart.axis(0).update(eval(csv));
-                    }
+                var csv = localStorage.getItem("jui.chartplay.data." + code.code);
+                if(csv != null) {
+                    window.currentChart.axis(0).update(eval(csv));
                 }
             } catch(e) {
                 console.log(e);
@@ -568,15 +567,14 @@ function viewCodeEditor() {
     }
 
     var code = code_list[currentChartIndex];
+
     $.ajax({
         url : "json/" + code.code,
         dataType : "text",
         success : function (data) {
-            // CSV 코드 로드할 때
-            if (code.csv) {
-                var cacheData = localStorage.getItem("jui.chartplay." + code.code);
-                data = (cacheData != null) ? cacheData : data;
-            }
+            // 코드가 캐싱되어 있을 때
+            var cache = localStorage.getItem("jui.chartplay.code." + code.code);
+            data = (cache != null) ? cache : data;
 
             // 차트 ID 변경
             if (data.indexOf("#chart-content") > -1) {
@@ -716,14 +714,27 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
         var reader = new FileReader();
 
         reader.onload = function(readerEvt) {
-            var result = getCsvToObject(readerEvt.target.result);
+            var code = code_list[currentChartIndex],
+                result = getCsvToObject(readerEvt.target.result);
 
-            localStorage.setItem("jui.chartplay.csv", result);
+            localStorage.setItem("jui.chartplay.data." + code.code, result);
             window.currentChart.axis(0).update(eval(result));
 
             $("#import_csv_input").val("");
         };
 
         reader.readAsText(e.target.files[0]);
+    });
+
+    // CODE 저장하기
+    $("#save_btn").on("click", function (e) {
+        var code = code_list[currentChartIndex];
+        localStorage.setItem("jui.chartplay.code." + code.code, editor.getValue());
+    });
+
+    $("#clear_btn").on("click", function (e) {
+        var code = code_list[currentChartIndex];
+        localStorage.removeItem("jui.chartplay.code." + code.code);
+        localStorage.removeItem("jui.chartplay.data." + code.code);
     });
 });
