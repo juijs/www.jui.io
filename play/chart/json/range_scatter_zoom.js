@@ -36,6 +36,7 @@ chart("#chart", {
         symbol : "cross",
         target : "delay",
         size : 5,
+        clip : true,
         colors : function(d) {
             if(d.error > 70) return "red";
             else if(d.error > 50) return "orange";
