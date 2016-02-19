@@ -543,7 +543,8 @@ function viewCodeEditor() {
         });
 
         editor.on("change", function(cm) {
-            var code = code_list[currentChartIndex];
+            // 데이터가 캐싱되어 있을 때
+            var cache2 = localStorage.getItem("jui.chartplay.data." + getChartKey());
 
             try {
                 $("#chart-content").empty();
@@ -553,41 +554,39 @@ function viewCodeEditor() {
 
                 var chart = jui.get("chart.builder").pop();
                 window.currentChart = chart[chart.length -1];
-                changeTheme($("select").find("option:selected").val());
 
-                // CSV 파일 로드 상태일 때
-                var csv = localStorage.getItem("jui.chartplay.data." + code.code);
-                if(csv != null) {
-                    window.currentChart.axis(0).update(eval(csv));
+                if(cache2 != null) {
+                    window.currentChart.axis(0).update(eval(cache2));
                 }
+
+                // 현재 데이터 적용
+                createTable();
+
+                // 현재 테마 적용
+                changeTheme($("select").find("option:selected").val());
             } catch(e) {
                 console.log(e);
             }
         });
     }
 
-    var code = code_list[currentChartIndex];
-
     $.ajax({
-        url : "json/" + code.code,
+        url : "json/" + getChartKey(),
         dataType : "text",
-        success : function (data) {
-            // 코드가 캐싱되어 있을 때
-            var cache = localStorage.getItem("jui.chartplay.code." + code.code);
-            data = (cache != null) ? cache : data;
+        success : function (origin) {
+            var cache1 = localStorage.getItem("jui.chartplay.code." + getChartKey());
 
-            // 차트 ID 변경
-            if (data.indexOf("#chart-content") > -1) {
-                editor.setValue(data);
-            } else if (data.indexOf("#chart") > -1) {
-                editor.setValue(data.replace("#chart", "#chart-content"));
+            // 코드가 캐싱되어 있을 때
+            if(cache1 != null) {
+                origin = cache1;
             }
 
-            // 현재 데이터 적용
-            createTable();
-
-            // 현재 테마 적용
-            changeTheme($("select").find("option:selected").val());
+            // 차트 ID 변경
+            if (origin.indexOf("#chart-content") > -1) {
+                editor.setValue(origin);
+            } else if (origin.indexOf("#chart") > -1) {
+                editor.setValue(origin.replace("#chart", "#chart-content"));
+            }
         },
         error : function(data, error) {
             console.log(error);
@@ -664,6 +663,10 @@ function getCsvToObject(csv) {
     return "[" + data.join(",") + "]";
 }
 
+function getChartKey() {
+    return code_list[currentChartIndex].code;
+}
+
 jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     editor = null;
 
@@ -733,8 +736,12 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     });
 
     $("#clear_btn").on("click", function (e) {
-        var code = code_list[currentChartIndex];
-        localStorage.removeItem("jui.chartplay.code." + code.code);
-        localStorage.removeItem("jui.chartplay.data." + code.code);
+        if(confirm("Delete the code and data cache?")) {
+            var code = code_list[currentChartIndex];
+
+            localStorage.removeItem("jui.chartplay.code." + code.code);
+            localStorage.removeItem("jui.chartplay.data." + code.code);
+            location.reload();
+        }
     });
 });
