@@ -623,7 +623,6 @@ function setFunctions() {
             }
 
             table_2.downloadCsv("jui_style");
-            console.log(data.join("\n"));
         } else {
             alert("Style data is not loaded.");
         }
