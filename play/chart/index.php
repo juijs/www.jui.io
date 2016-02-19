@@ -59,6 +59,11 @@
                     </li>
                 </ul>
 
+                <div class="import_csv_form">
+                    <a class="btn small" id="import_csv_btn"><i class="icon-upload"></i> Import</a>
+                    <input type="file" id="import_csv_input" />
+                </div>
+
                 <div id="tab_contents_1" class="tab-contents">
                     <div id="chart-code">
                         <textarea id="chart-code-text"></textarea>

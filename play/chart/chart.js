@@ -5,6 +5,7 @@ var table_1, table_2;
 var chart_1, chart_2, chart_3;
 var realtimeIndex = 0;
 var realtimeInterval = null;
+var csvFileData = null;
 
 var charts = [
     { type: "basic", title : "Basic" },
@@ -46,6 +47,7 @@ var code_list = [
     { type: "basic", title : "Set chart brushes", code : "update_brush.js" },
     { type: "basic", title : "Using SVG icons", code : "use_svg_icons.js" },
     { type: "basic", title : "Using dashboard-style", code : "use_dashboard_style.js" },
+    { type: "basic", title : "Import CSV File", code : "import_csv_file.js", csv : true },
 
     // grid basic
     { type: "grid", title : "Set domain", code : "grid_set_domain.js" },
@@ -300,6 +302,24 @@ function changeTheme(theme) {
     }
 }
 
+function createTableFields(fields) {
+    var $head = $('#table_1 thead tr');
+    // create thead
+    $head.empty();
+
+    for(var i = 0; i < fields.length; i++) {
+        $head.append("<th>" + fields[i] + "</th>");
+    }
+
+    var list = [];
+
+    for(var i = 0; i < fields.length; i++) {
+        list.push("<td><!= " + fields[i] + " !></td>");
+    }
+
+    return ["<tr>", list.join("") ,"</tr>"].join("");
+}
+
 function createTable() {
     if(jui.include("util.base").browser.msie) return;
 
@@ -313,29 +333,13 @@ function createTable() {
         fields.push(key);
     }
 
-    var $head = $('#table_1 thead tr');
-    // create thead
-    $head.empty();
-
-    for(var i = 0; i < fields.length; i++) {
-        $head.append("<th>" + fields[i] + "</th>");
-    }
-
-    // create template
-    var list = [];
-    for(var i = 0; i < fields.length; i++) {
-        list.push("<td><!= " + fields[i] + " !></td>");
-    }
-
-    var tpl = ["<tr>", list.join("") ,"</tr>"].join("");
-
     table_1 = jui.create("grid.table", "#table_1", {
         fields: fields,
         data: data,
         editRow: true,
         resize: true,
         tpl: {
-            row: tpl
+            row: createTableFields(fields)
         }
     });
 
@@ -491,6 +495,13 @@ function loadChartList() {
                 clearInterval(realtimeInterval);
             }
         }
+
+        // Import CSV 파일 모드
+        if(code.csv) {
+            $(".import_csv_form").show();
+        } else {
+            $(".import_csv_form").hide();
+        }
     });
 
     // 온-로드 시점에도 발생
@@ -510,8 +521,6 @@ function getIndexByCode(code) {
 }
 
 function viewCodeEditor() {
-    var code = code_list[currentChartIndex];
-
     if (!editor) {
         editor = CodeMirror.fromTextArea($("#chart-code-text")[0], {
             mode: "javascript",
@@ -522,6 +531,8 @@ function viewCodeEditor() {
         });
 
         editor.on("change", function(cm) {
+            var code = code_list[currentChartIndex];
+
             try {
                 $("#chart-content").empty();
 
@@ -532,12 +543,18 @@ function viewCodeEditor() {
                 window.currentChart = chart[chart.length -1];
 
                 changeTheme($("select").find("option:selected").val());
+
+                // CSV 파일 로드 상태일 때
+                if(code.csv && csvFileData != null) {
+                    window.currentChart.axis(0).update(csvFileData);
+                }
             } catch(e) {
                 console.log(e);
             }
         });
     }
 
+    var code = code_list[currentChartIndex];
     $.ajax({
         url : "json/" + code.code,
         dataType : "text",
@@ -644,5 +661,40 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
         } else {
             $("body").addClass("menu-open");
         }
+    });
+
+    // CSV 가져오기
+    $("#import_csv_input").on("change", function (e) {
+        var reader = new FileReader();
+
+        reader.onload = function(readerEvt) {
+            var data = [],
+                csv = readerEvt.target.result,
+                rows = csv.split("\n"),
+                fields = rows[0].split(",");
+
+            for(var i = 1; i < rows.length - 1; i++) {
+                var cells = rows[i].split(",");
+
+                for(var j = 0; j < cells.length; j++) {
+                    var v = $.trim(cells[j]);
+
+                    if(/^[0-9]*$/.test(v)) {
+                        cells[j] = fields[j] + ":" + v;
+                    } else {
+                        cells[j] = fields[j] + ":'" + v + "'";
+                    }
+                }
+
+                data.push("{" + cells.join(",") + "}");
+            }
+
+            csvFileData = eval("[" + data.join(",") + "]");
+            window.currentChart.axis(0).update(csvFileData);
+
+            $("#import_csv_input").val("");
+        };
+
+        reader.readAsText(e.target.files[0]);
     });
 });
