@@ -542,6 +542,12 @@ function viewCodeEditor() {
             theme : "neo"
         });
 
+        editor.setOption("extraKeys", {
+            "Ctrl-S": function(cm) {
+                $("#save_btn").trigger("click");
+            }
+        });
+
         editor.on("change", function(cm) {
             // 데이터가 캐싱되어 있을 때
             var cache2 = localStorage.getItem("jui.chartplay.data." + getChartKey());
@@ -732,6 +738,8 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     $("#save_btn").on("click", function (e) {
         var code = code_list[currentChartIndex];
         localStorage.setItem("jui.chartplay.code." + code.code, editor.getValue());
+
+        alert("The source code has been saved.");
     });
 
     $("#clear_btn").on("click", function (e) {
