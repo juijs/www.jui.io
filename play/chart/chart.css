@@ -133,7 +133,7 @@ body > .container > .content {
     position: absolute;
     background-color: #ddd;
     margin-left: -2px;
-    left: 40%;
+    left: 45%;
     top: 0px;
     bottom: 0px;
 }
@@ -144,7 +144,7 @@ body > .container > .content {
     left: 0px;
     top: 0px;
     bottom: 0px;
-    width: 40%;
+    width: 45%;
     overflow-y: auto;
     background: white;
 }
@@ -175,7 +175,7 @@ body > .container > .content {
 .chart_view {
     overflow: hidden;
     position: absolute;
-    left: 40%;
+    left: 45%;
     top: 0px;
     bottom: 0px;
     right: 10px;

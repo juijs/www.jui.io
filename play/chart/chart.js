@@ -1,5 +1,6 @@
 var editor;
 var comments;
+var notify;
 var currentChartIndex = 0;
 var table_1, table_2;
 var chart_1, chart_2, chart_3;
@@ -506,11 +507,11 @@ function loadChartList() {
 
         // CSV 내보내기/가져오기 상태처리
         if(code.csv === false) {
-            $(".import_csv_form").find(".group").hide();
+            $(".import_csv_form").find(".csv").hide();
             $(".import_csv_form").find("#import_csv_input").hide();
             $("#tab_1").find("li:eq(1)").hide();
         } else {
-            $(".import_csv_form").find(".group").show();
+            $(".import_csv_form").find(".csv").show();
             $(".import_csv_form").find("#import_csv_input").show();
             $("#tab_1").find("li:eq(1)").show();
         }
@@ -607,7 +608,7 @@ function setFunctions() {
         var $el = $(".chart_view");
 
         if ($el.hasClass("fullscreen")) {
-            $el.removeClass("fullscreen").animate({ left : "40%" }, viewCodeEditor);
+            $el.removeClass("fullscreen").animate({ left : "45%" }, viewCodeEditor);
         } else {
             $el.addClass("fullscreen").animate({ left : "0%" }, viewCodeEditor);
         }
@@ -672,12 +673,20 @@ function getChartKey() {
     return code_list[currentChartIndex].code;
 }
 
-jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
+jui.ready([ "util.base", "ui.window", "ui.notify" ], function(_, uiWin, uiNotify) {
     editor = null;
 
     loadChartList();
     setFunctions();
     createTab();
+
+    notify = uiNotify("body", {
+        position: "top-right",
+        timeout: 3000,
+        tpl: {
+            item: $("#tpl_alarm").html()
+        }
+    });
 
     // 댓글 모달 윈도우
     comments = uiWin("#comments", {
@@ -739,15 +748,26 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
         var code = code_list[currentChartIndex];
         localStorage.setItem("jui.chartplay.code." + code.code, editor.getValue());
 
-        //alert("The source code has been saved.");
+        notify.add({
+            title: code.code,
+            message: "The source code has been saved.",
+            color: "danger"
+        });
     });
 
     $("#clear_btn").on("click", function (e) {
-        if(confirm("Delete the code and data cache?")) {
+        if(confirm("Clear the code and data cache?")) {
             var code = code_list[currentChartIndex];
 
             localStorage.removeItem("jui.chartplay.code." + code.code);
             localStorage.removeItem("jui.chartplay.data." + code.code);
+            location.reload();
+        }
+    });
+
+    $("#clear_all_btn").on("click", function (e) {
+        if(confirm("Clear all code and data cache?")) {
+            localStorage.clear();
             location.reload();
         }
     });
