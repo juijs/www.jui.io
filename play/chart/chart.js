@@ -739,7 +739,7 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
         var code = code_list[currentChartIndex];
         localStorage.setItem("jui.chartplay.code." + code.code, editor.getValue());
 
-        alert("The source code has been saved.");
+        //alert("The source code has been saved.");
     });
 
     $("#clear_btn").on("click", function (e) {
