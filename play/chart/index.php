@@ -60,7 +60,15 @@
                 </ul>
 
                 <div class="import_csv_form">
-                    <a class="btn small" id="import_csv_btn"><i class="icon-upload"></i> Import</a>
+                    <a class="btn small" id="clear_all_btn" title="Save source code">Clear All</a>
+                    <div class="group">
+                        <a class="btn small" id="save_btn" title="Save source code"><i class="icon-save"></i></a>
+                        <a class="btn small" id="clear_btn" title="Clear cache"><i class="icon-trashcan"></i></a>
+                    </div>
+                    <div class="group csv">
+                        <a class="btn small" id="export_csv_btn" title="Export CSV file"><i class="icon-download"></i></a>
+                        <a class="btn small" id="import_csv_btn" title="Import CSV file"><i class="icon-upload"></i></a>
+                    </div>
                     <input type="file" id="import_csv_input" />
                 </div>
 
@@ -99,7 +107,6 @@
 
                         <div class="group">
                             <a class='btn btn-api' title="Chart API" href="http://api.jui.io/" target="_blank">API</a>
-                            <a class='btn btn-style' title="Show Styles"><i class='icon-edit'></i></a>
                             <a class='btn btn-image' title="Download Image"><i class='icon-image'></i></a>
                             <a class='btn btn-fullscreen' title="Full Screen"><i class='icon-new-window'></i></a>
                         </div>
@@ -110,6 +117,13 @@
         </div>
     </div>
 </div>
+
+<script id="tpl_alarm" type="text/template">
+    <div class="notify <!= color !>">
+        <div class="title"><!= title !></div>
+        <div class="message"><!= message !></div>
+    </div>
+</script>
 
 <?php include("../../tpl/footer_play.html"); ?>
 
