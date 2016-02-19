@@ -5,7 +5,6 @@ var table_1, table_2;
 var chart_1, chart_2, chart_3;
 var realtimeIndex = 0;
 var realtimeInterval = null;
-var csvFileData = null;
 
 var charts = [
     { type: "basic", title : "Basic" },
@@ -38,8 +37,8 @@ var code_list = [
     // basic
     { type: "basic", title : "Set brush events", code : "brush_event.js" },
     { type: "basic", title : "Set brush events (with HTML)", code : "brush_event_2.js" },
-    { type: "basic", title : "Set brush colors (array)", code : "brush_colors.js" },
-    { type: "basic", title : "Set brush colors (callback)", code : "brush_colors_callback.js" },
+    { type: "basic", title : "Set brush colors (Array)", code : "brush_colors.js" },
+    { type: "basic", title : "Set brush colors (Callback)", code : "brush_colors_callback.js" },
     { type: "basic", title : "Set theme styles", code : "change_theme.js" },
     { type: "basic", title : "Set chart padding", code : "chart_padding.js" },
     { type: "basic", title : "Update axis data", code : "brush_axis_value.js" },
@@ -47,7 +46,7 @@ var code_list = [
     { type: "basic", title : "Set chart brushes", code : "update_brush.js" },
     { type: "basic", title : "Using SVG icons", code : "use_svg_icons.js" },
     { type: "basic", title : "Using dashboard-style", code : "use_dashboard_style.js" },
-    { type: "basic", title : "Import CSV File", code : "import_csv_file.js", csv : true },
+    { type: "basic", title : "Import CSV File (+Cached)", code : "import_csv_file.js", csv : true },
 
     // grid basic
     { type: "grid", title : "Set domain", code : "grid_set_domain.js" },
@@ -340,6 +339,15 @@ function createTable() {
         resize: true,
         tpl: {
             row: createTableFields(fields)
+        },
+        event: {
+            editend: function(d, e) {
+                var code = code_list[currentChartIndex];
+
+                if(code.csv) {
+                    localStorage.setItem("jui.chartplay.csv", getCsvToObject(this.getCsv()));
+                }
+            }
         }
     });
 
@@ -545,8 +553,13 @@ function viewCodeEditor() {
                 changeTheme($("select").find("option:selected").val());
 
                 // CSV 파일 로드 상태일 때
-                if(code.csv && csvFileData != null) {
-                    window.currentChart.axis(0).update(csvFileData);
+                if(code.csv) {
+                    var csv = localStorage.getItem("jui.chartplay.csv");
+                    localStorage.setItem("jui.chartplay." + code.code, cm.getValue());
+
+                    if(csv != null) {
+                        window.currentChart.axis(0).update(eval(csv));
+                    }
                 }
             } catch(e) {
                 console.log(e);
@@ -559,6 +572,13 @@ function viewCodeEditor() {
         url : "json/" + code.code,
         dataType : "text",
         success : function (data) {
+            // CSV 코드 로드할 때
+            if (code.csv) {
+                var cacheData = localStorage.getItem("jui.chartplay." + code.code);
+                data = (cacheData != null) ? cacheData : data;
+            }
+
+            // 차트 ID 변경
             if (data.indexOf("#chart-content") > -1) {
                 editor.setValue(data);
             } else if (data.indexOf("#chart") > -1) {
@@ -618,6 +638,34 @@ function setFunctions() {
     });
 }
 
+function getCsvToObject(csv) {
+    var _ = jui.include("util.base"),
+        data = [],
+        rows = csv.split("\n"),
+        fields = rows[0].split(",");
+
+    for(var i = 1; i < rows.length - 1; i++) {
+        var cells = rows[i].split(",");
+
+        for(var j = 0; j < cells.length; j++) {
+            var v = $.trim(cells[j]);
+
+            if (/^[0-9]*$/.test(v) ||
+                (_.startsWith(v, '"') && _.endsWith(v, '"')) ||
+                (_.startsWith(v, "'") && _.endsWith(v, "'"))
+            ) {
+                cells[j] = fields[j] + ":" + v;
+            } else {
+                cells[j] = fields[j] + ":'" + v + "'";
+            }
+        }
+
+        data.push("{" + cells.join(",") + "}");
+    }
+
+    return "[" + data.join(",") + "]";
+}
+
 jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
     editor = null;
 
@@ -668,29 +716,10 @@ jui.ready([ "util.base", "ui.window" ], function(_, uiWin) {
         var reader = new FileReader();
 
         reader.onload = function(readerEvt) {
-            var data = [],
-                csv = readerEvt.target.result,
-                rows = csv.split("\n"),
-                fields = rows[0].split(",");
+            var result = getCsvToObject(readerEvt.target.result);
 
-            for(var i = 1; i < rows.length - 1; i++) {
-                var cells = rows[i].split(",");
-
-                for(var j = 0; j < cells.length; j++) {
-                    var v = $.trim(cells[j]);
-
-                    if(/^[0-9]*$/.test(v)) {
-                        cells[j] = fields[j] + ":" + v;
-                    } else {
-                        cells[j] = fields[j] + ":'" + v + "'";
-                    }
-                }
-
-                data.push("{" + cells.join(",") + "}");
-            }
-
-            csvFileData = eval("[" + data.join(",") + "]");
-            window.currentChart.axis(0).update(csvFileData);
+            localStorage.setItem("jui.chartplay.csv", result);
+            window.currentChart.axis(0).update(eval(result));
 
             $("#import_csv_input").val("");
         };
