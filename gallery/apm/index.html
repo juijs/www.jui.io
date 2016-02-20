@@ -198,6 +198,17 @@ function getDataForWolrdMap() {
     return data;
 }
 
+function getDataForVisitor() {
+    var desktopRate = randomValue(50, 50),
+        visits = randomValue(10000, 5000);
+
+    return [
+        { title : "Overall Visits", value : visits, max : 15000, min : 0 },
+        { title : "Mobile Rate", value : 100 - desktopRate, max : 100, min : 0 },
+        { title : "Desktop Rate", value : desktopRate, max : 100, min : 0 }
+    ];
+}
+
 jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
     windowResize();
 
@@ -566,6 +577,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             type : "map.bubble",
             min : 5,
             max : 50,
+            showText : true,
             colors : function(d) {
                 if(d.value > 5000) {
                     return "linear(top) #ff686c,0.9 #fa5559";
@@ -603,7 +615,12 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
     });
 
     var status = builder("#status", {
-        padding : 25,
+        padding : {
+            top : 25,
+            bottom : 25,
+            right : 25,
+            left : 50
+        },
         axis : [{
             c : {
                 type : "table",
@@ -611,11 +628,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                 columns : 3,
                 padding : 10
             },
-            data : [
-                { title : "Overall Visits", value : 192, max : 200, min : 0 },
-                { title : "Mobile Visits", value : 75, max : 100, min : 0 },
-                { title : "Desktop Visits", value : 25, max : 100, min : 0 }
-            ]
+            data : getDataForVisitor()
         }],
         brush : [{
             type : "fullgauge",
@@ -623,7 +636,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             titleX : -55,
             format : function(value, index) {
                 if(index == 0) {
-                    return value + "k";
+                    return Math.round(value / 1000) + "K";
                 }
 
                 return value + "%";
@@ -721,6 +734,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 
     setInterval(function() {
         map.axis(0).update(getDataForWolrdMap());
+        status.axis(0).update(getDataForVisitor());
     }, 3000);
 });
 </script>
