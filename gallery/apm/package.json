@@ -1,14 +1,14 @@
 {
   "name": "apm",
   "version": "1.0.0",
-  "title": "Dashboard for APM",
-  "description": "Dashboard for APM",
+  "title": "Real-time Monitoring Dashboard",
+  "description": "Dashboard for monitoring system status and visitor services, etc.",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "apm", "dashboard"
+    "apm", "dashboard", "server"
   ],
   "author": "alvin",
   "license": "MIT",

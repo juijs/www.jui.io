@@ -5,46 +5,17 @@
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
-<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" id="ui_theme" />
 <link rel="stylesheet" href="../../lib/jui/css/grid.min.css" />
-<link rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" id="grid_theme" />
 <script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/core.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
-<style>
-    body {
-        padding: 10px;
-    }
 
-    .col-7 {
-        padding-left: 15px;
-    }
+<link rel="stylesheet" href="index.css" />
 
-    .navbar {
-        margin-bottom: 15px;
-    }
-
-    .panel > .body {
-        padding: 7px !important;
-    }
-
-    #map, #status {
-        width: 100%;
-        height: 100%;
-    }
-
-    #dashboard_top {
-        width: 100%;
-        height: 60%;
-    }
-
-    #dashboard_bottom {
-        width: 100%;
-        height: 40%;
-    }
-</style>
 <script>
 function windowResize() {
     var $panel = $(".panel > .body"),
@@ -65,154 +36,16 @@ function pastTimeInterval(min) {
     return [ new Date(new Date() - time.MINUTE * min), new Date() ];
 }
 
-function getDataForActiveService() {
-    var data = [];
-
-    for(var i = 1; i <= 5; i++) {
-        data.push({
-            server: "W" + i,
-            normal: randomValue(0, 20),
-            warning: randomValue(0, 10),
-            fatal: randomValue(0, 5)
-        });
-    }
-
-    return data;
-}
-
-function getDataForResponseTime(count) {
-    var data = [];
-
-    for(var i = 0; i < count; i++) {
-        data.push({
-            w1: randomValue(4000, 1000),
-            w2: randomValue(3000, 1500),
-            w3: randomValue(6000, 500),
-            w4: randomValue(2000, 750),
-            w5: randomValue(7000, 250)
-        });
-    }
-
-    return data;
-}
-
-function getDataForTPS(count) {
-    var data = [];
-
-    for(var i = 0; i < count; i++) {
-        data.push({
-            w1: randomValue(50, 5),
-            w2: randomValue(70, 5),
-            w3: randomValue(60, 5),
-            w4: randomValue(50, 5),
-            w5: randomValue(30, 5)
-        });
-    }
-
-    return data;
-}
-
-function setTransactionData(list, domain) {
-    var count = Math.floor(Math.random() * 100);
-
-    for(var i = 0; i < list.length; i++) {
-        if(list[i].time.getTime() < domain[0].getTime()) {
-            list.shift();
-        } else {
-            break;
-        }
-    }
-
-    for(var i = 0; i < count; i++) {
-        var type = Math.floor(Math.random() * 6),
-            data = {
-                delay: Math.floor(Math.random() * 10000),
-                level: "normal",
-                time: domain[1]
-            };
-
-        if(type > 2 && type < 5) {
-            data.level = "warning";
-        } else if(type > 4) {
-            data.level = "fatal";
-        }
-
-        list.push(data);
-    }
-}
-
-function getDataForToday(count) {
-    var data = [];
-
-    for(var i = 0; i < count; i++) {
-        data.push({
-            tps: randomValue(50, 5),
-            user: randomValue(1000, 100)
-        });
-    }
-
-    return data;
-}
-
 function getTimeToIndex() {
     var now = new Date();
     return now.getHours() * 60 + now.getMinutes();
 }
 
-function getDataForHours() {
-    var data = [],
-        now = new Date();
-
-    for(var i = 0; i < 24; i++) {
-        data.push({
-            hours: i,
-            callcount: randomValue(10000, 2000),
-            visitor: randomValue(5000, 1000),
-            today: (i <= now.getHours()) ? true : false
-        });
-    }
-
-    return data;
-}
-
-function getDataForWolrdMap() {
-    var keys = [ "KR", "CN", "US", "FR", "BR", "AU", "JP", "IN", "RU", "GB" ],
-        data = [];
-
-    for(var i = 0; i < keys.length; i++) {
-        var value = randomValue(1000, 5000);
-
-        if(keys[i] == "KR") {
-            value = randomValue(5000, 1000);
-        } else if(keys[i] == "CN" || keys[i] == "RU") {
-            value = randomValue(3000, 2000);
-        } else if(keys[i] == "JP" || keys[i] == "IN") {
-            value = randomValue(2000, 3000);
-        }
-
-        data.push({
-            id: keys[i], value: value
-        });
-    }
-
-    return data;
-}
-
-function getDataForVisitor() {
-    var desktopRate = randomValue(50, 50),
-        visits = randomValue(10000, 5000);
-
-    return [
-        { title : "Overall Visits", value : visits, max : 15000, min : 0 },
-        { title : "Mobile Rate", value : 100 - desktopRate, max : 100, min : 0 },
-        { title : "Desktop Rate", value : desktopRate, max : 100, min : 0 }
-    ];
-}
-
-jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
+jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" ], function(_, time, builder, combo, tooltip) {
     windowResize();
 
-    var dashboard_top = builder("#dashboard_top", {
+    // Top left of the dashboard charts
+    window.dashboard_top = builder("#dashboard_top", {
         padding : 5,
         axis : [{
             x : {
@@ -341,14 +174,14 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
         }],
         widget : [{
             type : "title",
-            text : "Active Service",
+            text : "Active service",
             dx : -10,
             dy : -7,
             axis : 0,
             align : "start"
         }, {
             type : "title",
-            text : "Response Time",
+            text : "Response time",
             dx : -10,
             dy : -7,
             axis : 1,
@@ -418,7 +251,8 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
         render : false
     });
 
-    var dashboard_bottom = builder("#dashboard_bottom", {
+    // Bottom left of the dashboard charts
+    window.dashboard_bottom = builder("#dashboard_bottom", {
         padding : 5,
         axis : [{
             x : {
@@ -540,7 +374,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             align : "start"
         }, {
             type : "title",
-            text : "X-View",
+            text : "Transaction view",
             dx : -10,
             dy : -7,
             axis : 2,
@@ -563,7 +397,8 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
         canvas : true
     });
 
-    var map = builder("#map", {
+    // Top right of the map charts
+    window.map = builder("#map", {
         padding : 0,
         axis : [{
             map : {
@@ -610,11 +445,16 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             }
         }],
         style: {
-            mapPathBorderWidth: 0.3
-        }
+            mapPathBackgroundColor: "#a9a9a9",
+            mapPathBorderWidth: 0.3,
+            mapSelectorHoverColor: "#dcdcdc",
+            mapControlButtonColor: "#a9a9a9"
+        },
+        render: false
     });
 
-    var status = builder("#status", {
+    // Bottom right of the gauge charts
+    window.status = builder("#status", {
         padding : {
             top : 25,
             bottom : 25,
@@ -641,108 +481,85 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 
                 return value + "%";
             }
-        }]
+        }],
+        render: false
+    });
+
+    // Choose a theme for the UI
+    combo("#combo_theme", {
+        width: 150,
+        event: {
+            change: function(data) {
+                var theme = data.text.toLowerCase();
+
+                // change chart-theme
+                dashboard_top.setTheme(theme);
+                dashboard_bottom.setTheme(theme);
+                map.setTheme(theme);
+                status.setTheme(theme);
+
+                // change ui-theme
+                if(theme == "dark") {
+                    $("#ui_theme").attr("href", "../../lib/jui/css/ui-dark.min.css");
+                    $("#grid_theme").attr("href", "../../lib/jui/css/grid-dark.min.css");
+                    $("body").css("background", "#191919");
+                } else {
+                    $("#ui_theme").attr("href", "../../lib/jui/css/ui-jennifer.min.css");
+                    $("#grid_theme").attr("href", "../../lib/jui/css/grid-jennifer.min.css");
+                    $("body").css("background", "white");
+                }
+            }
+        }
+    });
+
+    // Help tooltip UI
+    tooltip("#btn_help", {
+        position: "left",
+        width: 400,
+        showType: "click",
+        tpl: {
+            item: $("#tpl_popover").html()
+        }
     });
 
     _.resize(windowResize, 100);
-
-    // Data update
-    setInterval(function() {
-        var domain = pastTimeInterval(5);
-
-        // 1. Active Service
-        dashboard_top.axis(0).update(getDataForActiveService());
-
-        // 2. Response Time
-        var responseTimeData = dashboard_top.axis(1).data;
-        dashboard_top.axis(1).set("x", { domain: domain });
-
-        if(responseTimeData.length == 0) {
-            dashboard_top.axis(1).update(getDataForResponseTime(300));
-        } else if(responseTimeData.length == 300) {
-            responseTimeData.shift();
-            responseTimeData.push(getDataForResponseTime(1)[0]);
-            dashboard_top.axis(1).update(responseTimeData);
-        }
-
-        // 3. TPS
-        var tpsData = dashboard_top.axis(2).data;
-        dashboard_top.axis(2).set("x", { domain: domain });
-
-        if(tpsData.length == 0) {
-            dashboard_top.axis(2).update(getDataForTPS(300));
-        } else if(tpsData.length == 300) {
-            tpsData.shift();
-            tpsData.push(getDataForTPS(1)[0]);
-            dashboard_top.axis(2).update(tpsData);
-        }
-
-        // 4. Today's TPS & User
-        var todaysTpsData = dashboard_top.axis(3).data,
-            todaysUserData = dashboard_top.axis(4).data,
-            splitIndex = getTimeToIndex();
-
-        if(todaysTpsData.length == 0) {
-            dashboard_top.axis(3).update(getDataForToday(1440));
-            dashboard_top.axis(4).update(getDataForToday(1440));
-        } else if(todaysTpsData.length == 1440) {
-            if(domain[1].getSeconds() == 0) {
-                var data = getDataForToday(1)[0];
-
-                todaysTpsData.shift();
-                todaysTpsData.push(data);
-                todaysUserData.shift();
-                todaysUserData.push(data);
-
-                dashboard_top.axis(3).update(todaysTpsData);
-                dashboard_top.axis(4).update(todaysUserData);
-            }
-        }
-
-        dashboard_top.updateBrush(3, { split: splitIndex });
-        dashboard_top.updateBrush(4, { split: splitIndex });
-        dashboard_top.updateBrush(5, { split: splitIndex });
-        dashboard_top.updateBrush(6, { split: splitIndex });
-
-        // Chart rendering
-        dashboard_top.render();
-    }, 1000);
-
-    setInterval(function() {
-        var domain = pastTimeInterval(10);
-
-        // Call Count & Visitor
-        if(dashboard_bottom.axis(0).data.length == 0 || domain[1].getMinutes() == 0) {
-            var hoursData = getDataForHours(),
-                focusIndex = {
-                    start: domain[1].getHours(),
-                    end: domain[1].getHours()
-                };
-
-            dashboard_bottom.updateBrush(1, focusIndex);
-            dashboard_bottom.updateBrush(3, focusIndex);
-            dashboard_bottom.axis(0).update(hoursData);
-            dashboard_bottom.axis(1).update(hoursData);
-        }
-
-        // Transaction
-        setTransactionData(dashboard_bottom.axis(2).data, domain);
-        dashboard_bottom.axis(2).set("x", { domain: domain });
-
-        dashboard_bottom.render();
-    }, 2000);
-
-    setInterval(function() {
-        map.axis(0).update(getDataForWolrdMap());
-        status.axis(0).update(getDataForVisitor());
-    }, 3000);
 });
 </script>
 </head>
 <body class="jui">
+
+<!-- Real-time data update -->
+<script type="text/javascript" src="data.js" ></script>
+
+<!-- Template for tooltip -->
+<script id="tpl_popover" type="text/template">
+    <div class="popover <!= position !>">
+        <div class="head">Help tooltip</div>
+        <div class="body">
+            <div class="image"><i class="icon-caution"></i></div>
+            <div class="message"><!= message !></div>
+        </div>
+    </div>
+</script>
+
 <div class="navbar">
-    <a class="btn small"><i class="icon-search"></i> Mini button</a>
-    <a class="btn small"> Mini button</a>
+    <div class="inline">
+        Theme
+        <div id="combo_theme" class="combo">
+            <a class="btn small">Select...</a>
+            <a class="btn small toggle"><i class="icon-arrow2"></i></a>
+            <ul>
+                <li>Jennifer</li>
+                <li>Dark</li>
+                <li>Pastel</li>
+                <li>Gradient</li>
+                <li>Pattern</li>
+            </ul>
+        </div>
+    </div>
+    <div class="inline right">
+        <a class="btn small" id="btn_help" title="You can change the theme through the left combo box."><i class="icon-help"></i></a>
+    </div>
 </div>
 <div class="row">
     <div class="col" style="width: 49%;">
@@ -770,7 +587,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
         <div class="row">
             <div class="panel">
                 <div class="head">
-                    <strong>Visitor status</strong>
+                    <strong>Visitor type</strong>
                 </div>
                 <div class="body">
                     <div id="status"></div>
