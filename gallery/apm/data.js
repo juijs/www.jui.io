@@ -233,10 +233,10 @@ setInterval(function() {
 
 setInterval(function() {
     // Visitor location
-    map.axis(0).update(getDataForWorldMap());
-    map.render();
+    visitor_map.axis(0).update(getDataForWorldMap());
+    visitor_map.render();
 
     // Visitor type
-    status.axis(0).update(getDataForVisitor());
-    status.render();
+    visitor_type.axis(0).update(getDataForVisitor());
+    visitor_type.render();
 }, 3000);
