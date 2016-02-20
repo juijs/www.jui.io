@@ -30,9 +30,19 @@
         padding: 7px !important;
     }
 
-    #dashboard, #map, #status {
+    #map, #status {
         width: 100%;
         height: 100%;
+    }
+
+    #dashboard_top {
+        width: 100%;
+        height: 60%;
+    }
+
+    #dashboard_bottom {
+        width: 100%;
+        height: 40%;
     }
 </style>
 <script>
@@ -50,9 +60,9 @@ function randomValue(start, limit) {
     return Math.floor(Math.random() * limit) + start;
 }
 
-function fiveMinBeforeTime() {
+function pastTimeInterval(min) {
     var time = jui.include("util.time");
-    return [ new Date(new Date() - time.MINUTE * 5), new Date() ];
+    return [ new Date(new Date() - time.MINUTE * min), new Date() ];
 }
 
 function getDataForActiveService() {
@@ -149,10 +159,26 @@ function getTimeToIndex() {
     return now.getHours() * 60 + now.getMinutes();
 }
 
+function getDataForHours() {
+    var data = [],
+        now = new Date();
+
+    for(var i = 0; i < 24; i++) {
+        data.push({
+            hours: i,
+            callcount: randomValue(10000, 2000),
+            visitor: randomValue(5000, 1000),
+            today: (i <= now.getHours()) ? true : false
+        });
+    }
+
+    return data;
+}
+
 jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
     windowResize();
 
-    var dashboard = builder("#dashboard", {
+    var dashboard_top = builder("#dashboard_top", {
         padding : 5,
         axis : [{
             x : {
@@ -173,13 +199,13 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                 bottom : 20
             },
             area : {
-                height: "19%"
+                height: "32%"
             }
         }, {
             extend : 0,
             x : {
                 type : "dateblock",
-                domain : fiveMinBeforeTime(),
+                domain : pastTimeInterval(5),
                 interval : 1,
                 realtime : "minutes",
                 format : "hh:mm",
@@ -187,11 +213,11 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             },
             y : {
                 type : "range",
-                domain : [ 0, 8000 ],
+                domain : [ 0, 10000 ],
                 step : 2
             },
             area : {
-                y : "20%",
+                y : "34%",
                 width : "49%"
             }
         }, {
@@ -199,7 +225,10 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             y : {
                 type : "range",
                 domain : [ 0, 100 ],
-                step : 2
+                step : 2,
+                format : function(d) {
+                    return d + "%";
+                }
             },
             area : {
                 x : "50%",
@@ -212,8 +241,9 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                 domain : [ new Date("2016/01/01"), new Date("2016/01/02") ],
                 interval : time.HOUR, // Only milliseconds
                 format : function(d, i) {
-                    return i;
-                }
+                    return (i % 2) ? "" : i;
+                },
+                realtime : false
             },
             y : {
                 type : "range",
@@ -222,7 +252,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             },
             area : {
                 x : "0%",
-                y : "40%",
+                y : "68%",
                 width : "49%"
             }
         }, {
@@ -230,89 +260,12 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             y : {
                 domain : function(d) {
                     return d.user * 1.3;
-                }
+                },
+                format : null
             },
             area : {
                 x : "50%",
                 width : "50%"
-            }
-        }, {
-            x : {
-                type : "fullblock",
-                domain : "quarter"
-            },
-            y : {
-                type : "range",
-                domain : "sales",
-                step : 2
-            },
-            data : [
-                { quarter : "00", sales : 50 },
-                { quarter : "02", sales : 20 },
-                { quarter : "04", sales : 10 },
-                { quarter : "06", sales : 30 },
-                { quarter : "08", sales : 44 },
-                { quarter : "10", sales : 22 },
-                { quarter : "12", sales : 21 },
-                { quarter : "14", sales : 36 },
-                { quarter : "16", sales : 56 },
-                { quarter : "18", sales : 30 },
-                { quarter : "20", sales : 32 },
-                { quarter : "22", sales : 25 },
-                { quarter : "24", sales : 22 }
-            ],
-            padding : {
-                left : 50,
-                top : 35,
-                right : 20,
-                bottom : 20
-            },
-            area : {
-                x : "0%",
-                y : "60%",
-                width : "49%",
-                height : "19%"
-            }
-        }, {
-            extend : 5,
-            data : [
-                { quarter : "00", sales : 50 },
-                { quarter : "02", sales : 20 },
-                { quarter : "04", sales : 10 },
-                { quarter : "06", sales : 30 },
-                { quarter : "08", sales : 44 },
-                { quarter : "10", sales : 22 },
-                { quarter : "12", sales : 21 },
-                { quarter : "14", sales : 36 },
-                { quarter : "16", sales : 56 },
-                { quarter : "18", sales : 30 },
-                { quarter : "20", sales : 32 },
-                { quarter : "22", sales : 25 },
-                { quarter : "24", sales : 22 }
-            ],
-            area : {
-                y : "80%"
-            }
-        }, {
-            extend : 1,
-            x : {
-                type : "date",
-                domain : fiveMinBeforeTime(),
-                interval : 1,
-                realtime : "minutes",
-                format : "hh:mm",
-                key : "time"
-            },
-            y : {
-                type : "range",
-                domain : [ 0, 8000 ],
-                step : 2
-            },
-            area : {
-                x : "50%",
-                y : "60%",
-                width : "50%",
-                height : "39%"
             }
         }],
         brush : [{
@@ -351,30 +304,6 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             format : function(d) {
                 return time.format(d, "HH:mm");
             }
-        }, {
-            type : "column",
-            target : [ "sales" ],
-            axis : 5
-        }, {
-            type : "column",
-            target : [ "sales" ],
-            axis : 6
-        }, {
-            type : "canvas.scatter",
-            symbol : "cross",
-            target : [ "delay" ],
-            size : 5,
-            colors : function(d) {
-                if(d.level == "fatal") {
-                    return "#ff0000"
-                } else if(d.level == "warning") {
-                    return "#f2ab14";
-                }
-
-                return "#4692ca";
-            },
-            clip : true,
-            axis : 7
         }],
         widget : [{
             type : "title",
@@ -412,29 +341,38 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             axis : 4,
             align : "start"
         }, {
-            type : "title",
-            text : "Hourly call count",
-            dx : -10,
-            dy : -7,
-            axis : 5,
-            align : "start"
-        }, {
-            type : "title",
-            text : "Hourly visitor",
-            dx : -10,
-            dy : -7,
-            axis : 6,
-            align : "start"
-        }, {
-            type : "title",
-            text : "X-View",
-            dx : -10,
-            dy : -7,
-            axis : 7,
-            align : "start"
-        }, {
             type : "tooltip",
-            brush : [ 1 ]
+            brush : [ 1, 2 ]
+        }, {
+            type : "cross",
+            xFormat : function(d) {
+                return time.format(d, "hh:mm");
+            },
+            yFormat : function(d) {
+                return Math.ceil(d);
+            },
+            axis : 1
+        }, {
+            type : "cross",
+            xFormat : function(d) {
+                return time.format(d, "hh:mm");
+            },
+            yFormat : function(d) {
+                return Math.ceil(d);
+            },
+            axis : 2
+        }, {
+            type : "cross",
+            yFormat : function(d) {
+                return Math.ceil(d);
+            },
+            axis : 3
+        }, {
+            type : "cross",
+            yFormat : function(d) {
+                return Math.ceil(d);
+            },
+            axis : 4
         }],
         style : {
             axisBorderColor : "#dcdcdc",
@@ -442,6 +380,153 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             axisBorderRadius : 5,
             titleFontSize : 12,
             titleFontWeight : 700
+        },
+        render : false
+    });
+
+    var dashboard_bottom = builder("#dashboard_bottom", {
+        padding : 5,
+        axis : [{
+            x : {
+                type : "block",
+                domain : "hours",
+                format : function(d, i) {
+                    return (d % 2) ? d : "";
+                }
+            },
+            y : {
+                type : "range",
+                domain : function(d) {
+                    return d.callcount * 1.3;
+                },
+                format : function(d, i) {
+                    return Math.ceil(d / 1000) + "K";
+                },
+                step : 2
+            },
+            padding : {
+                left : 50,
+                top : 35,
+                right : 20,
+                bottom : 20
+            },
+            area : {
+                width : "49%",
+                height : "48%"
+            }
+        }, {
+            extend : 0,
+            y : {
+                domain : function(d) {
+                    return d.visitor * 1.3
+                }
+            },
+            area : {
+                y : "51%"
+            }
+        }, {
+            extend : 1,
+            x : {
+                type : "date",
+                domain : pastTimeInterval(10),
+                interval : 2,
+                realtime : "minutes",
+                format : "hh:mm",
+                key : "time"
+            },
+            y : {
+                type : "range",
+                domain : [ 0, 10000 ],
+                step : 4,
+                format : null
+            },
+            area : {
+                x : "50%",
+                y : "0%",
+                width : "50%",
+                height : "99%"
+            }
+        }],
+        brush : [{
+            type : "column",
+            target : [ "callcount" ],
+            display : "max",
+            colors : function(d) {
+                return (d.today) ? 0 : "#929292";
+            },
+            axis : 0
+        }, {
+            type : "focus",
+            start : 0,
+            end : 0,
+            axis : 0
+        }, {
+            type : "column",
+            target : [ "visitor" ],
+            display : "max",
+            colors : function(d) {
+                return (d.today) ? 0 : "#929292";
+            },
+            axis : 1
+        }, {
+            type : "focus",
+            start : 0,
+            end : 0,
+            axis : 1
+        }, {
+            type : "canvas.scatter",
+            symbol : "cross",
+            target : [ "delay" ],
+            size : 5,
+            colors : function(d) {
+                if(d.level == "fatal") {
+                    return "#ff0000"
+                } else if(d.level == "warning") {
+                    return "#f2ab14";
+                }
+
+                return "#4692ca";
+            },
+            clip : true,
+            axis : 2
+        }],
+        widget : [{
+            type : "title",
+            text : "Hourly call count",
+            dx : -10,
+            dy : -7,
+            axis : 0,
+            align : "start"
+        }, {
+            type : "title",
+            text : "Hourly visitor",
+            dx : -10,
+            dy : -7,
+            axis : 1,
+            align : "start"
+        }, {
+            type : "title",
+            text : "X-View",
+            dx : -10,
+            dy : -7,
+            axis : 2,
+            align : "start"
+        }, {
+            type : "dragselect",
+            brush : 2
+        }],
+        style : {
+            axisBorderColor : "#dcdcdc",
+            axisBorderWidth : 1.5,
+            axisBorderRadius : 5,
+            titleFontSize : 12,
+            titleFontWeight : 700
+        },
+        event : {
+            "dragselect.end": function(data) {
+                alert(data.length);
+                console.log(data);
+            }
         },
         render : false,
         canvas : true
@@ -561,43 +646,43 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 
     // Data update
     setInterval(function() {
-        var domain = fiveMinBeforeTime();
+        var domain = pastTimeInterval(5);
 
         // 1. Active Service
-        dashboard.axis(0).update(getDataForActiveService());
+        dashboard_top.axis(0).update(getDataForActiveService());
 
         // 2. Response Time
-        var responseTimeData = dashboard.axis(1).data;
-        dashboard.axis(1).set("x", { domain: domain });
+        var responseTimeData = dashboard_top.axis(1).data;
+        dashboard_top.axis(1).set("x", { domain: domain });
 
         if(responseTimeData.length == 0) {
-            dashboard.axis(1).update(getDataForResponseTime(300));
+            dashboard_top.axis(1).update(getDataForResponseTime(300));
         } else if(responseTimeData.length == 300) {
             responseTimeData.shift();
             responseTimeData.push(getDataForResponseTime(1)[0]);
-            dashboard.axis(1).update(responseTimeData);
+            dashboard_top.axis(1).update(responseTimeData);
         }
 
         // 3. TPS
-        var tpsData = dashboard.axis(2).data;
-        dashboard.axis(2).set("x", { domain: domain });
+        var tpsData = dashboard_top.axis(2).data;
+        dashboard_top.axis(2).set("x", { domain: domain });
 
         if(tpsData.length == 0) {
-            dashboard.axis(2).update(getDataForTPS(300));
+            dashboard_top.axis(2).update(getDataForTPS(300));
         } else if(tpsData.length == 300) {
             tpsData.shift();
             tpsData.push(getDataForTPS(1)[0]);
-            dashboard.axis(2).update(tpsData);
+            dashboard_top.axis(2).update(tpsData);
         }
 
         // 4. Today's TPS & User
-        var todaysTpsData = dashboard.axis(3).data,
-            todaysUserData = dashboard.axis(4).data,
+        var todaysTpsData = dashboard_top.axis(3).data,
+            todaysUserData = dashboard_top.axis(4).data,
             splitIndex = getTimeToIndex();
 
         if(todaysTpsData.length == 0) {
-            dashboard.axis(3).update(getDataForToday(1440));
-            dashboard.axis(4).update(getDataForToday(1440));
+            dashboard_top.axis(3).update(getDataForToday(1440));
+            dashboard_top.axis(4).update(getDataForToday(1440));
         } else if(todaysTpsData.length == 1440) {
             if(domain[1].getSeconds() == 0) {
                 var data = getDataForToday(1)[0];
@@ -607,24 +692,44 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                 todaysUserData.shift();
                 todaysUserData.push(data);
 
-                dashboard.axis(3).update(todaysTpsData);
-                dashboard.axis(4).update(todaysUserData);
+                dashboard_top.axis(3).update(todaysTpsData);
+                dashboard_top.axis(4).update(todaysUserData);
             }
         }
 
-        dashboard.updateBrush(3, { split: splitIndex });
-        dashboard.updateBrush(4, { split: splitIndex });
-        dashboard.updateBrush(5, { split: splitIndex });
-        dashboard.updateBrush(6, { split: splitIndex });
-
-        // 6. Transaction
-        setTransactionData(dashboard.axis(7).data, domain);
-        dashboard.axis(7).set("x", { domain: domain });
-
+        dashboard_top.updateBrush(3, { split: splitIndex });
+        dashboard_top.updateBrush(4, { split: splitIndex });
+        dashboard_top.updateBrush(5, { split: splitIndex });
+        dashboard_top.updateBrush(6, { split: splitIndex });
 
         // Chart rendering
-        dashboard.render();
+        dashboard_top.render();
     }, 1000);
+
+    setInterval(function() {
+        var domain = pastTimeInterval(10);
+        console.log(dashboard_bottom.isRender())
+
+        // Call Count & Visitor
+        if(dashboard_bottom.axis(0).data.length == 0 || domain[1].getMinutes() == 0) {
+            var hoursData = getDataForHours(),
+                focusIndex = {
+                    start: domain[1].getHours(),
+                    end: domain[1].getHours()
+                };
+
+            dashboard_bottom.updateBrush(1, focusIndex);
+            dashboard_bottom.updateBrush(3, focusIndex);
+            dashboard_bottom.axis(0).update(hoursData);
+            dashboard_bottom.axis(1).update(hoursData);
+        }
+
+        // Transaction
+        setTransactionData(dashboard_bottom.axis(2).data, domain);
+        dashboard_bottom.axis(2).set("x", { domain: domain });
+
+        dashboard_bottom.render();
+    }, 2000);
 });
 </script>
 </head>
@@ -640,7 +745,8 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                 <strong>System dashboard</strong>
             </div>
             <div class="body">
-                <div id="dashboard"></div>
+                <div id="dashboard_top"></div>
+                <div id="dashboard_bottom"></div>
             </div>
         </div>
     </div>
