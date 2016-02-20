@@ -113,7 +113,7 @@ function getDataForTPS(count) {
 }
 
 function setTransactionData(list, domain) {
-    var count = Math.floor(Math.random() * 20);
+    var count = Math.floor(Math.random() * 100);
 
     for(var i = 0; i < list.length; i++) {
         if(list[i].time.getTime() < domain[0].getTime()) {
@@ -169,6 +169,29 @@ function getDataForHours() {
             callcount: randomValue(10000, 2000),
             visitor: randomValue(5000, 1000),
             today: (i <= now.getHours()) ? true : false
+        });
+    }
+
+    return data;
+}
+
+function getDataForWolrdMap() {
+    var keys = [ "KR", "CN", "US", "FR", "BR", "AU", "JP", "IN", "RU", "GB" ],
+        data = [];
+
+    for(var i = 0; i < keys.length; i++) {
+        var value = randomValue(1000, 5000);
+
+        if(keys[i] == "KR") {
+            value = randomValue(5000, 1000);
+        } else if(keys[i] == "CN" || keys[i] == "RU") {
+            value = randomValue(3000, 2000);
+        } else if(keys[i] == "JP" || keys[i] == "IN") {
+            value = randomValue(2000, 3000);
+        }
+
+        data.push({
+            id: keys[i], value: value
         });
     }
 
@@ -511,9 +534,6 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             dy : -7,
             axis : 2,
             align : "start"
-        }, {
-            type : "dragselect",
-            brush : 2
         }],
         style : {
             axisBorderColor : "#dcdcdc",
@@ -540,49 +560,18 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
                 width : 1040,
                 height : 630,
                 scale : 1.5
-            },
-            data :  [{
-                id: "KR",
-                value: 50220000
-            }, {
-                id: "CN",
-                value: 1357000000
-            }, {
-                id: "US",
-                value: 318900000
-            }, {
-                id: "FR",
-                value: 66030000
-            }, {
-                id: "BR",
-                value: 200400000
-            }, {
-                id: "AU",
-                value: 23130000
-            }, {
-                id: "JP",
-                value: 127300000
-            }, {
-                id: "IN",
-                value: 1252000000
-            }, {
-                id: "RU",
-                value: 143500000
-            }, {
-                id: "GB",
-                value: 64100000
-            }]
+            }
         }],
         brush : [{
             type : "map.bubble",
             min : 5,
             max : 50,
             colors : function(d) {
-                if(d.value > 1000000000) {
+                if(d.value > 5000) {
                     return "linear(top) #ff686c,0.9 #fa5559";
-                } else if(d.value > 100000000) {
+                } else if(d.value > 3000) {
                     return "linear(top) #ff9d46,0.9 #ff7800";
-                } else if(d.value > 50000000) {
+                } else if(d.value > 1000) {
                     return "linear(top) #b76fef,0.9 #9228e4";
                 }
 
@@ -601,7 +590,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
         }, {
             type : "map.tooltip",
             format : function(obj) {
-                if(obj.data.id == "south korea") {
+                if(obj.data.id == "KR") {
                     return "Korea";
                 }
 
@@ -609,7 +598,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
             }
         }],
         style: {
-            mapPathBorderWidth: 0.5
+            mapPathBorderWidth: 0.3
         }
     });
 
@@ -708,7 +697,6 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 
     setInterval(function() {
         var domain = pastTimeInterval(10);
-        console.log(dashboard_bottom.isRender())
 
         // Call Count & Visitor
         if(dashboard_bottom.axis(0).data.length == 0 || domain[1].getMinutes() == 0) {
@@ -730,6 +718,10 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 
         dashboard_bottom.render();
     }, 2000);
+
+    setInterval(function() {
+        map.axis(0).update(getDataForWolrdMap());
+    }, 3000);
 });
 </script>
 </head>
