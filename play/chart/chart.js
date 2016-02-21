@@ -3,7 +3,7 @@ var comments;
 var notify;
 var currentChartIndex = 0;
 var table_1, table_2, colors_win, colors_table, color_pick;
-var chart_1, chart_2, chart_3;
+var chart_1, chart_2, chart_3, tab_1;
 var realtimeIndex = 0;
 var realtimeInterval = null;
 
@@ -569,6 +569,9 @@ function loadChartList() {
             $(".import_csv_form").find("#import_csv_input").show();
             $("#tab_1").find("li:eq(1)").show();
         }
+
+        // 첫번째 탭 활성화
+        if(tab_1) tab_1.show(0);
     });
 
     // 온-로드 시점에도 발생
@@ -588,12 +591,6 @@ function getIndexByCode(code) {
 }
 
 function viewCodeEditor() {
-    // 현재 샘플의 테마가 저장되어 있는지 체크
-    var theme = localStorage.getItem("jui.chartplay.theme." + getChartKey());
-    if(theme == null) {
-        jui.redefine("chart.theme.custom", [], function () { return null; });
-    }
-
     if (!editor) {
         editor = CodeMirror.fromTextArea($("#chart-code-text")[0], {
             mode: "javascript",
@@ -628,13 +625,6 @@ function viewCodeEditor() {
                     window.currentChart.axis(0).update(eval(data));
                 }
                 createTable();
-
-                // 현재 테마 적용
-                if(theme != null) {
-                    eval(theme);
-                    $("select").find("option:last-child")[0].selected = true;
-                }
-                changeTheme($("select").find("option:selected").val());
             } catch(e) {
                 console.log(e);
             }
@@ -664,6 +654,17 @@ function viewCodeEditor() {
             console.log(error);
         }
     });
+
+    // 현재 샘플의 테마가 저장되어 있는지 체크
+    var theme = localStorage.getItem("jui.chartplay.theme." + getChartKey());
+
+    if(theme == null) {
+        jui.redefine("chart.theme.custom", [], function () { return null; });
+    } else {
+        eval(theme);
+        $("select").find("option:last-child")[0].selected = true;
+        changeTheme($("select").find("option:selected").val());
+    }
 }
 
 function setFunctions() {
