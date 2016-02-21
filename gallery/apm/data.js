@@ -1,3 +1,6 @@
+// Transaction caching data
+var txData = [];
+
 // Active Service
 function getDataForActiveService() {
     var data = [];
@@ -116,12 +119,12 @@ function getDataForVisitor() {
 }
 
 // Transaction view
-function setTransactionData(list, domain) {
-    var count = Math.floor(Math.random() * 100);
+function setTransactionData(domain) {
+    var count = Math.floor(Math.random() * 200);
 
-    for(var i = 0; i < list.length; i++) {
-        if(list[i].time.getTime() < domain[0].getTime()) {
-            list.shift();
+    for(var i = 0; i < txData.length; i++) {
+        if(txData[i].time.getTime() < domain[0].getTime()) {
+            txData.shift();
         } else {
             break;
         }
@@ -141,7 +144,7 @@ function setTransactionData(list, domain) {
             data.level = "fatal";
         }
 
-        list.push(data);
+        txData.push(data);
     }
 }
 
@@ -224,7 +227,8 @@ setInterval(function() {
     }
 
     // Transaction view
-    setTransactionData(dashboard_bottom.axis(2).data, domain);
+    setTransactionData(domain);
+    dashboard_bottom.axis(2).update(txData);
     dashboard_bottom.axis(2).set("x", { domain: domain });
 
     // Chart rendering
