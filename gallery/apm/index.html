@@ -230,12 +230,18 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             axis : 2
         }, {
             type : "cross",
+            xFormat : function(d) {
+                return time.format(d, "HH");
+            },
             yFormat : function(d) {
                 return Math.ceil(d);
             },
             axis : 3
         }, {
             type : "cross",
+            xFormat : function(d) {
+                return time.format(d, "HH");
+            },
             yFormat : function(d) {
                 return Math.ceil(d);
             },
@@ -279,8 +285,9 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
                 bottom : 20
             },
             area : {
-                width : "49%",
-                height : "48%"
+                width : "50%",
+                height : "48%",
+                x : "50%"
             }
         }, {
             extend : 0,
@@ -309,9 +316,9 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
                 format : null
             },
             area : {
-                x : "50%",
+                x : "0%",
                 y : "0%",
-                width : "50%",
+                width : "49%",
                 height : "99%"
             }
         }],
@@ -379,6 +386,18 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             dy : -7,
             axis : 2,
             align : "start"
+        }, {
+            type : "cross",
+            xFormat : function(d) {
+                return d;
+            },
+            axis : 0
+        }, {
+            type : "cross",
+            xFormat : function(d) {
+                return d;
+            },
+            axis : 1
         }],
         style : {
             axisBorderColor : "#dcdcdc",
