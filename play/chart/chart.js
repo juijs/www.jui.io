@@ -303,7 +303,12 @@ function changeTheme(theme) {
             createTableStyle();
         }
     } else {
-        alert("The theme does not exist.");
+        notify.add({
+            title: getChartKey(),
+            message: "The theme does not exist.",
+            color: "warning"
+        });
+
         $("select").find("option:first-child")[0].selected = true;
     }
 }
