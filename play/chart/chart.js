@@ -2,7 +2,7 @@ var editor;
 var comments;
 var notify;
 var currentChartIndex = 0;
-var table_1, table_2;
+var table_1, table_2, colors_win, colors_table;
 var chart_1, chart_2, chart_3;
 var realtimeIndex = 0;
 var realtimeInterval = null;
@@ -371,6 +371,38 @@ function createTableStyle() {
         editRow: [ 1 ],
         resize: true,
         event: {
+            editstart: function(row, e) {
+                if(row.data.key == "colors") {
+                    colors_win.show();
+
+                    var list = row.data.value.split("|"),
+                        data = [];
+
+                    for(var i = 0; i < list.length; i++) {
+                        data.push({ color: list[i] });
+                    }
+
+                    colors_table.update(data);
+
+                    // 윈도우 닫기 버튼에 저장 이벤트 설정
+                    $(colors_win.root).find(".close").off("click").on("click", function(e2) {
+                        var newList = colors_table.listData(),
+                            newData = [];
+
+                        for(var i = 0; i < newList.length; i++) {
+                            newData.push(newList[i].color);
+                        }
+
+                        // 데이터 갱신 및 포커스
+                        $(e.target).find(".edit").val(newData.join("|")).focus();
+
+                        colors_win.hide();
+                        colors_table.reset();
+
+                        return false;
+                    });
+                }
+            },
             editend: function(row, e) {
                 var chart = window.currentChart,
                     theme = chart.theme(),
@@ -393,7 +425,7 @@ function createTableStyle() {
             }
         },
         tpl: {
-            row: "<tr><td><!= key !></td><td><!= value !></td></tr>"
+            row: $("#tpl_table_2").html()
         }
     });
 
@@ -750,7 +782,7 @@ function getDataToObject() {
     return head.join("\n") + body.join(",\n") + foot.join("\n");
 }
 
-jui.ready([ "util.base", "ui.window", "ui.notify" ], function(_, uiWin, uiNotify) {
+jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table" ], function(_, uiWin, uiNotify, gridTable) {
     editor = null;
 
     loadChartList();
@@ -782,6 +814,21 @@ jui.ready([ "util.base", "ui.window", "ui.notify" ], function(_, uiWin, uiNotify
                 });
                 /**/
             }
+        }
+    });
+
+    // 컬러 변경 윈도우
+    colors_win = uiWin("#colors_win", {
+        width: 300,
+        height: 350,
+        modal: true
+    });
+
+    colors_table = gridTable("#colors_table", {
+        fields: [ "color" ],
+        editRow: [ 0 ],
+        tpl: {
+            row: "<tr><td style='background: <!= color !>'><!= color !></td></tr>"
         }
     });
 

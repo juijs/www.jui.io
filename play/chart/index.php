@@ -126,11 +126,40 @@
     </div>
 </div>
 
+<div id="colors_win" class="msgbox">
+    <div class="head">
+        Edit Colors
+        <a href="#" class="close"><i class="icon-exit"></i></a>
+    </div>
+    <div class="body">
+        <table id="colors_table" class="table simple small">
+            <thead>
+            <tr>
+                <th>Color</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
 <script id="tpl_alarm" type="text/template">
     <div class="notify <!= color !>">
         <div class="title"><!= title !></div>
         <div class="message"><!= message !></div>
     </div>
+</script>
+
+<script id="tpl_table_2" type="text/template">
+<tr>
+    <td><!= key !></td>
+
+    <! if(key.indexOf("Color") != -1) { !>
+    <td style="background: <!= value !>"><!= value !></td>
+    <! } else { !>
+    <td><!= value !></td>
+    <! } !>
+</tr>
 </script>
 
 <?php include("../../tpl/footer_play.html"); ?>
