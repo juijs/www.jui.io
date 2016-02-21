@@ -886,6 +886,18 @@ jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table", "ui.colorpicker
         }
     });
 
+    // CSV 내보내기
+    $("#export_csv_btn").on("click", function (e) {
+        var index = getIndexByCode(location.hash),
+            code = code_list[index],
+            csv = table_1.getCsv();
+
+        exportTextFile(code.code.split(".").join("_") + ".csv", csv);
+
+        // 로컬 스토리지에 저장
+        localStorage.setItem("jui.chartplay.data." + code.code, getCsvToObject(csv));
+    });
+
     // CSV 가져오기
     $("#import_csv_input").on("change", function (e) {
         var reader = new FileReader();
@@ -897,22 +909,11 @@ jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table", "ui.colorpicker
             localStorage.setItem("jui.chartplay.data." + code.code, result);
             window.currentChart.axis(0).update(eval(result));
 
+            createTable();
             $("#import_csv_input").val("");
         };
 
         reader.readAsText(e.target.files[0]);
-    });
-
-    // CSV 내보내기
-    $("#export_csv_btn").on("click", function (e) {
-        var index = getIndexByCode(location.hash),
-            code = code_list[index],
-            csv = table_1.getCsv();
-
-        exportTextFile(code.code.split(".").join("_") + ".csv", csv);
-
-        // 로컬 스토리지에 저장
-        localStorage.setItem("jui.chartplay.data." + code.code, getCsvToObject(csv));
     });
 
     // Theme 내보내기
