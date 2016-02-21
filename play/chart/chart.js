@@ -2,7 +2,7 @@ var editor;
 var comments;
 var notify;
 var currentChartIndex = 0;
-var table_1, table_2, colors_win, colors_table;
+var table_1, table_2, colors_win, colors_table, color_pick;
 var chart_1, chart_2, chart_3;
 var realtimeIndex = 0;
 var realtimeInterval = null;
@@ -401,6 +401,8 @@ function createTableStyle() {
 
                         return false;
                     });
+                } else if(row.data.key.indexOf("Color") != -1) {
+                    showTableColorPick(row, e);
                 }
             },
             editend: function(row, e) {
@@ -422,6 +424,9 @@ function createTableStyle() {
                     js = getDataToObject();
 
                 localStorage.setItem("jui.chartplay.theme." + code.code, js);
+
+                // 컬러 픽커 숨기기
+                $(color_pick.root).hide();
             }
         },
         tpl: {
@@ -782,7 +787,24 @@ function getDataToObject() {
     return head.join("\n") + body.join(",\n") + foot.join("\n");
 }
 
-jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table" ], function(_, uiWin, uiNotify, gridTable) {
+function showTableColorPick(row, e) {
+    var $edit = $(e.target).find(".edit"),
+        offset = $edit.offset();
+
+    $(color_pick.root).css({
+        left: offset.left,
+        top: offset.top + 22
+    }).show();
+
+    color_pick.setColor($edit.val());
+    color_pick.off("change");
+    color_pick.on("change", function(color) {
+        $edit.val(color);
+    });
+}
+
+jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table", "ui.colorpicker" ],
+    function(_, uiWin, uiNotify, gridTable, uiColor) {
     editor = null;
 
     loadChartList();
@@ -820,7 +842,7 @@ jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table" ], function(_, u
     // 컬러 변경 윈도우
     colors_win = uiWin("#colors_win", {
         width: 300,
-        height: 350,
+        height: 300,
         modal: true
     });
 
@@ -829,8 +851,17 @@ jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table" ], function(_, u
         editRow: [ 0 ],
         tpl: {
             row: "<tr><td style='background: <!= color !>'><!= color !></td></tr>"
+        },
+        event: {
+            editstart: showTableColorPick,
+            editend: function(row, e) {
+                $(color_pick.root).hide();
+            }
         }
     });
+
+    color_pick = uiColor("#color_pick");
+    $(color_pick.root).hide();
 
     // IE일 경우, 탭 제거
     if(_.browser.msie) {

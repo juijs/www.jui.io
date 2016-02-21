@@ -249,3 +249,8 @@ body > .container > .content {
 .tools .group+.group {
     margin-left: 0px !important;
 }
+
+#color_pick {
+    position: absolute;
+    z-index: 10000;
+}

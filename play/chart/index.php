@@ -143,6 +143,8 @@
     </div>
 </div>
 
+<div id="color_pick" class="colorpicker"></div>
+
 <script id="tpl_alarm" type="text/template">
     <div class="notify <!= color !>">
         <div class="title"><!= title !></div>
