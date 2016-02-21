@@ -841,8 +841,8 @@ jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table", "ui.colorpicker
 
     // 컬러 변경 윈도우
     colors_win = uiWin("#colors_win", {
-        width: 300,
-        height: 300,
+        width: 400,
+        height: 400,
         modal: true
     });
 
