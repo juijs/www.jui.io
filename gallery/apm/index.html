@@ -6,13 +6,10 @@
 
 <link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
 <link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" id="ui_theme" />
-<link rel="stylesheet" href="../../lib/jui/css/grid.min.css" />
-<link rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" id="grid_theme" />
 <script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
-<script type="text/javascript" src="../../lib/jui/js/core.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
-<script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
-<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.js" ></script>
 
 <link rel="stylesheet" href="index.css" />
 
@@ -228,24 +225,6 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
                 return Math.ceil(d);
             },
             axis : 2
-        }, {
-            type : "cross",
-            xFormat : function(d) {
-                return time.format(d, "HH");
-            },
-            yFormat : function(d) {
-                return Math.ceil(d);
-            },
-            axis : 3
-        }, {
-            type : "cross",
-            xFormat : function(d) {
-                return time.format(d, "HH");
-            },
-            yFormat : function(d) {
-                return Math.ceil(d);
-            },
-            axis : 4
         }],
         style : {
             axisBorderColor : "#dcdcdc",
@@ -265,7 +244,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
                 type : "block",
                 domain : "hours",
                 format : function(d, i) {
-                    return (d % 2) ? d : "";
+                    return (d == 3 || d == 9 || d == 15 || d == 21) ? d : "";
                 }
             },
             y : {
@@ -285,9 +264,9 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
                 bottom : 20
             },
             area : {
-                width : "50%",
+                width : "49%",
                 height : "48%",
-                x : "50%"
+                x : "0%"
             }
         }, {
             extend : 0,
@@ -316,9 +295,9 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
                 format : null
             },
             area : {
-                x : "0%",
+                x : "50%",
                 y : "0%",
-                width : "49%",
+                width : "50%",
                 height : "99%"
             }
         }],
@@ -386,6 +365,9 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             dy : -7,
             axis : 2,
             align : "start"
+        }, {
+            type : "canvas.dragselect",
+            brush : [ 4 ]
         }, {
             type : "cross",
             xFormat : function(d) {
@@ -520,11 +502,9 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
                 // change ui-theme
                 if(theme == "dark") {
                     $("#ui_theme").attr("href", "../../lib/jui/css/ui-dark.min.css");
-                    $("#grid_theme").attr("href", "../../lib/jui/css/grid-dark.min.css");
                     $("body").css("background", "#191919");
                 } else {
                     $("#ui_theme").attr("href", "../../lib/jui/css/ui-jennifer.min.css");
-                    $("#grid_theme").attr("href", "../../lib/jui/css/grid-jennifer.min.css");
                     $("body").css("background", "white");
                 }
             }
