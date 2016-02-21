@@ -34,6 +34,7 @@
                 <option value="pastel">Pastel</option>
                 <option value="gradient">Gradient</option>
                 <option value="pattern">Pattern</option>
+                <option value="custom">Custom</option>
             </select>
         </span>
 
@@ -59,17 +60,24 @@
                     </li>
                 </ul>
 
-                <div class="import_csv_form">
-                    <a class="btn small" id="clear_all_btn" title="Save source code">Clear All</a>
+                <div class="tools">
                     <div class="group">
-                        <a class="btn small" id="save_btn" title="Save source code"><i class="icon-save"></i></a>
-                        <a class="btn small" id="clear_btn" title="Clear cache"><i class="icon-trashcan"></i></a>
+                        <a class="btn small" id="clear_btn">Clear</a>
+                        <a class="btn small" id="clear_all_btn">Clear All</a>
                     </div>
+
+                    <a class="btn small" id="save_btn" title="Save source code"><i class="icon-save"></i></a>
+
                     <div class="group csv">
                         <a class="btn small" id="export_csv_btn" title="Export CSV file"><i class="icon-download"></i></a>
+                        <input type="file" id="import_csv_input" />
                         <a class="btn small" id="import_csv_btn" title="Import CSV file"><i class="icon-upload"></i></a>
                     </div>
-                    <input type="file" id="import_csv_input" />
+                    <div class="group theme">
+                        <a class="btn small" id="export_theme_btn" title="Export Theme file"><i class="icon-download"></i></a>
+                        <input type="file" id="import_theme_input" />
+                        <a class="btn small" id="import_theme_btn" title="Import Theme file"><i class="icon-upload"></i></a>
+                    </div>
                 </div>
 
                 <div id="tab_contents_1" class="tab-contents">

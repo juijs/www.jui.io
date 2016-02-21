@@ -291,14 +291,20 @@ function runRealtimeData(realtime) {
 }
 
 function changeTheme(theme) {
-    var chart = jui.get("chart.builder").pop();
+    var chart = jui.get("chart.builder").pop(),
+        theme = jui.include("chart.theme." + theme);
 
-    if(typeof(chart.options.theme) != "object") {
-        chart[chart.length - 1].setTheme(theme);
-    }
+    if(theme != null) {
+        if (typeof(chart.options.theme) != "object") {
+            chart[chart.length - 1].setTheme(theme);
+        }
 
-    if(table_2 != null) {
-        createTableStyle();
+        if (table_2 != null) {
+            createTableStyle();
+        }
+    } else {
+        alert("The theme does not exist.");
+        $("select").find("option:first-child")[0].selected = true;
     }
 }
 
@@ -324,7 +330,6 @@ function createTable() {
     if(jui.include("util.base").browser.msie) return;
 
     var chart = window.currentChart,
-        code = code_list[currentChartIndex],
         data = chart.get("axis", 0).data,
         obj = data[0],
         fields = [];
@@ -348,24 +353,12 @@ function createTable() {
 
                 // 로컬 스토리지에 저장
                 localStorage.setItem("jui.chartplay.data." + code.code, getCsvToObject(this.getCsv()));
-
-                // 내보내기 버튼 갱신
-                $("#export_csv_btn").attr({
-                    download: code.code + ".csv",
-                    href: this.getCsvBase64()
-                });
             }
         }
     });
 
     table_1.resize();
     window.currentChart.bindUI(0, table_1);
-
-    // 내보내기 버튼 갱신
-    $("#export_csv_btn").attr({
-        download: code.code + ".csv",
-        href: table_1.getCsvBase64()
-    });
 }
 
 function createTableStyle() {
@@ -390,6 +383,13 @@ function createTableStyle() {
                 }
 
                 chart.setTheme(theme);
+
+                // 로컬 스토리지에 저장
+                var index = getIndexByCode(location.hash),
+                    code = code_list[index],
+                    js = getDataToObject();
+
+                localStorage.setItem("jui.chartplay.theme." + code.code, js);
             }
         },
         tpl: {
@@ -415,10 +415,22 @@ function createTab() {
     tab_1 = jui.create("ui.tab", "#tab_1", {
         event: {
             change: function(data) {
-                if(data.index == 1) {
+                if(data.index == 0) {
+                    $("#save_btn").show();
+                    $(".tools").find(".csv").hide();
+                    $(".tools").find(".theme").hide();
+                } else if(data.index == 1) {
                     createTable();
+
+                    $("#save_btn").hide();
+                    $(".tools").find(".csv").css("display", "inline-block");
+                    $(".tools").find(".theme").hide();
                 } else if(data.index == 2) {
                     createTableStyle();
+
+                    $("#save_btn").hide();
+                    $(".tools").find(".csv").hide();
+                    $(".tools").find(".theme").css("display", "inline-block");
                 }
             }
         },
@@ -534,6 +546,12 @@ function getIndexByCode(code) {
 }
 
 function viewCodeEditor() {
+    // 현재 샘플의 테마가 저장되어 있는지 체크
+    var theme = localStorage.getItem("jui.chartplay.theme." + getChartKey());
+    if(theme == null) {
+        jui.redefine("chart.theme.custom", [], function () { return null; });
+    }
+
     if (!editor) {
         editor = CodeMirror.fromTextArea($("#chart-code-text")[0], {
             mode: "javascript",
@@ -550,8 +568,9 @@ function viewCodeEditor() {
         });
 
         editor.on("change", function(cm) {
-            // 데이터가 캐싱되어 있을 때
-            var cache2 = localStorage.getItem("jui.chartplay.data." + getChartKey());
+            // 데이터 및 테마 가져오기
+            var data = localStorage.getItem("jui.chartplay.data." + getChartKey()),
+                theme = localStorage.getItem("jui.chartplay.theme." + getChartKey());
 
             try {
                 $("#chart-content").empty();
@@ -562,14 +581,17 @@ function viewCodeEditor() {
                 var chart = jui.get("chart.builder").pop();
                 window.currentChart = chart[chart.length -1];
 
-                if(cache2 != null) {
-                    window.currentChart.axis(0).update(eval(cache2));
-                }
-
                 // 현재 데이터 적용
+                if(data != null) {
+                    window.currentChart.axis(0).update(eval(data));
+                }
                 createTable();
 
                 // 현재 테마 적용
+                if(theme != null) {
+                    eval(theme);
+                    $("select").find("option:last-child")[0].selected = true;
+                }
                 changeTheme($("select").find("option:selected").val());
             } catch(e) {
                 console.log(e);
@@ -580,6 +602,7 @@ function viewCodeEditor() {
     $.ajax({
         url : "json/" + getChartKey(),
         dataType : "text",
+        async : false,
         success : function (origin) {
             var cache1 = localStorage.getItem("jui.chartplay.code." + getChartKey());
 
@@ -673,6 +696,60 @@ function getChartKey() {
     return code_list[currentChartIndex].code;
 }
 
+function exportTextFile(name, text) {
+    var $form = $("<form action='export.php' method='POST' target='_blank'></form>"),
+        $name = $("<input type='hidden' name='filename'/>"),
+        $text = $("<input type='hidden' name='filetext'/>");
+
+    $name.val(name);
+    $text.val(text);
+    $form.append($name);
+    $form.append($text);
+    $("body").append($form);
+
+    $form.submit();
+    $form.remove();
+}
+
+function getDataToObject() {
+    var data = table_2.listData();
+
+    var head = [
+            "jui.redefine('chart.theme.custom', [], function() {",
+            "\treturn {\n",
+        ],
+        foot = [
+            "\n\t};",
+            "});"
+        ],
+        body = [];
+
+    for(var i = 0; i < data.length; i++) {
+        var d = data[i],
+            r = '\t\t' + d.key + ' : ';
+
+        if(d.key == "colors") {
+            var colors = d.value.split("|");
+
+            for(var j = 0; j < colors.length; j++) {
+                colors[j] = '"' + colors[j] + '"';
+            }
+
+            r += '[' + colors.join(",") + ']';
+        } else {
+            if(typeof(d.value) == "string") {
+                r += '"' + d.value + '"';
+            } else {
+                r += d.value;
+            }
+        }
+
+        body.push(r);
+    }
+
+    return head.join("\n") + body.join(",\n") + foot.join("\n");
+}
+
 jui.ready([ "util.base", "ui.window", "ui.notify" ], function(_, uiWin, uiNotify) {
     editor = null;
 
@@ -738,6 +815,50 @@ jui.ready([ "util.base", "ui.window", "ui.notify" ], function(_, uiWin, uiNotify
             window.currentChart.axis(0).update(eval(result));
 
             $("#import_csv_input").val("");
+        };
+
+        reader.readAsText(e.target.files[0]);
+    });
+
+    // CSV 내보내기
+    $("#export_csv_btn").on("click", function (e) {
+        var index = getIndexByCode(location.hash),
+            code = code_list[index],
+            csv = table_1.getCsv();
+
+        exportTextFile(code.code.split(".").join("_") + ".csv", csv);
+
+        // 로컬 스토리지에 저장
+        localStorage.setItem("jui.chartplay.data." + code.code, getCsvToObject(csv));
+    });
+
+    // Theme 내보내기
+    $("#export_theme_btn").on("click", function (e) {
+        var index = getIndexByCode(location.hash),
+            code = code_list[index],
+            js = getDataToObject();
+
+        exportTextFile(code.code.split(".").join("_") + ".js", js);
+
+        // 로컬 스토리지에 저장
+        localStorage.setItem("jui.chartplay.theme." + code.code, js);
+    });
+
+    // THEME 가져오기
+    $("#import_theme_input").on("change", function (e) {
+        var reader = new FileReader();
+
+        reader.onload = function(readerEvt) {
+            var code = code_list[currentChartIndex],
+                result = readerEvt.target.result;
+
+            localStorage.setItem("jui.chartplay.theme." + code.code, result);
+            eval(result);
+
+            window.currentChart.setTheme(jui.include("chart.theme.custom"));
+            createTableStyle();
+
+            $("#import_theme_input").val("");
         };
 
         reader.readAsText(e.target.files[0]);

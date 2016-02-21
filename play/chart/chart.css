@@ -223,14 +223,18 @@ body > .container > .content {
     display: none;
 }
 
-.import_csv_form {
+.tools {
     position: absolute;
     padding: 3px;
     right: 5px;
     top: 13px;
 }
 
-.import_csv_form > #import_csv_input {
+.tools > .csv, .tools > .theme {
+    display: none;
+}
+
+.tools input[type=file] {
     position: absolute;
     width: 0px;
     height: 24px;
@@ -239,4 +243,9 @@ body > .container > .content {
     top: 0px;
     cursor: pointer;
     padding-left: 35px;
+    z-index: 10000;
+}
+
+.tools .group+.group {
+    margin-left: 0px !important;
 }
