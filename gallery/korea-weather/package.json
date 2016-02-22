@@ -2,7 +2,7 @@
   "name": "korea-weather",
   "version": "1.0.0",
   "title": "Weather of the Korea",
-  "description": "Weather of the Korea",
+  "description": "It's easy to see the weather map of South Korea, it is a dashboard that provides a variety of information.",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +12,5 @@
   ],
   "author": "hyeonsu",
   "license": "MIT",
-  "height" : "750px"
+  "height" : "780px"
 }

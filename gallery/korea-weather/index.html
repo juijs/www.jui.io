@@ -166,7 +166,9 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
             map : {
                 path : "../../lib/jui/img/map/korea-500x650.svg",
                 width : 500,
-                height : 650
+                height : 650,
+                viewX : -20,
+                viewY : -20
             },
             data : weatherMapData
         }],
@@ -185,26 +187,24 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
     var weatherBar = builder("#weather-bar", {
         padding: {
             left: 0,
-            right: 20,
+            right: 25,
             top: 20,
-            bottom: 40
+            bottom: 50
         },
         axis : {
             x : {
                 type : "block",
                 domain : "name",
-                line : true
+                line : true,
+                textRotate : -10
             },
             y : {
                 type : "range",
-                domain : [30, 50],
-                step : 4,
+                domain : [ 30, 50 ],
+                step : 2,
                 line : true,
                 min: 0,
                 orient : "right"
-            },
-            area: {
-                // height: '100%',
             },
             data: generateProvincesTemperature()
         },
@@ -213,35 +213,36 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
             target : [ "Average", "Maximum" ]
         },
         widget : [
-            { type : "tooltip" },
-            { type : "legend" }
-        ],
+            { type : "tooltip", all : true },
+            { type : "legend", filter : true }
+        ]
     });
 
     var detailChartConfig = {
         startDate: getDateFromToday(0),
         endDate: getDateFromToday(2),
-        interval: 1000 * 60 * 60 * 4,
+        interval: 1000 * 60 * 60 * 4
     };
 
     function generateDetailChartData(startDate, endDate, interval, valueStart, valueEnd) {
         var data = [];
+
         for(var i = startDate.getTime(); i <= endDate.getTime(); i+=interval) {
             data.push({
                 date : i,
                 value : (Math.floor(Math.random() * (valueEnd - valueStart)) + valueStart),
             });
         }
-        console.log(data);
+
         return data;
     }
 
     var temperatureLine = builder("#temperature-line", {
         padding: {
             left: 30,
-            right: 20,
-            top: 20,
-            bottom: 30
+            right: 30,
+            top: 10,
+            bottom: 20
         },
         axis : [{
             x : {
@@ -249,28 +250,30 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
                 domain : [ detailChartConfig.startDate, detailChartConfig.endDate ],
                 interval : 1000 * 60 * 60 * 8, // 8 hours
                 format : "dd HH:mm",
-                key: "date",
+                key: "date"
             },
             y : {
                 type : "range",
-                domain : [20, 50],
-                step : 6,
+                domain : [ 20, 50 ],
+                step : 3,
                 line : true
             },
             data : generateDetailChartData(detailChartConfig.startDate, detailChartConfig.endDate,
                                            detailChartConfig.interval, 30, 45),
             area : {
-                width: '43%'
-            },
+                width: "47%"
+            }
         }, {
             extend : 0,
             area: {
-                x: '50%',
+                width: "47%",
+                x: "53%"
             },
             y : {
                 type : "range",
-                domain : [0, 100],
-                step : 5,
+                domain : [ 0, 100 ],
+                step : 3,
+                orient : "right"
             },
             data : generateDetailChartData(detailChartConfig.startDate, detailChartConfig.endDate,
                                            detailChartConfig.interval, 0, 100),
@@ -278,23 +281,27 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
         brush : [{
             type : "line",
             target : "value",
-            animate : true
+            animate : true,
+            colors : [ 2 ]
         },{
             type : "line",
             target : "value",
             animate : true,
-            axis: 1,
-        },{
-            type : "scatter",
-            hide : true
+            colors : [ 2 ],
+            axis: 1
         },{
             type : "scatter",
             hide : true,
+            colors : [ 2 ]
+        },{
+            type : "scatter",
+            hide : true,
+            colors : [ 2 ],
             axis: 1
         }],
-        widget : [
-            { type : "tooltip", brush:[2, 3] },
-        ],
+        widget : [{
+            type : "tooltip", brush:[ 2 ]
+        }]
     });
 
     function addComboboxData() {
@@ -309,6 +316,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
     }
 
     var combobox = combo("#province-combobox", {
+        width: 150
     });
 
     function generateAirQualityData() {
@@ -342,7 +350,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
         padding: {
             left: 30,
             right: 20,
-            top: 20,
+            top: 10,
             bottom: 20
         },
         axis : [{
@@ -353,28 +361,31 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
                 realtime : "minutes",
                 format : "hh:mm",
                 key: "date",
+                line : true
             },
             y : {
                 type : "range",
-                domain : [0, 100],
+                domain : [ 0, 100 ],
                 step : 4,
                 line : true
             },
             data: generateAirQualityData(),
             area : {
-                width: '100%'
-            },
+                width: "100%"
+            }
         }],
         brush: [{
             type : "line",
             target : [ "value" ],
+            colors : [ 3 ]
         }, {
             type : "scatter",
+            colors : [ 3 ],
             hide : true
         }],
         widget : [
-            { type : "tooltip", brush: 1 },
-        ],
+            { type : "tooltip", brush: 1 }
+        ]
     });
 
     setInterval(function() {
@@ -389,66 +400,66 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
 </script>
 </head>
 <body class="jui">
-<div class="row">
-    <div class="col" style="width: 550px; float:left;">
-        <div class="panel">
-            <div class="head">
-                <strong>Korea Weather Map</strong>
-            </div>
-            <div class="body">
-                <div id="weather-map"></div>
-            </div>
-        </div>
-    </div>
-    <div style="left: 2%; width: auto; overflow: hidden;">
-        <div class="row">
-            <div class="panel" style="width: 100%; ">
+    <div class="row">
+        <div class="col left">
+            <div class="panel">
                 <div class="head">
-                    <strong>Temperature in each province</strong>
+                    <strong>Korea Weather Map</strong>
                 </div>
-                <div class="body" >
-                    <div id="weather-bar" style="height: 120px"></div>
+                <div class="body">
+                    <div id="weather-map"></div>
                 </div>
             </div>
         </div>
-        <div class="panel">
-            <div class="head">
-               <strong>Detailed weather information</strong>
-
-                <div style="float: right;">
-                    <div id="province-combobox" class="combo">
-                        <a class="btn small" style="width: 150px;">Select...</a>
-                        <a class="btn small toggle"><i class="icon-arrow2"></i></a>
-                          <ul>
-
-                          </ul>
+        <div class="right">
+            <div class="row">
+                <div class="panel">
+                    <div class="head">
+                        <strong>Temperature in each province</strong>
+                    </div>
+                    <div class="body" >
+                        <div id="weather-bar"></div>
                     </div>
                 </div>
             </div>
-            <div class="body" style="height: 480px;">
-                <section>
-                    <h3 style="margin-top: 0px;">3 Day Forecast</h3>
-                    <table class="table expand large">
-                        <thead>
-                            <tr>
-                                <th>Day</th><th>High / Low</th><th>Description</th><th>PRECIP</th>
-                            </tr>
-                        </thead>
-                        <tbody id="forecast-table">
-                        </tbody>
-                    </table>
-                </section>
-                <section>
-                    <h3 style="margin: 5 0 0 0;">Temperature & Precipitation</h3>
-                    <div id="temperature-line" style="width: 100%; height: 130px"></div>
-                </section>
-                <section>
-                    <h3 style="margin: 0px;">Realtime Air Quality</h3>
-                    <div id="air-quality-line" style="width: 100%; height: 130px"></div>
-                </section>
+            <div class="panel">
+                <div class="head">
+                   <strong>Detailed weather information</strong>
+
+                    <div style="float: right;">
+                        <div id="province-combobox" class="combo">
+                            <a class="btn small">Select...</a>
+                            <a class="btn small toggle"><i class="icon-arrow2"></i></a>
+                              <ul>
+
+                              </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <section>
+                        <span class="h6">3 Day Forecast</span>
+                        <table class="table classic">
+                            <thead>
+                                <tr>
+                                    <th>Day</th><th>High / Low</th><th>Description</th><th>PRECIP</th>
+                                </tr>
+                            </thead>
+                            <tbody id="forecast-table">
+                            </tbody>
+                        </table>
+                    </section>
+                    <section>
+                        <span class="h6">Temperature & Precipitation</span>
+                        <div id="temperature-line"></div>
+                    </section>
+                    <section>
+                        <span class="h6">Realtime Air Quality</span>
+                        <div id="air-quality-line"></div>
+                    </section>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
