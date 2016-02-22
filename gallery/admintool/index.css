@@ -1,4 +1,3 @@
-
 html, body {
     background-color: #a5a5a5;
     background-image: url('http://blog.jui.io/wp-content/uploads/2015/03/light-noise.png');
@@ -19,11 +18,11 @@ html, body {
     position: relative;
     float: left;
     width: 98px;
-    height: 48px;
+    height: 45px;
     z-index: 1;
     font-size: 25px;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 13px;
 }
 
 .header .toolbar {
@@ -62,7 +61,6 @@ html, body {
 
 .content-list {
     position: relative;
-    border: 1px solid #e5e5e5;
 }
 
 .container > .menu {
@@ -75,13 +73,11 @@ html, body {
 }
 
 .container > .content {
-    background: #f3f3f3;
     padding: 0 0 0 98px;
 }
 
 .dashboard-first {
     overflow: auto;
-    border-bottom: 1px solid #ebebeb;
 }
 
 .dashboard-first .col {
@@ -93,18 +89,9 @@ html, body {
 }
 
 .card {
-    border-right: 1px solid #ebebeb;
     height: 80px;
     position: relative;
     text-align: left;
-
-    background-color: #fff;
-    background-image: -moz-linear-gradient(top, #fff 0, #f7f7f7 100%);
-    background-image: linear-gradient(top, #fff 0, #f7f7f7 100%);
-    background-image: -webkit-linear-gradient(top, #fff 0, #f7f7f7 100%);
-    background-image: -o-linear-gradient(top, #fff 0, #f7f7f7 100%);
-    background-image: -ms-linear-gradient(top, #fff 0, #f7f7f7 100%);
-
 }
 
 .col-3:last-child .card {
@@ -125,7 +112,6 @@ html, body {
     right: 10px;
     top: 10px;
     height: 24px;
-    color: #333;
     font-size: 12px;
 }
 
@@ -171,4 +157,71 @@ html, body {
 
 .container.hidden-menu .content {
     padding: 0px;
+}
+
+.view.info {
+    margin-top: 10px;
+    border-top: 1px dashed #dedede;
+}
+.view.info .title {
+    font-weight: bold;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.view.info .title > strong {
+    font-size:25px;
+    font-weight:bold;
+    color:#255bff;
+}
+.view.info .box {
+    border:1px solid #b5defd;
+    padding:20px;
+    padding-left:40px;
+}
+
+.dashed .table.simple {
+    border-radius: 0px !important;
+}
+
+/* Base */
+body {
+    font-size: 14px;
+    margin: 0px;
+    overflow-x: hidden;
+}
+
+.visit_total {
+    font-size: 15px;
+}
+
+.visit_total .title {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.visit_total .number {
+    font-size: 20px;
+}
+
+.visit_total .chart {
+    margin-top: 5px;
+    height: 50px;
+    width: 100px;
+}
+
+.bargauge {
+    font-size: 15px;
+}
+
+.bargauge .title {
+    padding: 16px;
+}
+
+.bargauge .chart {
+    height: 150px;
+    width: 80%;
+}
+
+.body {
+    padding: 10px;
 }

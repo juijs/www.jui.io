@@ -1,0 +1,35 @@
+.container > .content {
+    background: #1a1a1a;
+}
+
+.content-list {
+    border: 1px solid #404040;
+}
+
+.dashboard-first {
+    border-bottom: 1px solid #404040;
+}
+
+.card {
+    border-right: 1px solid #404040;
+    background-color: #232323;
+    background-image: -moz-linear-gradient(top, #232323 0, #1C1C1C 100%);
+    background-image: linear-gradient(top, #232323 0, #1C1C1C 100%);
+    background-image: -webkit-linear-gradient(top, #232323 0, #1C1C1C 100%);
+    background-image: -o-linear-gradient(top, #232323 0, #1C1C1C 100%);
+    background-image: -ms-linear-gradient(top, #232323 0, #1C1C1C 100%);
+}
+
+.card .title {
+    color: #a9a9a9;
+}
+
+.dashed {
+    border-top: 1px dashed #404040;
+}
+
+.dashed .table.simple {
+    border-left: 1px solid #4d4d4d !important;
+    border-right: 1px solid #4d4d4d !important;
+    border-bottom: 1px solid #4d4d4d !important;
+}

@@ -1,0 +1,34 @@
+.container > .content {
+    background: #f3f3f3;
+}
+
+.content-list {
+    border: 1px solid #e5e5e5;
+}
+
+.dashboard-first {
+    border-bottom: 1px solid #ebebeb;
+}
+
+.card {
+    border-right: 1px solid #ebebeb;
+    background-color: #fff;
+    background-image: -moz-linear-gradient(top, #fff 0, #f7f7f7 100%);
+    background-image: linear-gradient(top, #fff 0, #f7f7f7 100%);
+    background-image: -webkit-linear-gradient(top, #fff 0, #f7f7f7 100%);
+    background-image: -o-linear-gradient(top, #fff 0, #f7f7f7 100%);
+    background-image: -ms-linear-gradient(top, #fff 0, #f7f7f7 100%);
+}
+
+.card .title {
+    color: #333;
+}
+
+.dashed {
+    border-top: 1px dashed #e5e5e5;
+}
+
+.dashed .table.simple {
+    border-left: 1px solid #dfdce3 !important;
+    border-right: 1px solid #dfdce3 !important;
+}

@@ -291,16 +291,20 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
             axis: 1
         },{
             type : "scatter",
+            target : "value",
             hide : true,
             colors : [ 2 ]
         },{
             type : "scatter",
+            target : "value",
             hide : true,
             colors : [ 2 ],
             axis: 1
         }],
         widget : [{
-            type : "tooltip", brush:[ 2 ]
+            type : "tooltip",
+            brush:[ 2, 3 ],
+            orient : "bottom"
         }]
     });
 
@@ -380,6 +384,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo" ], function(_,
             colors : [ 3 ]
         }, {
             type : "scatter",
+            target : [ "value" ],
             colors : [ 3 ],
             hide : true
         }],

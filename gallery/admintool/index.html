@@ -1,121 +1,53 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>JENNIFER UI: AdminTool Sample </title>
-<link rel="shortcut icon" href="/res/img/favicon.ico" type="image/x-icon">
-<link rel="icon" href="/res/img/favicon.ico" type="image/x-icon">
+<title>JENNIFER UI: AdminTool Sample</title>
 <link rel="stylesheet" href="/lib/jui/css/ui.min.css"/>
-<link id="jui_theme" rel="stylesheet" href="/lib/jui/css/ui-jennifer.min.css"/>
+<link id="ui_theme" rel="stylesheet" href="/lib/jui/css/ui-jennifer.min.css"/>
 <link rel="stylesheet" href="/lib/jui/css/grid.min.css"/>
-<link rel="stylesheet" href="/lib/jui/css/grid-jennifer.min.css"/>
+<link id="grid_theme" rel="stylesheet" href="/lib/jui/css/grid-jennifer.min.css"/>
 <script src="/lib/jquery-1.8.0.min.js"></script>
-  <script src="/lib/jui/js/core.min.js"></script>
-  <script src="/lib/jui/js/ui.min.js"></script>
-  <script src="/lib/jui/js/grid.min.js"></script>
+<script src="/lib/jui/js/core.min.js"></script>
+<script src="/lib/jui/js/ui.min.js"></script>
+<script src="/lib/jui/js/grid.min.js"></script>
 <script src="/lib/jui/js/chart.min.js"></script>
-<script src="admin.js" type="text/javascript"></script>
-<meta name="title" content="JENNIFER UI: JENNIFER UI: HTML5 components and SVG charts"/>
-<meta name="description"
-      content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components."/>
-<meta name="keywords"
-      content="HTML, CSS, JS, JavaScript, SVG, chart, framework, bootstrap, front-end, frontend, web development, free, MIT"/>
-<meta name="author" content="Alvin, Jayden and Yoha"/>
-<meta charset="UTF-8">
-<meta property="og:title" content="JENNIFER UI: HTML5 components and SVG charts"/>
-<meta property="og:description"
-      content="JENNIFER UI is all free. a simple, fast, many: JUI is all-in-one desktop UI framework. Bootstrap support, Independent style & script components, SVG-based chart components."/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="http://www.jui.io/en/index.html"/>
-<meta property="og:image" content="http://www.jui.io/res/img/jui_link.jpg"/>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<link href="admin.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-/* Base */
-body {
-  font-size: 14px;
-  margin: 0px;
-  overflow-x: hidden;
-}
-
-.visit_total {
-  font-size: 15px;
-}
-
-.visit_total .title {
-  font-size: 15px;
-  margin-bottom: 4px;
-}
-
-.visit_total .number {
-  font-size: 20px;
-}
-
-.visit_total .chart {
-  margin-top: 5px;
-  height: 50px;
-  width: 100px;
-}
-
-.bargauge {
-  font-size: 15px;
-}
-
-.bargauge .title {
-  padding: 16px;
-}
-
-.bargauge .chart {
-  height: 150px;
-  width: 80%;
-}
-
-.body {
-  padding: 10px;
-}
-
-.dashed {
-  border-top: 1px dashed #e5e5e5;
-
-}
-</style>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+<link href="index.css" rel="stylesheet" type="text/css" />
+<link id="index_theme" href="index-jennifer.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="jui">
+
 <div class="header">
   <div class="logo">
     <i class="icon-menu"></i>
   </div>
   <div class="toolbar">
-
-    <span>Dashboard</span>
-    <span >
-          Themes
-          <select onchange="changeTheme(this.value)">
-            <option value="jennifer">Jennifer</option>
-            <option value="dark">Dark</option>
-          </select>
-      </span>
+    <span>Theme</span>
+    <span>
+      <select onchange="changeTheme(this.value)">
+        <option value="jennifer">Jennifer</option>
+        <option value="dark">Dark</option>
+      </select>
+    </span>
     <span style="float:right">
       Sample <i class="icon-check"></i>
     </span>
-
   </div>
 </div>
+
 <div class="container">
   <div class="menu">
-
     <div class="vmenu ">
       <a class="active"><i class="icon-monitoring"></i> Dashboard</a>
-      <a href="realtime.html"><i class="icon-realtime"></i> Realtime</a>
-      <a href="analysis.html"><i class="icon-profile"></i> Analysis</a>
+      <a><i class="icon-realtime"></i> Realtime</a>
+      <a><i class="icon-profile"></i> Analysis</a>
       <a><i class="icon-chart"></i> Statistics</a>
       <a><i class="icon-document"></i> Document</a>
       <a><i class="icon-gear"></i> Management</a>
       <a><i class="icon-user"></i> User</a>
     </div>
-
   </div>
   <div class="content">
-
     <div class="content-list">
       <div class="dashboard-first">
         <div class="col col-3">
@@ -129,41 +61,31 @@ body {
             <div class="title">Time of operation of call</div>
             <div class="value">2,364,806</div>
           </div>
-
         </div>
         <div class="col col-3">
           <div class="card">
             <div class="title">Time of operation Number of EVENT</div>
             <div class="value">15,610</div>
           </div>
-
         </div>
         <div class="col col-3">
           <div class="card">
             <div class="title">Peak Time</div>
             <div class="value">10:00 ~ 11:00</div>
           </div>
-
         </div>
       </div>
-
       <div class="panel">
-
         <div class="body">
-          <h2 class="title">Analysis</h2>
-
+          <h2 class="title">User Traffic</h2>
           <div class="view">
             <div id="traffic_chart" style="height:400px;"></div>
           </div>
-
         </div>
-
-
       </div>
-
       <div class="panel dashed">
         <div class="body">
-          <h2 class="title">Analysis</h2>
+          <h2 class="title">Visitor Status</h2>
 
           <div class="row view" style="height:150px;">
             <div class="col col-7">
@@ -173,12 +95,13 @@ body {
               <div id="gauge_chart" style="height:100%;"></div>
             </div>
           </div>
-          <div class="row view" style="margin-top:10px;border-top:1px dashed #dedede;">
+
+          <div class="row view info">
             <div class="col col-7">
-              <div style="font-weight: bold;margin-top:10px;margin-bottom:10px;"><strong
-                  style="font-size:25px;font-weight:bold;color:#255bff;">1,452,587</strong> people visited this site
+              <div class="title">
+                <strong>1,452,587</strong> people visited this site
               </div>
-              <div style="border:1px solid #b5defd;padding:20px;padding-left:40px;">
+              <div class="box">
                 <div class="row visit_total">
                   <div class="col col-4">
                     <div class="title">Visits</div>
@@ -219,16 +142,17 @@ body {
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
       <div class="panel dashed">
         <div class="body">
-          <h2 class="title">Analysis</h2>
+          <h2 class="title">Details</h2>
 
           <div class="view">
 
-            <div class="panel" style="border:1px solid #ababab;">
+            <div class="panel">
               <div class="head">
                 Recent Order List
               </div>
@@ -297,12 +221,9 @@ body {
               </table>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-
-
   </div>
 </div>
 <script>
@@ -354,7 +275,7 @@ chart_list[chart_list.length] = chart("#traffic_chart", {
     {
       x: {
         domain: "mr",
-        color: 0,
+        color: 1,
         orient: "top"
       },
       y: {
@@ -426,6 +347,7 @@ chart_list[chart_list.length] = chart("#traffic_chart", {
     }
   ],
   style: {
+    backgroundColor: "transparent",
     gridAxisBorderWidth: 2,
     titleFontSize: "11px",
     titleFontWeight: "bold"
@@ -498,6 +420,7 @@ chart_list[chart_list.length] = chart("#visit_chart", {
     colors: [0]
   },
   style: {
+    backgroundColor: "transparent",
     barBorderRadius: 0
   }
 });
@@ -532,6 +455,7 @@ chart_list[chart_list.length] = chart("#gauge_chart", {
     }
   },
   style: {
+    backgroundColor: "transparent",
     fontFamily: "Open Sans"
   }
 });
@@ -580,6 +504,9 @@ chart_list[chart_list.length] = chart("#line_sample_chart_1", {
   brush: {
     type: "line",
     target: [ "apple" ]
+  },
+  style: {
+    backgroundColor: "transparent"
   }
 });
 
@@ -606,6 +533,9 @@ chart_list[chart_list.length] = chart("#line_sample_chart_2", {
   brush: {
     type: "line",
     target: [ "microsoft" ]
+  },
+  style: {
+    backgroundColor: "transparent"
   }
 });
 
@@ -632,6 +562,9 @@ chart_list[chart_list.length] = chart("#line_sample_chart_3", {
   brush: {
     type: "line",
     target: [ "oracle" ]
+  },
+  style: {
+    backgroundColor: "transparent"
   }
 });
 
@@ -653,6 +586,9 @@ chart_list[chart_list.length] = chart("#bar_gauge_sample_chart_1", {
     format: function (value) {
       return value + '%';
     }
+  },
+  style: {
+    backgroundColor: "transparent"
   }
 });
 
@@ -672,14 +608,16 @@ chart_list[chart_list.length] = chart("#bar_gauge_sample_chart_2", {
     format: function (value) {
       return value + "%";
     }
+  },
+  style: {
+    backgroundColor: "transparent"
   }
 });
 
 function changeTheme(theme) {
-  // change ui
-  $("#jui_theme").attr("href", "../../../lib/jui.new/" + theme + ".theme.min.css");
-
-  // change chart
+  $("#ui_theme").attr("href", "/lib/jui/css/ui-" + theme + ".min.css");
+  $("#grid_theme").attr("href", "/lib/jui/css/grid-" + theme + ".min.css");
+  $("#index_theme").attr("href", "index-" + theme + ".css");
 
   for(var i = 0, len = chart_list.length; i < len; i++) {
 
@@ -688,7 +626,6 @@ function changeTheme(theme) {
     } else {
       chart_list[i].chart.setTheme(theme);
     }
-
   }
 }
 
