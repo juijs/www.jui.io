@@ -37,8 +37,8 @@
     </div>
     <div class="drawing-left-toolbar">
         <div class="buttons">
-            <a class="drawing-btn"><i class="icon-arrow4 white"></i></a>
-            <a class="drawing-btn"><i class="icon-edit white"></i></a>
+            <a class="drawing-btn arrow-btn"><i class="icon-arrow4 white"></i></a>
+            <a class="drawing-btn pen-btn"><i class="icon-edit white"></i></a>
             <a class="drawing-btn"><i class="icon-minus white"></i></a>
             <a class="drawing-btn"><i class="icon-stop white"></i></a>
             <a class="drawing-btn"><i class="icon-text white"></i></a>
@@ -75,7 +75,7 @@
 
         window.jui_menu = dropdown("#jui-menu");
 
-        builder(".drawing-root", {
+        var b = builder(".drawing-root", {
            width: '100%',
            height: '100%',
             padding : 0,
@@ -85,8 +85,15 @@
             style : {
                 backgroundColor: 'transparent'
             }
-
         });
+
+		$(".arrow-btn").on('click', function () {
+			b.emit('drawing.canvas.change.mode', [ 'pointer']);
+		});
+
+		$(".pen-btn").on('click', function () {
+			b.emit('drawing.canvas.change.mode', [ 'pen']);
+		});
     });
 </script>
 
