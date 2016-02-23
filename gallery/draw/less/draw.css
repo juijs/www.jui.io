@@ -111,3 +111,7 @@ body {
     cursor: pointer;
     font-size:27px;
 }
+
+.drawing-btn.select {
+	color: cyan;
+}

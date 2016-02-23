@@ -5,6 +5,7 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
         var rect;
 		var pathArea;
 		var seg;
+		var guidRect
         var canvasWidth = 800;
         var canvasHeight = 800;
         var ruleBase = 50;
@@ -18,7 +19,7 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 		var currentPen = [];
 		var currentMode = 'pen';
 		var currentSegments;
-		var selectSegment = true; 
+		var selectSegment = true;
 		var selectElement;
 
 		var parser = new PathParser();
@@ -26,19 +27,19 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 		var modeConfig = {
 
 			/**
-              *  객체를 가리킨다.  마우스 포인트에 맞는 객체를 선택할 수 있을까? 
+              *  객체를 가리킨다.  마우스 포인트에 맞는 객체를 선택할 수 있을까?
 			  */
 			pointer : '',
 
             /**
-			  * 캔버스를 움직인다.  룰러도 같이 업데이트 되어야 한다. 
+			  * 객체를 움직인다
 			  *
 			  */
 			move : '',
             plus : '',
             minus : '',
-			polygon : '',	 
-            pen : '' 
+			polygon : '',
+            pen : ''
 		};
 
 
@@ -78,18 +79,19 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
         this.drawBefore = function () {
             group = this.svg.g();
 
-			// 모드 설정 
+			// 모드 설정
 			this.initMode();
             this.initCanvas();
             this.initRule();
 			this.initEvent();
 			this.initPathArea();
 			this.initSegment();
+			this.initGuidRect();
         }
 
 		this.initPathArea = function () {
 			pathArea = this.svg.g({
-				className : "path-area"	
+				className : "path-area"
 			});
 
 			group.append(pathArea);
@@ -98,14 +100,22 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 
 		this.initSegment = function () {
 			seg = this.svg.g({
-				className : "seg"	
+				className : "seg"
 			});
 
 			group.append(seg);
 		}
 
+		this.initGuidRect = function () {
+			guidRect = this.svg.g({
+				className: "guid-rect"
+			});
+
+			group.append(guidRect);
+		}
+
 		this.initEvent = function () {
-			var self = this; 
+			var self = this;
 			this.chart.on('drawing.canvas.change.mode', function (mode) {
 				self.setMode(mode);
 			});
@@ -116,7 +126,7 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 		}
 
 		this.setMode = function (mode) {
-			currentMode = mode; 
+			currentMode = mode;
 		}
 
         this.initCanvas = function () {
@@ -132,12 +142,12 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 			});
 
 
-			this.setMouseEvent(rect, 
-				function click(e) { 
-					this.dragStart(e);	
-				}, function move(e) { 
+			this.setMouseEvent(rect,
+				function click(e) {
+					this.dragStart(e);
+				}, function move(e) {
 					this.drag(e);
-				}, function up(e) { 
+				}, function up(e) {
 					this.dragEnd(e);
 				}
 			);
@@ -150,41 +160,87 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 
 		this.dragStart = function (e) {
 
-			console.log(e);
+			var y = e.clientY - distY;
+			var x = e.clientX - distX;
 
 			if (currentMode == 'pen') {
-				currentPen = [];
-				currentPen.push( { x : e.clientX, y : e.clientY });
-				currentPath =  this.svg.path({
-					fill : 'transparent',
-					stroke : 'black',
-					'stroke-width' : 3,
+				currentPen = [{x: x, y: y}];
+
+				currentPath = this.svg.path({
+					className : 'item',
+					fill: 'transparent',
+					stroke: 'black',
+					'stroke-width': 3,
 					'stroke-linejoin': 'round'
 				});
 				this.appendToCanvas(currentPath);
+			} else if (currentMode == 'move') {
+				this.clickElement(e.target, e);
 			} else if (currentMode == 'pointer') {
 				this.parsingElement(e.target, e);
 			}
 		}
 
+		this.clickElement = function (el, e) {
+			if (el.getAttribute('className') == 'item') {
+				this.showMovePoint(el);
+			}
+		}
+
+		this.showMovePoint = function (el) {
+
+			var rect = el.getBoundingClientRect();
+
+			var fullRect = this.svg.rect({
+				className : 'move-segment',
+				x : rect.left - distX,
+				y : rect.top - distY,
+				width : rect.width,
+				height: rect.height,
+				fill : 'transparent',
+				stroke : 'blue'
+			});
+
+			guidRect.append(fullRect)
+			guidRect.element.appendChild(fullRect.element);
+
+			var leftTop = this.svg.rect({ className : 'move-segment-left-top', x : rect.left - 5 - distX, y : rect.top - 5 - distY, width : 10, height : 10  });
+			var rightTop = this.svg.rect({ className : 'move-segment-right-top', x : rect.left + rect.width - 5 - distX, y : rect.top - 5 - distY, width : 10, height : 10  });
+			var leftBottom = this.svg.rect({ className : 'move-segment-left-bottom', x : rect.left - 5 - distX, y : rect.top + rect.height - 5 - distY, width : 10, height : 10  });
+			var rightBottom = this.svg.rect({ className : 'move-segment-right-bottom', x : rect.left + rect.width - 5 - distX, y : rect.top + rect.height - 5 - distY, width : 10, height : 10  });
+
+			guidRect.append(leftTop)
+			guidRect.element.appendChild(leftTop.element);
+			guidRect.append(rightTop)
+			guidRect.element.appendChild(rightTop.element);
+			guidRect.append(leftBottom)
+			guidRect.element.appendChild(leftBottom.element);
+			guidRect.append(rightBottom)
+			guidRect.element.appendChild(rightBottom.element);
+
+		}
+
 		this.parsingElement = function (el, e) {
-			if (el.getAttribute('className') == 'segment') {	
+			if (el.getAttribute('className') == 'segment') {
 
 				if (e.ctrlKey) {
 
 					var index = el.getAttribute('index');
-					var s = currentSegments[index];
-					
+					var s = parser.getSegments(index);
+
 					if (s.command == 'M') {
-						currentSegments[index+1].command = 'M';
+						var next = parser.getSegments(index + 1);
+
+						next.command = 'M';
+						parser.setSegments(index+1, next);
 					}
 
-					currentSegments[index] = null;
+					parser.setSegments(index, null);
 					this.updateSegments(currentSegments);
 					el.parentNode.removeChild(el);
 				} else {
-					selectSegment = true; 
-					selectElement = el; 
+					selectSegment = true;
+					selectElement = el;
 				}
 
 			} else if (el.nodeName == 'path') {
@@ -197,16 +253,16 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 		}
 
 		this.updateSegments = function (s) {
-			currentTarget.setAttribute("d", this.joinPaths(s));
+			parser.update();
 		}
 
 		this.showSegment = function (s) {
 
-			// TODO: element.removeChildren()  이 필요하다. 
-			seg.children = [] ; 
+			// TODO: element.removeChildren()  이 필요하다.
+			seg.children = [] ;
 			var clone = seg.element.cloneNode(false);
 			seg.element.parentNode.replaceChild(clone, seg.element);
-			seg.element = clone; 
+			seg.element = clone;
 
 			 s = s || [] ;
 
@@ -218,9 +274,9 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 						index : i,
 						fill : 'transparent',
 						stroke : 'red',
-						cx : segment.x,
-						cy : segment.y,
-							r : 5
+						cx : segment.values[0],
+						cy : segment.values[1],
+						r : 5
 					});
 
 					seg.append(circle);
@@ -231,8 +287,8 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 						index : i,
 						fill : 'transparent',
 						stroke : 'blue',
-						cx : segment.x,
-						cy : segment.y,
+						cx : segment.values[0],
+						cy : segment.values[1],
 							r : 5
 					});
 
@@ -244,28 +300,31 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 		}
 
 		this.drag = function (e) {
+			var x = e.clientX - distX;
+			var y = e.clientY - distY;
 
 			if (selectSegment && selectElement) 	{
 				var seg = parser.getSegments(selectElement.getAttribute("index"));
-				seg.x = e.clientX - distX;
-				seg.y  = e.clientY - distY;
+				seg.values = [x, y];
 
 				parser.update()
-				selectElement.setAttribute('cx', seg.x);
-				selectElement.setAttribute('cy', seg.y);
+				selectElement.setAttribute('cx', x);
+				selectElement.setAttribute('cy', y);
 			} else {
-				currentPen.push( { x : e.clientX, y : e.clientY });
+				currentPen.push( { x : x, y : y });
 				this.drawCurrentPen();
 			}
 		}
 
 		this.dragEnd = function (e) {
+			var x = e.clientX - distX;
+			var y = e.clientY - distY;
 
-			if (selectSegment) 	{ 
-				selectSegment = false; 
+			if (selectSegment) 	{
+				selectSegment = false;
 				selectElement = null;
 			} else  {
-				currentPen.push( { x : e.clientX, y : e.clientY });
+				currentPen.push( { x : x, y : y });
 
 				this.drawCurrentPen(true);
 				this.drawEnd();
@@ -277,9 +336,9 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 			for(var i = 0, len=  currentPen.length; i < len; i++) {
 				var pen = currentPen[i];
 				if (i == 0) {
-					currentPath.MoveTo(pen.x - distX, pen.y- distY);
+					currentPath.MoveTo(pen.x, pen.y);
 				} else {
-					currentPath.LineTo(pen.x - distX, pen.y - distY);
+					currentPath.LineTo(pen.x, pen.y);
 				}
 			}
 
@@ -290,7 +349,7 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 		}
 
 		this.drawEnd = function () {
-			
+
 			drawObjects.push( { el : currentPath } );
 			currentPath = null;
 			currentPen = [];
@@ -301,12 +360,12 @@ jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathPa
 		}
 
 		this.setMouseEvent = function (element, mousedown, mousemove, mouseup) {
-			var self = this; 
+			var self = this;
 
 			function de(downEvent) {
 				mousedown.call(self, downEvent);
 
-				if (currentMode == 'pen' || selectSegment){ 
+				if (currentMode == 'pen' || selectSegment){
 					self.chart.on('chart.mousemove', me);
 					self.chart.on('chart.mouseup', ue);
 				}

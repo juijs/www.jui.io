@@ -39,10 +39,10 @@
     </div>
     <div class="drawing-left-toolbar">
         <div class="buttons">
-            <a class="drawing-btn arrow-btn"><i class="icon-arrow4 white"></i></a>
-            <a class="drawing-btn pen-btn"><i class="icon-edit white"></i></a>
-            <a class="drawing-btn"><i class="icon-minus white"></i></a>
-            <a class="drawing-btn"><i class="icon-stop white"></i></a>
+            <a class="drawing-btn" data-mode="pointer"><i class="icon-arrow4 white"></i></a>
+            <a class="drawing-btn" data-mode="pen"><i class="icon-edit white"></i></a>
+            <a class="drawing-btn" data-mode="move"><i class="icon-minus white"></i></a>
+            <a class="drawing-btn" data-mode="pen2"><i class="icon-stop white"></i></a>
             <a class="drawing-btn"><i class="icon-text white"></i></a>
         </div>
     </div>
@@ -89,13 +89,12 @@
             }
         });
 
-		$(".arrow-btn").on('click', function () {
-			b.emit('drawing.canvas.change.mode', [ 'pointer']);
+		$("[data-mode]").on('click', function () {
+			$("[data-mode].select").removeClass('select');
+			$(this).addClass('select');
+			b.emit('drawing.canvas.change.mode', [ $(this).data('mode') ]);
 		});
 
-		$(".pen-btn").on('click', function () {
-			b.emit('drawing.canvas.change.mode', [ 'pen']);
-		});
     });
 </script>
 
