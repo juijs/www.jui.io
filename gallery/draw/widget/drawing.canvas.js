@@ -1,4 +1,4 @@
-jui.define("chart.widget.drawing.canvas", [], function () {
+jui.define("chart.widget.drawing.canvas", ["util.parser.path"], function (PathParser) {
     var DrawingCanvas = function () {
 
         var group;
@@ -20,7 +20,8 @@ jui.define("chart.widget.drawing.canvas", [], function () {
 		var currentSegments;
 		var selectSegment = true; 
 		var selectElement;
-		var parseRegForPath = /([mMlLvVhHcCsSqQtTaAzZ]([^mMlLvVhHcCsSqQtTaAzZ]*))/g;
+
+		var parser = new PathParser();
 
 		var modeConfig = {
 
@@ -149,7 +150,10 @@ jui.define("chart.widget.drawing.canvas", [], function () {
 
 		this.dragStart = function (e) {
 
+			console.log(e);
+
 			if (currentMode == 'pen') {
+				currentPen = [];
 				currentPen.push( { x : e.clientX, y : e.clientY });
 				currentPath =  this.svg.path({
 					fill : 'transparent',
@@ -184,10 +188,9 @@ jui.define("chart.widget.drawing.canvas", [], function () {
 				}
 
 			} else if (el.nodeName == 'path') {
-				currentTarget = el;
-				var segments = this.parsePath(el.getAttribute('d'));
-				currentSegments = segments;
-				this.showSegment(segments);
+
+				parser.init(el);
+				this.showSegment(parser.getSegments());
 			} else if (el.nodeName == 'rect') {
 				this.showSegment(null);
 			}
@@ -240,54 +243,14 @@ jui.define("chart.widget.drawing.canvas", [], function () {
 
 		}
 
-		this.parsePath = function (pathString) {
-			var arr = pathString.match(parseRegForPath);
-
-			var segments =  [];
-			for(var i = 0, len = arr.length; i < len; i++) {
-				var segment = arr[i];
-
-				if (segment.indexOf("M") > -1) {
-					var temp = segment.replace("M","").split(",");
-					segments.push({ command : "M", x : temp[0], y : temp[1] });
-				} else if (segment.indexOf("L") > -1) { 
-					var temp = segment.replace("L","").split(",");
-					segments.push({ command : "L", x : temp[0], y : temp[1] });
-				} else if (segment.indexOf("Z") > -1) { 
-					segments.push({ command : "Z"});
-				}
-			}
-
-			return segments;
-
-		}
-
-		this.joinPaths = function (segments) {
-			var arr = [];
-			for(var i = 0, len = segments.length; i < len; i++) {
-				var s = segments[i];
-
-				if (!s)  {  continue; }
-
-				if (s.command == 'Z' || s.command == 'z')
-				{
-					arr.push(s.command);
-				} else {
-					arr.push([s.command, [s.x, s.y].join(",") ].join(""));
-				}
-			}
-
-			return arr.join(" ");
-		}
-
 		this.drag = function (e) {
 
 			if (selectSegment && selectElement) 	{
-				var seg = currentSegments[selectElement.getAttribute("index")];
+				var seg = parser.getSegments(selectElement.getAttribute("index"));
 				seg.x = e.clientX - distX;
 				seg.y  = e.clientY - distY;
 
-				this.updateSegments(currentSegments);
+				parser.update()
 				selectElement.setAttribute('cx', seg.x);
 				selectElement.setAttribute('cy', seg.y);
 			} else {
