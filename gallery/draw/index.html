@@ -15,7 +15,9 @@
     <script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
     <script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
     <link rel="stylesheet" type="text/css" href="less/draw.css" />
+    <script type="text/javascript" src="util/PathParser.js" ></script>
     <script type="text/javascript" src="widget/drawing.canvas.js" ></script>
+
 </head>
 <body class="jui">
 <div class="drawing">
@@ -37,10 +39,10 @@
     </div>
     <div class="drawing-left-toolbar">
         <div class="buttons">
-            <a class="drawing-btn"><i class="icon-arrow4 white"></i></a>
-            <a class="drawing-btn"><i class="icon-edit white"></i></a>
-            <a class="drawing-btn"><i class="icon-minus white"></i></a>
-            <a class="drawing-btn"><i class="icon-stop white"></i></a>
+            <a class="drawing-btn" data-mode="pointer"><i class="icon-arrow4 white"></i></a>
+            <a class="drawing-btn" data-mode="pen"><i class="icon-edit white"></i></a>
+            <a class="drawing-btn" data-mode="move"><i class="icon-minus white"></i></a>
+            <a class="drawing-btn" data-mode="pen2"><i class="icon-stop white"></i></a>
             <a class="drawing-btn"><i class="icon-text white"></i></a>
         </div>
     </div>
@@ -75,7 +77,7 @@
 
         window.jui_menu = dropdown("#jui-menu");
 
-        builder(".drawing-root", {
+        var b = builder(".drawing-root", {
            width: '100%',
            height: '100%',
             padding : 0,
@@ -85,8 +87,14 @@
             style : {
                 backgroundColor: 'transparent'
             }
-
         });
+
+		$("[data-mode]").on('click', function () {
+			$("[data-mode].select").removeClass('select');
+			$(this).addClass('select');
+			b.emit('drawing.canvas.change.mode', [ $(this).data('mode') ]);
+		});
+
     });
 </script>
 

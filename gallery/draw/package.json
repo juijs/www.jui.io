@@ -1,16 +1,11 @@
 {
-  "name": "draw",
-  "version": "1.0.0",
-  "title": "Drawing Tool",
-  "description": "Drawing Tool",
-  "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "apm", "dashboard"
-  ],
-  "author": "easylogic",
-  "license": "MIT",
-  "height" : "1000px"
+    "name": "draw",
+    "version": "1.0.0",
+    "title" : "Drawing Tool",
+    "description": "SVG Drawing Tool for SVG",
+    "main": "index.html",
+    "keywords": [ "draw", "line" ],
+    "author": "easylogic",
+    "license": "MIT",
+    "height" : "500px"
 }
