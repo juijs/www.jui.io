@@ -143,7 +143,7 @@ chart("#chart", {
         type : "zoomscroll",
         key : "c",
         format : function(d, i) {
-            return (d.getDate() == 10) ? time.format(d, "yyyy. MM") : "";
+            return (d.getDate() == 10) ? time.format(d, "yy/MM/dd") : "";
         }
     }],
 	style : {
