@@ -70,6 +70,9 @@ var dataSource = [
 ];
 
 chart("#chart", {
+	padding : {
+		bottom : 0
+	},
     axis : [{
         x : {
             type : "block",
@@ -118,9 +121,9 @@ chart("#chart", {
         },
         area : {
             x : 0,
-            y : "55%",
+            y : "50%",
             width : "100%",
-            height : "30%"
+            height : "36%"
         },
         extend : 0
     }],
