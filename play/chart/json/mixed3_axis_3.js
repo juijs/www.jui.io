@@ -138,6 +138,9 @@ chart("#chart", {
         brush : 0
     }, {
         type : "zoomscroll",
-        target : "c"
+        key : "c",
+        format : function(d, i) {
+            return (d.getDate() == 10) ? time.format(d, "yyyy. MM") : "";
+        }
     }]
 });
