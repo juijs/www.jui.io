@@ -158,8 +158,10 @@
 
     <! if(key.indexOf("Color") != -1) { !>
     <td style="background: <!= value !>"><!= value !></td>
+	<! } else if(key.indexOf("Image") != -1) { !>
+	<td><img src="<!= value !>"/></td>
     <! } else { !>
-    <td><!= value !></td>
+	<td><!= value !></td>
     <! } !>
 </tr>
 </script>

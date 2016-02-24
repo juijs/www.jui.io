@@ -142,5 +142,8 @@ chart("#chart", {
         format : function(d, i) {
             return (d.getDate() == 10) ? time.format(d, "yyyy. MM") : "";
         }
-    }]
+    }],
+	style : {
+		zoomScrollBackgroundSize : 60
+	}
 });
