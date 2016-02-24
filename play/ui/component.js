@@ -76,7 +76,7 @@ var code_list = [
     { type: "tab", title: "Bottom tabs", code: "tab_2" },
     { type: "tab", title: "Tab manipulation", code: "tab_3" },
     { type: "tab", title: "Tab dragging", code: "tab_4" },
-    //{ type: "tab", title: "Use dropdown menu", code: "tab_5" },
+    { type: "tab", title: "Use dropdown menu", code: "tab_5" },
     { type: "tooltip", title: "Default tooltip", code: "tooltip_1" },
     { type: "tooltip", title: "With popover style", code: "tooltip_2" },
     { type: "modal", title: "Global modal", code: "modal_1" },
