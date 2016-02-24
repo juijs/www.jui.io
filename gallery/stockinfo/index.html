@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" id="ui_theme" />
+<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.js" ></script>
+<script type="text/javascript" src="data.js" ></script>
+<link rel="stylesheet" href="index.css" />
+
+<script>
+
+(function initData() {
+	for(var i = 0, len = data.length; i < len; i++) {
+		var d = data[i];
+
+		d.date = new Date(d.date);
+		d.month = d.date.getMonth(); // pre-calculate month for better performance
+		d.close = +d.close; // coerce to number
+		d.open = +d.open;
+	}
+})();
+
+function getVolumeData() {
+	var nd = [],
+		total = 0;
+
+	for(var i = 0, len = data.length; i < len; i++) {
+		var d = data[i],
+			move = (d.open + d.close) / 2,
+			days = i + 1;
+
+		total += move;
+
+		nd.push({
+			date: d.date,
+			days: days,
+			move: move,
+			avg: Math.round(total / days)
+		});
+		console.log(total, move);
+	}
+
+	return nd;
+}
+
+jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
+	var c = builder("#monthly_index", {
+		height : 300,
+		axis : {
+			x : {
+				type : "dateblock",
+				domain : [ data[0].date, data[data.length - 1].date ],
+				interval : time.DAY * 365,
+				format: "yyyy",
+				line: true
+			},
+			y : {
+				type : "range",
+				domain: [ 0, 7000 ],
+				unit: 1000,
+				line : true
+			}
+		},
+		brush : {
+			type : "area",
+			line : true,
+			target : [ "move", "avg" ]
+		}
+	});
+
+	c.axis(0).update(getVolumeData());
+});
+</script>
+</head>
+<body class="jui">
+
+<div class="row">
+    <div id="monthly_index"></div>
+</div>
+
+</body>
+</html>
