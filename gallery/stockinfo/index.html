@@ -43,38 +43,59 @@ function getVolumeData() {
 			move: move,
 			avg: Math.round(total / days)
 		});
-		console.log(total, move);
 	}
 
 	return nd;
 }
 
 jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
+	var d = getVolumeData();
+
 	var c = builder("#monthly_index", {
+		padding : {
+			bottom : 100
+		},
 		height : 300,
 		axis : {
 			x : {
-				type : "dateblock",
-				domain : [ data[0].date, data[data.length - 1].date ],
+				type : "date",
+				domain : [ d[0].date, d[d.length - 1].date ],
 				interval : time.DAY * 365,
-				format: "yyyy",
-				line: true
+				format : "yyyy",
+				key : "date",
+				line : true
 			},
 			y : {
 				type : "range",
 				domain: [ 0, 7000 ],
 				unit: 1000,
 				line : true
-			}
+			},
+			data : d
 		},
-		brush : {
+		brush : [{
 			type : "area",
 			line : true,
 			target : [ "move", "avg" ]
-		}
+		}],
+		widget : [{
+			type : "zoomscroll",
+			key : "move",
+			format : function(d, i) {
+				return time.format(d, "yyyy");
+			},
+			dy : 70
+		}],
+		event : {
+			"zoomscroll.dragend": function(start, end) {
+				this.axis(0).set("x", { domain: [ d[start].date, d[end - 1].date ] });
+				this.render();
+			}
+		},
+		render : false
 	});
 
-	c.axis(0).update(getVolumeData());
+	//c.axis(0).update(getVolumeData());
 });
 </script>
 </head>
