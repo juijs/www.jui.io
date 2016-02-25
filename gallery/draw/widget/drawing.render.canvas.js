@@ -1,8 +1,6 @@
-jui.define("util.render.canvas", ["util.parser.path"], function (PathParser) {
+jui.define("util.render.canvas", [], function () {
     var DrawingRenderCanvas = function (canvas) {
 		
-		var disabled = true; 
-
 		var rect; 
 
         this.initFilter = function () {
@@ -72,20 +70,10 @@ jui.define("util.render.canvas", ["util.parser.path"], function (PathParser) {
                 height: size.height
             });
         }
-
-
-		this.setDisabled = function (value) {
-			disabled = value;
-
-			this.initMode();
-		}
-
-		this.getDisabled = function () {
-			return !!disabled;
-		}
   
     };
 
 
     return DrawingRenderCanvas;
-});
+}, "drawing.core");
+
