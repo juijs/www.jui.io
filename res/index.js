@@ -39,34 +39,35 @@ function initHashEvent() {
 	$(window).hashchange(function() {
 		if(location.hash.indexOf("#") != -1) {
 			hash = location.hash.substring(1).split("/");
-			
+
 			if (hash[0].indexOf("chart-") > -1) {
 			    return;
 			}
-			
+
 			initMenuUrl(hash);
 		} else {
 			initMenuUrl([ "home" ]);
 		}
-		
+
 		$("body").scrollTop(0);
 	});
-	
+
 	// 온-로드 시점에도 발생
 	$(window).hashchange();
 }
 
-function initMenuUrl(hash) {
-	if(hash[0] != "home") {
+function initMenuUrl(link) {
+	var hash = link[0].split("?")[0];
+
+	if(hash != "home") {
 		$("header .menu").find("a").removeClass("active");
 	}
 
-	if (hash[0].indexOf('gallery-view-') > -1) {
+	if (hash.indexOf('gallery-view-') > -1) {
 		var src = menuInfo['gallery-view'].src;
 	} else {
-		var src = menuInfo[hash[0]].src;
+		var src = menuInfo[hash].src;
 	}
-
 
     // 타이틀 & 메시지 처리
     if(hash == "chart") {
@@ -101,31 +102,31 @@ function initMenuUrl(hash) {
             $("nav.about").show();
         } else if(hash == "gallery") {
 			$(".main, nav.download, nav.about, nav.sub, #gallery-view").hide();
-		} else if (hash[0].indexOf('gallery-view') > -1) {
+		} else if(hash.indexOf('gallery-view') > -1) {
 			$(".main, nav.download, nav.about, nav.sub, #gallery").hide();
 		} else {
             $(".main, nav.download, nav.about").hide();
             $("nav.sub").show();
-            $("nav.sub .title").html(menuInfo[hash[0]].title);
-            $("nav.sub .msg").html(menuInfo[hash[0]].msg);
+            $("nav.sub .title").html(menuInfo[hash].title);
+            $("nav.sub .msg").html(menuInfo[hash].msg);
         }
     }
 
 	// 영역 보이기 및 숨기기
 	$("article").hide();
-	$("#" + hash[0]).show();
-	
+	$("#" + hash).show();
+
 	// 상단 메뉴바 선택 효과 처리
-	$("[href*=" + hash[0] + "]").addClass("active");
+	$("[href*=" + hash + "]").addClass("active");
 
 	// 화면 비동기 로드
 	if(src) {
-		if (hash[0] == "chart" || hash[0] == "gallery") {
-			$("#" + hash[0]).load(src);
-		} else if (hash[0].indexOf('gallery-view') > -1 ) {
-			$("#gallery-view").load(src  + "#" + hash[0].replace('gallery-view-', '')).show();
+		if (hash == "chart" || hash == "gallery") {
+			$("#" + hash).load(src);
+		} else if (hash.indexOf('gallery-view') > -1 ) {
+			$("#gallery-view").load(src  + "#" + hash.replace('gallery-view-', '')).show();
 		} else {
-			$("#" + hash[0]).find(".col").load(src, function () {
+			$("#" + hash).find(".col").load(src, function () {
 				Prism.highlightAll();
 			});
 		}
@@ -284,7 +285,7 @@ jui.ready([ "ui.modal", "ui.dropdown" ], function(modal, dropdown) {
 	loading = modal("#floatingBarsG", {
 		color: "black"
 	});
-	
+
 	initHashEvent();
 	initAnimation();
 	checkIeVersion();
