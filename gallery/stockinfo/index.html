@@ -49,17 +49,18 @@ function getVolumeData() {
 }
 
 jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
-	var d = getVolumeData();
+	var volumeData = getVolumeData();
 
-	var c = builder("#monthly_index", {
+	var volumeChart = builder("#monthly_index", {
 		padding : {
-			bottom : 100
+			bottom : 90
 		},
+		width : 1024,
 		height : 300,
-		axis : {
+		axis : [{
 			x : {
 				type : "date",
-				domain : [ d[0].date, d[d.length - 1].date ],
+				domain : [ volumeData[0].date, volumeData[volumeData.length - 1].date ],
 				interval : time.DAY * 365,
 				format : "yyyy",
 				key : "date",
@@ -67,35 +68,67 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 			},
 			y : {
 				type : "range",
-				domain: [ 0, 7000 ],
-				unit: 1000,
-				line : true
+				domain: [ 0, 2000 ],
+				step : 4,
+				line : false,
+				color : 2
 			},
-			data : d
-		},
+			start : 2000,
+			end : 3000
+		}, {
+			extend : 0,
+			x : {
+				hide : true
+			},
+			y : {
+				type : "range",
+				domain: [ 0, 7000 ],
+				step : 7,
+				line : false,
+				orient : "right",
+				color : 0
+			}
+		}],
 		brush : [{
 			type : "area",
 			line : true,
-			target : [ "move", "avg" ]
+			target : [ "avg" ],
+			colors : [ 2 ],
+			axis : 0
+		}, {
+			type : "area",
+			line : true,
+			target : [ "move" ],
+			axis : 1
 		}],
 		widget : [{
 			type : "zoomscroll",
 			key : "move",
+			dy : 30,
 			format : function(d, i) {
 				return time.format(d, "yyyy");
 			},
-			dy : 70
+			axis : 1
 		}],
 		event : {
 			"zoomscroll.dragend": function(start, end) {
-				this.axis(0).set("x", { domain: [ d[start].date, d[end - 1].date ] });
-				this.render();
+				var domain = {
+					domain: [ volumeData[start].date, volumeData[end].date ]
+				};
+
+				this.axis(0).set("x", domain);
+				this.axis(1).set("x", domain);
 			}
+		},
+		style : {
+			areaBackgroundOpacity : 0.75
 		},
 		render : false
 	});
 
-	//c.axis(0).update(getVolumeData());
+	volumeChart.axis(0).update(volumeData);
+	volumeChart.axis(1).update(volumeData);
+	volumeChart.render(true);
 });
 </script>
 </head>

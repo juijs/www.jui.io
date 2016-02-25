@@ -69,9 +69,12 @@ var dataSource = [
     { date: new Date(1994,4,28), l: 25.75, h: 28.25, o: 28.00, c: 27.25, v: 1909200 }
 ];
 
-chart("#chart", {
+var start = 10,
+    end = 30;
+
+var c = chart("#chart", {
 	padding : {
-		bottom : 0
+		bottom : 60
 	},
     axis : [{
         x : {
@@ -92,9 +95,6 @@ chart("#chart", {
             width : "100%",
             height : "45%"
         },
-        data : dataSource,
-        start : 10,
-        end : 30,
         keymap : {
             low : "l",
             high : "h",
@@ -103,8 +103,12 @@ chart("#chart", {
         }
     }, {
         x : {
-            format : function(d, day_cnt) {
-                return time.format(d, "MM-dd");
+            format : function(d, i) {
+                if(end - start < 30 || i % 2 == 0) {
+                    return time.format(d, "MM-dd");
+                }
+
+                return "";
             },
             hide : false
         },
@@ -123,7 +127,7 @@ chart("#chart", {
             x : 0,
             y : "50%",
             width : "100%",
-            height : "36%"
+            height : "40%"
         },
         extend : 0
     }],
@@ -146,7 +150,20 @@ chart("#chart", {
             return (d.getDate() == 10) ? time.format(d, "yy/MM/dd") : "";
         }
     }],
+    event : {
+        "zoomscroll.dragend": function(s, e) {
+            start = s;
+            end = e;
+        }
+    },
 	style : {
 		zoomScrollBackgroundSize : 60
-	}
+	},
+    render : false
 });
+
+c.axis(0).update(dataSource);
+c.axis(0).zoom(start, end);
+c.axis(1).update(dataSource);
+c.axis(1).zoom(start, end);
+c.render(true);
