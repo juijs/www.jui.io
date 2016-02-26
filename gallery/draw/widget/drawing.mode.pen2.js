@@ -16,6 +16,11 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 		var pen2;
 		var events;
 		var point_list = [];
+		var self = this;
+
+		function move2 (e) {
+			self.move(e);
+		}
 
 		this.init = function () {
 			pen2 = canvas.svg.g({
@@ -42,6 +47,7 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 		// mode 가 변경될 때 초기 상태로 되돌린다.
 		this.initMode = function () {
 			var self = this;
+
 			// 비활성화 일 때 초기 상태로 되돌림
 			if (this.disabled)
 			{
@@ -50,13 +56,13 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 					canvas.chart.off(move2);
 				}
 
+				pen2.element.innerHTML = "";
+
 			}
 			// 활성화 모드
 			else {
 				events = canvas.setMouseEvent( function click(e) { self.dragStart(e); },  function move(e) { self.drag(e); },  function up(e) { self.dragEnd(e); } );
-				canvas.chart.on('chart.mousemove', function move2 (e) {
-					self.move(e);
-				});
+				canvas.chart.on('chart.mousemove', move2);
 			}
 		}
 
@@ -79,6 +85,8 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 				currentDragCircle2 = null;
 
 				this.generatePath(point_list);
+
+				canvas.appendToCanvas(realPath);
 
 				point_list = [];
 				return;
@@ -175,10 +183,12 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 			currentCurvePos = canvas.pos(e);
 
 			var s = point_list[point_list.length-1]
-			
-			s.type = 'curve';
-			s.curve = currentCurvePos;
-			s.reverse = reversePos; 
+
+			if (s) {
+				s.type = 'curve';
+				s.curve = currentCurvePos;
+				s.reverse = reversePos;
+			}
 
 			this.drawCurveGuide();
 			this.generatePath();

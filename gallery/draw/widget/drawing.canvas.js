@@ -1,13 +1,13 @@
 jui.define("chart.widget.drawing.canvas", [
-	"util.render.canvas", 
-	"util.render.rule", 
-	"util.parser.path", 
-	"util.mode.pointer", 
-	"util.mode.pen", 
-	"util.mode.pen2", 
+	"util.render.canvas",
+	"util.render.rule",
+	"util.parser.path",
+	"util.mode.pointer",
+	"util.mode.pen",
+	"util.mode.pen2",
 	"util.mode.move"
 ], function (
-	RenderCanvas, RenderRule,	
+	RenderCanvas, RenderRule,
 	PathParser, ModePointer, ModePen, ModePen2, ModeMove
 ) {
     var DrawingCanvas = function () {
@@ -32,7 +32,7 @@ jui.define("chart.widget.drawing.canvas", [
 			pointer : new ModePointer(this),
 
             /**
-			  * 객체를 움직인다, 크기를 조절한다.  회전을 준다. 
+			  * 객체를 움직인다, 크기를 조절한다.  회전을 준다.
 			  *
 			  */
 			move : new ModeMove(this),
@@ -40,10 +40,10 @@ jui.define("chart.widget.drawing.canvas", [
             minus : '',
 			polygon : '',
 
-			// 그림을 그린다. 
+			// 그림을 그린다.
             pen : new ModePen(this),
 
-			// 커브를 그린다. 
+			// 커브를 그린다.
             pen2 : new ModePen2(this)
 		};
 
@@ -53,7 +53,7 @@ jui.define("chart.widget.drawing.canvas", [
 
 		this.setCanvasSize = function (w, h) {
 			canvasWidth = w;
-			canvasHeight = h; 
+			canvasHeight = h;
 
 			renderCanvas.initSize();
 			renderRule.initSize();
@@ -72,14 +72,14 @@ jui.define("chart.widget.drawing.canvas", [
         this.drawBefore = function () {
             group = this.svg.g();
 
-			// 그리기 객체 초기화 
+			// 그리기 객체 초기화
 			renderCanvas.init();
 			renderRule.init();
 
-			// 그릴 수 있는 path 영역 설정 
+			// 그릴 수 있는 path 영역 설정
 			this.initPathArea();
 
-			// 이벤트 설정 
+			// 이벤트 설정
 			this.initEvent();
 
 			// 모드 설정
@@ -120,13 +120,14 @@ jui.define("chart.widget.drawing.canvas", [
 
 		this.setMode = function (mode) {
 
-			if (currentMode)
+			if (currentMode != mode)
 			{
 				modeConfig[currentMode].setDisabled(true);
 			}
 
 			currentMode = mode;
 			modeConfig[currentMode].setDisabled(false);
+
 
 		}
 
@@ -166,10 +167,8 @@ jui.define("chart.widget.drawing.canvas", [
 			return { mousedown : de, mousemove : me, mouseup : ue };
 		}
 
-		this.offMouseEvent = function (events) {
+		this.offMouseEvent = function (event) {
 			this.chart.off(event.mousedown);
-			this.chart.off(event.mousemove);
-			this.chart.off(event.mouseup);
 		}
 
         this.draw = function () {

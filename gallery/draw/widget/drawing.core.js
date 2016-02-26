@@ -1,7 +1,9 @@
 jui.define("drawing.core", [], function () {
     var DrawingCore = function () {
-		
-		// mode 가 변경될 때 초기 상태로 되돌린다. 
+
+		this.disabled = true;
+
+		// mode 가 변경될 때 초기 상태로 되돌린다.
 		this.initMode = function () {
 
 		}
@@ -26,7 +28,7 @@ jui.define("drawing.core", [], function () {
 		this.getDisabled = function () {
 			return !!this.disabled;
 		}
-  
+
     };
 
 
