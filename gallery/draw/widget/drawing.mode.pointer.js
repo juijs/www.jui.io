@@ -19,7 +19,7 @@ jui.define("util.mode.pointer", ["util.parser.path"], function (PathParser) {
 		this.initMode = function () {
 			var self = this; 
 			// 비활성화 일 때 초기 상태로 되돌림 
-			if (disabled)
+			if (this.disabled)
 			{
 				if (events) {
 					canvas.offMouseEvent(events);
@@ -52,14 +52,10 @@ jui.define("util.mode.pointer", ["util.parser.path"], function (PathParser) {
 		}
 
 		this.dragStart = function (e) {
-			if (disabled) return; 
-
 			this.parsingElement(e.target, e);
 		}
 
 		this.dragEnd = function (e) {
-			if (disabled) return; 
-
 			if (selectElement) 	{
 				selectElement = null;
 			} 
@@ -143,19 +139,10 @@ jui.define("util.mode.pointer", ["util.parser.path"], function (PathParser) {
 			}
 
 		}
-
-		this.setDisabled = function (value) {
-			disabled = value;
-
-			this.initMode();
-		}
-
-		this.getDisabled = function () {
-			return !!disabled;
-		}
   
     };
 
 
     return DrawingModePointer;
-});
+}, "drawing.core");
+

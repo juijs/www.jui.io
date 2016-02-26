@@ -24,7 +24,7 @@ jui.define("util.mode.move", ["util.parser.path"], function (PathParser) {
 		this.initMode = function () {
 			var self = this; 
 			// 비활성화 일 때 초기 상태로 되돌림 
-			if (disabled)
+			if (this.disabled)
 			{
 				if (events) {
 					canvas.offMouseEvent(events);
@@ -40,14 +40,10 @@ jui.define("util.mode.move", ["util.parser.path"], function (PathParser) {
 		}
 
 		this.drag = function () {
-			if (disabled) return; 
-
 			// 구현 해야함. 
 		}
 
 		this.dragStart = function (e) {
-			if (disabled) return; 
-
 			this.clickElement(e.target, e);
 		}
 
@@ -126,8 +122,6 @@ jui.define("util.mode.move", ["util.parser.path"], function (PathParser) {
 		}
 
 		this.dragEnd = function (e) {
-			if (disabled) return; 
-
 			moveElement = null;
 			moveDirection = "";
 			moveStart = [];
@@ -155,18 +149,9 @@ jui.define("util.mode.move", ["util.parser.path"], function (PathParser) {
 			currentPen = [];
 		}
 
-		this.setDisabled = function (value) {
-			disabled = value;
-
-			this.initMode();
-		}
-
-		this.getDisabled = function () {
-			return !!disabled;
-		}
   
     };
 
 
     return DrawingModeMove;
-});
+}, "drawing.core");

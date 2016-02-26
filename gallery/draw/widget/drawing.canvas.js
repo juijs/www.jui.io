@@ -4,10 +4,11 @@ jui.define("chart.widget.drawing.canvas", [
 	"util.parser.path", 
 	"util.mode.pointer", 
 	"util.mode.pen", 
+	"util.mode.pen2", 
 	"util.mode.move"
 ], function (
 	RenderCanvas, RenderRule,	
-	PathParser, ModePointer, ModePen, ModeMove
+	PathParser, ModePointer, ModePen, ModePen2, ModeMove
 ) {
     var DrawingCanvas = function () {
 
@@ -40,7 +41,10 @@ jui.define("chart.widget.drawing.canvas", [
 			polygon : '',
 
 			// 그림을 그린다. 
-            pen : new ModePen(this)
+            pen : new ModePen(this),
+
+			// 커브를 그린다. 
+            pen2 : new ModePen2(this)
 		};
 
 		this.getCanvasSize = function () {
@@ -127,6 +131,13 @@ jui.define("chart.widget.drawing.canvas", [
 		}
 
 
+		this.pos = function (e) {
+			return {
+				x : e.clientX - distX,
+				y : e.clientY - distY
+			}
+		}
+
 		this.appendToCanvas = function (elem) {
 			pathArea.element.appendChild(elem.element);
 		}
@@ -146,8 +157,8 @@ jui.define("chart.widget.drawing.canvas", [
 
 			function ue(upEvent) {
 					mouseup.call(self, upEvent);
-					self.chart.off('chart.mousemove', me);
-					self.chart.off('chart.mouseup', ue);
+					self.chart.off(me);
+					self.chart.off(ue);
 			}
 
 			this.chart.on('chart.mousedown', de);
@@ -156,9 +167,9 @@ jui.define("chart.widget.drawing.canvas", [
 		}
 
 		this.offMouseEvent = function (events) {
-			this.chart.off('chart.mousedown', event.mousedown);
-			this.chart.off('chart.mousemove', event.mousemove);
-			this.chart.off('chart.mouseup', event.mouseup);
+			this.chart.off(event.mousedown);
+			this.chart.off(event.mousemove);
+			this.chart.off(event.mouseup);
 		}
 
         this.draw = function () {

@@ -1,7 +1,6 @@
 jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
     var DrawingModePen = function (canvas) {
 		
-		var disabled = false; 
 		var parser = new PathParser();
 		var currentPen = [];
 		var events;
@@ -14,7 +13,7 @@ jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
 		this.initMode = function () {
 			var self = this; 
 			// 비활성화 일 때 초기 상태로 되돌림 
-			if (disabled)
+			if (this.disabled)
 			{
 				if (events) {
 					canvas.offMouseEvent(events);
@@ -28,22 +27,12 @@ jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
 		}
 
 		this.drag = function (e) {
-			if (disabled) return; 
-
-			var x = e.clientX - canvas.getDistX();
-			var y = e.clientY - canvas.getDistY();
-
-			currentPen.push( { x : x, y : y });
+			currentPen.push( canvas.pos(e));
 			this.drawCurrentPen();
 		}
 
 		this.dragStart = function (e) {
-			if (disabled) return; 
-
-				var x = e.clientX - canvas.getDistX();
-				var y = e.clientY - canvas.getDistY();
-
-				currentPen = [{x: x, y: y}];
+				currentPen = [canvas.pos(e)];
 
 				currentPath = canvas.svg.path({
 					className : 'item',
@@ -56,12 +45,7 @@ jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
 		}
 
 		this.dragEnd = function (e) {
-			if (disabled) return; 
-
-			var x = e.clientX - canvas.getDistX();
-			var y = e.clientY - canvas.getDistY();
-
-			currentPen.push( { x : x, y : y });
+			currentPen.push( canvas.pos(e));
 
 			this.drawCurrentPen(true);
 			this.drawEnd();
@@ -88,19 +72,9 @@ jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
 			currentPath = null;
 			currentPen = [];
 		}
-
-		this.setDisabled = function (value) {
-			disabled = value;
-
-			this.initMode();
-		}
-
-		this.getDisabled = function () {
-			return !!disabled;
-		}
   
     };
 
 
     return DrawingModePen;
-});
+}, "drawing.core");

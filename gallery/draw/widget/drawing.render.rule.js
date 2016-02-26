@@ -1,7 +1,6 @@
 jui.define("util.render.rule", [], function () {
     var DrawingRenderRule = function (canvas) {
 		
-		var disabled = false; 
         var ruleBase = 50;
         var ruleSize = 15;
         var ruleSizeV = 30;
@@ -164,18 +163,10 @@ jui.define("util.render.rule", [], function () {
             canvas.appendToGroup(ruleV);
         }
 
-		this.setDisabled = function (value) {
-			disabled = value;
-
-			this.initMode();
-		}
-
-		this.getDisabled = function () {
-			return !!disabled;
-		}
   
     };
 
 
     return DrawingRenderRule;
-});
+}, "drawing.core");
+
