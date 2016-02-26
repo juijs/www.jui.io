@@ -11,6 +11,7 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 		var currentDragCircle2;
 		var currentDragPath;
 		var currentMovePath;
+		var realPath;
 		var isDragging = false;
 		var pen2;
 		var events;
@@ -87,6 +88,11 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 
 			point_list.push({ type : 'pointer', pos : startPos });
 
+			realPath = this.addGuidePath({
+				stroke : 'black',
+				'stroke-width' : 3
+			});
+
 			currentDragPath = this.addGuidePath({
 				'stroke-dasharray' : '5 5'
 			});
@@ -97,11 +103,10 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 			currentDragCircle = this.addCircle({
 				stroke : 'red'
 			});
-			/*
+
 			currentDragCircle2 = this.addCircle({
 				stroke : 'green'
 			});
-			*/
 
 			currentDragCenterCircle.attr({
 				'cx' :  startPos.x,
@@ -124,45 +129,44 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 				currentMovePath.join();
 
 			} else {
-				currentMovePath.join();
+				this.generatePath(point_list);
 			}
 		}
 
 		this.generatePath = function () {
 			var len = point_list.length;
 
-			var path = canvas.svg.path({
-				className : 'item',
-				fill : 'transparent',
-				stroke : 'black',
-				'stroke-width' : 3
-			});
-
 			for(var i = 0; i < len; i++) {
 				var segment = point_list[i];
 				var pos = segment.pos;
 
 				if (i == 0) {
-					path.MoveTo(pos.x, pos.y);
+					realPath.MoveTo(pos.x, pos.y);
 				} else {
-					if (segment.type == 'pointer') {
-						path.LineTo(pos.x, pos.y);
-					} else if (segment.type == 'curve') {
-						var pointer = point_list[i+1];
-						var curve = point_list[i+2];
+					var prev = point_list[i-1];
 
-						if (pointer && curve) {
-							path.CurveTo(pos.x, pos.y, curve.pos.x, curve.pos.y, pointer.pos.x, pointer.pos.y);
+					if (segment.type == 'pointer') {
+						if (prev.type == 'pointer')
+						{
+							realPath.LineTo(pos.x, pos.y);
+						} else if (prev.tyep == 'curve') {
+							realPath.CurveTo(prev.reverse.x, prev.reverse.y,pos.x, pos.y, pos.x, pos.y);
 						}
 
-						// 커브는 어떻게 그리나요
+
+					} else if (segment.type == 'curve') {
+						if (prev.type == 'pointer') {
+							realPath.SCurveTo(segment.curve.x, segment.curve.y, pos.x, pos.y);
+						} else if (prev.type == 'curve')
+						{
+							realPath.CurveTo(prev.reverse.x, prev.reverse.y, segment.curve.x, segment.curve.y, pos.x, pos.y);
+						}
 					}
 				}
 			}
 
-			path.join();
-
-			canvas.appendToCanvas(path);
+			realPath.join();
+			//canvas.appendToCanvas(path);
 		}
 
 		this.drag = function (e) {
@@ -170,7 +174,14 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 
 			currentCurvePos = canvas.pos(e);
 
+			var s = point_list[point_list.length-1]
+			
+			s.type = 'curve';
+			s.curve = currentCurvePos;
+			s.reverse = reversePos; 
+
 			this.drawCurveGuide();
+			this.generatePath();
 		}
 
 		this.dragEnd = function (e) {
@@ -178,10 +189,11 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 
 			// 점을 추가 한다
 			if (currentCurvePos) {
-				point_list.push({ type : 'curve', pos : currentCurvePos, reverse : reversePos });
 				currentCurvePos = null;
 				reversePos = null;
 			}
+
+				this.generatePath();
 		}
 
 		this.addToPen = function (o) {
@@ -235,16 +247,11 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 			var reverseX = (startPos.x > currentCurvePos.x) ? currentCurvePos.x + distX2 : currentCurvePos.x - distX2;
 			var reverseY = (startPos.y > currentCurvePos.y) ?  currentCurvePos.y + distY2 : currentCurvePos.y - distY2;
 
-			/*
-			currentDragCircle2.attr({
-				'cx' :  reverseX,
-				'cy' :  reverseY
-			});
-			*/
+			currentDragCircle2.attr({  'cx' :  reverseX,  'cy' :  reverseY });
 
 			currentDragPath.MoveTo(currentCurvePos.x, currentCurvePos.y);
 			currentDragPath.LineTo(startPos.x, startPos.y);
-			//currentDragPath.LineTo(reverseX, reverseY);
+			currentDragPath.LineTo(reverseX, reverseY);
 			currentDragPath.join();
 
 			reversePos = { x : reverseX, y : reverseY };
