@@ -5,10 +5,18 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 		var parser = new PathParser();
 		var selectElement = null;
 		var seg;
+		var segPath;
 		var events;
 		var showedSegmentList = [];
 
 		this.init = function () {
+
+			segPath = canvas.svg.g({
+				className : "seg-path"
+			});
+
+			canvas.appendToGroup(segPath);
+
 			seg = canvas.svg.g({
 				className : "seg"
 			});
@@ -28,6 +36,7 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 
 
 				seg.element.innerHTML = "";
+				segPath.element.innerHTML = "";
 
 			}
 			// 활성화 모드
@@ -43,72 +52,44 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 				var pos = canvas.pos(e);
 				var index = selectElement.getAttribute("index");
 				var type = selectElement.getAttribute("type");
-				var line = selectElement.line;
 
-				var seg = parser.getSegments(index);
+				var segment = parser.getSegments(index);
 
 				if (type) {
-					if (seg.command == 'S') {
+					if (segment.command == 'S') {
 						if (type == 'curve') {
-							seg.values[0] = pos.x;
-							seg.values[1] = pos.y;
+							segment.values[0] = pos.x;
+							segment.values[1] = pos.y;
 						} else {
-							seg.values[2] = pos.x;
-							seg.values[3] = pos.y;
+							segment.values[2] = pos.x;
+							segment.values[3] = pos.y;
 						}
-						line.MoveTo(seg.values[0], seg.values[1]);
-						line.LineTo(seg.values[2], seg.values[3]);
-						line.join();
-					} else if (seg.command == 'C') {
+					} else if (segment.command == 'C') {
 						if (type == 'curve') {
-							seg.values[0] = pos.x;
-							seg.values[1] = pos.y;
-
-							var prev = parser.getSegments(index-1);
-
-							line.MoveTo(prev.values[prev.values.length-2], prev.values[prev.values.length-1]);
-							line.LineTo(seg.values[0], seg.values[1]);
-							line.join();
+							segment.values[0] = pos.x;
+							segment.values[1] = pos.y;
 						} else if (type == 'curve-end') {
-							seg.values[2] = pos.x;
-							seg.values[3] = pos.y;
-							line.MoveTo(seg.values[2], seg.values[3]);
-							line.LineTo(seg.values[4], seg.values[5]);
-							line.join();
+							segment.values[2] = pos.x;
+							segment.values[3] = pos.y;
 						} else  {
-							seg.values[4] = pos.x;
-							seg.values[5] = pos.y;
-
-							line.MoveTo(seg.values[2], seg.values[3]);
-							line.LineTo(seg.values[4], seg.values[5]);
-							line.join();
-
-							//TODO: 다음 시점의 line 을 이동해야한다
-							// TODO: 다음 시점이 curve 일 때만 이동한다
-
-							var next = parser.getSegments(index+1);
-
-							if (next.command == 'C') {
-								//showedSegmentList[index+1];
-							}
-
+							segment.values[4] = pos.x;
+							segment.values[5] = pos.y;
 						}
-
-
 					}
 
 					selectElement.setAttribute('cx', pos.x);
 					selectElement.setAttribute('cy', pos.y);
 
 				} else {
-					seg.values[0] = pos.x;
-					seg.values[1] = pos.y;
+					segment.values[0] = pos.x;
+					segment.values[1] = pos.y;
 
 					selectElement.setAttribute('cx', pos.x);
 					selectElement.setAttribute('cy', pos.y);
 				}
 
-				parser.update()
+				parser.update();
+				this.showSegmentLine(parser.getSegments());
 
 			}
 		}
@@ -162,49 +143,26 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 			return canvas.svg.circle(_.extend({
 				className : 'segment',
 				fill : 'white',
+				'fill-opacity' : 0.9,
 				stroke : 'blue',
 				r : 5
 			}, o || {}));
 		};
 
 
-		this.showSegment = function (s) {
+		this.showSegmentLine = function (s) {
 
-			// TODO: element.removeChildren()  이 필요하다.
-			seg.children = [] ;
-			var clone = seg.element.cloneNode(false);
-			seg.element.parentNode.replaceChild(clone, seg.element);
-			seg.element = clone;
+			// TODO: element.removeChildren()  이 필요하다
+			segPath.children = [] ;
+			var clone = segPath.element.cloneNode(false);
+			segPath.element.parentNode.replaceChild(clone, segPath.element);
+			segPath.element = clone;
 
 			 s = s || [] ;
-			showedSegmentList = [];
 
 			for(var i = 0, len = s.length ; i < len; i++) {
 				var segment = s[i];
-				if (segment.command == 'M') {
-					var circle = this.createSegment({
-						index : i,
-						stroke : 'red',
-						cx : segment.values[0],
-						cy : segment.values[1]
-					});
-
-					seg.append(circle);
-					seg.element.appendChild(circle.element);
-
-					showedSegmentList[i] = [circle];
-				} else if (segment.command == 'L') {
-					var circle = this.createSegment({
-						index : i,
-						stroke : 'blue',
-						cx : segment.values[0],
-						cy : segment.values[1]
-					});
-
-					seg.append(circle);
-					seg.element.appendChild(circle.element);
-					showedSegmentList[i] = [circle];
-				} else if (segment.command == 'S') {
+				if (segment.command == 'S') {
 
 					var line = canvas.svg.path({
 						stroke : 'blue',
@@ -216,37 +174,9 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 					line.LineTo(segment.values[2], segment.values[3]);
 					line.join();
 
-					seg.append(line);
-					seg.element.appendChild(line.element);
+					segPath.append(line);
+					segPath.element.appendChild(line.element);
 
-
-					var circle = this.createSegment({
-						index : i,
-						stroke : 'red',
-						type : 'curve',
-						cx : segment.values[0],
-						cy : segment.values[1]
-					});
-
-					circle.element.line = line;
-
-					seg.append(circle);
-					seg.element.appendChild(circle.element);
-
-					var circle2 = this.createSegment({
-						index : i,
-						stroke : 'blue',
-						type : 'pointer',
-						cx : segment.values[2],
-						cy : segment.values[3]
-					});
-
-					circle2.element.line = line;
-
-					seg.append(circle2);
-					seg.element.appendChild(circle2.element);
-
-					showedSegmentList[i] = [circle, circle2, line];
 
 				} else if (segment.command == 'C') {
 
@@ -260,8 +190,8 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 					line.LineTo(segment.values[4], segment.values[5]);
 					line.join();
 
-					seg.append(line);
-					seg.element.appendChild(line.element);
+					segPath.append(line);
+					segPath.element.appendChild(line.element);
 
 					var line2 = canvas.svg.path({
 						stroke : 'blue',
@@ -275,8 +205,51 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 					line2.LineTo(segment.values[0], segment.values[1]);
 					line2.join();
 
-					seg.append(line2);
-					seg.element.appendChild(line2.element);
+					segPath.append(line2);
+					segPath.element.appendChild(line2.element);
+
+				}
+			}
+
+		}
+
+
+		this.showSegment = function (s) {
+
+			this.showSegmentLine(s);
+
+			// TODO: element.removeChildren()  이 필요하다.
+			seg.children = [] ;
+			var clone = seg.element.cloneNode(false);
+			seg.element.parentNode.replaceChild(clone, seg.element);
+			seg.element = clone;
+
+			s = s || [] ;
+			for(var i = 0, len = s.length ; i < len; i++) {
+				var segment = s[i];
+				if (segment.command == 'M') {
+					var circle = this.createSegment({
+						index : i,
+						stroke : 'red',
+						cx : segment.values[0],
+						cy : segment.values[1]
+					});
+
+					seg.append(circle);
+					seg.element.appendChild(circle.element);
+
+				} else if (segment.command == 'L') {
+					var circle = this.createSegment({
+						index : i,
+						stroke : 'blue',
+						cx : segment.values[0],
+						cy : segment.values[1]
+					});
+
+					seg.append(circle);
+					seg.element.appendChild(circle.element);
+
+				} else if (segment.command == 'S') {
 
 					var circle = this.createSegment({
 						index : i,
@@ -286,7 +259,29 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 						cy : segment.values[1]
 					});
 
-					circle.element.line = line2;
+					seg.append(circle);
+					seg.element.appendChild(circle.element);
+
+					var circle2 = this.createSegment({
+						index : i,
+						stroke : 'blue',
+						type : 'pointer',
+						cx : segment.values[2],
+						cy : segment.values[3]
+					});
+
+					seg.append(circle2);
+					seg.element.appendChild(circle2.element);
+
+				} else if (segment.command == 'C') {
+
+					var circle = this.createSegment({
+						index : i,
+						stroke : 'red',
+						type : 'curve',
+						cx : segment.values[0],
+						cy : segment.values[1]
+					});
 
 					seg.append(circle);
 					seg.element.appendChild(circle.element);
@@ -298,7 +293,6 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 						cx : segment.values[2],
 						cy : segment.values[3]
 					});
-					circle2.element.line = line;
 
 					seg.append(circle2);
 					seg.element.appendChild(circle2.element);
@@ -311,17 +305,14 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 						cy : segment.values[5]
 					});
 
-					circle3.element.line = line;
-					circle3.element.line2 = line2;
-
 					seg.append(circle3);
 					seg.element.appendChild(circle3.element);
 
-					showedSegmentList[i] = [circle, circle2, circle3, line, line2];
 				}
 			}
 
 		}
+
 
     };
 

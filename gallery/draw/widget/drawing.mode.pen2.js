@@ -98,7 +98,8 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 
 			realPath = this.addGuidePath({
 				stroke : 'black',
-				'stroke-width' : 3
+				'stroke-width' : 3,
+				'fill-opacity' : 0
 			});
 
 			currentDragPath = this.addGuidePath({
@@ -229,7 +230,9 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 				fill : 'transparent',
 				stroke : 'blue',
 				'stroke-width' : 1
-			}, obj || {}));
+			}, obj || {})).css({
+				'pointer-events': 'visibleStroke'
+			});
 
 			this.addToPen(path);
 
