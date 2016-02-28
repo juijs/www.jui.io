@@ -16,9 +16,9 @@ chart("#chart", {
     },
     brush : {
         type : "donut",
-        showText : true,
+        showText : "inner",
         format : function(k, v) {
-            return names[k] + ": " + v;
+            return v + "%";
         }
     },
     widget : [{

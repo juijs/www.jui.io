@@ -16,7 +16,7 @@ chart("#chart", {
     },
     brush : {
         type : "donut",
-        showText : true,
+        showText : "outer",
         active : "ie",
         activeEvent : "click",
         format : function(k, v) {

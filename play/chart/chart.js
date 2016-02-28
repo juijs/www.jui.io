@@ -23,8 +23,8 @@ var charts = [
     { type: "topology", title : "Topology Map" },
     { type: "bar", title : "Bar Chart" },
     { type: "column", title : "Column Chart" },
-    { type: "pie", title : "Pie Chart" },
-    { type: "donut", title : "Donut Chart" },
+    { type: "pie", title : "Pie & Donut Chart" },
+    //{ type: "donut", title : "Donut Chart" },
     { type: "bubble", title : "Bubble Chart" },
     { type: "scatter", title : "Scatter Chart" },
     { type: "area", title : "Area Chart" },
@@ -169,14 +169,16 @@ var code_list = [
     // pie
     { type: "pie", title : "Basic Pie", code : "pie.js" },
     { type: "pie", title : "Active Pie", code : "active_pie.js" },
-    { type: "pie", title : "Pie (3D)", code : "3d_pie.js" },
-    { type: "pie", title : "Overlap Pie", code : "mini_pie.js" },
+    { type: "pie", title : "Basic Donut", code : "donut.js" },
+    { type: "pie", title : "Active Donut", code : "active_donut.js" },
 
     // donut
-    { type: "donut", title : "Basic Donut", code : "donut.js" },
-    { type: "donut", title : "Active Donut", code : "active_donut.js" },
-    { type: "donut", title : "Donut (3D)", code : "3d_donut.js" },
-    { type: "donut", title : "Overlap Donut", code : "mini_donut.js" },
+    /*/
+    { type: "pie", title : "Pie (3D)", code : "3d_pie.js", hide: true  },
+    { type: "pie", title : "Overlap Pie", code : "mini_pie.js", hide: true },
+    { type: "donut", title : "Donut (3D)", code : "3d_donut.js", hide: true  },
+    { type: "donut", title : "Overlap Donut", code : "mini_donut.js", hide : true },
+    /**/
 
     // bubble
     { type: "bubble", title : "Basic Bubble", code : "bubble.js" },
