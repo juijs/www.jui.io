@@ -25,11 +25,10 @@ var filteredData = [],
 	];
 
 (function initData() {
-	for(var i = 0, len = data.length; i < len; i++) {
-		var d = data[i];
+	for(var i = 0, len = originData.length; i < len; i++) {
+		var d = originData[i];
 
 		d.date = new Date(d.date);
-		d.month = d.date.getMonth(); // pre-calculate month for better performance
 		d.close = +d.close; // coerce to number
 		d.open = +d.open;
 
@@ -54,11 +53,53 @@ var filteredData = [],
 	}
 })();
 
+function getPerformanceData(start, end) {
+	var data = (filteredData.length == 0) ? originData : filteredData,
+		result = [],
+		cache = {}
+
+	for(var i = start; i <= end; i++) {
+		var v = data[i],
+			y = v.date.getFullYear(),
+			p = cache[y];
+
+		if(!p) {
+			p = {
+				year: y,
+				count: 0,
+				absGain: 0,
+				fluctuation: 0,
+				sumIndex: 0,
+				avgIndex: 0,
+				percentageGain: 0,
+				fluctuationPercentage: 0
+			};
+		}
+
+		++p.count;
+		p.absGain += v.close - v.open;
+		p.fluctuation += Math.abs(v.close - v.open);
+		p.sumIndex += (v.open + v.close) / 2;
+		p.avgIndex = p.sumIndex / p.count;
+		p.percentageGain = p.avgIndex ? (p.absGain / p.avgIndex) * 100 : 0;
+		p.fluctuationPercentage = p.avgIndex ? (p.fluctuation / p.avgIndex) * 100 : 0;
+
+		cache[y] = p;
+	}
+
+	for(var key in cache) {
+		result.push(cache[key]);
+	}
+
+	return result;
+}
+
 function getLossAndGainData(start, end) {
-	var result = [{
-		loss: 0,
-		gain: 0
-	}];
+	var data = (filteredData.length == 0) ? originData : filteredData,
+		result = [{
+			loss: 0,
+			gain: 0
+		}];
 
 	for(var i = start; i <= end; i++) {
 		if(data[i].open > data[i].close) {
@@ -75,12 +116,13 @@ function getLossAndGainData(start, end) {
 }
 
 function getQuarterData(start, end) {
-	var result = [{
-		1: 0,
-		2: 0,
-		3: 0,
-		4: 0
-	}];
+	var data = (filteredData.length == 0) ? originData : filteredData,
+		result = [{
+			1: 0,
+			2: 0,
+			3: 0,
+			4: 0
+		}];
 
 	for(var i = start; i <= end; i++) {
 		result[0][data[i].quarter] += 1;
@@ -90,7 +132,8 @@ function getQuarterData(start, end) {
 }
 
 function getDayOfWeekData(start, end) {
-	var keys = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+	var data = (filteredData.length == 0) ? originData : filteredData,
+		keys = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
 		result = [];
 
 	for(var i = 0; i < keys.length; i++) {
@@ -112,7 +155,8 @@ function getDayOfWeekData(start, end) {
 }
 
 function getFluctuationData(start, end) {
-	var result = [],
+	var data = (filteredData.length == 0) ? originData : filteredData,
+		result = [],
 		cache = {};
 
 	for(var i = start; i <= end; i++) {
@@ -137,6 +181,7 @@ function getFluctuationData(start, end) {
 
 function getDailyTableData(start, end) {
 	var _ = jui.include("util.base"),
+		data = (filteredData.length == 0) ? originData : filteredData,
 		result = [];
 
 	for(var i = start; i <= end; i++) {
@@ -165,7 +210,8 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 				type : "range",
 				domain : [ -2000, 2000 ],
 				unit : 500,
-				line : true
+				line : "solid",
+				key : "absGain"
 			},
 			y : {
 				type : "range",
@@ -174,8 +220,12 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 				format : function(v) {
 					return v + "%";
 				},
-				line : true
+				line : "solid"
 			}
+		}],
+		brush : [{
+			type : "bubble",
+			target : "percentageGain"
 		}],
 		widget : [{
 			type : "title",
@@ -192,10 +242,14 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		style : {
 			titleFontSize : 11,
 			titleFontWeight : "bold"
-		}
+		},
+		render : false
 	});
 
 	var summaryChart = builder("#summary_info", {
+		padding : {
+			left : 0
+		},
 		height : 250,
 		axis : [{
 			area : {
@@ -204,12 +258,12 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		}, {
 			area : {
 				width : "20%",
-				x : "21%"
+				x : "18%"
 			}
 		}, {
 			area : {
 				width : "20%",
-				x : "42%"
+				x : "40%"
 			},
 			x : {
 				type : "range",
@@ -218,13 +272,13 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 				},
 				step : 1,
 				reverse : true,
-				line : true
+				line : "solid"
 			},
 			y : {
 				type : "block",
 				domain : "dayStr",
 				orient : "right",
-				line : true
+				line : "solid"
 			}
 		}, {
 			area : {
@@ -234,23 +288,23 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 			x : {
 				type : "range",
 				domain : [ -25, 25 ],
+				key : "percent",
 				step : 10,
-				line : true,
 				format : function(v) {
 					return v + "%";
 				}
 			},
 			y : {
 				type : "range",
-				domain : [ 0, 2000 ],
-				step : 4,
+				domain : [ 0, 2500 ],
+				step : 5,
 				orient : "right",
-				line : true
+				line : "solid"
 			}
 		}],
 		brush : [{
 			type : "pie",
-			showText : false,
+			showText : "inner",
 			activeEvent : "click",
 			format : function(k, v) {
 				var res = "";
@@ -263,7 +317,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 			axis : 0
 		}, {
 			type : "donut",
-			showText : false,
+			showText : "inner",
 			activeEvent : "click",
 			format : function(k, v) {
 				if(k == 1) return "Q1";
@@ -277,6 +331,10 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 			activeEvent : "click",
 			target : [ "value" ],
 			axis : 2
+		},  {
+			type : "column",
+			size : 5,
+			axis : 3
 		}],
 		widget : [{
 			type : "title",
@@ -302,11 +360,28 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 			orient : "bottom",
 			dy : 50,
 			axis : 3
+		}, {
+			type : "tooltip",
+			orient : "right",
+			brush : [ 0, 1, 2 ],
+			format : function(v, k) {
+				return v[k];
+			}
+		}, {
+			type : "cross",
+			xFormat : function(d) {
+				return Math.ceil(d) + "%";
+			},
+			yFormat : function(d) {
+				return Math.ceil(d);
+			},
+			axis : 3
 		}],
 		style : {
 			titleFontSize : 11,
 			titleFontWeight : "bold",
-			gridTickBorderSize : 0
+			gridTickBorderSize : 0,
+			gridActiveFontColor : "#333"
 		},
 		event : {
 			click: function(obj, e) {
@@ -332,11 +407,11 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		axis : [{
 			x : {
 				type : "date",
-				domain : [ data[0].date, data[data.length - 1].date ],
+				domain : [ originData[0].date, originData[originData.length - 1].date ],
 				interval : time.DAY * 365,
 				format : "yyyy",
 				key : "date",
-				line : true
+				line : "solid"
 			},
 			y : {
 				type : "range",
@@ -363,13 +438,13 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		}],
 		brush : [{
 			type : "area",
-			line : true,
+			line : "solid",
 			target : [ "avg" ],
 			colors : [ 2 ],
 			axis : 0
 		}, {
 			type : "area",
-			line : true,
+			line : "solid",
 			target : [ "total" ],
 			axis : 1
 		}],
@@ -385,7 +460,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		event : {
 			"zoomscroll.dragend": function(start, end) {
 				var domain = {
-					domain: [ data[start].date, data[end].date ]
+					domain: [ originData[start].date, originData[end].date ]
 				};
 
 				this.axis(0).set("x", domain);
@@ -409,26 +484,31 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 	});
 
 	// Initialize Data
-	volumeChart.axis(0).update(data);
-	volumeChart.axis(1).update(data);
+	volumeChart.axis(0).update(originData);
+	volumeChart.axis(1).update(originData);
 	volumeChart.render(true);
-	updateAll(0, data.length - 1);
+	updateAll(0, originData.length - 1);
 
 	// Updates for the Data Range
 	function updateAll(start, end) {
-		var lossAndGainData = getLossAndGainData(start, end),
+		var performanceData = getPerformanceData(start, end),
+			lossAndGainData = getLossAndGainData(start, end),
 			quarterData = getQuarterData(start, end),
-			dayOfWeekData = getDayOfWeekData(start, end);
+			dayOfWeekData = getDayOfWeekData(start, end),
+			fluctuationData = getFluctuationData(start, end),
+			dailyTableData = getDailyTableData(start, end);
+
+		performanceChart.axis(0).update(performanceData);
+		performanceChart.render();
 
 		summaryChart.axis(0).update(lossAndGainData);
 		summaryChart.axis(1).update(quarterData);
 		summaryChart.axis(2).update(dayOfWeekData);
+		summaryChart.axis(3).update(fluctuationData);
 		summaryChart.render();
 
-		stock_table.update(getDailyTableData(start, end));
+		stock_table.update(dailyTableData);
 	}
-
-	//getFluctuationData(startIndex, endIndex);
 });
 </script>
 </head>
