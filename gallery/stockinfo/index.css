@@ -5,3 +5,7 @@ body {
 .panel > .body {
     padding: 0 !important;
 }
+
+.panel > .xtable {
+    border-bottom: 1px solid #dcdcdc;
+}

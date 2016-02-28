@@ -21,7 +21,8 @@ var filteredData = [],
 	filters = [
 		{ gain: false, loss: false },
 		{ 1: false, 2: false, 3: false, 4: false },
-		{ day: null }
+		{ day: null },
+		{ start: 0, end: originData.length - 1 }
 	];
 
 (function initData() {
@@ -392,6 +393,8 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 				} else {
 					filter["day"] = obj.data.day;
 				}
+
+				updateFilteredData();
 			}
 		},
 		render : false
@@ -407,7 +410,10 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		axis : [{
 			x : {
 				type : "date",
-				domain : [ originData[0].date, originData[originData.length - 1].date ],
+				domain : [
+					originData[filters[3].start].date,
+					originData[filters[3].end].date
+				],
 				interval : time.DAY * 365,
 				format : "yyyy",
 				key : "date",
@@ -466,6 +472,11 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 				this.axis(0).set("x", domain);
 				this.axis(1).set("x", domain);
 
+				filters[3] = {
+					start: start,
+					end: end
+				};
+
 				updateAll(start, end);
 			}
 		},
@@ -483,31 +494,61 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		bufferCount: 20
 	});
 
+	update(originData);
+	updateSummary(0, originData.length - 1);
+	updateETC(0, originData.length - 1);
+
 	// Initialize Data
-	volumeChart.axis(0).update(originData);
-	volumeChart.axis(1).update(originData);
-	volumeChart.render(true);
-	updateAll(0, originData.length - 1);
+	function update(data) {
+		volumeChart.axis(0).update(data);
+		volumeChart.axis(1).update(data);
+		volumeChart.render(true);
+	}
 
 	// Updates for the Data Range
-	function updateAll(start, end) {
-		var performanceData = getPerformanceData(start, end),
-			lossAndGainData = getLossAndGainData(start, end),
+	function updateSummary(start, end) {
+		var lossAndGainData = getLossAndGainData(start, end),
 			quarterData = getQuarterData(start, end),
 			dayOfWeekData = getDayOfWeekData(start, end),
-			fluctuationData = getFluctuationData(start, end),
-			dailyTableData = getDailyTableData(start, end);
-
-		performanceChart.axis(0).update(performanceData);
-		performanceChart.render();
+			fluctuationData = getFluctuationData(start, end);
 
 		summaryChart.axis(0).update(lossAndGainData);
 		summaryChart.axis(1).update(quarterData);
 		summaryChart.axis(2).update(dayOfWeekData);
 		summaryChart.axis(3).update(fluctuationData);
 		summaryChart.render();
+	}
+
+	function updateETC(start, end) {
+		var performanceData = getPerformanceData(start, end),
+			dailyTableData = getDailyTableData(start, end);
+
+		performanceChart.axis(0).update(performanceData);
+		performanceChart.render();
 
 		stock_table.update(dailyTableData);
+	}
+
+	function updateFilteredData() {
+		filteredData = [];
+
+		for(var i = 0, len = originData.length; i < len; i++) {
+			var d = originData[i];
+
+			if (
+				((d.open > d.close) && filters[0].loss) ||
+				((d.open <= d.close) && filters[0].gain) ||
+				(d.quarter == 1 && filters[1][1]) ||
+				(d.quarter == 2 && filters[1][2]) ||
+				(d.quarter == 3 && filters[1][3]) ||
+				(d.quarter == 4 && filters[1][4])
+			) {
+				filteredData.push(d);
+			}
+		}
+
+		update(filteredData);
+		updateETC(0, filteredData.length - 1);
 	}
 });
 </script>
