@@ -1,0 +1,16 @@
+{
+  "name": "stockinfo",
+  "version": "1.0.0",
+  "title": "Nasdaq 100 Index",
+  "description": "Nasdaq 100 Index",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "weather", "dashboard", "korea"
+  ],
+  "author": "alvin",
+  "license": "MIT",
+  "height" : "1240px"
+}

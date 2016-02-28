@@ -1,4 +1,4 @@
-var data = [
+var originData = [
     {
         "date": "11/01/1985",
         "open": 115.48,
