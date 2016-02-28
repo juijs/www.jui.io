@@ -5,16 +5,18 @@
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
-<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" id="ui_theme" />
+<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/grid.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" />
 <script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
-<script type="text/javascript" src="../../lib/jui/js/chart.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
 <script type="text/javascript" src="data.js" ></script>
 <link rel="stylesheet" href="index.css" />
 
 <script>
-
 (function initData() {
 	for(var i = 0, len = data.length; i < len; i++) {
 		var d = data[i];
@@ -23,44 +25,293 @@
 		d.month = d.date.getMonth(); // pre-calculate month for better performance
 		d.close = +d.close; // coerce to number
 		d.open = +d.open;
+
+		var v = (d.open + d.close) / 2;
+		d.total = v;
+		d.avg = v / 2;
+
+		// Quarter
+		var month = d.date.getMonth();
+		if (month <= 2) {
+			d.quarter = 1;
+		} else if (month > 2 && month <= 5) {
+			d.quarter = 2;
+		} else if (month > 5 && month <= 8) {
+			d.quarter = 3;
+		} else {
+			d.quarter = 4;
+		}
+
+		// Day Of Week
+		d.day = d.date.getDay();
 	}
 })();
 
-function getVolumeData() {
-	var nd = [],
-		total = 0;
+function getLossAndGainData(start, end) {
+	var result = [{
+		loss: 0,
+		gain: 0
+	}];
 
-	for(var i = 0, len = data.length; i < len; i++) {
-		var d = data[i],
-			move = (d.open + d.close) / 2,
-			days = i + 1;
+	for(var i = start; i <= end; i++) {
+		if(data[i].open > data[i].close) {
+			result[0].loss += 1;
+		} else {
+			result[0].gain += 1;
+		}
+	}
 
-		total += move;
+	result[0].loss = Math.round(result[0].loss / (end - start) * 100);
+	result[0].gain = Math.round(result[0].gain / (end - start) * 100);
 
-		nd.push({
-			date: d.date,
-			days: days,
-			move: move,
-			avg: Math.round(total / days)
+	return result;
+}
+
+function getQuarterData(start, end) {
+	var result = [{
+		1: 0,
+		2: 0,
+		3: 0,
+		4: 0
+	}];
+
+	for(var i = start; i <= end; i++) {
+		result[0][data[i].quarter] += 1;
+	}
+
+	return result;
+}
+
+function getDayOfWeekData(start, end) {
+	var keys = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+		result = [];
+
+	for(var i = 0; i < keys.length; i++) {
+		result.push({
+			day: keys[i],
+			value: 0
 		});
 	}
 
-	return nd;
+	for(var i = start; i <= end; i++) {
+		result[data[i].day].value += 1;
+	}
+
+	result.shift();
+	result.pop();
+
+	return result;
 }
 
-jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
-	var volumeData = getVolumeData();
+function getFluctuationData(start, end) {
+	var result = [],
+		cache = {};
+
+	for(var i = start; i <= end; i++) {
+		var per = Math.round((data[i].close - data[i].open) / data[i].open * 100);
+
+		if(!cache[per]) {
+			cache[per] = 0;
+		}
+
+		cache[per] += 1;
+	}
+
+	for(var key in cache) {
+		result.push({
+			percent: parseInt(key),
+			count: cache[key]
+		});
+	}
+
+	return result;
+}
+
+function getDailyTableData(start, end) {
+	var _ = jui.include("util.base"),
+		result = [];
+
+	for(var i = start; i <= end; i++) {
+		var d = _.extend({
+			date: _.dateFormat(data[i].date, "yyyy-MM-dd"),
+			change: (data[i].close - data[i].open).toFixed(2)
+		}, data[i], true);
+
+		result.push(d);
+	}
+
+	return result;
+}
+
+jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function(_, time, builder, xtable) {
+	var startIndex = 0,
+		endIndex = data.length - 1;
+
+	var performanceChart = builder("#yearly_performance", {
+		height : 250,
+		padding : {
+			left : 65,
+			right : 50,
+			top : 25,
+			bottom : 40
+		},
+		axis : [{
+			x : {
+				type : "range",
+				domain : [ -2000, 2000 ],
+				unit : 500,
+				line : true
+			},
+			y : {
+				type : "range",
+				domain : [ -150, 150 ],
+				unit : 50,
+				format : function(v) {
+					return v + "%";
+				},
+				line : true
+			}
+		}],
+		widget : [{
+			type : "title",
+			text : "Index Gain (%)",
+			align : "start",
+			orient : "center",
+			dx : -75
+		}, {
+			type : "title",
+			text : "Index Gain",
+			orient : "bottom",
+			dy : 12
+		}],
+		style : {
+			titleFontSize : 11,
+			titleFontWeight : "bold"
+		}
+	});
+
+	var summaryChart = builder("#summary_info", {
+		height : 250,
+		axis : [{
+			area : {
+				width : "20%"
+			}
+		}, {
+			area : {
+				width : "20%",
+				x : "21%"
+			}
+		}, {
+			area : {
+				width : "20%",
+				x : "42%"
+			},
+			x : {
+				type : "range",
+				domain : "value",
+				step : 1,
+				reverse : true,
+				line : true
+			},
+			y : {
+				type : "block",
+				domain : "day",
+				orient : "right",
+				line : true
+			}
+		}, {
+			area : {
+				width : "32%",
+				x : "68%"
+			},
+			x : {
+				type : "range",
+				domain : [ -25, 25 ],
+				step : 10,
+				line : true,
+				format : function(v) {
+					return v + "%";
+				}
+			},
+			y : {
+				type : "range",
+				domain : [ 0, 2000 ],
+				step : 4,
+				orient : "right",
+				line : true
+			}
+		}],
+		brush : [{
+			type : "pie",
+			showText : false,
+			format : function(k, v) {
+				var res = "";
+
+				if(k == "loss") res = "Loss";
+				else res = "Gain";
+
+				return res + " (" + v + "%)";
+			},
+			axis : 0
+		}, {
+			type : "donut",
+			showText : false,
+			format : function(k, v) {
+				if(k == 1) return "Q1";
+				else if(k == 2) return "Q2";
+				else if(k == 3) return "Q3";
+				else if(k == 4) return "Q4";
+			},
+			axis : 1
+		},  {
+			type : "bar",
+			target : [ "value" ],
+			axis : 2
+		}],
+		widget : [{
+			type : "title",
+			text : "Days by Gain/Loss",
+			orient : "bottom",
+			dy : 50,
+			axis : 0
+		}, {
+			type : "title",
+			text : "Quarters",
+			orient : "bottom",
+			dy : 50,
+			axis : 1
+		}, {
+			type : "title",
+			text : "Day of Week",
+			orient : "bottom",
+			dy : 50,
+			axis : 2
+		}, {
+			type : "title",
+			text : "Days by Fluctuation",
+			orient : "bottom",
+			dy : 50,
+			axis : 3
+		}],
+		style : {
+			titleFontSize : 11,
+			titleFontWeight : "bold",
+			gridTickBorderSize : 0
+		},
+		render : false
+	});
 
 	var volumeChart = builder("#monthly_index", {
 		padding : {
+			top : 25,
 			bottom : 90
 		},
-		width : 1024,
+		width : "100%",
 		height : 300,
 		axis : [{
 			x : {
 				type : "date",
-				domain : [ volumeData[0].date, volumeData[volumeData.length - 1].date ],
+				domain : [ data[startIndex].date, data[endIndex].date ],
 				interval : time.DAY * 365,
 				format : "yyyy",
 				key : "date",
@@ -68,7 +319,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 			},
 			y : {
 				type : "range",
-				domain: [ 0, 2000 ],
+				domain: [ 0, 3000 ],
 				step : 4,
 				line : false,
 				color : 2
@@ -98,12 +349,12 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 		}, {
 			type : "area",
 			line : true,
-			target : [ "move" ],
+			target : [ "total" ],
 			axis : 1
 		}],
 		widget : [{
 			type : "zoomscroll",
-			key : "move",
+			key : "total",
 			dy : 30,
 			format : function(d, i) {
 				return time.format(d, "yyyy");
@@ -113,11 +364,14 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 		event : {
 			"zoomscroll.dragend": function(start, end) {
 				var domain = {
-					domain: [ volumeData[start].date, volumeData[end].date ]
+					domain: [ data[start].date, data[end].date ]
 				};
 
 				this.axis(0).set("x", domain);
 				this.axis(1).set("x", domain);
+
+				startIndex = start;
+				endIndex = end;
 			}
 		},
 		style : {
@@ -126,16 +380,100 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 		render : false
 	});
 
-	volumeChart.axis(0).update(volumeData);
-	volumeChart.axis(1).update(volumeData);
+	var stock_table = xtable("#stock_table", {
+		fields: [ "date", "open", "close", "change", "volume" ],
+		resize: true,
+		sort: true,
+		buffer: "scroll",
+		bufferCount: 20
+	});
+
+	volumeChart.axis(0).update(data);
+	volumeChart.axis(1).update(data);
 	volumeChart.render(true);
+
+	var lossAndGainData = getLossAndGainData(startIndex, endIndex);
+	summaryChart.axis(0).update(lossAndGainData);
+
+	var quarterData = getQuarterData(startIndex, endIndex);
+	summaryChart.axis(1).update(quarterData);
+
+	var dayOfWeekData = getDayOfWeekData(startIndex, endIndex);
+	summaryChart.axis(2).update(dayOfWeekData);
+
+	summaryChart.render();
+
+	stock_table.update(getDailyTableData(startIndex, endIndex));
+
+	//getFluctuationData(startIndex, endIndex);
 });
 </script>
 </head>
 <body class="jui">
 
 <div class="row">
-    <div id="monthly_index"></div>
+	<div class="panel">
+		<div class="head">
+			<strong>Yearly Performance</strong>
+		</div>
+		<div class="body">
+			<div id="yearly_performance"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel">
+		<div class="head">
+			<strong>Summary Information</strong>
+		</div>
+		<div class="body">
+			<div id="summary_info"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel">
+		<div class="head">
+			<strong>Monthly Index Abs Move & Volume Chart</strong>
+		</div>
+		<div class="body">
+			<div id="monthly_index"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel">
+		<div class="head">
+			<strong>Daily Stock Table</strong>
+		</div>
+		<div id="stock_table" class="xtable">
+			<table class="table classic">
+				<thead>
+				<tr>
+					<th>Date</th>
+					<th>Open</th>
+					<th>Close</th>
+					<th>Change</th>
+					<th>Volume</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<script data-jui="#stock_table" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= date !></td>
+				<td><!= open !></td>
+				<td><!= close !></td>
+				<td><!= change !></td>
+				<td><!= volume !></td>
+			</tr>
+		</script>
+	</div>
 </div>
 
 </body>
