@@ -182,6 +182,7 @@ var code_list = [
 
     // bubble
     { type: "bubble", title : "Basic Bubble", code : "bubble.js" },
+    { type: "bubble", title : "Active Bubble", code : "active_bubble.js" },
     { type: "bubble", title : "Range Bubble", code : "range_bubble.js" },
 
     // scatter

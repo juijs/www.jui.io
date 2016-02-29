@@ -24,16 +24,16 @@ chart("#chart", {
         type : "bubble",
         min : 30,
         max : 50,
+        active : 1,
+        activeEvent : "click",
         scaleKey : "profit",
         target : "sales",
         showText : true,
-        format : function(d) {
-            return d.profit;
-        },
-        colors : function(d) {
-            if(d.profit > 30) return 2;
-            else if(d.profit > 20) return 1;
-            return 0;
+        colors : [ "#ff0000" ]
+    },
+    event : {
+        click : function(data) {
+            console.log(data);
         }
     }
 });
