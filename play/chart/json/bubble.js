@@ -24,8 +24,8 @@ chart("#chart", {
         type : "bubble",
         min : 30,
         max : 50,
-        scaleKey : "profit",
         target : "sales",
+        scaleKey : "profit",
         showText : true,
         format : function(d) {
             return d.profit;
