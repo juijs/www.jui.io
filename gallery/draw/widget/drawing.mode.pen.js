@@ -1,6 +1,6 @@
 jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
     var DrawingModePen = function (canvas) {
-		
+
 		var parser = new PathParser();
 		var currentPen = [];
 		var events;
@@ -9,18 +9,18 @@ jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
 
 		}
 
-		// mode 가 변경될 때 초기 상태로 되돌린다. 
+		// mode 가 변경될 때 초기 상태로 되돌린다.
 		this.initMode = function () {
-			var self = this; 
-			// 비활성화 일 때 초기 상태로 되돌림 
+			var self = this;
+			// 비활성화 일 때 초기 상태로 되돌림
 			if (this.disabled)
 			{
 				if (events) {
 					canvas.offMouseEvent(events);
 				}
 
-			} 
-			// 활성화 모드 
+			}
+			// 활성화 모드
 			else {
 				events = canvas.setMouseEvent( function click(e) { self.dragStart(e); },  function move(e) { self.drag(e); },  function up(e) { self.dragEnd(e); } );
 			}
@@ -40,6 +40,8 @@ jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
 					stroke: 'black',
 					'stroke-width': 3,
 					'stroke-linejoin': 'round'
+				}).css({
+					'pointer-events': 'visibleStroke'
 				});
 				canvas.appendToCanvas(currentPath);
 		}
@@ -72,7 +74,7 @@ jui.define("util.mode.pen", ["util.parser.path"], function (PathParser) {
 			currentPath = null;
 			currentPen = [];
 		}
-  
+
     };
 
 

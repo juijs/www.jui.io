@@ -4,8 +4,8 @@
     "title" : "Drawing Tool",
     "description": "SVG Drawing Tool for SVG",
     "main": "index.html",
-    "keywords": [ "draw", "line" ],
+    "keywords": [ "draw", "line", "path", "tool" ],
     "author": "easylogic",
     "license": "MIT",
-    "height" : "500px"
+    "height" : "1000px"
 }
