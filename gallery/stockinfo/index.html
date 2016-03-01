@@ -14,6 +14,7 @@
 <script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
 <script type="text/javascript" src="data.js" ></script>
+<script type="text/javascript" src="util.js" ></script>
 <link rel="stylesheet" href="index.css" />
 
 <script>
@@ -46,143 +47,6 @@
 	}
 })();
 
-function getPerformanceData(start, end) {
-	var result = [],
-		cache = {}
-
-	for(var i = start; i <= end; i++) {
-		var v = data[i],
-			y = v.date.getFullYear(),
-			p = cache[y];
-
-		if(!p) {
-			p = {
-				year: y,
-				count: 0,
-				absGain: 0,
-				fluctuation: 0,
-				sumIndex: 0,
-				avgIndex: 0,
-				percentageGain: 0,
-				fluctuationPercentage: 0
-			};
-		}
-
-		++p.count;
-		p.absGain += v.close - v.open;
-		p.fluctuation += Math.abs(v.close - v.open);
-		p.sumIndex += (v.open + v.close) / 2;
-		p.avgIndex = p.sumIndex / p.count;
-		p.percentageGain = p.avgIndex ? (p.absGain / p.avgIndex) * 100 : 0;
-		p.fluctuationPercentage = p.avgIndex ? (p.fluctuation / p.avgIndex) * 100 : 0;
-
-		cache[y] = p;
-	}
-
-	for(var key in cache) {
-		result.push(cache[key]);
-	}
-
-	return result;
-}
-
-function getLossAndGainData(start, end) {
-	var result = [{
-			loss: 0,
-			gain: 0
-		}];
-
-	for(var i = start; i <= end; i++) {
-		if(data[i].open > data[i].close) {
-			result[0].loss += 1;
-		} else {
-			result[0].gain += 1;
-		}
-	}
-
-	result[0].loss = Math.round(result[0].loss / (end - start) * 100);
-	result[0].gain = Math.round(result[0].gain / (end - start) * 100);
-
-	return result;
-}
-
-function getQuarterData(start, end) {
-	var result = [{
-			1: 0,
-			2: 0,
-			3: 0,
-			4: 0
-		}];
-
-	for(var i = start; i <= end; i++) {
-		result[0][data[i].quarter] += 1;
-	}
-
-	return result;
-}
-
-function getDayOfWeekData(start, end) {
-	var keys = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
-		result = [];
-
-	for(var i = 0; i < keys.length; i++) {
-		result.push({
-			day: i,
-			dayStr: keys[i],
-			value: 0
-		});
-	}
-
-	for(var i = start; i <= end; i++) {
-		result[data[i].day].value += 1;
-	}
-
-	result.shift();
-	result.pop();
-
-	return result;
-}
-
-function getFluctuationData(start, end) {
-	var result = [],
-		cache = {};
-
-	for(var i = start; i <= end; i++) {
-		var per = Math.round((data[i].close - data[i].open) / data[i].open * 100);
-
-		if(!cache[per]) {
-			cache[per] = 0;
-		}
-
-		cache[per] += 1;
-	}
-
-	for(var key in cache) {
-		result.push({
-			percent: parseInt(key),
-			count: cache[key]
-		});
-	}
-
-	return result;
-}
-
-function getDailyTableData(start, end) {
-	var _ = jui.include("util.base"),
-		result = [];
-
-	for(var i = start; i <= end; i++) {
-		var d = _.extend({
-			date: _.dateFormat(data[i].date, "yyyy-MM-dd"),
-			change: (data[i].close - data[i].open).toFixed(2)
-		}, data[i], true);
-
-		result.push(d);
-	}
-
-	return result;
-}
-
 jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function(_, time, builder, xtable) {
 	var performanceChart = builder("#yearly_performance", {
 		height : 250,
@@ -198,7 +62,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 				domain : [ -2000, 2000 ],
 				unit : 500,
 				line : "solid",
-				key : "percentageGain"
+				key : "absGain"
 			},
 			y : {
 				type : "range",
@@ -212,7 +76,15 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		}],
 		brush : [{
 			type : "bubble",
+			min : 15,
+			max : 50,
 			target : "percentageGain",
+			scaleKey : "fluctuationPercentage",
+			showText : true,
+			activeEvent : "click",
+			format : function(d) {
+				return d.year;
+			},
 			colors : function(d) {
 				var gain = d.absGain;
 
@@ -239,7 +111,35 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		}],
 		style : {
 			titleFontSize : 11,
-			titleFontWeight : "bold"
+			titleFontWeight : "bold",
+			gridActiveFontColor : "#333",
+			gridActiveBorderColor : "#ebebeb"
+		},
+		event : {
+			click : function(obj, e) {
+				var indexes = getYearIndexes(obj.data.year);
+
+				updateSummaryChart(indexes.start, indexes.end);
+				updateVolumeChart(indexes.start, indexes.end);
+				updateDailyTable(indexes.start, indexes.end);
+			},
+			mouseover : function(obj, e) {
+				var $values = $("#tooltip").find(".value");
+
+				$("#tooltip").css({
+					left: e.pageX - 115,
+					top: e.pageY - 110
+				}).show()
+
+				$("#tooltip").find(".head").html(obj.data.year);
+
+				$($values[0]).html(Math.ceil(obj.data.fluctuation));
+				$($values[2]).html(Math.ceil(obj.data.fluctuationPercentage));
+				$($values[1]).html(Math.ceil(obj.data.count));
+			},
+			mouseout : function() {
+				$("#tooltip").hide();
+			}
 		},
 		render : false
 	});
@@ -406,9 +306,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 				step : 4,
 				line : false,
 				color : 2
-			},
-			start : 2000,
-			end : 3000
+			}
 		}, {
 			extend : 0,
 			x : {
@@ -446,15 +344,10 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		}],
 		event : {
 			"zoomscroll.dragend": function(start, end) {
-				var domain = {
-					domain: [ data[start].date, data[end].date ]
-				};
-
-				this.axis(0).set("x", domain);
-				this.axis(1).set("x", domain);
-
-				updateSummary(start, end);
-				updateETC(start, end);
+				updatePerformanceChart(start, end);
+				updateSummaryChart(start, end);
+				updateVolumeChart(start, end);
+				updateDailyTable(start, end);
 			}
 		},
 		style : {
@@ -471,19 +364,24 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		bufferCount: 20
 	});
 
-	update(data, true);
-	updateSummary(0, data.length - 1);
-	updateETC(0, data.length - 1);
+	updatePerformanceChart();
+	updateSummaryChart();
+	updateVolumeChart();
+	updateDailyTable();
 
-	// Initialize Data
-	function update(data, isAll) {
-		volumeChart.axis(0).update(data);
-		volumeChart.axis(1).update(data);
-		volumeChart.render(isAll);
+	function updatePerformanceChart(start, end) {
+		start = start || 0;
+		end = end || data.length - 1;
+
+		var performanceData = getPerformanceData(start, end);
+		performanceChart.axis(0).update(performanceData);
+		performanceChart.render();
 	}
 
-	// Updates for the Data Range
-	function updateSummary(start, end) {
+	function updateSummaryChart(start, end) {
+		start = start || 0;
+		end = end || data.length - 1;
+
 		var lossAndGainData = getLossAndGainData(start, end),
 			quarterData = getQuarterData(start, end),
 			dayOfWeekData = getDayOfWeekData(start, end),
@@ -496,13 +394,27 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		summaryChart.render();
 	}
 
-	function updateETC(start, end) {
-		var performanceData = getPerformanceData(start, end),
-			dailyTableData = getDailyTableData(start, end);
+	function updateVolumeChart(start, end) {
+		if(arguments.length == 2) {
+			var domain = {
+				domain: [ data[start].date, data[end].date ]
+			};
 
-		performanceChart.axis(0).update(performanceData);
-		performanceChart.render();
+			volumeChart.axis(0).set("x", domain);
+			volumeChart.axis(1).set("x", domain);
+			volumeChart.render();
+		} else {
+			volumeChart.axis(0).update(data);
+			volumeChart.axis(1).update(data);
+			volumeChart.render(true);
+		}
+	}
 
+	function updateDailyTable(start, end) {
+		start = start || 0;
+		end = end || data.length - 1;
+
+		var dailyTableData = getDailyTableData(start, end);
 		stock_table.update(dailyTableData);
 	}
 });
@@ -572,6 +484,26 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 				<td><!= volume !></td>
 			</tr>
 		</script>
+	</div>
+</div>
+
+<div id="tooltip" class="popover top">
+	<div class="head"></div>
+	<div class="body">
+		<div class="message">
+			<div class="row">
+				<div class="col col-6"><strong>Fluctuation</strong></div>
+				<div class="col col-6 value"></div>
+			</div>
+			<div class="row">
+				<div class="col col-6"><strong>Fluctuation (%)</strong></div>
+				<div class="col col-6 value"></div>
+			</div>
+			<div class="row">
+				<div class="col col-6"><strong>Count</strong></div>
+				<div class="col col-6 value"></div>
+			</div>
+		</div>
 	</div>
 </div>
 

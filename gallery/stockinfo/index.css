@@ -9,3 +9,12 @@ body {
 .panel > .xtable {
     border-bottom: 1px solid #dcdcdc;
 }
+
+#tooltip {
+    position: absolute;
+    width: 220px;
+}
+
+#tooltip .value {
+    text-align: right;
+}
