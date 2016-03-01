@@ -261,8 +261,8 @@ function initAnimation() {
 	setInterval(prev, interval);
 }
 
-function changeLanguage(from, to) {
-	location.href = location.href.split("/" + from + "/").join("/" + to + "/");
+function changeLanguage(lang) {
+	location.href = "/?lang=" + lang;
 }
 
 jui.ready([ "ui.modal", "ui.dropdown" ], function(modal, dropdown) {
@@ -286,7 +286,7 @@ jui.ready([ "ui.modal", "ui.dropdown" ], function(modal, dropdown) {
 		color: "black"
 	});
 
-	initHashEvent();
+	//initHashEvent();
 	initAnimation();
 	checkIeVersion();
 

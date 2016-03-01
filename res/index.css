@@ -457,7 +457,6 @@ nav.about {
     height: 524px;
     border-bottom-width: 0px !important;
     background-color: #2b3340 !important;
-    display: none;
 }
 
 nav.sub {
@@ -529,9 +528,11 @@ nav.bg .info, nav.bg-sub .info {
 	bottom: 5px;
 }
 
+/*/
 article {
 	display: none;
 }
+/**/
 
 article iframe {
 	width: 100%;

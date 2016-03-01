@@ -1,16 +1,13 @@
 <?php
 
-
 function directoryList($path, $omit = '') {
     $arr = scandir($path);
 
     $list = array();
     foreach($arr as $file) {
-
         if ($file == '.' || $file == '..') continue;
 
         $real_path = $path.DIRECTORY_SEPARATOR.$file;
-
         $real_name = str_replace($omit, "", $real_path);
 
         if (is_dir($real_path)) {
@@ -29,7 +26,6 @@ function directoryList($path, $omit = '') {
         }
     }
 
-
     usort($list, function($a, $b) {
         if ($a['list'] && !$b['list']) {
             return -1;
@@ -43,6 +39,27 @@ function directoryList($path, $omit = '') {
     return $list;
 }
 
-echo json_encode(directoryList(".", ""));
-
+$list = directoryList("./gallery", "");
 ?>
+
+<link rel="stylesheet" href="gallery/list.css" />
+
+<div class="gallery-container">
+    <div class="gallery-list">
+        <?php for($i = 0; $i < sizeof($list); $i++) { ?>
+        <div class="item">
+            <div class="wrap">
+                <div class="body">
+                    <iframe border="0" frameborder="0" src="/gallery/<?php echo $list[$i]["info"]->name ?>/index.html" scrolling="no"></iframe>
+                    <a href="/?p=gallery.<?php echo $list[$i]["info"]->name ?>"></a>
+                </div>
+                <div class="footer" title="<?php echo $list[$i]["info"]->description ?>">
+                    <?php echo $list[$i]["info"]->title ?>
+                </div>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+</div>
+
+

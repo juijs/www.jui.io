@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "title": "Stock Information",
   "description": "Nasdaq 100 Index 1985/11/01-2012/06/29",
-  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

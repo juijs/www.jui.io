@@ -1,18 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include("../../tpl/header_play.html"); ?>
-    <title>JENNIFER UI: UI Play</title>
-
-    <meta name="title" content="JENNIFER UI: UI Play" />
-    <meta name="description" content="JUI provide all kinds of UI components that are used in web pages. Grid can handle millions of data, and can display the data in a hierarchical structure." />
-    <meta name="keywords" content="swich, progress bar, color picker, combo box, window, dropdown, tab, tree, paging, modal, auto complete, grid, tree grid, bigdata grid, free, MIT" />
-    <meta name="author" content="Alvin, Jayden and Yoha" />
-    <meta property="og:title" content="JENNIFER UI: UI Play" />
-    <meta property="og:description" content="JUI provide all kinds of UI components that are used in web pages. Grid can handle millions of data, and can display the data in a hierarchical structure." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://chart.jui.io/" />
-    <meta property="og:image" content="http://jui.io/res/img/jui_info_4.jpg" />
+    <?php include("../header_play.html"); ?>
+    <?php include("metadata.html"); ?>
 
     <link rel="stylesheet" href="../chart/chart.css">
     <link rel="stylesheet" href="../chart/responsive.css">
@@ -91,7 +81,7 @@
 
 <link id="jui_theme_ui" rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
 <link id="jui_theme_grid" rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" />
-<?php include("../../tpl/footer_play.html"); ?>
+<?php include("../footer_play.html"); ?>
 
 </body>
 </html>

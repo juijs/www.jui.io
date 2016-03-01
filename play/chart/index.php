@@ -1,18 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include("../../tpl/header_play.html"); ?>
-    <title>JENNIFER UI: Chart Play</title>
-
-    <meta name="title" content="JENNIFER UI: Chart Play" />
-    <meta name="description" content="SVG-based JUI chart that can be used in the browser and Node.js. Support many types of charts. (Dashboard, Map, Topology, Full 3D)" />
-    <meta name="keywords" content="realtime chart, 3d chart, timeline chart, dashboard chart, svg chart, free chart, MIT" />
-    <meta name="author" content="Alvin, Jayden and Yoha" />
-    <meta property="og:title" content="JENNIFER UI: Chart Play" />
-    <meta property="og:description" content="SVG-based JUI chart that can be used in the browser and Node.js. Support many types of charts. (Dashboard, Map, Topology, Full 3D)" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://chart.jui.io/" />
-    <meta property="og:image" content="http://jui.io/res/img/jui_info_4.jpg" />
+    <?php include("../header_play.html"); ?>
+    <?php include("metadata.html"); ?>
 
     <link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
     <link rel="stylesheet" href="chart.css">
@@ -166,7 +156,7 @@
 </tr>
 </script>
 
-<?php include("../../tpl/footer_play.html"); ?>
+<?php include("../footer_play.html"); ?>
 
 </body>
 </html>

@@ -12,8 +12,8 @@
 <script src="/lib/jui/js/grid.min.js"></script>
 <script src="/lib/jui/js/chart.min.js"></script>
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-<link href="index.css" rel="stylesheet" type="text/css" />
-<link id="index_theme" href="index-jennifer.css" rel="stylesheet" type="text/css" />
+<link href="/gallery/admintool/index.css" rel="stylesheet" type="text/css" />
+<link id="index_theme" href="/gallery/admintool/index-jennifer.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="jui">
 
@@ -617,7 +617,7 @@ chart_list[chart_list.length] = chart("#bar_gauge_sample_chart_2", {
 function changeTheme(theme) {
   $("#ui_theme").attr("href", "/lib/jui/css/ui-" + theme + ".min.css");
   $("#grid_theme").attr("href", "/lib/jui/css/grid-" + theme + ".min.css");
-  $("#index_theme").attr("href", "index-" + theme + ".css");
+  $("#index_theme").attr("href", "/gallery/admintool/index-" + theme + ".css");
 
   for(var i = 0, len = chart_list.length; i < len; i++) {
 
