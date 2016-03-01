@@ -5,26 +5,26 @@
 			The JUI library can be used only in markup where a jui class is configured and <strong>&lt;!DOCTYPE HTML&gt;</strong> is declared in the uppermost part of the document.
 
 			<pre><code class="language-markup">&lt;body class=&quot;jui&quot;&gt;
-		...
-	&lt;/body&gt;</code></pre>
+	...
+&lt;/body&gt;</code></pre>
 		</p>
 		<p class="br">
 			Use a component module inside of the <strong>ready</strong> method callback.
 
 			<pre><code class="language-javascript">jui.ready([ "ui.combo", "grid.table" ], function(combo, table) {
-		var combo = combo(selector, options),
-			table = table(selector, options);
+	var combo = combo(selector, options),
+		table = table(selector, options);
 
-		//...
-	});</code></pre>
+	//...
+});</code></pre>
 		</p>
 		<p>
 			A method for creating a component object dynamically, even outside of the callback of the <strong>ready</strong> method. OHowever, the <strong>create</strong> method can only be used once the callback of the <strong>ready</strong> method is complete.
 
 	<pre><code class="language-javascript">var combo = jui.create(&quot;ui.combo&quot;, selector, options),
-		table = jui.create(&quot;grid.table&quot;, selector, options);
+	table = jui.create(&quot;grid.table&quot;, selector, options);
 
-	//...</code></pre>
+//...</code></pre>
 		</p>
 	</section>
 
@@ -35,14 +35,14 @@
 
 
 	<pre><code class="language-markup">&lt;span class=&quot;tooltip&quot; title=&quot;Tooltip Message&quot;&gt;Tooltip 1&lt;/span&gt;
-	&lt;span class=&quot;tooltip&quot; title=&quot;Tooltip Message&quot;&gt;Tooltip 2&lt;/span&gt;</code></pre>
+&lt;span class=&quot;tooltip&quot; title=&quot;Tooltip Message&quot;&gt;Tooltip 2&lt;/span&gt;</code></pre>
 
 			<pre><code class="language-javascript">jui.ready([ "ui.tooltip" ], function(tooltip) {
-		var tips = tooltip(&quot;.tooltip&quot;);
+	var tips = tooltip(&quot;.tooltip&quot;);
 
-		tips[0].show();
-		tips[1].show();
-	});</code></pre>
+	tips[0].show();
+	tips[1].show();
+});</code></pre>
 		</p>
 	</section>
 
@@ -52,56 +52,56 @@
 			JUI is a template-based UI library. To set a template, there are two methods, as follows.<br/> First, input the selector of the target table in the <strong>data-jui</strong> property of the template script tag, then configure the template type in the <strong>data-tpl</strong> property.
 
 	<pre><code class="language-markup">&lt;table id=&quot;table&quot; class=&quot;table table-classic&quot;&gt;
-		&lt;thead&gt;
-			&lt;tr&gt;
-				&lt;th&gt;Name&lt;/th&gt;
-				&lt;th&gt;Age&lt;/th&gt;
-				&lt;th&gt;Location&lt;/th&gt;
-			&lt;/tr&gt;
-		&lt;/thead&gt;
-		&lt;tbody&gt;&lt;/tbody&gt;
-	&lt;/table&gt;</code></pre>
-
-			<pre><code class="language-markup">&lt;script data-jui=&quot;#table&quot; data-tpl=&quot;row&quot; type=&quot;text/template&quot;&gt;
+	&lt;thead&gt;
 		&lt;tr&gt;
-			&lt;td&gt;&lt;!= name !&gt;&lt;/td&gt;
-			&lt;td&gt;&lt;!= age !&gt;&lt;/td&gt;
-			&lt;td&gt;&lt;!= location !&gt;&lt;/td&gt;
+			&lt;th&gt;Name&lt;/th&gt;
+			&lt;th&gt;Age&lt;/th&gt;
+			&lt;th&gt;Location&lt;/th&gt;
 		&lt;/tr&gt;
-	&lt;/script&gt;</code></pre>
+	&lt;/thead&gt;
+	&lt;tbody&gt;&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+		<pre><code class="language-markup">&lt;script data-jui=&quot;#table&quot; data-tpl=&quot;row&quot; type=&quot;text/template&quot;&gt;
+	&lt;tr&gt;
+		&lt;td&gt;&lt;!= name !&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;!= age !&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;!= location !&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/script&gt;</code></pre>
 
 			<pre><code class="language-javascript">jui.ready([ "grid.table" ], function(table) {
-		var table = table(&quot;#table&quot;);
+	var table = table(&quot;#table&quot;);
 
-		table.update([
-			{ name: &quot;Hong&quot;, age: 29, location: &quot;Ilsan&quot; },
-			{ name: &quot;Jung&quot;, age: 25, location: &quot;Dangsan&quot; }
-		]);
-	});</code></pre>
+	table.update([
+		{ name: &quot;Hong&quot;, age: 29, location: &quot;Ilsan&quot; },
+		{ name: &quot;Jung&quot;, age: 25, location: &quot;Dangsan&quot; }
+	]);
+});</code></pre>
 
 			<p class="br">
 			As shown above, the method of adding as a tpl option when creating a table object after getting the content of an applicable template script tag is also provided. Configuring a template using this method minimizes code redundancy as the template can be commonly used in multiple table objects.
 
 			<pre><code class="language-markup">&lt;script id=&quot;tpl_table&quot; type=&quot;text/template&quot;&gt;
-		&lt;tr&gt;
-			&lt;td&gt;&lt;!= name !&gt;&lt;/td&gt;
-			&lt;td&gt;&lt;!= age !&gt;&lt;/td&gt;
-			&lt;td&gt;&lt;!= location !&gt;&lt;/td&gt;
-		&lt;/tr&gt;
-	&lt;/script&gt;</code></pre>
+	&lt;tr&gt;
+		&lt;td&gt;&lt;!= name !&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;!= age !&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;!= location !&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/script&gt;</code></pre>
 
 			<pre><code class="language-javascript">jui.ready([ "grid.table" ], function(table) {
-		var table = table(&quot;#table&quot;, {
-			tpl: {
-				row: $(&quot;#tpl_table&quot;).html();
-			}
-		});
+	var table = table(&quot;#table&quot;, {
+		tpl: {
+			row: $(&quot;#tpl_table&quot;).html();
+		}
+	});
 
-		table.update([
-			{ name: &quot;Hong&quot;, age: 29, location: &quot;Ilsan&quot; },
-			{ name: &quot;Jung&quot;, age: 25, location: &quot;Dangsan&quot; }
-		]);
-	});</code></pre>
+	table.update([
+		{ name: &quot;Hong&quot;, age: 29, location: &quot;Ilsan&quot; },
+		{ name: &quot;Jung&quot;, age: 25, location: &quot;Dangsan&quot; }
+	]);
+});</code></pre>
 			</p>
 
 			<p class="br">
@@ -117,25 +117,25 @@
 			And a module object is loaded through the callback function can be the last in the order.
 
 			<pre><code class="language-javascript">jui.defineUI(&quot;ui.test&quot;, [ &quot;util.base&quot; ], function(_) {
-		var UI = function() {
-			this.init = function() {
-				// initially implemented part
-			}
-
-			this.func1 = function(val) {
-				// open method 1
-			}
+	var UI = function() {
+		this.init = function() {
+			// initially implemented part
 		}
 
-		UI.setup = function() {
-			return { // default UI option settings
-				option1: 1000,
-				option2: true
-			}
+		this.func1 = function(val) {
+			// open method 1
 		}
+	}
 
-		return UI;
-	});</code></pre>
+	UI.setup = function() {
+		return { // default UI option settings
+			option1: 1000,
+			option2: true
+		}
+	}
+
+	return UI;
+});</code></pre>
 		</p>
 
 		<p class="br">

@@ -7,38 +7,38 @@
             그리고 테마 파일은 다르게 사용할 수 있으며, 테마를 쉽게 만들 수 있는 JUI 스토어 서비스를 제공합니다. (<a href="http://store.jui.io" target="_blank">Link</a>)
 
             <pre><code class="language-markup">&lt;!-- Basic style components --&gt;
-    &lt;link rel="stylesheet" href="/jui/dist/ui.min.css" />
-    &lt;link rel="stylesheet" href="/jui/dist/ui-jennifer.min.css" />
+&lt;link rel="stylesheet" href="/jui/dist/ui.min.css" />
+&lt;link rel="stylesheet" href="/jui/dist/ui-jennifer.min.css" />
 
-    &lt;!-- Grid style components --&gt;
-    &lt;link rel="stylesheet" href="/jui-grid/dist/grid.min.css" />
-    &lt;link rel="stylesheet" href="/jui-grid/dist/grid-jennifer.min.css" /></code></pre>
+&lt;!-- Grid style components --&gt;
+&lt;link rel="stylesheet" href="/jui-grid/dist/grid.min.css" />
+&lt;link rel="stylesheet" href="/jui-grid/dist/grid-jennifer.min.css" /></code></pre>
         </p>
         <p>
             <strong>jui</strong> 클래스가 설정되어 있는 마크업의 하위에서만 사용할 수 있습니다.
             <pre><code class="language-markup">&lt;body class="jui">
-        ...
-    &lt;/body></code></pre>
+    ...
+&lt;/body></code></pre>
         </p>
 
         <p class="br">
             차트를 제외한 모든 컴포넌트들은 <strong>jQuery 1.8</strong> 이상에서만 동작하므로 해당 라이브러리를 먼저 로드해야 합니다.<br/>
             그리고 이번 JUI 코어와 유틸리티가 별도의 프로젝트로 분리되었기 때문에 별도로 로드해야 합니다.
             <pre><code class="language-markup">&lt;!-- Required script files -->
-    &lt;script src="jquery.min.js">&lt;/script>
-    &lt;script src="/jui-core/dist/core.min.js">&lt;/script>
+&lt;script src="jquery.min.js">&lt;/script>
+&lt;script src="/jui-core/dist/core.min.js">&lt;/script>
 
-    &lt;!-- Basic script components -->
-    &lt;script src="/jui/dist/ui.min.js">&lt;/script>
+&lt;!-- Basic script components -->
+&lt;script src="/jui/dist/ui.min.js">&lt;/script>
 
-    &lt;!-- Grid script components -->
-    &lt;script src="/jui-grid/dist/grid.min.js">&lt;/script></code></pre>
+&lt;!-- Grid script components -->
+&lt;script src="/jui-grid/dist/grid.min.js">&lt;/script></code></pre>
         </p>
 
         <p class="br">
             아래는 차트를 사용하기 위해 로드해야할 스크립트 파일입니다.
             <pre><code class="language-markup">&lt;script src="/jui-core/dist/core.min.js">&lt;/script>
-    &lt;script src="/jui-chart/dist/chart.min.js">&lt;/script></code></pre>
+&lt;script src="/jui-chart/dist/chart.min.js">&lt;/script></code></pre>
         </p>
     </section>
 
@@ -48,9 +48,9 @@
         <p>
             JUI 라이브러리는 <strong>npm</strong>이나 <strong>bower</strong>와 같은 패키지 매니저를 통해서도 설치할 수 있습니다.
             <pre><code class="language-javascript">npm install jui
-    npm install jui-core
-    npm install jui-grid
-    npm install jui-chart</code></pre>
+npm install jui-core
+npm install jui-grid
+npm install jui-chart</code></pre>
         </p>
     </section>
 
