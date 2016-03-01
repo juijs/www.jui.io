@@ -13,7 +13,7 @@
 
 <div class="header">
     <div class="logo">
-        <img src="../../res/img/play_logo.png" align="absmiddle" onclick="window.open('../../index.html', 'jui.site')" />
+        <img src="../../res/img/play_logo.png" align="absmiddle" onclick="window.open('/', 'jui.site')" />
     </div>
     <div class="toolbar">
         <span >
