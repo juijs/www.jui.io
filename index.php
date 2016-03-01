@@ -31,14 +31,16 @@
     <?php include("doc/header.html"); ?>
 
     <?php
-        if(startsWith(page(), "gallery.") == false) {
-            if(page() == "gallery") {
+        if(startsWith(page(), "gallery.") == true) {
+            include("gallery/view_metadata.php");
+        } else {
+            if(page() == null) {
+                include("doc/".$lang."/home_metadata.html");
+            } else if(page() == "gallery") {
                 include("gallery/list_metadata.html");
             } else {
-                include("doc/".$lang."/metadata.html");
+                include("doc/".$lang."/".page()."_metadata.html");
             }
-        } else {
-            include("gallery/view_metadata.php");
         }
     ?>
 </head>
