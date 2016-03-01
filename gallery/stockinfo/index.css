@@ -13,6 +13,7 @@ body {
 #tooltip {
     position: absolute;
     width: 220px;
+    display: none;
 }
 
 #tooltip .value {
