@@ -33,10 +33,12 @@
     <?php
         if(startsWith(page(), "gallery.") == false) {
             if(page() == "gallery") {
-                include("gallery/metadata.html");
+                include("gallery/list_metadata.html");
             } else {
                 include("doc/".$lang."/metadata.html");
             }
+        } else {
+            include("gallery/view_metadata.php");
         }
     ?>
 </head>
