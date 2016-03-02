@@ -1,39 +1,45 @@
 var chart = jui.include("chart.builder");
 
+var baseDate = +new Date(1968, 9, 3),
+	baseValue = Math.random() * 150,
+	oneDay = 24 * 3600 * 1000,
+	data = [{
+		date: new Date(baseDate),
+		value: baseValue
+	}];
+
+for (var i = 1; i < 3650; i++) {
+	var now = new Date(baseDate += oneDay);
+	data.push({
+		date: now,
+		value: Math.round((Math.random() - 0.498) * 40 + data[i - 1].value)
+	});
+}
+
 chart("#chart-content", {
-    axis : {
-        x : {
-            type : "fullblock",
-            domain : [ "Q1", "Q2", "Q3", "Q4" ],
-            line : true
-        },
-        y : {
-            type: "range",
-            domain : function(d) {
-                return Math.max(d.sales, d.profit, d.dept);
-            },
-            step: 10
-        },
-        data : [
-            { sales: 2, profit: 15, dept: 7 },
-            { sales: -15, profit: 6, dept: 2 },
-            { sales: 8, profit: 10, dept: 5 },
-            { sales: 18, profit: 5, dept: 12 }
-        ]
-    },
+	axis : [{
+		x : {
+			type : "date",
+			domain : [ data[0].date, data[data.length - 1].date ],
+			interval : oneDay * 365,
+			format : "yyyy",
+			key : "date",
+			line : 'solid'
+		},
+		y : {
+			type : "range",
+			domain : "value",
+			step : 10,
+			line : 'solid'
+		},
+		data : data
+	}],
 	brush : [{
 		type : "area",
-        line : true
-	}, {
-        type : "focus",
-        start : 1,
-        end : 2
-    }],
+		target : [ "value" ]
+	}],
     widget : [{
         type : "title",
         text : "Area Sample"
-    }],
-    style : {
-        areaBackgroundOpacity : 0.5
-    }
+    }]
 });

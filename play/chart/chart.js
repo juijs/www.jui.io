@@ -196,13 +196,13 @@ var code_list = [
     { type: "scatter", title : "Image symbol in Scatter", code : "image_scatter.js" },
 
     //area
-    { type: "area", title : "Basic Area (+Focus)", code : "area.js" },
-    { type: "area", title : "Stacked Area 1", code : "stack_area.js" },
-    { type: "area", title : "Stacked Area 2", code : "stack_area2.js" },
-    { type: "area", title : "Stacked Curve Area", code : "stack_curve_area.js" },
-    { type: "area", title : "Stacked Step Area", code : "stack_step_area.js" },
+    { type: "area", title : "Basic Area", code : "area.js" },
+    { type: "area", title : "Stacked Area 1", code : "stack_area.js", hide : true },
+    { type: "area", title : "Stacked Area 2", code : "stack_area2.js", hide : true },
+    { type: "area", title : "Stacked Curve Area", code : "stack_curve_area.js", hide : true },
+    { type: "area", title : "Stacked Area", code : "stack_step_area.js" },
     { type: "area", title : "Split Area", code : "split_area.js" },
-    { type: "area", title : "Reverse Area", code : "reverse_area.js", hide : true },
+    { type: "area", title : "Reverse Area", code : "reverse_area.js" },
 
     // radar
     { type: "radar", title : "Basic Radar", code : "radar.js" },
@@ -210,8 +210,8 @@ var code_list = [
 
     // line
     { type: "line", title : "Basic Line", code : "line.js" },
-    { type: "line", title : "Step Line ", code : "step_line.js" },
-    { type: "line", title : "Curve Line (+Dotted)", code : "curve_line.js" },
+    { type: "line", title : "Step Line", code : "step_line.js", hide : true },
+    { type: "line", title : "Curve Line (+Dotted)", code : "curve_line.js", hide : true },
     { type: "line", title : "Active Line", code : "active_line.js" },
     { type: "line", title : "Mini Line", code : "mini_line.js", hide : true },
     { type: "line", title : "Range Line", code : "range_line.js" },

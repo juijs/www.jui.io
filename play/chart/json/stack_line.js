@@ -23,10 +23,14 @@ chart("#chart", {
         data : data
     },
     brush : {
-        type : "stackline"
+        type : "stackline",
+		symbol : "step"
     },
     widget : [
         { type : "title", text : "Line Sample" },
         { type : "legend" }
-    ]
+    ],
+	style : {
+		lineBorderDashArray : "6, 3"
+	}
 });
