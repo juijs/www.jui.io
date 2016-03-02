@@ -20,7 +20,8 @@ chart("#chart", {
             type : "range",
             domain : [ 0, 100 ],
             line: true,
-            step : 4
+            step : 4,
+			key : "value"
         },
         data : [
             { sales: 0, profit: 15, total: 20, value: 80 },
@@ -39,10 +40,7 @@ chart("#chart", {
     brush : {
         type: "polygon.scatter3d",
         target : [ "sales", "profit", "total" ],
-        size : 10,
-        zkey: function(data) {
-            return data.value;
-        }
+        size : 10
     },
     widget : [{
         type : "polygon.rotate3d"

@@ -28,7 +28,8 @@ var chart = builder("#chart", {
         z : {
             type : "block",
             domain : [ "fatal", "warning", "normal" ],
-            line : true
+            line : true,
+			key : "level"
         },
         depth : 200,
         degree : {
@@ -43,15 +44,10 @@ var chart = builder("#chart", {
         target : [ "delay" ],
         size : 7,
         clip : true,
-        zkey : function(d) {
-            if(d.level == "fatal") return 0;
-            else if(d.level == "warning") return 1;
-            return 2;
-        },
         colors : function(d) {
-            if(d.level == "fatal") {
+            if(d.level == 0) {
                 return "#ff0000"
-            } else if(d.level == "warning") {
+            } else if(d.level == 1) {
                 return "#f2ab14";
             }
 
@@ -96,14 +92,14 @@ function appendTxData(list, domain) {
         var type = Math.floor(Math.random() * 6),
             data = {
                 delay: Math.floor(Math.random() * 10000),
-                level: "normal",
+                level: 2,
                 time: domain[1]
             };
 
         if(type > 2 && type < 5) {
-            data.level = "warning";
+            data.level = 1;
         } else if(type > 4) {
-            data.level = "fatal";
+            data.level = 0;
         }
 
         list.push(data);
