@@ -23,7 +23,8 @@ chart("#chart", {
 		]
 	}],
 	brush : [{
-		type : "hudcolumn"
+		type : "hudcolumn",
+		target : [ "left", "right" ]
 	}],
 	widget : [{
 		type : "tooltip",
