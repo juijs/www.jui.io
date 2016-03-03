@@ -12,6 +12,7 @@ var charts = [
     { type: "grid", title : "Grid Basic" },
     { type: "grid2", title : "Grid Style" },
     { type: "grid3", title : "Grid Type" },
+    { type: "hud", title : "HUD Chart" },
     { type: "equalizer", title : "Equalizer Chart" },
     { type: "timeline", title : "Timeline Chart" },
     { type: "realtime", title : "Realtime Chart" },
@@ -70,6 +71,9 @@ var code_list = [
     { type: "grid3", title : "Date Block + Range", code : "grid_dateblock_range.js" },
     { type: "grid3", title : "Date + Range", code : "grid_date_range.js" },
     { type: "grid3", title : "Block + Log", code : "grid_block_log.js" },
+
+	// equalizer chart
+	{ type: "hud", title : "HUD Column", code : "hud_column.js" },
 
     // equalizer chart
     { type: "equalizer", title : "Equalizer Bar", code : "equalizer_bar.js" },
