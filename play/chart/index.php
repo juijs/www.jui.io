@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="chart.css">
     <link rel="stylesheet" href="responsive.css">
     <script src="chart.js" type="text/javascript"></script>
+    <script src="resource/f16_model.js" type="text/javascript"></script>
 </head>
 <body class="jui">
 
