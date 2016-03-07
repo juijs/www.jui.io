@@ -73,6 +73,7 @@ var code_list = [
 	{ type: "grid3", title : "Block + Log", code : "grid_block_log.js" },
 
 	// equalizer chart
+	{ type: "hud", title : "HUD Bar", code : "hud_bar.js" },
 	{ type: "hud", title : "HUD Column", code : "hud_column.js" },
 
 	// equalizer chart
@@ -672,8 +673,9 @@ function viewCodeEditor() {
     } else {
         eval(theme);
         $("select").find("option:last-child")[0].selected = true;
-        changeTheme($("select").find("option:selected").val());
     }
+
+	changeTheme($("select").find("option:selected").val());
 }
 
 function setFunctions() {
