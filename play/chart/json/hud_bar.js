@@ -2,7 +2,7 @@ var chart = jui.include("chart.builder");
 
 chart("#chart", {
 	padding : {
-		left : 150,
+		left : 200,
 		right : 100
 	},
 	axis : [{

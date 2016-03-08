@@ -300,9 +300,10 @@ function runRealtimeData(realtime) {
     }, 1000);
 }
 
-function changeTheme(theme) {
-    var chart = jui.get("chart.builder").pop(),
-        theme = jui.include("chart.theme." + theme);
+function changeTheme(value) {
+	var name = !value ? $("select").find("option:selected").val() : value,
+		chart = jui.get("chart.builder").pop(),
+        theme = jui.include("chart.theme." + name);
 
     if(theme != null) {
         if (typeof(chart.options.theme) != "object") {
@@ -635,6 +636,9 @@ function viewCodeEditor() {
                     window.currentChart.axis(0).update(eval(data));
                 }
                 createTable();
+
+				// 현재 테마 적용
+				changeTheme();
             } catch(e) {
                 console.log(e);
             }
@@ -675,7 +679,7 @@ function viewCodeEditor() {
         $("select").find("option:last-child")[0].selected = true;
     }
 
-	changeTheme($("select").find("option:selected").val());
+	changeTheme();
 }
 
 function setFunctions() {
