@@ -131,6 +131,10 @@ jui.define("chart.widget.drawing.canvas", [
 
 		}
 
+		this.getMode = function (mode) {
+			return modeConfig[mode] || {};
+		}
+
 
 		this.pos = function (e) {
 			return {

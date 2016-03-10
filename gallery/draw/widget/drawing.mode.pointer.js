@@ -1,7 +1,7 @@
 jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, PathParser) {
     var DrawingModePointer = function (canvas) {
 
-		var disabled = false;
+		this.canvas = canvas; 
 		var parser = new PathParser();
 		var selectElement = null;
 		var seg;
@@ -11,17 +11,17 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 
 		this.init = function () {
 
-			segPath = canvas.svg.g({
+			segPath = this.canvas.svg.g({
 				className : "seg-path"
 			});
 
-			canvas.appendToGroup(segPath);
+			this.canvas.appendToGroup(segPath);
 
-			seg = canvas.svg.g({
+			seg = this.canvas.svg.g({
 				className : "seg"
 			});
 
-			canvas.appendToGroup(seg);
+			this.canvas.appendToGroup(seg);
 		}
 
 		// mode 가 변경될 때 초기 상태로 되돌린다.
@@ -31,7 +31,7 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 			if (this.disabled)
 			{
 				if (events) {
-					canvas.offMouseEvent(events);
+					this.canvas.offMouseEvent(events);
 				}
 
 
@@ -41,15 +41,13 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 			}
 			// 활성화 모드
 			else {
-				events = canvas.setMouseEvent( function click(e) { self.dragStart(e); },  function move(e) { self.drag(e); },  function up(e) { self.dragEnd(e); } );
+				events = this.canvas.setMouseEvent( function click(e) { self.dragStart(e); },  function move(e) { self.drag(e); },  function up(e) { self.dragEnd(e); } );
 			}
 		}
 
 		this.drag = function (e) {
-			if (disabled) return;
-
 			if (selectElement) 	{
-				var pos = canvas.pos(e);
+				var pos = this.canvas.pos(e);
 				var index = selectElement.getAttribute("index");
 				var type = selectElement.getAttribute("type");
 
@@ -135,12 +133,17 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 			}
 		}
 
+		this.externalShowSegment = function (el) {
+			parser.init(el);
+			this.showSegment(parser.getSegments());
+		}
+
 		this.updateSegments = function (s) {
 			parser.update();
 		}
 
 		this.createSegment = function (o) {
-			return canvas.svg.circle(_.extend({
+			return this.canvas.svg.circle(_.extend({
 				className : 'segment',
 				fill : 'white',
 				'fill-opacity' : 0.9,
@@ -164,7 +167,7 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 				var segment = s[i];
 				if (segment.command == 'S') {
 
-					var line = canvas.svg.path({
+					var line = this.canvas.svg.path({
 						stroke : 'blue',
 						'stroke-dasharray' : '5 5',
 						'stroke-width' : 1
@@ -180,7 +183,7 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 
 				} else if (segment.command == 'C') {
 
-					var line = canvas.svg.path({
+					var line = this.canvas.svg.path({
 						stroke : 'blue',
 						'stroke-dasharray' : '5 5',
 						'stroke-width' : 1
@@ -193,7 +196,7 @@ jui.define("util.mode.pointer", ["util.base", "util.parser.path"], function (_, 
 					segPath.append(line);
 					segPath.element.appendChild(line.element);
 
-					var line2 = canvas.svg.path({
+					var line2 = this.canvas.svg.path({
 						stroke : 'blue',
 						'stroke-dasharray' : '5 5',
 						'stroke-width' : 1

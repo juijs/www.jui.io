@@ -4,6 +4,87 @@ jui.define("util.parser.path", [], function () {
 		    var splitReg = /[\b\t \,]/g;
 			var segments =  [];
 			var pathElement;
+
+			var matrix = {
+
+				multiply : function (a) {
+					return function (b, startIndex) {
+						var x = +b[startIndex];
+						var y = +b[startIndex+1];
+
+						return [
+							a[0][0] * x + a[0][1] * x +  a[0][2] * x,
+							a[1][0] * y + a[1][1] * y +  a[1][2] * y,
+							1
+						];
+					};
+				},
+
+				translate : function (tx, ty) {
+					return this.multiply([
+						[1, 0, tx],
+						[0, 1, ty],
+						[0, 0, 1]
+					]);
+				},
+			
+				rotate : function (angle) {
+					return this.multiply([
+						[Math.cos(angle) , Math.sin(angle), 0] 
+						[-Math.sin(angle),  Math.cos(angle), 0],
+						[0, 0, 1]
+					]);
+				},
+
+				scale : function (sx, sy) {
+					return this.multiply([
+						[sx, 0, 0],
+						[0, sy, 0],
+						[0, 0, 1]
+					]);
+				},
+
+				skewX : function (x) {
+					return this.multiply([
+						[1, x, 0],
+						[0, 1, 0],
+						[0, 0, 1]
+					]);
+				},
+
+				skewY : function (y) {
+					return this.multiply([
+						[1, 0, 0],
+						[y, 1, 0],
+						[0, 0, 1]
+					]);
+				},
+
+				reflectionOrigin : function () {
+					return this.multiply([
+						[-1, 0, 0],
+						[0, -1, 0],
+						[0, 0, 1]
+					]);
+				},
+
+				reflectionX : function () {
+					return this.multiply([
+						[1, 0, 0],
+						[0, -1, 0],
+						[0, 0, 1]
+					]);
+				},
+
+				reflectionY : function () {
+					return this.multiply([
+						[-1, 0, 0],
+						[0, 1, 0],
+						[0, 0, 1]
+					]);
+				}
+			};
+
 			this.init = function (el) {
 				pathElement = el;
 				this.parse();
@@ -28,63 +109,63 @@ jui.define("util.parser.path", [], function () {
 				segments = [];
 
 				for(var i = 0, len = arr.length; i < len; i++) {
-					var segment = arr[i];
+					var s = arr[i];
 
-					if (segment.indexOf("M") > -1) {
-						var temp = this.trim(segment.replace("M", ""));
+					if (s.indexOf("M") > -1) {
+						var temp = this.trim(s.replace("M", ""));
 						segments.push({command: "M", values : temp });
-					} else if (segment.indexOf("m") > -1) {
-						var temp = this.trim(segment.replace("m",""));
+					} else if (s.indexOf("m") > -1) {
+						var temp = this.trim(s.replace("m",""));
 						segments.push({ command : "m", values : temp });
-					} else if (segment.indexOf("L") > -1) {
-						var temp = this.trim(segment.replace("L",""));
+					} else if (s.indexOf("L") > -1) {
+						var temp = this.trim(s.replace("L",""));
 						segments.push({ command : "L", values : temp });
-					} else if (segment.indexOf("l") > -1) {
-						var temp = this.trim(segment.replace("l",""));
+					} else if (s.indexOf("l") > -1) {
+						var temp = this.trim(s.replace("l",""));
 						segments.push({ command : "l", values : temp });
-					} else if (segment.indexOf("H") > -1) {
-						var temp = this.trim(segment.replace("H",""));
+					} else if (s.indexOf("H") > -1) {
+						var temp = this.trim(s.replace("H",""));
 						segments.push({ command : "H", values : temp });
-					} else if (segment.indexOf("h") > -1) {
-						var temp = this.trim(segment.replace("h",""));
+					} else if (s.indexOf("h") > -1) {
+						var temp = this.trim(s.replace("h",""));
 						segments.push({ command : "h", values : temp });
-					} else if (segment.indexOf("V") > -1) {
-						var temp = this.trim(segment.replace("V",""));
+					} else if (s.indexOf("V") > -1) {
+						var temp = this.trim(s.replace("V",""));
 						segments.push({ command : "V", values : temp });
-					} else if (segment.indexOf("v") > -1) {
-						var temp = this.trim(segment.replace("v",""));
+					} else if (s.indexOf("v") > -1) {
+						var temp = this.trim(s.replace("v",""));
 						segments.push({ command : "v", values : temp });
-					} else if (segment.indexOf("C") > -1) {
-						var temp = this.trim(segment.replace("C",""));
+					} else if (s.indexOf("C") > -1) {
+						var temp = this.trim(s.replace("C",""));
 						segments.push({ command : "C", values : temp });
-					} else if (segment.indexOf("c") > -1) {
-						var temp = this.trim(segment.replace("c",""));
+					} else if (s.indexOf("c") > -1) {
+						var temp = this.trim(s.replace("c",""));
 						segments.push({ command : "c", values : temp });
-					} else if (segment.indexOf("S") > -1) {
-						var temp = this.trim(segment.replace("S",""));
+					} else if (s.indexOf("S") > -1) {
+						var temp = this.trim(s.replace("S",""));
 						segments.push({ command : "S", values : temp });
-					} else if (segment.indexOf("s") > -1) {
-						var temp = this.trim(segment.replace("s",""));
+					} else if (s.indexOf("s") > -1) {
+						var temp = this.trim(s.replace("s",""));
 						segments.push({ command : "s", values : temp });
-					} else if (segment.indexOf("Q") > -1) {
-						var temp = this.trim(segment.replace("Q",""));
+					} else if (s.indexOf("Q") > -1) {
+						var temp = this.trim(s.replace("Q",""));
 						segments.push({ command : "Q", values : temp });
-					} else if (segment.indexOf("q") > -1) {
-						var temp = this.trim(segment.replace("q",""));
+					} else if (s.indexOf("q") > -1) {
+						var temp = this.trim(s.replace("q",""));
 						segments.push({ command : "q", values : temp });
-					} else if (segment.indexOf("T") > -1) {
-						var temp = this.trim(segment.replace("T",""));
+					} else if (s.indexOf("T") > -1) {
+						var temp = this.trim(s.replace("T",""));
 						segments.push({ command : "T", values : temp });
-					} else if (segment.indexOf("t") > -1) {
-						var temp = this.trim(segment.replace("t",""));
+					} else if (s.indexOf("t") > -1) {
+						var temp = this.trim(s.replace("t",""));
 						segments.push({ command : "t", values : temp });
-					} else if (segment.indexOf("A") > -1) {
-						var temp = this.trim(segment.replace("A",""));
+					} else if (s.indexOf("A") > -1) {
+						var temp = this.trim(s.replace("A",""));
 						segments.push({ command : "A", values : temp });
-					} else if (segment.indexOf("a") > -1) {
-						var temp = this.trim(segment.replace("a",""));
+					} else if (s.indexOf("a") > -1) {
+						var temp = this.trim(s.replace("a",""));
 						segments.push({ command : "a", values : temp });
-					} else if (segment.indexOf("Z") > -1) {
+					} else if (s.indexOf("Z") > -1) {
 						segments.push({ command : "Z"});
 					}
 				}
@@ -127,6 +208,69 @@ jui.define("util.parser.path", [], function () {
 
 			this.update = function () {
 				pathElement.setAttribute("d", this.joinPath());
+			}
+
+			this.each = function (callback) {
+				for(var i = 0, len = segments.length; i < len; i++) {
+					segments[i] = callback.call(this, segments[i]);
+				}				
+			}
+
+			this._loop = function (m) {
+				this.each(function(segment) {
+					var v = segment.values;
+					var c = segment.command.toUpperCase();
+
+					if (c == 'M' || c == 'L') {
+						segment.values = m(v, 0);
+					} else if (c == 'V') {
+						var result = m([+v[0], 0]);
+						segment.values = [result[0]];
+					} else if (c == 'H') {
+						var result = m([0, +v[0]]);
+						segment.values = [result[1]];
+					} else if (c == 'C' || c == 'S' || c == 'T' || c == 'Q') {
+						for(var i = 0, len = v.length; i < len; i+=2) {
+							var result = m(v, i); 
+							segment.values[i] = result[0];
+							segment.values[i+1] = result[1];
+						}
+					} else if (c == 'A') {
+
+					}
+				});
+			}
+
+			this.translate = function (tx, ty) {
+				this._loop(matrix.translate(tx, ty));
+			}
+
+			this.scale = function (sx, sy) {
+				this._loop(matrix.scale(sx, sy));
+			}
+
+			this.rotate = function (angle) {
+				this._loop(matrix.rotate(angle));
+			}
+
+			this.reflectionOrigin = function () {
+				this._loop(matrix.reflectionOrigin(angle));
+			}
+
+			this.reflectionX = function () {
+				this._loop(matrix.reflectionX(angle));
+			}
+
+			this.reflectionY = function () {
+				this._loop(matrix.reflectionY(angle));
+			}
+
+			this.skewX = function (sx) {
+				this._loop(matrix.skewX(sx));
+			}
+
+			this.skewY = function (sy) {
+				this._loop(matrix.skewY(sy));
 			}
     };
 

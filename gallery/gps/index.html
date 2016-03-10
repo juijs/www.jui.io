@@ -1,0 +1,575 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" id="ui_theme" />
+<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.js" ></script>
+<link rel="stylesheet" href="/gallery/gps/main.css" />
+<script src="resources/model/f16.js"></script>
+<script src="resources/model/dodge.js"></script>
+<script src="resources/model/hind.js"></script>
+<script>
+jui.define("chart.widget.radar", ["util.math"], function(math) { 
+
+	var Radar = function () {
+		var g, guid, line, tail;
+		var circle, circle2; 
+		var angle = 0; 
+		var tail_length = 50;
+		var tail_size = 5; 
+		var self = this; 
+		this.drawBefore = function () { 
+			g = this.svg.g({
+				'class' : 'radar'
+			});
+
+
+			guide = this.svg.g({
+				'class' : 'radar-guide'
+			});
+
+			g.append(guide);
+
+			line = this.svg.path({
+				'stroke-width' : 2,
+				'stroke' : '#26AD20'
+			});
+
+			guide.append(line)
+
+			tail = this.svg.path({
+				'fill' : this.chart.color('linear(left) #26AD20,20% #26AD20,100% black'),
+				'fill-opacity' : 0.1,
+				'filter' : 'url(#blurFilter)',
+				'stroke-width' : 0,
+				'stroke' : 'transparent'
+			});
+
+			guide.append(tail);
+
+			circle = this.svg.circle({
+				fill : 'black',
+				stroke : 'rgb(24, 159, 130)',
+				cx : 0,
+				cy : 0,
+				r : 20 
+			});
+
+			guide.append(circle);
+
+			circle2 = this.svg.circle({
+				fill : 'rgb(24, 159, 130)',
+				cx : 0,
+				cy : 0,
+				r : 10 
+			});
+
+			guide.append(circle2);
+
+			var filter = this.svg.filter({
+				id : "blurFilter",
+				x : 0,
+				y : 0
+			});
+
+			filter.append(this.svg.feGaussianBlur({
+				in : "SourceGraphic",
+				stdDeviation: 7
+			}));
+
+			this.chart.appendDefs(filter);
+		}
+
+		this.updateGuide = function () {
+
+
+
+			guide.rotate(angle);
+
+		}
+
+		this.updateTail = function () {
+
+			var w= this.axis.area('width');
+			var h = this.axis.area('height');
+
+			var r = Math.min(w, h)/2;
+
+			line.MoveTo(0, 0);
+			line.lineTo(0, r);
+			line.join();
+
+			var size = Math.floor(r / 5)/4 ;
+
+			tail.MoveTo(0, 0);
+			tail.lineTo(tail_length-tail_size, 0);
+
+			var unit = tail_length/size;
+			
+			for(var i = 0; i < size; i++) {
+				var start = i * unit; 
+				tail.qCurveTo(start, tail_size, 0, tail_size*2);
+				tail.qCurveTo(-start, tail_size, 0, tail_size*2);
+			}
+
+			tail.lineTo(-tail_length-tail_size, 0);
+			tail.closePath();
+			tail.join();
+		}
+
+		this.draw = function () {
+
+			var w= this.axis.area('width');
+			var h = this.axis.area('height');
+
+			var r = Math.min(w, h)/2;
+
+			var startPosX = w/2 + this.chart.padding('left');
+			var startPosY = h/2 + this.chart.padding('top');
+
+			guide.translate(startPosX, startPosY);
+
+			self.updateTail();
+
+			clearInterval(window.timer);
+			window.timer = setInterval(function() {
+				
+				angle = angle + 0.7;
+
+				if (angle >= 360)
+				{
+					angle = 0;
+				}
+
+				self.updateGuide();
+
+			}, 1000/60);
+
+			
+			return g; 
+		}
+	}
+
+
+	return Radar; 
+
+}, "chart.widget.core");
+</script>
+</head>
+<body class="jui">
+
+<div class="chart-panel panel-left">
+	<div id="chart1" class="chart-line">
+		<div class="container"></div>
+	</div>
+	<div id="chart2" class="chart-line">
+		<div class="container"></div>
+	</div>
+	<div id="chart3" class="chart-line">
+		<div class="container"></div>
+	</div>
+	<div id="chart4" class="chart-line">
+		<div class="container"></div>
+	</div>
+</div>
+
+<div class="chart-panel panel-right">
+	<div id="chart6" class="chart-line">
+		<div class="container"></div>
+	</div>
+	<div id="chart7" class="chart-line">
+		<div class="container"></div>
+	</div>
+
+	<div id="chart8" class="chart-line">
+		<div class="container"></div>
+	</div>
+</div>
+
+<div id="chart5">
+	<div class="container"></div>
+</div>
+
+
+<script>
+    jui.ready(function() {
+
+		var style = {
+				backgroundColor: 'transparent',
+				gridAxisBorderColor : 'rgb(24, 159, 130)',
+				gridBorderColor : 'rgb(24, 159, 130)',
+				gridBorderWidth: 0.5
+			}
+
+		var domain = [];
+
+		for(var i = 0; i < 360; i += 30) {
+			domain.push(i);
+		}
+
+        var chart = jui.include("chart.builder");
+        var data = [
+            { type : "STR", warrior : 100, wizard : 30, archer : 35 },
+            { type : "VIT", warrior : 80, wizard : 50, archer : 70 },
+            { type : "DEX", warrior : 50, wizard : 70, archer : 95 },
+            { type : "AGI", warrior : 70, wizard : 60, archer : 75 },
+            { type : "INT", warrior : 30, wizard : 100, archer : 30 },
+            { type : "WIS", warrior : 50, wizard : 90, archer : 40 }
+        ];
+
+        var c = chart("#chart5 .container", {
+
+			theme : "dark",
+			padding : {
+				left : 0,
+				right :0,
+				top: 20,
+				bottom: 20
+			},            
+            axis : {
+                c : {
+                    type : "radar",
+                    shape : "circle",
+                    domain : domain,
+					line : true
+                },
+                data : data
+            },
+			widget : {
+				type : 'radar'
+			},
+			style : style 
+
+        });
+
+		var color = jui.include('util.color');
+		var c = color.scale().domain('rgb(38,173,32)', 'rgb(0,25,0)');
+
+		function create (max) {
+			return Math.floor(Math.random() * max % 100);
+		}
+
+		function get_random_data () {
+			return [
+					{ normal : create(5), warning : create(15), fatal : create(5) },
+					{ normal : create(25), warning : create(8), fatal : create(5) },
+					{ normal : create(3), warning : create(4), fatal : create(10) },
+					{ normal : create(18), warning : create(5), fatal : create(7) },
+					{ normal : create(5), warning : create(15), fatal : create(5) },
+					{ normal : create(25), warning : create(8), fatal : create(5) },
+					{ normal : create(12), warning : create(4), fatal : create(10) },
+					{ normal : create(18), warning : create(50), fatal : create(7) },
+					{ normal : create(5), warning : create(15), fatal : create(5) },
+					{ normal : create(5), warning : create(8), fatal : create(50) },
+					{ normal : create(12), warning : create(2), fatal : create(80) },
+					{ normal : create(18), warning : create(5), fatal : create(7) }
+				]
+		}
+
+		var list = chart("#chart1 .container,#chart2 .container", {
+			padding: {
+				top : 0,
+				left : 0,
+				right: 0, 
+				bottom : 30	
+			},
+			axis : [{
+				x : {
+					domain : [ "0", "1", "2", "3", "4 ", "5", "6", "7", "8", "9", "10", "11" ],		// 임의의 배열을 생성하는게 필요할지도 모르겠군. 
+					line : true,
+					hide : true 
+				},
+				y : {
+					type : "range",
+					domain : function(d) {
+						return Math.max(d.normal, d.warning, d.fatal);
+					},
+					step : 5,
+					line : true,
+					hide : true 
+				},
+				data : get_random_data()
+			}],
+			brush : {
+				type : "equalizercolumn",
+				target : [ "normal", "warning", "fatal" ],
+				unit : 10,
+				innerPadding: 1,
+				outerPadding: 2, 
+				colors : c.ticks(3)
+			},
+			widget : {
+				type : 'title',
+				orient : 'bottom',
+				text : 'Monitoring',
+				size : '15px',
+				color : 'rgb(38,173,32)',
+				dy : 10
+			},
+			style : style 
+		});
+
+		var list2 = chart("#chart3 .container,#chart4 .container", {
+			padding: {
+				top : 0,
+				left : 0,
+				right: 0, 
+				bottom : 30	
+			},
+			axis : [{
+				x : {
+					domain : [ "0", "1", "2", "3", "4 ", "5", "6", "7", "8", "9", "10", "11" ],		// 임의의 배열을 생성하는게 필요할지도 모르겠군. 
+					line : true,
+					hide : true 
+				},
+				y : {
+					type : "range",
+					domain : function(d) {
+						return Math.max(d.normal, d.warning, d.fatal);
+					},
+					step : 5,
+					line : true,
+					hide : true 
+				},
+				data : get_random_data()
+			}],
+			brush : {
+				type : "line",
+				target : [ "normal", "warning", "fatal" ],
+				colors : c.ticks(3)
+			},
+			widget : {
+				type : 'title',
+				orient : 'bottom',
+				text : 'Monitoring',
+				size : '15px',
+				color : 'rgb(38,173,32)',
+				dy : 10
+			},
+			style : style 
+		});
+
+		setInterval(function() {
+			list2[1].get('axis', 0).update(get_random_data());
+		}, 3000);
+
+		setInterval(function() {
+			list2[0].get('axis', 0).update(get_random_data());
+		}, 2000);
+
+		setInterval(function() {
+				list[1].get('axis', 0).update(get_random_data());
+		}, 1000);
+
+		setInterval(function() {
+				list[0].get('axis', 0).update(get_random_data());
+		}, 500);
+
+		// modeling 객체 렌더링 
+		var f16 = chart("#chart6 .container", {
+			padding : 0,
+			axis : {
+				x : {
+					type : "range",
+					domain : [ -5, 20 ],
+					hide : true
+				},
+				y : {
+					type : "range",
+					domain : [ -3, 5 ],
+					hide : true
+				},
+				z : {
+					type : "range",
+					domain : [ -7, 7 ],
+					hide : true
+				},
+				degree : {
+					x: 0,
+					y: 0,
+					z: 0
+				},
+				depth : 400,
+				perspective : 0.8
+			},
+			brush : {
+				type : "canvas.model3d",
+				model : "f16"
+			},
+			widget : {
+				type : "polygon.rotate3d"
+			},
+			style : {
+				backgroundColor: 'transparent',
+				gridXAxisBorderWidth: 1,
+				gridYAxisBorderWidth: 1,
+				gridZAxisBorderWidth: 1
+			},
+			canvas : true
+		});
+
+
+		var f16Y = 0;
+
+		function startF16() {
+			stopF16();
+			f16.timer = setInterval(function() {
+				(f16Y += 10);
+				if (f16Y > 360) {
+					f16Y = 0;
+				}
+
+
+				f16.axis(0).set('degree', {
+					y : f16Y
+				});
+			}, 200);
+		}
+
+		function stopF16() {
+			clearInterval(f16.timer);
+		}
+
+		startF16();
+
+// modeling 객체 렌더링 
+		var hind = chart("#chart7 .container", {
+			padding : 0,
+			axis : {
+				x : {
+					type : "range",
+					domain : [ -10, 10 ],
+					hide : true
+				},
+	            y : {
+					type : "range",
+					domain : [ -5, 20 ],
+					hide : true
+				},
+				z : {
+					type : "range",
+					domain : [ -7, 7 ],
+					hide : true
+				},
+				degree : {
+					x: 180,
+					y: 0,
+					z: 90
+				},
+				depth : 400,
+				perspective : 0.8,
+			},
+			brush : {
+				type : "canvas.model3d",
+				model : "hind" ,
+				colors : ['green'] 
+			},
+			widget : {
+				type : "polygon.rotate3d"
+			},
+			style : {
+				backgroundColor: 'transparent',
+				gridXAxisBorderWidth: 1,
+				gridYAxisBorderWidth: 1,
+				gridZAxisBorderWidth: 1
+			},
+			canvas : true
+		});
+
+		var hindY = 0;
+
+		function startHind() {
+			stopHind();
+			hind.timer = setInterval(function() {
+				(hindY += 10);
+				if (hindY > 360) {
+					hindY = 0;
+				}
+
+
+				hind.axis(0).set('degree', {
+					y : hindY
+				});
+			}, 200);
+		}
+
+		function stopHind() {
+			clearInterval(hind.timer);
+		}
+
+		startHind();
+
+// modeling 객체 렌더링 
+		var dodge = chart("#chart8 .container", {
+			padding : 0,
+			axis : {
+				x : {
+					type : "range",
+                domain : [ -10, 10 ],
+					hide : true
+				},
+	            y : {
+					type : "range",
+	                domain : [ -5, 5 ],
+					hide : true
+				},
+				z : {
+					type : "range",
+	                domain : [ -7, 7 ],
+					hide : true
+				},
+				degree : {
+					x: 0,
+					y: 0,
+					z: 0
+				},
+				depth : 400,
+				perspective : 0.8,
+			},
+			brush : {
+				type : "canvas.model3d",
+				model : "dodge"
+			},
+			widget : {
+				type : "polygon.rotate3d"
+			},
+			style : {
+				backgroundColor: 'transparent',
+				gridXAxisBorderWidth: 1,
+				gridYAxisBorderWidth: 1,
+				gridZAxisBorderWidth: 1
+			},
+			canvas : true
+		});
+		var dodgeY = 0;
+
+		function startDodge() {
+			stopDodge();
+			dodge.timer = setInterval(function() {
+				(dodgeY += 10);
+				if (dodgeY > 360) {
+					dodgeY = 0;
+				}
+
+
+				dodge.axis(0).set('degree', {
+					y : dodgeY
+				});
+			}, 200);
+		}
+
+		function stopDodge() {
+			clearInterval(dodge.timer);
+		}
+
+		startDodge();
+
+    })
+</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, PathParser) {
     var DrawingModePen2 = function (canvas) {
 
+		this.canvas = canvas; 
 		var parser = new PathParser();
 		var currentPen = [];
 		var startPos;
@@ -23,13 +24,15 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 		}
 
 		this.init = function () {
-			pen2 = canvas.svg.g({
+			this.super('init');
+
+			pen2 = this.canvas.svg.g({
 				className : "pen2-guid"
 			});
 
-			canvas.appendToGroup(pen2);
+			this.canvas.appendToGroup(pen2);
 
-			currentPath = canvas.svg.path({
+			currentPath = this.canvas.svg.path({
 				className : 'item',
 				fill: 'transparent',
 				stroke: 'black',
@@ -52,8 +55,8 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 			if (this.disabled)
 			{
 				if (events) {
-					canvas.offMouseEvent(events);
-					canvas.chart.off(move2);
+					this.canvas.offMouseEvent(events);
+					this.canvas.chart.off(move2);
 				}
 
 				pen2.element.innerHTML = "";
@@ -61,38 +64,26 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 			}
 			// 활성화 모드
 			else {
-				events = canvas.setMouseEvent( function click(e) { self.dragStart(e); },  function move(e) { self.drag(e); },  function up(e) { self.dragEnd(e); } );
-				canvas.chart.on('chart.mousemove', move2);
+				events = this.canvas.setMouseEvent( function click(e) { self.dragStart(e); },  function move(e) { self.drag(e); },  function up(e) { self.dragEnd(e); } );
+				this.canvas.chart.on('chart.mousemove', move2);
 			}
 		}
 
 		this.dragStart = function (e) {
 
-			if (this.isRightClick(e))
+			if (this.isRightClick(e) || (e.target.nodeName == 'circle'  && e.target.className == 'move-segment'))
 			{
-
-				if (currentMovePath) {
-					currentMovePath.remove();
-					currentMovePath.element.parentNode.removeChild(currentMovePath.element);
-				}
-
-
-				startPos = null;
-				currentDragPath = null;
-				currentMovePath = null;
-				currentDragCenterCircle = null;
-				currentDragCircle = null;
-				currentDragCircle2 = null;
-
-				this.generatePath(point_list);
-
-				canvas.appendToCanvas(realPath);
-
-				point_list = [];
+				this.drawStop(e);
 				return;
 			}
 
-			startPos = canvas.pos(e);
+			if (e.target.nodeName == 'path') {
+				this.super('dragStart', [e]);
+				this.isPointerDrag = true; 
+				return;
+			}
+
+			startPos = this.canvas.pos(e);
 
 			point_list.push({ type : 'pointer', pos : startPos });
 
@@ -109,9 +100,13 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 				'stroke-dasharray' : '5 5'
 			});
 			currentDragCenterCircle = this.addCircle();
-			currentDragCircle = this.addCircle({
-				stroke : 'red'
-			});
+
+			if (!currentDragCircle) 			{ 			
+				currentDragCircle = this.addCircle({
+					stroke : 'red'
+				});			
+			}
+
 
 			currentDragCircle2 = this.addCircle({
 				stroke : 'green'
@@ -125,17 +120,36 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 		}
 
 		this.move = function (e) {
+
+			if (this.isPointerDrag)
+			{
+				return;
+			}
+
 			if (!startPos) {
 				return;
 			}
 
 			if (!isDragging) {
-				var pos = canvas.pos(e);
+				var pos = this.canvas.pos(e);
 
+
+				var segmentX = startPos.x + (pos.x - startPos.x)/2;
+				var segmentY = startPos.y + (pos.y - startPos.y)/2;
 
 				currentMovePath.MoveTo(startPos.x, startPos.y);
-				currentMovePath.LineTo(pos.x, pos.y);
+				currentMovePath.QCurveTo(pos.x, startPos.y, pos.x, pos.y);
 				currentMovePath.join();
+
+				currentDragCircle.attr({
+						cx : pos.x,
+						cy : startPos.y
+				});
+
+				currentDragCircle2.attr({
+						cx : pos.x,
+						cy : pos.y
+				});
 
 			} else {
 				this.generatePath(point_list);
@@ -143,6 +157,7 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 		}
 
 		this.generatePath = function () {
+			return;
 			var len = point_list.length;
 
 			for(var i = 0; i < len; i++) {
@@ -151,39 +166,46 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 
 				if (i == 0) {
 					realPath.MoveTo(pos.x, pos.y);
-				} else {
-					var prev = point_list[i-1];
+				} 
 
-					if (segment.type == 'pointer') {
-						if (prev.type == 'pointer')
-						{
-							realPath.LineTo(pos.x, pos.y);
-						} else if (prev.tyep == 'curve') {
-							realPath.CurveTo(prev.reverse.x, prev.reverse.y,pos.x, pos.y, pos.x, pos.y);
-						}
-
-
-					} else if (segment.type == 'curve') {
-						if (prev.type == 'pointer') {
-							realPath.SCurveTo(segment.curve.x, segment.curve.y, pos.x, pos.y);
-						} else if (prev.type == 'curve')
-						{
-							realPath.CurveTo(prev.reverse.x, prev.reverse.y, segment.curve.x, segment.curve.y, pos.x, pos.y);
-						}
+				var prev = point_list[i-1];
+				if (segment.type == 'pointer') {
+					if (i == 0) {
+						continue; 
 					}
+
+					if (prev.type == 'pointer') {
+						realPath.LineTo(pos.x, pos.y);
+					} else if (prev.type == 'curve') {
+						realPath.QCurveTo(segment.curve.x, segment.curve.y, pos.x, pos.y);
+					}
+
+				} else if (segment.type == 'curve') {
+					realPath.QCurveTo(segment.curve.x, segment.curve.y, pos.x, pos.y);
+				} else if (segment.type == 'close') {
+					realPath.ClosePath();
 				}
 			}
 
 			realPath.join();
-			//canvas.appendToCanvas(path);
+			//this.canvas.appendToCanvas(path);
 		}
 
 		this.drag = function (e) {
+
+			if (this.isPointerDrag)
+			{
+				this.super('drag', [ e ] );
+				return;
+			}
+
 			isDragging = true;
 
-			currentCurvePos = canvas.pos(e);
+			currentCurvePos = this.canvas.pos(e);
 
 			var s = point_list[point_list.length-1]
+
+			this.drawCurveGuide();
 
 			if (s) {
 				s.type = 'curve';
@@ -191,20 +213,56 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 				s.reverse = reversePos;
 			}
 
-			this.drawCurveGuide();
 			this.generatePath();
 		}
 
+		// right click, first segment click 
+		this.drawStop = function (e) {
+
+				if (currentMovePath) {
+					currentMovePath.remove();
+					currentMovePath.element.parentNode.removeChild(currentMovePath.element);
+				}
+
+				if (e.target.nodeName == 'circle')
+				{
+					point_list.push({ type : 'close' });
+				}
+
+
+				startPos = null;
+				currentDragPath = null;
+				currentMovePath = null;
+				currentDragCenterCircle = null;
+//				currentDragCircle = null;
+//				currentDragCircle2 = null;
+
+				this.generatePath(point_list);
+
+				this.canvas.appendToCanvas(realPath);
+
+				point_list = [];
+
+				//pen2.element.innerHTML = "";
+		}
+
 		this.dragEnd = function (e) {
+			if (this.isPointerDrag) {
+				this.super('dragEnd', [ e ]);
+				this.isPointerDrag = false; 
+				return; 
+			}
+
+
 			isDragging = false;
 
 			// 점을 추가 한다
 			if (currentCurvePos) {
 				currentCurvePos = null;
-				reversePos = null;
+//				reversePos = null;
 			}
 
-				this.generatePath();
+			this.generatePath();
 		}
 
 		this.addToPen = function (o) {
@@ -213,7 +271,7 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 		}
 
 		this.addCircle = function (o) {
-			var circle = canvas.svg.circle(_.extend({
+			var circle = this.canvas.svg.circle(_.extend({
 				fill : 'white',
 				stroke : 'blue',
 				'stroke-width' : 1,
@@ -226,7 +284,7 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 		}
 
 		this.addGuidePath = function (obj) {
-			var path = canvas.svg.path(_.extend({
+			var path = this.canvas.svg.path(_.extend({
 				fill : 'transparent',
 				stroke : 'blue',
 				'stroke-width' : 1
@@ -262,9 +320,9 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 
 			currentDragCircle2.attr({  'cx' :  reverseX,  'cy' :  reverseY });
 
-			currentDragPath.MoveTo(currentCurvePos.x, currentCurvePos.y);
-			currentDragPath.LineTo(startPos.x, startPos.y);
-			currentDragPath.LineTo(reverseX, reverseY);
+			currentDragPath.MoveTo(startPos.x, startPos.y);
+			currentDragPath.QCurveTo(reverseX, reverseY, currentCurvePos.x, currentCurvePos.y);
+//			currentDragPath.LineTo();
 			currentDragPath.join();
 
 			reversePos = { x : reverseX, y : reverseY };
@@ -279,4 +337,4 @@ jui.define("util.mode.pen2", ["util.base", "util.parser.path"], function (_, Pat
 
 
     return DrawingModePen2;
-}, "drawing.core");
+}, "util.mode.pointer");
