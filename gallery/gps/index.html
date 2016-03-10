@@ -9,21 +9,21 @@
 <script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/chart.js" ></script>
-<link rel="stylesheet" href="/gallery/gps/main.css" />
+<link rel="stylesheet" href="main.css" />
 <script src="resources/model/f16.js"></script>
 <script src="resources/model/dodge.js"></script>
 <script src="resources/model/hind.js"></script>
 <script>
-jui.define("chart.widget.radar", ["util.math"], function(math) { 
+jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 	var Radar = function () {
 		var g, guid, line, tail;
-		var circle, circle2; 
-		var angle = 0; 
+		var circle, circle2;
+		var angle = 0;
 		var tail_length = 50;
-		var tail_size = 5; 
-		var self = this; 
-		this.drawBefore = function () { 
+		var tail_size = 5;
+		var self = this;
+		this.drawBefore = function () {
 			g = this.svg.g({
 				'class' : 'radar'
 			});
@@ -57,7 +57,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				stroke : 'rgb(24, 159, 130)',
 				cx : 0,
 				cy : 0,
-				r : 20 
+				r : 20
 			});
 
 			guide.append(circle);
@@ -66,7 +66,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				fill : 'rgb(24, 159, 130)',
 				cx : 0,
 				cy : 0,
-				r : 10 
+				r : 10
 			});
 
 			guide.append(circle2);
@@ -110,9 +110,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			tail.lineTo(tail_length-tail_size, 0);
 
 			var unit = tail_length/size;
-			
+
 			for(var i = 0; i < size; i++) {
-				var start = i * unit; 
+				var start = i * unit;
 				tail.qCurveTo(start, tail_size, 0, tail_size*2);
 				tail.qCurveTo(-start, tail_size, 0, tail_size*2);
 			}
@@ -138,7 +138,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 			clearInterval(window.timer);
 			window.timer = setInterval(function() {
-				
+
 				angle = angle + 0.7;
 
 				if (angle >= 360)
@@ -150,13 +150,13 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 			}, 1000/60);
 
-			
-			return g; 
+
+			return g;
 		}
 	}
 
 
-	return Radar; 
+	return Radar;
 
 }, "chart.widget.core");
 </script>
@@ -195,6 +195,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 	<div class="container"></div>
 </div>
 
+<div id="chart9">
+	<div class="container"></div>
+</div>
 
 <script>
     jui.ready(function() {
@@ -230,7 +233,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				right :0,
 				top: 20,
 				bottom: 20
-			},            
+			},
             axis : {
                 c : {
                     type : "radar",
@@ -243,7 +246,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			widget : {
 				type : 'radar'
 			},
-			style : style 
+			style : style
 
         });
 
@@ -275,14 +278,14 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			padding: {
 				top : 0,
 				left : 0,
-				right: 0, 
-				bottom : 30	
+				right: 0,
+				bottom : 30
 			},
 			axis : [{
 				x : {
-					domain : [ "0", "1", "2", "3", "4 ", "5", "6", "7", "8", "9", "10", "11" ],		// 임의의 배열을 생성하는게 필요할지도 모르겠군. 
+					domain : [ "0", "1", "2", "3", "4 ", "5", "6", "7", "8", "9", "10", "11" ],		// 임의의 배열을 생성하는게 필요할지도 모르겠군.
 					line : true,
-					hide : true 
+					hide : true
 				},
 				y : {
 					type : "range",
@@ -291,7 +294,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 					},
 					step : 5,
 					line : true,
-					hide : true 
+					hide : true
 				},
 				data : get_random_data()
 			}],
@@ -300,7 +303,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				target : [ "normal", "warning", "fatal" ],
 				unit : 10,
 				innerPadding: 1,
-				outerPadding: 2, 
+				outerPadding: 2,
 				colors : c.ticks(3)
 			},
 			widget : {
@@ -311,21 +314,21 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				color : 'rgb(38,173,32)',
 				dy : 10
 			},
-			style : style 
+			style : style
 		});
 
 		var list2 = chart("#chart3 .container,#chart4 .container", {
 			padding: {
 				top : 0,
 				left : 0,
-				right: 0, 
-				bottom : 30	
+				right: 0,
+				bottom : 30
 			},
 			axis : [{
 				x : {
-					domain : [ "0", "1", "2", "3", "4 ", "5", "6", "7", "8", "9", "10", "11" ],		// 임의의 배열을 생성하는게 필요할지도 모르겠군. 
+					domain : [ "0", "1", "2", "3", "4 ", "5", "6", "7", "8", "9", "10", "11" ],		// 임의의 배열을 생성하는게 필요할지도 모르겠군.
 					line : true,
-					hide : true 
+					hide : true
 				},
 				y : {
 					type : "range",
@@ -334,7 +337,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 					},
 					step : 5,
 					line : true,
-					hide : true 
+					hide : true
 				},
 				data : get_random_data()
 			}],
@@ -351,7 +354,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				color : 'rgb(38,173,32)',
 				dy : 10
 			},
-			style : style 
+			style : style
 		});
 
 		setInterval(function() {
@@ -370,7 +373,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				list[0].get('axis', 0).update(get_random_data());
 		}, 500);
 
-		// modeling 객체 렌더링 
+		// modeling 객체 렌더링
 		var f16 = chart("#chart6 .container", {
 			padding : 0,
 			axis : {
@@ -435,9 +438,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			clearInterval(f16.timer);
 		}
 
-		startF16();
+		//startF16();
 
-// modeling 객체 렌더링 
+// modeling 객체 렌더링
 		var hind = chart("#chart7 .container", {
 			padding : 0,
 			axis : {
@@ -467,7 +470,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			brush : {
 				type : "canvas.model3d",
 				model : "hind" ,
-				colors : ['green'] 
+				colors : ['green']
 			},
 			widget : {
 				type : "polygon.rotate3d"
@@ -502,9 +505,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			clearInterval(hind.timer);
 		}
 
-		startHind();
+		//startHind();
 
-// modeling 객체 렌더링 
+// modeling 객체 렌더링
 		var dodge = chart("#chart8 .container", {
 			padding : 0,
 			axis : {
@@ -567,7 +570,125 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			clearInterval(dodge.timer);
 		}
 
-		startDodge();
+		//startDodge();
+
+
+		// 맵 적용
+		var names = {
+			KR: "Korea",
+			CN: "China",
+			JP: "Japan"
+		}
+
+		var data = [{
+			id: "KR",
+			value: 50220000,
+			texts: [
+				"50.22 million people in 2013",
+				"47.01 million people in 2000",
+				"45.95 million people in 1997"
+			]
+		}, {
+			id: "CN",
+			value: 1357000000,
+			texts: [
+				"13.57 billion people in 2013",
+				"12.63 billion people in 2000",
+				"12.3 billion people in 1997"
+			]
+		}, {
+			id: "JP",
+			value: 127300000,
+			texts: [
+				"1.273 billion people in 2013",
+				"1.269 billion people in 2000",
+				"1.261 billion people in 1997"
+			]
+		}];
+
+		var colors = c.ticks(3);
+
+		var map = chart("#chart9 .container", {
+			padding : 0,
+			axis : [{
+				map : {
+					path : "../../lib/jui/img/map/world-1040x660.svg",
+					width : 1040,
+					height : 630,
+					scale : 3,
+					viewX : -300,
+					viewY : 100
+				},
+				data : data
+			}],
+			brush : [{
+				type : "map.selector",
+				active : [ "KR", "JP", "CN" ]
+			}],
+			widget : [{
+				type : "map.minimap",
+				scale : 0.2,
+				align : "end",
+				orient : "top",
+				dx : -50
+			}],
+			style: {
+				fontFamily: "noto sans, sans-serif",
+				backgroundColor: "transparent",
+				mapPathBackgroundColor: colors[3],
+				mapPathBorderColor: colors[1],
+				mapPathBorderWidth: 0.5,
+				mapControlButtonColor: "#ffcb2b",
+				mapSelectorHoverColor: colors[2],
+				mapSelectorActiveColor: colors[2],
+				mapMinimapPathBackgroundColor: "#fff",
+				mapMinimapPathBackgroundOpacity: 1,
+				mapMinimapDragBackgroundColor: "#BEAB1E",
+				mapMinimapDragBorderColor: "#A88007"
+			},
+			event : {
+				render : function () {
+					mapClip();
+				}
+			}
+		});
+
+		mapClip();
+
+
+		function mapClip() {
+			var clipPath = map.svg.clipPath({
+				id : 'map-clip'
+			});
+
+			var area = map.axis(0).area();
+			var size = Math.min(area.width, area.height);
+
+
+			var clipCircle = map.svg.circle({
+				cx : area.width/2,
+				cy : area.height/2,
+				r  : size/2 - 25,
+				fill : 'black'
+			});
+
+
+
+			var defs = map.svg.root.element.children[0].children[0];
+
+			clipPath.append(clipCircle);
+			clipPath.element.appendChild(clipCircle.element);
+
+			map.appendDefs(clipPath);
+			defs.appendChild(clipPath.element);
+
+
+
+			map.axis(0).map.root.attr({
+				'clip-path' : 'url(#map-clip)'
+			});
+		}
+
 
     })
 </script>
