@@ -57,7 +57,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				stroke : 'rgb(24, 159, 130)',
 				cx : 0,
 				cy : 0,
-				r : 20
+				r : 10
 			});
 
 			guide.append(circle);
@@ -66,7 +66,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				fill : 'rgb(24, 159, 130)',
 				cx : 0,
 				cy : 0,
-				r : 10
+				r : 5
 			});
 
 			guide.append(circle2);
@@ -195,18 +195,63 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 	<div class="container"></div>
 </div>
 
-<div id="chart9">
-	<div class="container"></div>
-</div>
-
 <script>
     jui.ready(function() {
+
+		var color = jui.include('util.color');
+		var c = color.scale().domain('rgb(38,173,32)', 'rgb(0,25,0)');
+
+
+		// 맵 적용
+		var names = {
+			KR: "Korea",
+			CN: "China",
+			JP: "Japan"
+		}
+
+		var data = [{
+			id: "KR",
+			value: 50220000,
+			texts: [
+				"50.22 million people in 2013",
+				"47.01 million people in 2000",
+				"45.95 million people in 1997"
+			]
+		}, {
+			id: "CN",
+			value: 1357000000,
+			texts: [
+				"13.57 billion people in 2013",
+				"12.63 billion people in 2000",
+				"12.3 billion people in 1997"
+			]
+		}, {
+			id: "JP",
+			value: 127300000,
+			texts: [
+				"1.273 billion people in 2013",
+				"1.269 billion people in 2000",
+				"1.261 billion people in 1997"
+			]
+		}];
+
+		var colors = c.ticks(3);
 
 		var style = {
 				backgroundColor: 'transparent',
 				gridAxisBorderColor : 'rgb(24, 159, 130)',
 				gridBorderColor : 'rgb(24, 159, 130)',
-				gridBorderWidth: 0.5
+				gridBorderWidth: 0.5,
+				mapPathBackgroundColor: colors[3],
+				mapPathBorderColor: colors[1],
+				mapPathBorderWidth: 0.5,
+				mapControlButtonColor: "#ffcb2b",
+				mapSelectorHoverColor: colors[2],
+				mapSelectorActiveColor: colors[2],
+				mapMinimapPathBackgroundColor: "#fff",
+				mapMinimapPathBackgroundOpacity: 1,
+				mapMinimapDragBackgroundColor: "#BEAB1E",
+				mapMinimapDragBorderColor: "#A88007"
 			}
 
 		var domain = [];
@@ -225,7 +270,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
             { type : "WIS", warrior : 50, wizard : 90, archer : 40 }
         ];
 
-        var c = chart("#chart5 .container", {
+        var mainChart = chart("#chart5 .container", {
 
 			theme : "dark",
 			padding : {
@@ -234,24 +279,85 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				top: 20,
 				bottom: 20
 			},
-            axis : {
-                c : {
-                    type : "radar",
-                    shape : "circle",
-                    domain : domain,
+            axis : [
+			{
+				map : {
+					path : "../../lib/jui/img/map/world-1040x660.svg",
+					width : 1040,
+					height : 630,
+					scale : 3,
+					viewX : -300,
+					viewY : 100
+				},
+				data : data
+			},{
+				c : {
+					type : "radar",
+					shape : "circle",
+					domain : domain,
 					line : true
-                },
-                data : data
-            },
-			widget : {
+				},
+				data : data
+			}],
+			brush : [{
+				type : "map.selector",
+				active : [ "KR", "JP", "CN" ]
+			}],
+			widget : [{
 				type : 'radar'
 			},
-			style : style
+			{
+				type : "map.minimap",
+				scale : 0.2,
+				align : "end",
+				orient : "top",
+				dx : -50
+			}],
+			style : style,
+			event : {
+				render : function () {
+					mapClip();
+				}
+			}
 
         });
 
-		var color = jui.include('util.color');
-		var c = color.scale().domain('rgb(38,173,32)', 'rgb(0,25,0)');
+		mapClip();
+
+
+		function mapClip() {
+			var clipPath = mainChart.svg.clipPath({
+				id : 'map-clip'
+			});
+
+			var area = mainChart.axis(0).area();
+			var size = Math.min(area.width, area.height);
+
+
+			var clipCircle = mainChart.svg.circle({
+				cx : area.width/2,
+				cy : area.height/2,
+				r  : size/2,
+				fill : 'black'
+			});
+
+
+
+			var defs = mainChart.svg.root.element.children[0].children[0];
+
+			clipPath.append(clipCircle);
+			clipPath.element.appendChild(clipCircle.element);
+
+			mainChart.appendDefs(clipPath);
+			defs.appendChild(clipPath.element);
+
+
+
+			mainChart.axis(0).map.root.attr({
+				'clip-path' : 'url(#map-clip)'
+			});
+		}
+
 
 		function create (max) {
 			return Math.floor(Math.random() * max % 100);
@@ -573,121 +679,6 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 		//startDodge();
 
 
-		// 맵 적용
-		var names = {
-			KR: "Korea",
-			CN: "China",
-			JP: "Japan"
-		}
-
-		var data = [{
-			id: "KR",
-			value: 50220000,
-			texts: [
-				"50.22 million people in 2013",
-				"47.01 million people in 2000",
-				"45.95 million people in 1997"
-			]
-		}, {
-			id: "CN",
-			value: 1357000000,
-			texts: [
-				"13.57 billion people in 2013",
-				"12.63 billion people in 2000",
-				"12.3 billion people in 1997"
-			]
-		}, {
-			id: "JP",
-			value: 127300000,
-			texts: [
-				"1.273 billion people in 2013",
-				"1.269 billion people in 2000",
-				"1.261 billion people in 1997"
-			]
-		}];
-
-		var colors = c.ticks(3);
-
-		var map = chart("#chart9 .container", {
-			padding : 0,
-			axis : [{
-				map : {
-					path : "../../lib/jui/img/map/world-1040x660.svg",
-					width : 1040,
-					height : 630,
-					scale : 3,
-					viewX : -300,
-					viewY : 100
-				},
-				data : data
-			}],
-			brush : [{
-				type : "map.selector",
-				active : [ "KR", "JP", "CN" ]
-			}],
-			widget : [{
-				type : "map.minimap",
-				scale : 0.2,
-				align : "end",
-				orient : "top",
-				dx : -50
-			}],
-			style: {
-				fontFamily: "noto sans, sans-serif",
-				backgroundColor: "transparent",
-				mapPathBackgroundColor: colors[3],
-				mapPathBorderColor: colors[1],
-				mapPathBorderWidth: 0.5,
-				mapControlButtonColor: "#ffcb2b",
-				mapSelectorHoverColor: colors[2],
-				mapSelectorActiveColor: colors[2],
-				mapMinimapPathBackgroundColor: "#fff",
-				mapMinimapPathBackgroundOpacity: 1,
-				mapMinimapDragBackgroundColor: "#BEAB1E",
-				mapMinimapDragBorderColor: "#A88007"
-			},
-			event : {
-				render : function () {
-					mapClip();
-				}
-			}
-		});
-
-		mapClip();
-
-
-		function mapClip() {
-			var clipPath = map.svg.clipPath({
-				id : 'map-clip'
-			});
-
-			var area = map.axis(0).area();
-			var size = Math.min(area.width, area.height);
-
-
-			var clipCircle = map.svg.circle({
-				cx : area.width/2,
-				cy : area.height/2,
-				r  : size/2 - 25,
-				fill : 'black'
-			});
-
-
-
-			var defs = map.svg.root.element.children[0].children[0];
-
-			clipPath.append(clipCircle);
-			clipPath.element.appendChild(clipCircle.element);
-
-			map.appendDefs(clipPath);
-			defs.appendChild(clipPath.element);
-
-
-
-			map.axis(0).map.root.attr({
-				'clip-path' : 'url(#map-clip)'
-			});
-		}
 
 
     })
