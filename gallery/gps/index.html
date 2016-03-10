@@ -251,7 +251,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				mapMinimapPathBackgroundColor: "#fff",
 				mapMinimapPathBackgroundOpacity: 1,
 				mapMinimapDragBackgroundColor: "#BEAB1E",
-				mapMinimapDragBorderColor: "#A88007"
+				mapMinimapDragBorderColor: "#A88007",
+				mapMinimapBorderWidth : 0.5,
+				mapMinimapPathBorderWidth : 0.1
 			}
 
 		var domain = [];
@@ -283,9 +285,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			{
 				map : {
 					path : "../../lib/jui/img/map/world-1040x660.svg",
-					width : 1040,
+					width : 900,
 					height : 630,
-					scale : 3,
+					scale : 4,
 					viewX : -300,
 					viewY : 100
 				},
