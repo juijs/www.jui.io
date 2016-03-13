@@ -68,6 +68,7 @@ var code_list = [
     { type: "xtable", title: "Data paging & scrolling", code: "xtable_3" },
     { type: "xtable", title: "Data filters", code: "xtable_4" },
     { type: "xtable", title: "Horizontal scroll bar", code: "xtable_5" },
+    { type: "xtable", title: "Virtual scrolling", code: "xtable_6" },
     { type: "dropdown", title: "Show & Hide dropdown", code: "dropdown_1" },
     { type: "dropdown", title: "Auto Close prevention", code: "dropdown_2" },
     { type: "dropdown", title: "Control by keyboard", code: "dropdown_3" },

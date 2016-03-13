@@ -140,7 +140,7 @@ var code_list = [
 	// topology map
 	{ type: "topology", title : "Server Topologies", code : "topology.js" },
 	{ type: "topology", title : "Server Topologies with image", code : "topology2.js" },
-	{ type: "topology", title : "Inner Chart Topologies", code : "topology3.js" },
+	{ type: "topology", title : "Server Topologies (Advanced)", code : "topology3.js" },
 
 	// bar
 	{ type: "bar", title : "Basic Bar", code : "bar.js" },
