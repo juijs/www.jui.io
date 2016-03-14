@@ -15,6 +15,7 @@ var charts = [
     { type: "hud", title : "HUD Chart" },
     { type: "equalizer", title : "Equalizer Chart" },
     { type: "timeline", title : "Timeline Chart" },
+    { type: "heatmap", title : "Heatmap Chart" },
     { type: "realtime", title : "Realtime Chart" },
     { type: "map", title : "Map Chart" },
     { type: "full3d", title : "Full 3D Chart" },
@@ -82,6 +83,9 @@ var code_list = [
 
 	// timeline chart
 	{ type: "timeline", title : "Requests done to load page", code : "timeline1.js" },
+
+	// heatmap chart
+	{ type: "heatmap", title : "Weekly attendance (%)", code : "heatmap1.js" },
 
 	// realtime chart
 	{ type: "realtime", title : "TPS & Memory Monitor", code : "realtime1.js", csv : false },
