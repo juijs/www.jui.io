@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
+<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
+<script type="text/javascript" src="/gallery/fitness/data.js" ></script>
+<link rel="stylesheet" href="/gallery/fitness/index.css" />
+
+<script>
+
+jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
+	builder("#joining_chart", {
+		theme : "pastel",
+		width: "100%",
+		height : 420,
+		padding : {
+			top : 55
+		},
+		axis : [
+			{
+				x : {
+					type : "block",
+					domain : [
+						"Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10",
+						"Week 11", "Week 12", "Week 13", "Week 14", "Week 15", "Week 16", "Week 17", "Week 18", "Week 19", "Week 20",
+						"Week 21", "Week 22", "Week 23", "Week 24", "Week 25", "Attrn Avg"
+					],
+					line : "solid",
+					key : "x"
+				},
+				y : {
+					type : "block",
+					domain : [ "Oct", "Nov", "Dec", "Jan", "Feb", "Mar" ],
+					line : "solid",
+					key : "y"
+
+				},
+				data : joining_data
+			}
+
+		],
+		brush : [{
+			type : "heatmap",
+			target : "value",
+			colors : function(d) {
+				if(d.isLast) return "#aeceeb";
+				else {
+					if(d.value > 95) return "#588526";
+					else if(d.value > 60) return "#8cba00";
+					return "#fab913";
+				}
+			},
+			format : function(d) {
+				return d.value + "%";
+			}
+		}],
+		widget : [{
+			type : "tooltip",
+			orient : "right",
+			format : function(d) {
+				return (d.message) ? d.message : "No message!!!";
+			}
+		}, {
+			type : "title",
+			text : "Members retained per week"
+		}, {
+			type : "title",
+			text : "Members are grouped by their month of joining",
+			dy : 18
+		}, {
+			type : "title",
+			text : "Joining Month",
+			align : "end",
+			orient : "center",
+			dx : 58,
+			dy : -18
+		}],
+		style : {
+			titleFontWeight : "bold",
+			titleFontColor : "#555555",
+			titleFontSize : 13
+		}
+	});
+
+	builder("#gender_chart", {
+		theme : "pastel",
+		width : "100%",
+		height : 300,
+		padding : 70,
+		axis : [{
+			data : demo_data[0]
+		}],
+		brush : [{
+			type : "pie",
+			showText : "outer",
+			activeEvent : "click",
+			format : function(k, v) {
+				return demo_names[0][k] + ", " + v + "%";
+			}
+		}],
+		widget : [{
+			type : "title",
+			text : "Male vs Female members"
+		}, {
+			type : "tooltip",
+			format : function(data, k) {
+				return {
+					key: demo_names[0][k],
+					value: data[k] + "%"
+				}
+			}
+		}],
+		style : {
+			titleFontWeight : "bold",
+			titleFontSize : 12
+		}
+	});
+
+	builder("#age_chart", {
+		theme : "pastel",
+		width : "100%",
+		height : 300,
+		padding : 70,
+		axis : [{
+			data : demo_data[1]
+		}],
+		brush : [{
+			type : "pie",
+			showText : "outer",
+			format : function(k, v) {
+				return demo_names[1][k] + ", " + v + "%";
+			}
+		}],
+		widget : [{
+			type : "title",
+			text : "Age group of members"
+		}, {
+			type : "tooltip",
+			format : function(data, k) {
+				return {
+					key: demo_names[1][k],
+					value: data[k] + "%"
+				}
+			}
+		}],
+		style : {
+			titleFontWeight : "bold",
+			titleFontSize : 12
+		}
+	});
+
+	builder("#tenure_chart", {
+		theme : "pastel",
+		width : "100%",
+		height : 320,
+		padding : 80,
+		axis : [{
+			data : demo_data[2]
+		}],
+		brush : [{
+			type : "pie",
+			showText : "outer",
+			format : function(k, v) {
+				return demo_names[2][k] + ", " + v + "%";
+			}
+		}],
+		widget : [{
+			type : "title",
+			text : "Member Tenure"
+		}, {
+			type : "tooltip",
+			format : function(data, k) {
+				return {
+					key: demo_names[2][k],
+					value: data[k] + "%"
+				}
+			}
+		}],
+		style : {
+			titleFontWeight : "bold",
+			titleFontSize : 12
+		}
+	});
+
+	builder("#profession_chart", {
+		theme : "pastel",
+		width : "100%",
+		height : 320,
+		padding : 80,
+		axis : [{
+			data : demo_data[3]
+		}],
+		brush : [{
+			type : "pie",
+			showText : "outer",
+			format : function(k, v) {
+				return demo_names[3][k] + ", " + v + "%";
+			}
+		}],
+		widget : [{
+			type : "title",
+			text : "Major professions of members"
+		}, {
+			type : "tooltip",
+			format : function(data, k) {
+				return {
+					key: demo_names[3][k],
+					value: data[k] + "%"
+				}
+			}
+		}],
+		style : {
+			titleFontWeight : "bold",
+			titleFontSize : 12
+		}
+	});
+});
+</script>
+</head>
+<body class="jui">
+
+<div class="row main">
+	<div class="h4">Cohort analysis of members based on month of joining</div>
+	<div id="joining_chart"></div>
+</div>
+
+<div class="row main">
+	<div class="h4 demo">Demographics</div>
+	<div class="row">
+		<div class="col col-3 line"><div id="gender_chart"></div></div>
+		<div class="col col-3 line"><div id="age_chart"></div></div>
+		<div class="col col-3 line"><div id="tenure_chart"></div></div>
+		<div class="col col-3"><div id="profession_chart"></div></div>
+	</div>
+</div>
+
+</body>
+</html>

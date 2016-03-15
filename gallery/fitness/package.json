@@ -1,0 +1,13 @@
+{
+  "name": "fitness",
+  "version": "1.0.0",
+  "title": "Fitness Center - Cohort Analysis",
+  "description": "This dashboard showcases cohort analysis for a fitness center to help the management analysis the efficacy of its fitness programs.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "alvin",
+  "license": "MIT",
+  "height" : "1240px"
+}

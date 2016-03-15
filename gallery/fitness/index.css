@@ -1,0 +1,24 @@
+body {
+    padding: 10px;
+}
+
+.row.main {
+	margin-bottom: 30px;
+}
+
+.h4 {
+	color: #f4821f !important;
+	font-weight: bold !important;
+}
+
+.h4.demo {
+	margin-bottom: 30px;
+}
+
+.col.line {
+	border-right: 1px dashed #dcdcdc;
+}
+
+#joining_chart {
+	margin-top: 30px;
+}
