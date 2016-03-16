@@ -1,0 +1,15 @@
+{
+  "name": "facebookgroup",
+  "version": "1.0.0",
+  "title": "Facebook Group",
+  "description": "Facebook group statistics.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "facebook", "group", "statistics"
+  ],
+  "author": "donghyun",
+  "license": "MIT",
+  "height" : "730px"
+}
