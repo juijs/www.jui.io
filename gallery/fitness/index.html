@@ -23,29 +23,26 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 		padding : {
 			top : 55
 		},
-		axis : [
-			{
-				x : {
-					type : "block",
-					domain : [
-						"Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10",
-						"Week 11", "Week 12", "Week 13", "Week 14", "Week 15", "Week 16", "Week 17", "Week 18", "Week 19", "Week 20",
-						"Week 21", "Week 22", "Week 23", "Week 24", "Week 25", "Attrn Avg"
-					],
-					line : "solid",
-					key : "x"
-				},
-				y : {
-					type : "block",
-					domain : [ "Oct", "Nov", "Dec", "Jan", "Feb", "Mar" ],
-					line : "solid",
-					key : "y"
+		axis : [{
+			x : {
+				type : "block",
+				domain : [
+					"Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10",
+					"Week 11", "Week 12", "Week 13", "Week 14", "Week 15", "Week 16", "Week 17", "Week 18", "Week 19", "Week 20",
+					"Week 21", "Week 22", "Week 23", "Week 24", "Week 25", "Attrn Avg"
+				],
+				line : "solid",
+				key : "x"
+			},
+			y : {
+				type : "block",
+				domain : [ "Oct", "Nov", "Dec", "Jan", "Feb", "Mar" ],
+				line : "solid",
+				key : "y"
 
-				},
-				data : joining_data
-			}
-
-		],
+			},
+			data : joining_data
+		}],
 		brush : [{
 			type : "heatmap",
 			target : "value",
@@ -236,11 +233,15 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 		theme : "pastel",
 		width : "100%",
 		height : 350,
+		padding : {
+			top : 55,
+			left : 65
+		},
 		axis : [{
 			x : {
 				type : "fullblock",
 				domain : "startdate",
-				format : function(d, i) {
+				format : function(val, i) {
 					return "Week " + (i + 1);
 				},
 				line : false
@@ -254,14 +255,46 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 			data : growth_data
 		}],
 		brush : [{
-			type : "line"
+			type : "line",
+			target : "val"
+		}, {
+			type : "scatter",
+			target : "val",
+			size : 10
 		}],
 		widget : [{
-			type : "title",
-			text : "Line Sample"
+			type : "tooltip",
+			brush : 1,
+			format : function(d) {
+				return d.val;
+			}
 		}, {
-			type : "tooltip"
-		}]
+			type : "title",
+			text : "Growth of members over time"
+		}, {
+			type : "title",
+			text : "How events and promotions influenced memberships",
+			dy : 18
+		}, {
+			type : "title",
+			text : "No. of Members",
+			align : "start",
+			orient : "center",
+			dx : -90,
+			dy : -20
+		}],
+		style : {
+			gridBorderColor : "#dcdcdc",
+			gridBorderDashArray : "none",
+			gridYAxisBorderWidth : 0,
+			gridXAxisBorderWidth : 1,
+			gridXAxisBorderColor : "white",
+			gridTickBorderSize : 0,
+			gridTickPadding : 10,
+			titleFontWeight : "bold",
+			titleFontColor : "#555555",
+			titleFontSize : 13
+		}
 	});
 });
 </script>

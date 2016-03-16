@@ -218,3 +218,129 @@ var growth_data = [
 		val: 150
 	}
 ];
+
+var event_data = [
+	[ ],
+	[ ],
+	[
+		[
+			0.14,
+			"Calender{BR}Distribution"
+		]
+	],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[
+		[
+			0.42,
+			"Annual{BR}Picnic"
+		]
+	],
+	[ ],
+	[ ],
+	[
+		[
+			0.42,
+			"New{BR}Yoga Class"
+		]
+	],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[
+		[
+			0.57,
+			"New Kids{BR}Fitness{BR}Section"
+		]
+	],
+	[ ],
+	[ ],
+	[
+		[
+			0.42,
+			"3rd{BR}Anniversary{BR}Party"
+		]
+	],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[
+		[
+			0.85,
+			"Announcement of{BR}30% Discount{BR}For Members"
+		]
+	],
+	[ ],
+	[ ],
+	[ ],
+	[
+		[
+			0.57,
+			"Introduction{BR}of Advanced{BR}Machinery"
+		]
+	],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[
+		[
+			0,
+			"Mr. &amp; Ms. FIT{BR}Championship{BR}2015"
+		]
+	],
+	[ ],
+	[ ],
+	[
+		[
+			0.57,
+			"Camp on{BR}Warm up/{BR}Cool Down Exercise"
+		]
+	],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[
+		[
+			0.14,
+			"Opening of{BR}new Suppliment{BR}Food Shop"
+		]
+	],
+	[ ],
+	[ ],
+	[
+		[
+			0.14,
+			"New Karate{BR}section{BR}for all"
+		]
+	],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[
+		[
+			0.14,
+			"X-MAS 2015{BR}Celebration"
+		]
+	],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ],
+	[ ]
+];

@@ -6,6 +6,10 @@ body {
 	margin-bottom: 30px;
 }
 
+.row.main:first-child {
+	margin-top: 30px;
+}
+
 .h4 {
 	color: #f4821f !important;
 	font-weight: bold !important;

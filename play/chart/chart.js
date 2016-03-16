@@ -306,12 +306,11 @@ function runRealtimeData(realtime) {
 
 function changeTheme(value) {
 	var name = !value ? $("select").find("option:selected").val() : value,
-		chart = jui.get("chart.builder").pop(),
-        theme = jui.include("chart.theme." + name);
+		chart = jui.get("chart.builder").pop();
 
-    if(theme != null) {
+    if(name != null) {
         if (typeof(chart.options.theme) != "object") {
-            chart[chart.length - 1].setTheme(theme);
+            chart[chart.length - 1].setTheme(name);
         }
 
         if (table_2 != null) {
