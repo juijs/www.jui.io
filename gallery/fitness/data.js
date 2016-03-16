@@ -220,127 +220,52 @@ var growth_data = [
 ];
 
 var event_data = [
-	[ ],
-	[ ],
-	[
-		[
-			0.14,
-			"Calender{BR}Distribution"
-		]
-	],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[
-		[
-			0.42,
-			"Annual{BR}Picnic"
-		]
-	],
-	[ ],
-	[ ],
-	[
-		[
-			0.42,
-			"New{BR}Yoga Class"
-		]
-	],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[
-		[
-			0.57,
-			"New Kids{BR}Fitness{BR}Section"
-		]
-	],
-	[ ],
-	[ ],
-	[
-		[
-			0.42,
-			"3rd{BR}Anniversary{BR}Party"
-		]
-	],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[
-		[
-			0.85,
-			"Announcement of{BR}30% Discount{BR}For Members"
-		]
-	],
-	[ ],
-	[ ],
-	[ ],
-	[
-		[
-			0.57,
-			"Introduction{BR}of Advanced{BR}Machinery"
-		]
-	],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[
-		[
-			0,
-			"Mr. &amp; Ms. FIT{BR}Championship{BR}2015"
-		]
-	],
-	[ ],
-	[ ],
-	[
-		[
-			0.57,
-			"Camp on{BR}Warm up/{BR}Cool Down Exercise"
-		]
-	],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[
-		[
-			0.14,
-			"Opening of{BR}new Suppliment{BR}Food Shop"
-		]
-	],
-	[ ],
-	[ ],
-	[
-		[
-			0.14,
-			"New Karate{BR}section{BR}for all"
-		]
-	],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[
-		[
-			0.14,
-			"X-MAS 2015{BR}Celebration"
-		]
-	],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ],
-	[ ]
+	{
+		val: 0.14,
+		txt: "Calender Distribution"
+	},
+	{
+		val: 0.42,
+		txt: "Annual Picnic"
+	},
+	{
+		val: 0.42,
+		txt: "New Yoga Class"
+	},
+	{
+		val: 0.57,
+		txt: "New Kids Fitness Section"
+	},
+	{
+		val: 0.42,
+		txt: "3rd Anniversary Party"
+	},
+	{
+		val: 0.85,
+		txt: "Announcement of 30% Discount For Members"
+	},
+	{
+		val: 0.57,
+		txt: "Introduction of Advanced Machinery"
+	},
+	{
+		val: 0,
+		txt: "Mr. & Ms. FIT Championship 2015"
+	},
+	{
+		val: 0.57,
+		txt: "Camp on Warm up/ Cool Down Exercise"
+	},
+	{
+		val: 0.14,
+		txt: "Opening of new Suppliment Food Shop"
+	},
+	{
+		val: 0.14,
+		txt: "New Karate section for all"
+	},
+	{
+		val: 0.14,
+		txt: "X-MAS 2015 Celebration"
+	}
 ];

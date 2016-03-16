@@ -234,8 +234,7 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 		width : "100%",
 		height : 350,
 		padding : {
-			top : 55,
-			left : 65
+			top : 55
 		},
 		axis : [{
 			x : {
@@ -253,21 +252,57 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 				line : "solid"
 			},
 			data : growth_data
+		}, {
+			x : {
+				type : "dateblock",
+				domain : [ new Date("2015/10/08"), new Date("2016/03/16") ],
+				interval : 1000 * 60 * 60 * 24 * 7, // 7days
+				hide : true
+			},
+			y : {
+				type : "range",
+				domain : [ 0, 3 ],
+				hide : true
+			},
+			data : event_data
 		}],
 		brush : [{
 			type : "line",
-			target : "val"
+			target : "val",
+			axis : 0
 		}, {
 			type : "scatter",
 			target : "val",
-			size : 10
+			size : 10,
+			axis : 0
+		}, {
+			type : "line",
+			symbol : "step",
+			target : "val",
+			display : "max",
+			clip : false,
+			colors : [ 2 ],
+			axis : 1
+		}, {
+			type : "scatter",
+			target : "val",
+			colors : [ 2 ],
+			hide : true,
+			axis : 1
 		}],
 		widget : [{
 			type : "tooltip",
-			brush : 1,
 			format : function(d) {
 				return d.val;
-			}
+			},
+			brush : 1
+		}, {
+			type : "tooltip",
+			orient : "bottom",
+			format : function(d) {
+				return d.txt;
+			},
+			brush : 3
 		}, {
 			type : "title",
 			text : "Growth of members over time"
@@ -281,6 +316,13 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 			align : "start",
 			orient : "center",
 			dx : -90,
+			dy : -20
+		}, {
+			type : "title",
+			text : "Rate. of Events",
+			align : "end",
+			orient : "center",
+			dx : 78,
 			dy : -20
 		}],
 		style : {
