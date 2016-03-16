@@ -6,7 +6,7 @@ jui.ready([ "grid.xtable" ], function(xtable) {
         width: 800,
         scrollWidth: 600,
 		scrollHeight: 400,
-		rowHeight: 27,
+		rowHeight: 26,
 		buffer: "vscroll",
 		tpl: {
 			row: "<tr><td><!= name !></td><td><!= age !></td><td><!= location !></td></tr>",
