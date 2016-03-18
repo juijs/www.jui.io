@@ -1,1 +1,1 @@
-{"comment_max_cnt": 162206, "statistics": [{"comments": 26896, "date": "2014", "posts": 7680}, {"comments": 162206, "date": "2015", "posts": 0}, {"comments": 20091, "date": "2016", "posts": 0}], "post_max_cnt": 31145}
+{"post_max_cnt": 31145, "statistics": [{"date": "2014", "posts": 7680, "comments": 26896}, {"date": "2015", "posts": 31145, "comments": 162206}, {"date": "2016", "posts": 4444, "comments": 20091}], "comment_max_cnt": 162206}
