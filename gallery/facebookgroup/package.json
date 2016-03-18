@@ -2,7 +2,7 @@
   "name": "facebookgroup",
   "version": "1.0.0",
   "title": "Facebook Group",
-  "description": "Facebook group statistics.",
+  "description": "Facebook group network, statistics, status and so on.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
