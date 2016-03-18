@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<META charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
+<link rel="stylesheet" href="/gallery/apmmarket/index.css" />
+<script>
+	var _ = jui.include("util.base");
+
+	$(function() {
+		$(".summary-box").on("click", function(e) {
+			var $box = $(this),
+				$boxPop = $("#popupcontent"),
+				index = $box.data("index");
+
+			if($(e.target).hasClass("btn")) {
+				$boxPop.css({
+					width: $box.width(),
+					height: $box.height(),
+					left: $box.offset().left,
+					top: $box.offset().top
+				}).addClass("transition");
+
+				var $iframe = $boxPop.find("iframe"),
+					url = "/gallery/apmmarket/pop_" + (index + 1) + ".html",
+					isLoading = true;
+
+				$iframe.attr("src", url);
+				$iframe.on("load", function(e) {
+					if(!isLoading) return;
+
+					$boxPop.fadeIn(1000);
+					$iframe.css("border-radius", "5px");
+
+					setTimeout(function() {
+						$boxPop.css({
+							width: "100%",
+							height: "100%",
+							left: "0px",
+							top: "0px"
+						});
+
+						setTimeout(function() {
+							$boxPop.removeClass("transition");
+							$iframe.css("border-radius", "0px");
+							isLoading = false;
+
+							if(_.browser.mozilla) {
+								$iframe.attr("src", url);
+							}
+						}, 1000);
+					}, 1000);
+				});
+			}
+		});
+
+		$(".summary-box:not(.back)").on("mouseover", function(e) {
+			if($(e.target).hasClass("btn")) return;
+
+			var index = $(this).data("index"),
+				$target = $(".back[data-index=" + index + "]");
+
+			$(this).hide();
+			$target.show().addClass("flipInY animated");
+
+			setTimeout(function() {
+				$target.removeClass("flipInY animated");
+			}, 1000);
+
+			$(".summary-box").each(function(i) {
+				var targetIndex = $(this).data("index");
+
+				if(index != targetIndex) {
+					if($(this).hasClass("back")) {
+						$(this).hide();
+					} else {
+						$(this).show();
+					}
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+    <div class="homecontent" id="homecontent">
+        <div id="logo">
+            <img src="/gallery/apmmarket/images/logo.png" onclick="window.open('http://jennifersoft.com')">
+        </div>
+        <div id="header">
+            <span class="link" onclick="window.open('http://jui.io')">jui.io</span><br>
+            <p>Create your own chart with JUI.</p></div>
+        <center>
+            <div class="text">
+                <h1>Application<br>Performance Monitoring<br>
+                    Market Status</h1>
+                <h2>JENNIFER is a smart APM solution for Application Performance Monitoring</h2>
+            </div>
+            <div class="item">
+                <div class="summary">
+                    <div class="summary-box" data-index="0" style="left: 0px;">
+                        <div class="summary-normal">
+                            <div class="imagesfield"><img alt="APM Market Share Analysis" src="/gallery/apmmarket/images/summary_1.jpg"></div>
+                            <div class="summary-info">
+                                <div class="title">APM Market Share Analysis</div>
+                                <div class="content">The application performance monitoring market had another strong year...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-box back" data-index="0"  style="left: 0px;">
+                        <div class="summary-hover" style="background-color:#814fd5">
+                            <div class="info">GARTNER</div>
+                            <div class="title">APM<br>Market Share<br>Analysis</div>
+                            <div class="content">The application performance
+                                monitoring market had another
+                                strong year, growing 13.1% and
+                                reaching $2.4 billion in 2013.</div>
+                            <a href="#" class="btn btn-default">READ MORE</a>
+                        </div>
+                    </div>
+                    <div class="summary-box" data-index="1" style="left: 258px;">
+                        <div class="summary-normal">
+                            <div class="imagesfield"><img alt="APM Market Share Analysis" src="/gallery/apmmarket/images/summary_2.jpg"></div>
+                            <div class="summary-info">
+                                <div class="title">JenniferSoft<br> Worldwide Partners</div>
+                                <div class="content">JenniferSoft, Inc an independent software vender company in the Application Performance...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-box back" data-index="1" style="left: 258px;">
+                        <div class="summary-hover2" style="background-color:#ffcb2b">
+                            <div class="info">JenniferSoft</div>
+                            <div class="title">JenniferSoft<br>Worldwide<br>
+                                Partners</div>
+                            <div class="content">JenniferSoft, Inc an independent software vender company in the Application Performance Management(APM) market.</div>
+                            <a href="#" class="btn btn-default">READ MORE</a>
+                        </div>
+                    </div>
+                   <div class="summary-box" data-index="2" style="left: 516px;">
+                       <div class="summary-normal">
+                           <div class="imagesfield"><img alt="APM Market Share Analysis" src="/gallery/apmmarket/images/summary_3.jpg"></div>
+                           <div class="summary-info">
+                               <div class="title">JENNIFER Reference</div>
+                               <div class="content">Currently, the total number of enterprise customers of JENNIFER is 1024 by jun 10th 2015.</div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="summary-box back" data-index="2" style="left: 516px;">
+                       <div class="summary-hover" style="background-color:#1abc9c">
+                           <div class="info">JenniferSoft</div>
+                           <div class="title">JENNIFER<br>Reference<br></div>
+                           <div class="content">Currently, the total number of enterprise customers of JENNIFER is 1024 by jun 10th 2015.</div>
+                           <a href="#" class="btn btn-default">READ MORE</a>
+                       </div>
+                   </div>
+                </div>
+            </div>
+        </center>
+    </div>
+    <div id="footer" style="bottom: 0px;">
+        Like this? Your friends will, too. Share on.
+        <i class="social-icon facebook"></i>
+        <i class="social-icon twitter"></i>
+        <i class="social-icon googleplus"></i>
+        <i class="social-icon linkedin"></i>
+   </div>
+
+    <div id="popupcontent">
+        <iframe width="100%" height="100%" frameborder="0" framespacing="0" marginheight="0" marginwidth="0" scrolling="no" vspace="0"></iframe>
+    </div>
+</body>
+
+
+</html>
+
+

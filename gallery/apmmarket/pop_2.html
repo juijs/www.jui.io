@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="/gallery/apmmarket/pop_2.css" />
+	<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+	<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
+	<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
+    <script>
+        jui.ready([ "chart.builder", "util.base" ], function(builder, _) {
+            var names = {
+                KR: "Korea",
+                JP: "Japan",
+                CN: "China",
+                TH: "Thailand",
+                MY: "Malaysia",
+                AU: "Australia",
+                IL: "Israel",
+                TR: "Turkey",
+                RO: "Turkey",
+                IT: "Italy",
+                PL: "Poland",
+                IE: "Ireland",
+                UA: "Ukraine",
+                DE: "Germany",
+                AT: "Austria",
+                CH: "Switzerland",
+                ES: "Spain",
+                PT: "Portugal",
+                US: "USA",
+                BR: "Brazil"
+            }
+
+            var data = [{
+                id: "KR",
+                value: 3,
+                texts: [
+                    "2010 SK C&C",
+                    "2008 LG N-Sys",
+                    "2006 samsung SDS"
+                ]
+            }, {
+                id: "JP",
+                value: 7,
+                texts: [
+                    "2010 Security and Knowledge Support Service",
+                    "2010 Shin Nihon System Technology Corporation",
+                    "2009 OrioGlobal, Ltd.",
+                    "2008 Blaze Consulting",
+                    "2008 Hitachi information Systems",
+                    "2008 NEC Corporation",
+                    "2006 K.K Ashisuto"
+                ]
+            }, {
+                id: "CN",
+                value: 4,
+                texts: [
+                    "2013 KunlanSoft",
+                    "2012 Esol",
+                    "2012 Encore",
+                    "2009 JawaSoft"
+                ]
+            }, {
+                id: "TH",
+                value: 1,
+                texts: [ "2013 INGRAM MICRO" ]
+            }, {
+                id: "MY",
+                value: 1,
+                texts: [ "2010 Pocketpixel" ]
+            }, {
+                id: "AU",
+                value: 1,
+                texts: [ "2010 Pickett Computer Services Pty Ltd" ]
+            }, {
+                id: "IL",
+                value: 1,
+                texts: [ "2011 Infomanta" ]
+            }, {
+                id: "TR",
+                value: 1,
+                texts: [ "2012 VBT" ]
+            }, {
+                id: "RO",
+                value: 1,
+                texts: [ "2011 Castalia" ]
+            }, {
+                id: "IT",
+                value: 1,
+                texts: [ "2012 Expertise4IT" ]
+            }, {
+                id: "PL",
+                value: 1,
+                texts: [ "2009 WorldIT" ]
+            }, {
+                id: "IE",
+                value: 1,
+                texts: [ "2012 keFox" ]
+            }, {
+                id: "UA",
+                value: 1,
+                texts: [ "2012 keFox" ]
+            }, {
+                id: "DE",
+                value: 1,
+                texts: [ "2011 NuPSoft" ]
+            }, {
+                id: "AT",
+                value: 1,
+                texts: [ "2011 NuPSoft" ]
+            }, {
+                id: "CH",
+                value: 1,
+                texts: [ "2011 NuPSoft" ]
+            }, {
+                id: "ES",
+                value: 1,
+                texts: [ "2011 VANTIS" ]
+            }, {
+                id: "PT",
+                value: 1,
+                texts: [ "2011 VANTIS" ]
+            }, {
+                id: "US",
+                value: 2,
+                texts: [
+                    "2012 TONE Software",
+                    "2008 Caucho Technology, Inc"
+                ]
+            }, {
+                id: "BR",
+                value: 2,
+                texts: [
+                    "2011 VANTIS",
+                    "2010 Sun Software"
+                ]
+            }];
+
+            var c = builder("#chart", {
+                padding : 0,
+                axis : [{
+                    map : {
+                        path : "images/world-1040x660.svg",
+                        width : 1040,
+                        height : 660
+                    },
+                    data : data
+                }],
+                brush : [{
+                    type : "map.selector",
+                    active : [ "KR", "JP", "CN", "TH", "MY", "AU", "IL", "TR", "RO", "IT", "PL", "IE", "UA", "DE", "AT", "CH", "ES", "PT", "US", "BR" ]
+                }, {
+                    type : "map.note",
+                    activeEvent : "map.mouseover",
+                    format : function(data) {
+                        return names[data.id] + ": " + data.value;
+                    }
+                }],
+                style: {
+                    fontFamily: "noto sans, sans-serif",
+                    backgroundColor: "transparent",
+                    mapPathBackgroundColor: "rgb(255,229,149)",
+                    mapPathBorderColor: "#ffcb2b",
+                    mapPathBorderWidth: 0.5,
+                    mapSelectorHoverColor: "rgb(255,255,255)",
+                    mapSelectorActiveColor: "rgb(242,140,8)"
+                }
+            });
+
+            _.resize(function() {
+                var h = $(window).height() - $(c.root).offset().top,
+                        s = h / 660,
+                        w = 1060 * s;
+
+                $(c.root).width(w).height(h);
+                c.axis(0).updateGrid("map", {
+                    scale: s,
+                    viewX: (1060 - w) / 2,
+                    viewY: (660 - h) / 2
+                });
+            });
+
+            $(window).resize();
+        });
+    </script>
+</head>
+<body>
+<div class="slide2">
+    <i class="close close-default" onclick="parent.$('#popupcontent').hide();"></i>
+    <center>
+        <div class="text">
+            <h3>JenniferSoft</h3>
+            <h1>JenniferSoft Worldwide Partners</h1>
+            <h2>JenniferSoft, Inc an independent software vender company in the Application Performance Management(APM) market.<br>
+                JenniferSoft has made it's best efforts to establish a solid
+            relationship of trust with worldwide reselling partners and our customers.</h2>
+        </div>
+    </center>
+</div>
+
+<div id="chart"></div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "apmmarket",
+  "version": "1.0.0",
+  "title": "APM Market Status",
+  "description": "JENNIFER is a smart APM solution for Application Performance Monitoring",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "market", "dashboard", "jennifersoft", "apm", "jui", "chart"
+  ],
+  "author": "alvin",
+  "license": "MIT",
+  "height" : "1000px"
+}

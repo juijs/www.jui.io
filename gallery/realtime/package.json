@@ -1,5 +1,5 @@
 {
-  "name": "apm",
+  "name": "realtime",
   "version": "1.0.0",
   "title": "Real-time Monitoring Dashboard",
   "description": "Dashboard for monitoring system status and visitor services, etc.",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "apm", "dashboard", "server"
+    "apm", "dashboard", "server", "realtime", "chart"
   ],
   "author": "alvin",
   "license": "MIT",

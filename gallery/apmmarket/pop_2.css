@@ -1,0 +1,90 @@
+/*body*/
+body {
+	font-family: 'noto sans', sans-serif;
+	font-weight: 400;
+	font-size: 1em;
+	background-color: #ffcb2b;
+	margin:0px 0px;
+}
+img{
+	max-width: 100%;
+}
+.link{
+	color:#fff;
+	cursor: pointer;
+}
+/*top*/
+.close {
+	background-image:url('images/img_close.png');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	width:39px;
+	height:39px;
+	right: 0;
+	position: absolute;
+	cursor:pointer;
+	vertical-align: middle;
+	margin: 15px;
+}
+.close-default {
+	opacity: 0.3;
+	-webkit-transition:0.3s;
+	-moz-transition:0.3s;
+	-o-transition:0.3s;
+	transition:0.3s;
+}
+.close-default:hover,
+.close-default:focus,
+.close-default:active,
+.close-default.active,
+.open .dropdown-toggle.close-default {
+	opacity: 1;
+}
+/*slide2*/
+
+.slide2 {
+	color:#666666;
+}
+.slide2 .text{
+	padding: 20px 0 0 0;
+}
+.slide2 h1 {
+	font-size:1.4em;
+	color: rgba(0,0,0,0.7);
+	font-weight: 700;
+	padding:0 40px;
+
+}
+.slide2 h2 {
+	font-size: 0.75em;
+	color:rgba(0,0,0,0.5);
+	font-weight: normal;
+	line-height: 1.2em;
+	padding:0 30px;
+}
+.slide2 h3 {
+	font-size: 0.625em;
+	color:rgba(0,0,0,0.5);
+	font-weight: normal;
+}
+@media screen and (min-width: 500px){
+	.slide2 .text{
+		padding: 54px 0 0 0;
+	}
+	.slide2 h1 {
+		font-size: 2.2em;
+	}
+	.slide2 h2 {
+		font-size: 1em;
+		color:rgba(0,0,0,0.7);
+		line-height: 1.45em;
+	}
+	.slide2 h3 {
+		font-size: 0.95em;
+		letter-spacing: 2px;
+		font-weight: 700;
+	}
+}
+#chart {
+	margin: 60px auto;
+}

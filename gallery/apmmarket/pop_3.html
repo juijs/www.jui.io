@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/gallery/apmmarket/pop_3.css" />
+	<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+	<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
+	<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
+    <script>
+        jui.ready([ "chart.builder", "util.base" ], function(builder, _) {
+            var data = [{
+                id: "KR",
+                value: 3
+            }, {
+                id: "JP",
+                value: 7
+            }, {
+                id: "CN",
+                value: 4
+            }, {
+                id: "TH",
+                value: 1
+            }, {
+                id: "MY",
+                value: 1
+            }, {
+                id: "AU",
+                value: 1
+            }, {
+                id: "IL",
+                value: 1
+            }, {
+                id: "TR",
+                value: 1
+            }, {
+                id: "RO",
+                value: 1
+            }, {
+                id: "IT",
+                value: 1
+            }, {
+                id: "PL",
+                value: 1
+            }, {
+                id: "IE",
+                value: 1
+            }, {
+                id: "UA",
+                value: 1
+            }, {
+                id: "DE",
+                value: 1
+            }, {
+                id: "AT",
+                value: 1
+            }, {
+                id: "CH",
+                value: 1
+            }, {
+                id: "ES",
+                value: 1
+            }, {
+                id: "PT",
+                value: 1
+            }, {
+                id: "US",
+                value: 2
+            }, {
+                id: "BR",
+                value: 2
+            }];
+
+            var c = builder("#chart", {
+                padding : {
+                    top : 0,
+                    bottom : 0
+                },
+                axis : [{
+                    map : {
+                        path : "images/world-1040x660.svg",
+                        width : 1040,
+                        height : 660
+                    },
+                    data : data
+                }, {
+                    x : {
+                        type : "block",
+                        domain : "year",
+                        line : false
+                    },
+                    y : {
+                        type : "range",
+                        domain : [ 0, 1000 ],
+                        step : 5,
+                        line : true
+                    },
+                    area : {
+                        y : "70%",
+                        height : "25%"
+                    },
+                    data : [
+                        { year : "2008", sales : 261 },
+                        { year : "2009", sales : 375 },
+                        { year : "2010", sales : 478 },
+                        { year : "2011", sales : 586 },
+                        { year : "2012", sales : 683 },
+                        { year : "2013", sales : 820 },
+                        { year : "2014", sales : 1028 }
+                    ]
+                }],
+                brush : [{
+                    type : "map.bubble",
+                    colors : [ "rgb(129,79,213)" ],
+                    showText : true,
+                    min : 15,
+                    max : 50
+                }, {
+                    type : "map.selector",
+                    active : [ "KR", "JP", "CN", "TH", "MY", "AU", "IL", "TR", "RO", "IT", "PL", "IE", "UA", "DE", "AT", "CH", "ES", "PT", "US", "BR" ]
+                }, {
+                    type : "column",
+                    target : "sales",
+                    size : 20,
+                    axis : 1,
+                    display : "all",
+                    clip : false,
+                    colors : function(d) {
+                        if(d.sales < 1000) {
+                            return "#555d69";
+                        }
+
+                        return "#fff000";
+                    }
+                }],
+                style: {
+                    fontFamily: "noto sans, sans-serif",
+                    backgroundColor : "transparent",
+                    gridFontColor : "rgba(255,255,255,0.9)",
+                    gridYFontSize : 14,
+                    gridYFontColor : "white",
+                    gridXFontSize : 17,
+                    gridXFontColor : "black",
+                    gridXFontWeight : "bold",
+                    gridBorderColor : "#b8e5de",
+                    gridYAxisBorderWidth : 0,
+                    gridXAxisBorderWidth : 1,
+                    gridXAxisBorderColor : "white",
+                    gridTickBorderSize : 0,
+                    gridTickPadding : 10,
+                    tooltipPointRadius : 0,
+                    tooltipPointBorderWidth : 0,
+                    tooltipPointFontSize : "17px",
+                    barBorderRadius : 0,
+                    mapPathBackgroundColor : "rgb(170,223,215)",
+                    mapPathBorderColor : "#1abc9c",
+                    mapPathBorderWidth : 0.5,
+                    mapBubbleBackgroundOpacity : 0.6,
+                    mapSelectorHoverColor: "rgb(255,255,255)",
+                    mapSelectorActiveColor: "rgb(255,255,255)"
+                }
+            });
+
+            _.resize(function() {
+                var h = $(window).height() - $(c.root).offset().top,
+                    s = h / 660,
+                    w = 1060 * s,
+                    p = 100;
+
+                $(c.root).width(w).height(h);
+                c.axis(0).updateGrid("map", {
+                    scale: h / (660 + p),
+                    viewX: (1060 + p - w) / 2,
+                    viewY: (660 + p - h) / 2
+                });
+            });
+
+            $(window).resize();
+        });
+    </script>
+</head>
+<body>
+<div class="slide3">
+    <i class="close close-default" onclick="parent.$('#popupcontent').hide();"></i>
+    <center>
+        <div class="text">
+            <h3>JenniferSoft</h3>
+            <h1>JENNIFER Reference</h1>
+            <h2>Since its inception in 2005, JenniferSoft has deployed JENNIFER to 261 new customer sites in 2008, 478 in 2010, 683 in 2012.<br>
+            Currently, the total number of enterprise customers of JENNIFER is 1028 by Jun 10th 2015.</h2>
+        </div>
+    </center>
+</div>
+
+<div id="chart"></div>
+</body>
+</html>
