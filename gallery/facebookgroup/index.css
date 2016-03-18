@@ -1,0 +1,53 @@
+body {
+	font-family: sans-serif;
+	padding: 20px;
+	margin: 0px;
+}
+
+.full-height {
+	height: 100%;
+}
+
+.left {
+	width: 550px !important;
+}
+
+.right {
+	left: 2%;
+	width: auto;
+	overflow: hidden;
+	padding-left: 10px;
+}
+
+.right > .row:first-child {
+	margin-bottom: 7px;
+}
+
+
+.right > .panel:last-child > .body {
+	height: 472px;
+	overflow: hidden;
+}
+
+#weather-bar {
+	height: 120px;
+}
+
+span.h6 {
+	font-weight: bold !important;
+	margin: 20px 0px 6px 0px;
+}
+
+section:first-child span.h6 {
+	margin-top: 0px !important;
+}
+
+#temperature-line {
+	width: 100%;
+	height: 130px;
+}
+
+#air-quality-line {
+	width: 100%;
+	height: 130px;
+}
