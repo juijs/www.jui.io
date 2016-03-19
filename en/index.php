@@ -1,1 +1,0 @@
-<script>location.href="/index.php";</script>

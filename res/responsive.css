@@ -67,6 +67,10 @@
 	#about .col-4 p {
 		width: 100% !important;
 	}
+
+	.gallery-container .item {
+		flex: 1 0 100% !important
+	}
 }
 
 @media screen and (max-device-width: 400px) {

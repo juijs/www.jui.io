@@ -50,11 +50,16 @@ $list = directoryList("./gallery", "");
         <div class="item">
             <div class="wrap">
                 <div class="body">
+                    <?php if(isset($list[$i]["info"]->thumbnail)) { ?>
+                    <img src="<?php echo $list[$i]["info"]->thumbnail ?>" onclick="/gallery/<?php echo $list[$i]["info"]->name ?>/index.html" />
+                    <?php } else { ?>
                     <iframe border="0" frameborder="0" src="/gallery/<?php echo $list[$i]["info"]->name ?>/index.html" scrolling="no"></iframe>
+                    <?php } ?>
                     <a href="/?p=gallery.<?php echo $list[$i]["info"]->name ?>"></a>
                 </div>
-                <div class="footer" title="<?php echo $list[$i]["info"]->description ?>">
-                    <?php echo $list[$i]["info"]->title ?>
+                <div class="footer">
+                    <div class="title"><?php echo $list[$i]["info"]->title ?></div>
+                    <div class="description"><?php echo $list[$i]["info"]->description ?></div>
                 </div>
             </div>
         </div>
