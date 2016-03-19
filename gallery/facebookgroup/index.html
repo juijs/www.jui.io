@@ -406,7 +406,6 @@
 			height: 290,
 			padding: {
 				top: 25,
-				left: 25,
 				right: 25
 			},
 			axis: {
@@ -434,9 +433,14 @@
 				activeEvent: "click",
 				clip: false
 			},
-			widget: [
-				{ type: "legend" }
-			]
+			widget: [{
+				type: "legend"
+			}, {
+				type: "cross",
+				yFormat: function(d) {
+					return Math.floor(d / 1000) + "k";
+				}
+			}]
 		});
 	}
 
