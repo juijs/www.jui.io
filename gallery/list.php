@@ -59,8 +59,9 @@ $list = directoryList("./gallery", "");
                     <?php } ?>
                     <a href="/?p=gallery.<?php echo $list[$i]["info"]->name ?>"></a>
                 </div>
-                <div class="footer" title="<?php echo $list[$i]["info"]->description ?>">
-                    <?php echo $list[$i]["info"]->title ?>
+                <div class="footer">
+                    <div class="title" title="<?php echo $list[$i]["info"]->title ?>"><?php echo $list[$i]["info"]->title ?></div>
+                    <div class="description" title="<?php echo $list[$i]["info"]->description ?>"><?php echo $list[$i]["info"]->description ?></div>
                 </div>
             </div>
         </div>

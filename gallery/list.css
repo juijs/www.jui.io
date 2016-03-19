@@ -46,17 +46,27 @@
     bottom:0px;
     left:0px;
     right:0px;
-    height: 40px;
+    height: 60px;
     padding:10px;
     box-sizing: border-box;
     border-top:1px solid #ddd;
-    font-weight: bold;
+}
+.gallery-list .item .footer > .title {
+	font-weight: bold;
+	font-size: 14px;
+}
+.gallery-list .item .footer > .description {
+	font-size: 12px;
+	padding-top: 7px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .gallery-list .item .body {
     position: absolute;
     top:0px;
-    bottom:40px;
+    bottom:60px;
     left:0px;
     right:0px;
 }
