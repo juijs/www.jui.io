@@ -2,8 +2,7 @@
 .gallery-container {
     margin: 0 auto;
     margin-top:100px;
-    width: 90%;
-    max-width:980px;
+    width: 980px;
 }
 
 .gallery-list {
@@ -12,31 +11,24 @@
 }
 
 .gallery-list .item {
-    flex:1 0 50%;
-    position:relative;
-    height:350px;
-    padding:10px;
-    box-sizing:border-box;
+    position: relative;
+    flex: 1 0 50%;
+    height: 350px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-.item .wrap {
+.gallery-list .item .wrap {
+    position: relative;
     height: 100%;
-    width:100%;
-    border:1px solid black;
-    box-sizing:border-box;
-    position:relative;
-
+    width: 100%;
     box-shadow: 0 5px 10px 0 rgba(0,0,0,0.22);
     border: 1px solid #ddd;
     border-radius: 3px;
-    display: block;
-
-    cursor:pointer;
-
-
+    cursor: pointer;
 }
 
-.item .header {
+.gallery-list .item .header {
     position:absolute;
     top:0px;
     left:0px;
@@ -49,59 +41,51 @@
     border-bottom:1px solid #ddd;
 }
 
-.item .footer {
+.gallery-list .item .footer {
     position:absolute;
     bottom:0px;
     left:0px;
     right:0px;
-    height: 65px;
-    padding:9px;
+    height: 40px;
+    padding:10px;
     box-sizing: border-box;
     border-top:1px solid #ddd;
-}
-
-.item .footer .title {
     font-weight: bold;
-    font-size: 13px;
-    margin-bottom: 7px;
 }
 
-.item .footer .description {
-    font-size: 11px;
-}
-
-.item .body {
+.gallery-list .item .body {
     position: absolute;
     top:0px;
-    bottom:65px;
+    bottom:40px;
     left:0px;
     right:0px;
 }
 
-.item .body iframe {
-    position:relative;
+.gallery-list .item .body iframe {
+    position: relative;
     box-sizing: border-box;
-    border:0px;
-
-    width:300%;
-    height:300%;
+    border: 0px;
+    width: 300%;
+    height: 300%;
     transform: translate3d(0, 0, 0) scale(0.333333);
     transform-origin: top left;
     transition: opacity 0.4s ease;
-
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
-.item .body img {
+.gallery-list .item .body img {
     cursor: pointer;
     width: 100%;
     height: 100%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
-.item .body a {
-    position:absolute;
-    top:0px;
-    bottom:0px;
-    right:0px;
-    left:0px;
-
+.gallery-list .item .body a {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
 }

@@ -68,8 +68,15 @@
 		width: 100% !important;
 	}
 
-	.gallery-container .item {
-		flex: 1 0 100% !important
+	/* Gallery */
+	.gallery-container {
+		width: 100% !important;
+	}
+	.gallery-list .item {
+		flex: 1 0 100% !important;
+	}
+	.gallery-list .item.iframe {
+		display: none;
 	}
 }
 
