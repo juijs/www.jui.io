@@ -62,7 +62,7 @@
 				<div class="head">
 					<strong>Status</strong>
 				</div>
-				<div class="body" style="height: 353px;">
+				<div class="body" style="height: 300px;">
 					<table id="status" class="table simple stripeless">
 						<thead>
 						<tr>
@@ -94,7 +94,7 @@
 					<div class="head">
 						<strong>Time Overview</strong>
 					</div>
-					<div class="body">
+					<div class="body" style="height: 300px;">
 						<div id="time_overview"></div>
 					</div>
 				</div>
@@ -282,23 +282,33 @@
 		var statistics = data['statistics'];
 		var post_max_cnt = ceil(data['post_max_cnt']);
 		var comment_max_cnt = ceil(data["comment_max_cnt"]);
+		var scatter_size = (method == "day") ? 0 : ((method == "year") ? 12 : 7);
 
 		$(display).empty();
 		chart(display, {
 			padding: {
 				left: 60
 			},
-			height: 400,
+			height: 300,
 			axis: [{
 				data: statistics,
 				x: {
 					type: "block",
 					domain: "date",
-					textRotate : -30
+					textRotate : -30,
+					format : function(d, i) {
+						if(method == "day") {
+							return (i % 60 == 0) ? d : "";
+						} else if(method == "month") {
+							return (i % 2 == 0) ? d : "";
+						}
+
+						return d;
+					}
 				},
 				y: {
 					type: "range",
-					domain: [0, post_max_cnt],
+					domain: [0, post_max_cnt * 1.2],
 					step: 4,
 					line: true
 				},
@@ -308,10 +318,10 @@
 				}
 			}, {
 				x: {
-					hide: true,
+					hide: true
 				},
 				y: {
-					domain: [0, comment_max_cnt],
+					domain: [0, comment_max_cnt * 1.2],
 					orient: "right"
 				},
 				area: {
@@ -335,21 +345,22 @@
 			}, {
 				type: "scatter",
 				target: "comments",
-				size: 10,
+				size: scatter_size,
 				axis: 1,
 				colors: [2]
 			}],
 			widget: [{
 				type: "title",
 				text: capitalizeFirstLetter(method) + " Statistics",
-				align: "start"
+				align: "start",
+				dy: 5
 			}, {
 				type: "title",
 				text: "Counts",
 				align: "start",
 				orient: "center",
-				dx: -55,
-				dy: -90
+				dx: -45,
+				dy: -10
 			}, {
 				type: "tooltip",
 				format: function (k, v) {
@@ -358,10 +369,11 @@
 				brush: [0, 2, 3, 4]
 			}, {
 				type: "zoom",
+				axis: 0
 			}],
 			style: {
 				scatterBorderWidth: 1.5,
-				titleFontSize: "11px",
+				titleFontSize: 11,
 				titleFontWeight: "bold"
 			},
 			format: function (v) {
@@ -369,6 +381,14 @@
 					return ((v > 1000) ? Math.floor(v / 1000) + "k" : v);
 				}
 				return v;
+			},
+			event: {
+				"zoom.end": function(start, end) {
+					this.axis(1).zoom(start, end);
+				},
+				"zoom.close": function() {
+					this.axis(1).screen(1);
+				}
 			}
 		});
 	}
@@ -383,7 +403,12 @@
 
 		$(display).empty();
 		chart(display, {
-			height: 350,
+			height: 290,
+			padding: {
+				top: 25,
+				left: 25,
+				right: 25
+			},
 			axis: {
 				x: {
 					type: "fullblock",
@@ -393,9 +418,12 @@
 				y: {
 					type: "range",
 					domain: function (d) {
-						return Math.max(d.posts, d.comments);
+						return Math.max(d.posts, d.comments) * 1.2;
 					},
-					step: 10
+					format: function (d) {
+						return Math.floor(d / 1000) + "k";
+					},
+					step: 4
 				},
 				data: hour_statistics
 			},
@@ -403,11 +431,11 @@
 				type: "line",
 				display: "max",
 				active: "posts",
-				activeEvent: "click"
+				activeEvent: "click",
+				clip: false
 			},
 			widget: [
-				{type: "title", text: "Time Overview"},
-				{type: "legend"}
+				{ type: "legend" }
 			]
 		});
 	}
@@ -418,8 +446,10 @@
 		function display(display, model, data) {
 			$(display).empty();
 			chart(display, {
-				padding: 150,
-				height: 600,
+				padding: {
+					bottom: 70
+				},
+				height: 350,
 				axis: {
 					data: [data]
 				},
@@ -430,13 +460,18 @@
 				},
 				widget: [{
 					type: "title",
-					text: model + " Proprotion"
+					text: model + " Proprotion",
+					dy: -10
 				}, {
 					type: "tooltip",
-					orient: "left",
+					orient: "left"
 				}, {
-					type: "legend",
-				}]
+					type: "legend"
+				}],
+				style : {
+					titleFontWeight: "bold",
+					titleFontSize: 11
+				}
 			});
 		}
 
