@@ -170,10 +170,10 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 	<div id="chart2" class="chart-line">
 		<div class="container"></div>
 	</div>
-	<div id="chart3" class="chart-line">
+	<div id="chart3">
 		<div class="container"></div>
 	</div>
-	<div id="chart4" class="chart-line">
+	<div id="chart4">
 		<div class="container"></div>
 	</div>
 </div>
@@ -272,6 +272,47 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
             { type : "WIS", warrior : 50, wizard : 90, archer : 40 }
         ];
 
+		var map_data = [{
+			id: "KR",
+			airport: "small"
+		}, {
+			id: "GB",
+			airport: "small"
+		}, {
+			id: "IE",
+			airport: "small"
+		}, {
+			id: "PT",
+			airport: "small"
+		}, {
+			id: "ES",
+			airport: "small"
+		}, {
+			id: "FR",
+			airport: "small"
+		}, {
+			id: "SE",
+			airport: "small"
+		}, {
+			id: "UA",
+			airport: "small"
+		}, {
+			id: "IT",
+			airport: "small"
+		}, {
+			id: "IE",
+			airport: "small"
+		}, {
+			id: "NO",
+			airport: "small"
+		}, {
+			id: "GR",
+			airport: "small"
+		}, {
+			id: "LT",
+			airport: "small"
+		}];
+
         var mainChart = chart("#chart5 .container", {
 
 			theme : "dark",
@@ -291,7 +332,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 					viewX : -300,
 					viewY : 100
 				},
-				data : data
+				data : map_data
 			},{
 				c : {
 					type : "radar",
@@ -302,8 +343,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				data : data
 			}],
 			brush : [{
-				type : "map.selector",
-				active : [ "KR", "JP", "CN" ]
+				type : "map.flightroute",
+				colors : jui.include("util.color").map.jet(2)
 			}],
 			widget : [{
 				type : 'radar'
@@ -358,6 +399,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			mainChart.axis(0).map.root.attr({
 				'clip-path' : 'url(#map-clip)'
 			});
+
+			var g = mainChart.svg.root.element.children[0].children[6];
+			g.setAttribute('clip-path', 'url(#map-clip)');
 		}
 
 
@@ -380,6 +424,16 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 					{ normal : create(12), warning : create(2), fatal : create(80) },
 					{ normal : create(18), warning : create(5), fatal : create(7) }
 				]
+		}
+
+		function get_random_data_2() {
+			var max1 = create(1000);
+			var max2 = create(1000);
+
+			return [
+				{ value : create(max1), min : 0, max : max1 },
+				{ value : create(max2), min : 0, max : max2 }
+			]
 		}
 
 		var list = chart("#chart1 .container,#chart2 .container", {
@@ -426,51 +480,30 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 		});
 
 		var list2 = chart("#chart3 .container,#chart4 .container", {
-			padding: {
-				top : 0,
-				left : 0,
-				right: 0,
-				bottom : 30
-			},
+			padding: 0,
 			axis : [{
-				x : {
-					domain : [ "0", "1", "2", "3", "4 ", "5", "6", "7", "8", "9", "10", "11" ],		// 임의의 배열을 생성하는게 필요할지도 모르겠군.
-					line : true,
-					hide : true
+				c : {
+					type : 'table',
+					rows : 1,
+					columns : 2
 				},
-				y : {
-					type : "range",
-					domain : function(d) {
-						return Math.max(d.normal, d.warning, d.fatal);
-					},
-					step : 5,
-					line : true,
-					hide : true
-				},
-				data : get_random_data()
+				data : get_random_data_2()
 			}],
 			brush : {
-				type : "line",
-				target : [ "normal", "warning", "fatal" ],
-				colors : c.ticks(3)
-			},
-			widget : {
-				type : 'title',
-				orient : 'bottom',
-				text : 'Monitoring',
-				size : '15px',
-				color : 'rgb(38,173,32)',
-				dy : 10
+				type : "circle",
+				size : 10,
+				externalSize: 1,
+				colors : c.ticks(2)
 			},
 			style : style
 		});
 
 		setInterval(function() {
-			list2[1].get('axis', 0).update(get_random_data());
+			list2[1].get('axis', 0).update(get_random_data_2());
 		}, 3000);
 
 		setInterval(function() {
-			list2[0].get('axis', 0).update(get_random_data());
+			list2[0].get('axis', 0).update(get_random_data_2());
 		}, 2000);
 
 		setInterval(function() {
@@ -483,6 +516,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 		// modeling 객체 렌더링
 		var f16 = chart("#chart6 .container", {
+			width:300,
+			height:200,
 			padding : 0,
 			axis : {
 				x : {
@@ -550,6 +585,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 // modeling 객체 렌더링
 		var hind = chart("#chart7 .container", {
+			width:300,
+			height:200,
 			padding : 0,
 			axis : {
 				x : {
@@ -617,6 +654,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 // modeling 객체 렌더링
 		var dodge = chart("#chart8 .container", {
+			width:300,
+			height:200,
 			padding : 0,
 			axis : {
 				x : {
@@ -681,7 +720,30 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 		//startDodge();
 
 
+		var start_list = [ startF16, startHind, startDodge];
+		var end_list = [ stopF16, stopHind, stopDodge];
+		var id_list = [ '#chart6', '#chart7', '#chart8'];
+		var chart_list = [f16, hind, dodge];
 
+
+		function nextModeling() {
+			var i = create(3);
+
+			$("#chart6,#chart7,#chart8").removeClass('on');
+			$(id_list[i]).addClass('on');
+
+			chart_list[i].render();
+			start_list[i].call();
+
+			setTimeout(function() {
+				end_list[i].call();
+
+				nextModeling();
+			}, 10000);
+		}
+
+
+		setTimeout(nextModeling, 1000);
 
     })
 </script>
