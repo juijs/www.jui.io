@@ -12,10 +12,10 @@ var charts = [
     { type: "grid", title : "Grid Basic" },
     { type: "grid2", title : "Grid Style" },
     { type: "grid3", title : "Grid Type" },
-    { type: "hud", title : "HUD Chart" },
+    { type: "morechart", title : "More Chart" },
     { type: "equalizer", title : "Equalizer Chart" },
-    { type: "timeline", title : "Timeline Chart" },
-    { type: "heatmap", title : "Heatmap Chart" },
+    //{ type: "timeline", title : "Timeline Chart" },
+    //{ type: "heatmap", title : "Heatmap Chart" },
     { type: "realtime", title : "Realtime Chart" },
     { type: "map", title : "Map Chart" },
     { type: "full3d", title : "Full 3D Chart" },
@@ -74,18 +74,15 @@ var code_list = [
 	{ type: "grid3", title : "Block + Log", code : "grid_block_log.js" },
 
 	// equalizer chart
-	{ type: "hud", title : "HUD Bar", code : "hud_bar.js" },
-	{ type: "hud", title : "HUD Column", code : "hud_column.js" },
+	{ type: "morechart", title : "Sales Pyramid", code : "pyramid.js" },
+	{ type: "morechart", title : "HUD Bar", code : "hud_bar.js" },
+	{ type: "morechart", title : "HUD Column", code : "hud_column.js" },
+	{ type: "morechart", title : "Requests done to load page", code : "timeline1.js" },
+	{ type: "morechart", title : "Weekly attendance (%)", code : "heatmap1.js" },
 
 	// equalizer chart
 	{ type: "equalizer", title : "Equalizer Bar", code : "equalizer_bar.js" },
 	{ type: "equalizer", title : "Equalizer Column", code : "equalizer_column.js" },
-
-	// timeline chart
-	{ type: "timeline", title : "Requests done to load page", code : "timeline1.js" },
-
-	// heatmap chart
-	{ type: "heatmap", title : "Weekly attendance (%)", code : "heatmap1.js" },
 
 	// realtime chart
 	{ type: "realtime", title : "TPS & Memory Monitor", code : "realtime1.js", csv : false },
