@@ -37,7 +37,7 @@
             if(page() == null) {
                 include("doc/".$lang."/home_metadata.html");
             } else if(page() == "gallery") {
-                include("gallery/list_metadata.html");
+                include("doc/".$lang."/gallery_metadata.html");
             } else {
                 include("doc/".$lang."/".page()."_metadata.html");
             }
@@ -77,12 +77,17 @@
             </div>
         </article>
     <?php } else if(page() == "gallery") { ?>
+		<nav class="navbar fixed top sub">
+			<div class="center">
+				<?php include("doc/".$lang."/gallery_title.html"); ?>
+			</div>
+		</nav>
         <article>
-            <?php include("gallery/list.php"); ?>
+			<?php include("gallery/list.php"); ?>
         </article>
     <?php } else if(startsWith(page(), "gallery.")) { ?>
         <article>
-            <?php include("gallery/view.php") ?>
+			<?php include("gallery/view.php") ?>
         </article>
     <?php } else { ?>
         <nav class="navbar fixed top sub">

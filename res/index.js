@@ -262,7 +262,13 @@ function initAnimation() {
 }
 
 function changeLanguage(lang) {
-	location.href = "/?lang=" + lang;
+	var page = location.href.split("p=")[1];
+
+	if(page) {
+		location.href = "/?lang=" + lang + "&p=" + page;
+	} else {
+		location.href = "/?lang=" + lang;
+	}
 }
 
 jui.ready([ "ui.modal", "ui.dropdown" ], function(modal, dropdown) {
