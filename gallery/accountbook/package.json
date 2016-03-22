@@ -1,0 +1,15 @@
+{
+  "name": "accountbook",
+  "version": "1.0.0",
+  "title": "Account Book",
+  "description": "Monitoring the status of your service, and a screen that shows the visitor's information.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "admintool"
+  ],
+  "author": "seogi1004",
+  "license": "MIT",
+  "height" : "768px"
+}

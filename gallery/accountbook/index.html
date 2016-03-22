@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>JENNIFER UI: AdminTool Sample</title>
+<link rel="stylesheet" href="/lib/jui/css/ui.min.css"/>
+<link id="ui_theme" rel="stylesheet" href="/lib/jui/css/ui-jennifer.min.css"/>
+<link rel="stylesheet" href="/lib/jui/css/grid.min.css"/>
+<link id="grid_theme" rel="stylesheet" href="/lib/jui/css/grid-jennifer.min.css"/>
+<script src="/lib/jquery-1.8.0.min.js"></script>
+<script src="/lib/jui/js/core.min.js"></script>
+<script src="/lib/jui/js/ui.min.js"></script>
+<script src="/lib/jui/js/grid.min.js"></script>
+<script src="/lib/jui/js/chart.min.js"></script>
+<link href="/gallery/accountbook/index.css" rel="stylesheet" type="text/css" />
+
+<script>
+jui.ready([ "chart.builder", "grid.table" ], function(builder, table) {
+	builder("#chart", {
+		width : "100%",
+		height : 300,
+		padding : {
+			top : 25,
+			right : 25,
+			bottom: 25
+		},
+		axis : [{
+			x : {
+				type : "block",
+				domain : [ "식비", "주거/통신", "생활용품", "의복/미용", "건강/문화", "교육/육아", "교통/차량", "경조사/회비", "세금/이자", "용돈/기타", "미분류" ],
+			},
+			y : {
+				type : "range",
+				domain : [ 0, 100 ],
+				step : 5,
+				line : "solid"
+			}
+		}],
+		brush : [{
+			type : "column"
+		}],
+		style : {
+			gridXAxisBorderWidth : 1,
+			gridYAxisBorderWidth : 0,
+			gridTickBorderSize : 0,
+			gridTickPadding : 7
+		}
+	});
+});
+</script>
+</head>
+<body class="jui">
+
+<div class="header">
+	<div class="center">
+		<div class="title">
+			<span class="start-date">2016.02.10</span>
+			-
+			<span class="end-date">2016.02.10</span>
+		</div>
+		<div class="slider horizontal">
+			<div class="track">
+				<div class="progress" style="left: 50%; width: 20%;"></div>
+				<div class="handle from" style="left: 50%;"></div>
+				<div class="handle to" style="left: 70%;"></div>
+			</div>
+			<div class="scale">
+				<span>10</span>
+				<span>11</span>
+				<span>12</span>
+				<span>1</span>
+				<span>2</span>
+				<span>3</span>
+				<span>4</span>
+				<span>5</span>
+				<span>6</span>
+				<span>7</span>
+				<span>8</span>
+				<span>9</span>
+				<span>10</span>
+			</div>
+		</div>
+	</div>
+
+	<ul class="tab top">
+		<li><a href="#">지출</a></li>
+		<li><a href="#">수입</a></li>
+		<li><a href="#">달력</a></li>
+	</ul>
+
+	<div class="toolbar">
+		<a class="btn mini"><i class="icon-chart"></i></a>
+		<div class="group">
+			<a class="btn mini"><i class="icon-chart"></i></a>
+			<a class="btn mini"><i class="icon-chart"></i></a>
+			<a class="btn mini"><i class="icon-chart"></i></a>
+		</div>
+		<a class="btn mini">항목추가</a>
+	</div>
+</div>
+
+<div class="contents">
+	<div>
+		<div id="chart"></div>
+	</div>
+	<div style="display: none;"></div>
+	<div style="display: none;"></div>
+</div>
+
+
+</body>
+</html>
