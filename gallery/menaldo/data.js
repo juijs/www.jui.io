@@ -11,7 +11,7 @@
  */
 
 var data = {
-	offensePoints: [{
+	offensePoint: [{
 		messiGoal: 47,
 		messiAssist: 11,
 		ronaldoGoal: 33,
@@ -47,5 +47,59 @@ var data = {
 		ronaldoGoal: 61,
 		ronaldoAssist: 21,
 		season: '14/15'
+	}],
+	allTimeStats: [
+		{
+			type: 'APPS',
+			messi: 625,
+			ronaldo: 784
+		},
+		{
+			type: 'GOALS',
+			messi: 498,
+			ronaldo: 532
+		},
+		{
+			type: 'ASSISTS',
+			messi: 201,
+			ronaldo: 178
+		},
+		{
+			type: 'A MATCH GOALS',
+			messi: 49,
+			ronaldo: 55
+		}
+	],
+	/**
+	 * Messi: https://www.whoscored.com/Players/11119/History/Lionel-Messi
+	 */
+	averageRating: [{
+		season: '09/10',
+		messi: '8.67',
+		ronaldo: '8.24'
+	}, {
+		season: '10/11',
+		messi: '8.76',
+		ronaldo: '8.35'
+	}, {
+		season: '11/12',
+		messi: '8.88',
+		ronaldo: '8.28'
+	}, {
+		season: '12/13',
+		messi: '8.83',
+		ronaldo: '8.15'
+	}, {
+		season: '13/14',
+		messi: '8.34',
+		ronaldo: '8.27'
+	}, {
+		season: '14/15',
+		messi: '8.84',
+		ronaldo: '8.48'
+	}, {
+		season: '15/16',
+		messi: '8.47',
+		ronaldo: '7.87'
 	}]
 };
