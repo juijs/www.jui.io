@@ -14,7 +14,45 @@
 <link href="/gallery/accountbook/index.css" rel="stylesheet" type="text/css" />
 
 <script>
-jui.ready([ "chart.builder", "grid.table" ], function(builder, table) {
+function getDefaultData(count) {
+	var data = [];
+
+	for(var i = 0; i < count; i++) {
+		data.push({
+			date: "",
+			memo: "",
+			cash: "",
+			card: "",
+			type: "",
+			tag: "",
+			money: ""
+		});
+	}
+
+	return data;
+}
+
+jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function(builder, table, tab, datepicker) {
+	tab("#tab", {
+		event: {
+			change: function(data) {
+				if(data.index == 0) {
+					$("#tab_1").show();
+					$("#tab_2").hide();
+					$("#tab_3").hide();
+				} else if(data.index == 1) {
+					$("#tab_1").hide();
+					$("#tab_2").show();
+					$("#tab_3").hide();
+				} else {
+					$("#tab_1").hide();
+					$("#tab_2").hide();
+					$("#tab_3").show();
+				}
+			}
+		}
+	});
+
 	builder("#chart", {
 		width : "100%",
 		height : 300,
@@ -43,6 +81,37 @@ jui.ready([ "chart.builder", "grid.table" ], function(builder, table) {
 			gridYAxisBorderWidth : 0,
 			gridTickBorderSize : 0,
 			gridTickPadding : 7
+		}
+	});
+
+	table("#table_1", {
+		fields: [ null, "date", "memo", "cash", "card", "type", "tag" ],
+		resize: true,
+		colshow: true,
+		scroll: true,
+		scrollHeight: 240,
+		sort: [ 1, 2, 3, 4, 5, 6 ],
+		data : getDefaultData(11)
+	});
+
+	table("#table_2", {
+		fields: [ null, "date", "memo", "money", "type", "tag" ],
+		resize: true,
+		colshow: true,
+		sort: [ 1, 2, 3, 4, 5 ],
+		data : getDefaultData(26)
+	});
+
+	datepicker("#datepicker", {
+		titleFormat: "yyyy. MM",
+		format: "yyyy-MM-dd",
+		event: {
+			select: function(date, e) {
+				alert(date);
+			}
+		},
+		tpl: {
+			date: $("#tpl_date").html()
 		}
 	});
 });
@@ -81,7 +150,7 @@ jui.ready([ "chart.builder", "grid.table" ], function(builder, table) {
 		</div>
 	</div>
 
-	<ul class="tab top">
+	<ul id="tab" class="tab top">
 		<li><a href="#">지출</a></li>
 		<li><a href="#">수입</a></li>
 		<li><a href="#">달력</a></li>
@@ -99,11 +168,85 @@ jui.ready([ "chart.builder", "grid.table" ], function(builder, table) {
 </div>
 
 <div class="contents">
-	<div>
+	<div id="tab_1">
 		<div id="chart"></div>
+
+		<table id="table_1" class="table simple headline small stripeless" style="margin-top: 15px;">
+			<thead>
+			<tr>
+				<th width="15"><input type="checkbox" /></th>
+				<th>날짜</th>
+				<th>사용내역</th>
+				<th>현금</th>
+				<th>카드</th>
+				<th>분류</th>
+				<th>태그</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_1" data-tpl="row" type="text/template">
+			<tr>
+				<td><input type="checkbox" /></td>
+				<td><!= date !></td>
+				<td><!= memo !></td>
+				<td><!= cash !></td>
+				<td><!= card !></td>
+				<td><!= type !></td>
+				<td><!= tag !></td>
+			</tr>
+		</script>
 	</div>
-	<div style="display: none;"></div>
-	<div style="display: none;"></div>
+	<div id="tab_2" style="display: none;">
+		<table id="table_2" class="table simple headline small stripeless" style="margin-top: 15px;">
+			<thead>
+			<tr>
+				<th width="15"><input type="checkbox" /></th>
+				<th>날짜</th>
+				<th>내역</th>
+				<th>금액</th>
+				<th>분류</th>
+				<th>태그</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script data-jui="#table_2" data-tpl="row" type="text/template">
+			<tr>
+				<td><input type="checkbox" /></td>
+				<td><!= date !></td>
+				<td><!= memo !></td>
+				<td><!= money !></td>
+				<td><!= type !></td>
+				<td><!= tag !></td>
+			</tr>
+		</script>
+	</div>
+	<div id="tab_3" style="display: none;">
+		<div id="datepicker" class="calendar" style="height: 580px; padding-top: 0px;">
+			<table class="body">
+				<tr>
+					<th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
+				</tr>
+			</table>
+		</div>
+
+		<script id="tpl_date" type="text/template">
+			<td>
+				<! if(type != "none") { !>
+				<! if(day == 0) { !>
+				<span style="color: red;"><!= date !></span>
+				<! } else if(day == 6) { !>
+				<span style="color: blue;"><!= date !></span>
+				<! } else { !>
+				<span><!= date !></span>
+				<! } !>
+				<! } !>
+			</td>
+		</script>
+	</div>
 </div>
 
 
