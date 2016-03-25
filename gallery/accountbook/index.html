@@ -24,15 +24,49 @@ function getDefaultData(count) {
 			cash: "",
 			card: "",
 			type: "",
-			tag: "",
-			money: ""
+			income: ""
 		});
 	}
 
 	return data;
 }
 
-jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function(builder, table, tab, datepicker) {
+function printStartToEndDate(month) {
+	var _ = jui.include("util.base");
+
+	var now = new Date(),
+		start = new Date(now.getFullYear(), month || now.getMonth(), 1),
+		end = new Date(start.getFullYear(), start.getMonth() + 1, 1);
+
+	start.setDate(1);
+	end = new Date(end.getTime() - 1);
+
+	$(".header .start-date").html(_.dateFormat(start, "yyyy.MM.dd"));
+	$(".header .end-date").html(_.dateFormat(end, "yyyy.MM.dd"));
+}
+
+jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider" ],
+	function(builder, table, tab, datepicker, slider) {
+
+	var month = new Date().getMonth();
+
+	// To display this month
+	printStartToEndDate(month);
+
+	slider("#slider", {
+		type: "single",
+		from: month + 1,
+		min: 1,
+		max: 12,
+		step: 1,
+		tooltip: false,
+		event: {
+			change: function(d) {
+				printStartToEndDate(d.from - 1);
+			}
+		}
+	});
+
 	tab("#tab", {
 		event: {
 			change: function(data) {
@@ -51,6 +85,24 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function
 				}
 			}
 		}
+	});
+
+	table("#table_outgoing", {
+		fields: [ null, "date", "memo", "cash", "card", "type" ],
+		resize: true,
+		colshow: true,
+		scroll: true,
+		scrollHeight: 240,
+		sort: [ 1, 2, 3, 4, 5 ],
+		data : getDefaultData(11)
+	});
+
+	table("#table_income", {
+		fields: [ null, "date", "memo", "income", "type" ],
+		resize: true,
+		colshow: true,
+		sort: [ 1, 2, 3, 4 ],
+		data : getDefaultData(26)
 	});
 
 	builder("#chart", {
@@ -84,26 +136,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function
 		}
 	});
 
-	table("#table_1", {
-		fields: [ null, "date", "memo", "cash", "card", "type", "tag" ],
-		resize: true,
-		colshow: true,
-		scroll: true,
-		scrollHeight: 240,
-		sort: [ 1, 2, 3, 4, 5, 6 ],
-		data : getDefaultData(11)
-	});
-
-	table("#table_2", {
-		fields: [ null, "date", "memo", "money", "type", "tag" ],
-		resize: true,
-		colshow: true,
-		sort: [ 1, 2, 3, 4, 5 ],
-		data : getDefaultData(26)
-	});
-
 	datepicker("#datepicker", {
-		titleFormat: "yyyy. MM",
 		format: "yyyy-MM-dd",
 		event: {
 			select: function(date, e) {
@@ -122,31 +155,24 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function
 <div class="header">
 	<div class="center">
 		<div class="title">
-			<span class="start-date">2016.02.10</span>
-			-
-			<span class="end-date">2016.02.10</span>
+			<span class="start-date"></span> - <span class="end-date"></span>
 		</div>
-		<div class="slider horizontal">
-			<div class="track">
-				<div class="progress" style="left: 50%; width: 20%;"></div>
-				<div class="handle from" style="left: 50%;"></div>
-				<div class="handle to" style="left: 70%;"></div>
-			</div>
-			<div class="scale">
-				<span>10</span>
-				<span>11</span>
-				<span>12</span>
-				<span>1</span>
-				<span>2</span>
-				<span>3</span>
-				<span>4</span>
-				<span>5</span>
-				<span>6</span>
-				<span>7</span>
-				<span>8</span>
-				<span>9</span>
-				<span>10</span>
-			</div>
+
+		<div id="slider" class="slider horizontal" style="width: 250px;"></div>
+
+		<div class="slider-scale">
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+			<span>5</span>
+			<span>6</span>
+			<span>7</span>
+			<span>8</span>
+			<span>9</span>
+			<span>10</span>
+			<span>11</span>
+			<span>12</span>
 		</div>
 	</div>
 
@@ -157,11 +183,10 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function
 	</ul>
 
 	<div class="toolbar">
-		<a class="btn mini"><i class="icon-chart"></i></a>
 		<div class="group">
-			<a class="btn mini"><i class="icon-chart"></i></a>
-			<a class="btn mini"><i class="icon-chart"></i></a>
-			<a class="btn mini"><i class="icon-chart"></i></a>
+			<a class="btn mini"><i class="icon-table"></i></a>
+			<a class="btn mini"><i class="icon-tool"></i></a>
+			<a class="btn mini"><i class="icon-printer"></i></a>
 		</div>
 		<a class="btn mini">항목추가</a>
 	</div>
@@ -171,7 +196,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function
 	<div id="tab_1">
 		<div id="chart"></div>
 
-		<table id="table_1" class="table simple headline small stripeless" style="margin-top: 15px;">
+		<table id="table_outgoing" class="table simple headline small stripeless" style="margin-top: 15px;">
 			<thead>
 			<tr>
 				<th width="15"><input type="checkbox" /></th>
@@ -180,13 +205,12 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function
 				<th>현금</th>
 				<th>카드</th>
 				<th>분류</th>
-				<th>태그</th>
 			</tr>
 			</thead>
 			<tbody></tbody>
 		</table>
 
-		<script data-jui="#table_1" data-tpl="row" type="text/template">
+		<script data-jui="#table_outgoing" data-tpl="row" type="text/template">
 			<tr>
 				<td><input type="checkbox" /></td>
 				<td><!= date !></td>
@@ -194,12 +218,11 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function
 				<td><!= cash !></td>
 				<td><!= card !></td>
 				<td><!= type !></td>
-				<td><!= tag !></td>
 			</tr>
 		</script>
 	</div>
 	<div id="tab_2" style="display: none;">
-		<table id="table_2" class="table simple headline small stripeless" style="margin-top: 15px;">
+		<table id="table_income" class="table simple headline small stripeless" style="margin-top: 15px;">
 			<thead>
 			<tr>
 				<th width="15"><input type="checkbox" /></th>
@@ -207,20 +230,18 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker" ], function
 				<th>내역</th>
 				<th>금액</th>
 				<th>분류</th>
-				<th>태그</th>
 			</tr>
 			</thead>
 			<tbody></tbody>
 		</table>
 
-		<script data-jui="#table_2" data-tpl="row" type="text/template">
+		<script data-jui="#table_income" data-tpl="row" type="text/template">
 			<tr>
 				<td><input type="checkbox" /></td>
 				<td><!= date !></td>
 				<td><!= memo !></td>
-				<td><!= money !></td>
+				<td><!= income !></td>
 				<td><!= type !></td>
-				<td><!= tag !></td>
 			</tr>
 		</script>
 	</div>

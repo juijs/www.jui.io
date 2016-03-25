@@ -8,13 +8,23 @@
 	text-align: center;
 }
 .header > .center > .title {
-	font-size: 22px;
+	font-size: 18px;
 	font-weight: bold;
+	margin-left: -10px;
 }
 .header > .toolbar {
 	position: absolute;
 	right: 0px;
 	top: 115px;
+}
+
+.header > .center > .slider-scale {
+	margin-top: -9px;
+	font-size: 1px;
+	color: #a9a9a9;
+}
+.header > .center > .slider-scale > span {
+	margin-right: 9px;
 }
 
 /* JUI Components */
@@ -27,12 +37,4 @@
 }
 .jui .slider.horizontal .track .handle {
 	margin-top: -6px;
-}
-.jui .slider .scale {
-	padding-top: 19px;
-	font-size: 1px;
-	color: #a9a9a9;
-}
-.jui .slider .scale > span {
-	margin-right: 7px;
 }

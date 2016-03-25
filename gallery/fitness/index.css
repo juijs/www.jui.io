@@ -11,8 +11,11 @@ body {
 }
 
 .h4 {
-	color: #f4821f !important;
+	font-size: 16px !important;
+	text-decoration: overline;
+	color: #333;
 	font-weight: bold !important;
+	font-family: Caslon540BT-Regular,Times,New Roman,serif,jennifer;
 }
 
 .h4.demo {

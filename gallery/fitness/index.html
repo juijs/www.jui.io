@@ -47,11 +47,11 @@ jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, build
 			type : "heatmap",
 			target : "value",
 			colors : function(d) {
-				if(d.isLast) return "#aeceeb";
+				if(d.isLast) return "#e0e0e0";
 				else {
-					if(d.value > 95) return "#588526";
-					else if(d.value > 60) return "#8cba00";
-					return "#fab913";
+					if(d.value > 95) return "#fef92c";
+					else if(d.value > 60) return "#81ebd7";
+					return "#b5b5b5";
 				}
 			},
 			format : function(d) {
