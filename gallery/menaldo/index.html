@@ -20,7 +20,6 @@
 <script>
 function windowResize() {
     var container = $('.jui');
-    var $panel = $(".panel > .body");
 
     $(container).height(740);
     $('#weather-map').height(670);
@@ -28,22 +27,27 @@ function windowResize() {
 /**
  * http://localhost:1111/play/chart/#fixed_imagecolumn.js
  */
-jui.ready(["util.base", "util.time", "chart.builder"], function(_, time, builder) {
+jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo'], function(_, time, builder, xtable, combo) {
+	var NAMES = {
+		messi: 'Messi',
+		ronaldo: 'Ronaldo'
+	};
+
 	var offensePointChart = builder('#offense-point', {
 		height: 200,
 		axis: {
 			x: {
-				type: "block",
-				domain: "season",
+				type: 'block',
+				domain: 'season',
 				line: true
 			},
 			y: {
-				type: "range",
+				type: 'range',
 				domain: [0, 90],
 				step: 5
 			},
 			area: {
-//				width: "47%"
+//				width: '47%'
 			},
 			data: data.offensePoint
 		},
@@ -54,14 +58,14 @@ jui.ready(["util.base", "util.time", "chart.builder"], function(_, time, builder
 			bottom: 50
 		},
 		brush: [{
-			type: "column",
-			display: "all",
+			type: 'column',
+			display: 'all',
 //			outerPadding: 20,
-			target: ["messiGoal", "ronaldoGoal", "messiAssist", "ronaldoAssist"]
+			target: ['messiGoal', 'ronaldoGoal', 'messiAssist', 'ronaldoAssist']
 		}],
 		widget: [
 			{
-				type: "legend",
+				type: 'legend',
 				format: function(v) {
 					if (v === 'messiGoal') return 'Messi Goal';
 					else if (v === 'ronaldoGoal') return 'Ronaldo Goal';
@@ -69,63 +73,58 @@ jui.ready(["util.base", "util.time", "chart.builder"], function(_, time, builder
 					else if (v === 'ronaldoAssist') return 'Ronaldo Assist';
 				}
 			},
-			{ type: "tooltip", brush: 1 },
+			{ type: 'tooltip', brush: 1 },
 			{
-				type: "title",
-				text: "Offense Point",
-				align: "start",
-				orient: "center",
+				type: 'title',
+				text: 'Offense Point',
+				align: 'start',
+				orient: 'center',
 				dx: -60
 			}
 		]
 	});
 
-	var names = {
-		messi: "Messi",
-		ronaldo: "Ronaldo"
-	};
-
 	var allTimeStatsChart = builder('#all-time-stats', {
-		height: 200,
+		height: 170,
 		axis: [{
 			x: {
-				type: "range",
+				type: 'range',
 				domain: [0, 850],
 				step: 10,
 				line: true,
 				reverse: true
 			},
 			y: {
-				type: "block",
-				domain: "type"
+				type: 'block',
+				domain: 'type'
 			},
 			data: data.allTimeStats,
 			area: {
-				x: 0, y: 0, width: "50%", height: "100%"
+				x: 0, y: 0, width: '50%', height: '100%'
 			}
 		}, {
 			x: {
 				reverse: false
 			},
 			y: {
-				orient: "right"
+				orient: 'right'
 			},
 			area: {
-				x: "50%", y: 0, width: "50%", height: "100%"
+				x: '50%', y: 0, width: '50%', height: '100%'
 			},
 			extend: 0
 		}],
 		brush: [{
-			type: "bar",
-			target: "messi",
+			type: 'bar',
+			target: 'messi',
 			colors: [ 1 ],
-			display: "all",
+			display: 'all',
 			axis: 0
 		}, {
-			type: "bar",
-			target: "ronaldo",
+			type: 'bar',
+			target: 'ronaldo',
 			colors: [ 2 ],
-			display: "all",
+			display: 'all',
 			axis: 1
 		}],
 		padding: {
@@ -135,30 +134,30 @@ jui.ready(["util.base", "util.time", "chart.builder"], function(_, time, builder
 			bottom: 50
 		},
 		widget: [{
-			type: "legend",
+			type: 'legend',
 			brush: [ 0, 1 ],
 			format: function(k) {
-				return names[k];
+				return NAMES[k];
 			}
 		}, {
-			type: "tooltip",
+			type: 'tooltip',
 			brush: [ 0, 1 ],
 			format: function(data, k) {
 				return {
-					key: names[k],
+					key: NAMES[k],
 					value: data[k]
 				}
 			}
 		}]
 	});
 
-	var awardsChart = builder('#awards', {
+	var overallChart = builder('#overall', {
 		padding: {
 			left: 20,
 			top: 30,
-			bottom: 50,
+			bottom: 60
 		},
-		height: 250,
+		height: 220,
 		axis: [{
 			area: {
 				width: '20%'
@@ -168,58 +167,120 @@ jui.ready(["util.base", "util.time", "chart.builder"], function(_, time, builder
 			]
 		}, {
 			area: {
-				width: '40%',
-				x: '25%'
+				width: '42%',
+				x: '28%'
 			},
 			x: {
-				type: "fullblock",
-				domain: "season"
+				type: 'fullblock',
+				domain: 'season'
 			},
 			y: {
-				type: "range",
+				type: 'range',
 				domain: [ 5, 10 ],
 				step: 5,
 				line: true
 			},
 			data: data.averageRating
+		}, {
+			area: {
+				x: '78%',
+				width: '20%'
+			},
+			data: [
+				{Messi: 174, Ronaldo: 106}
+			]
 		}],
 		brush: [{
-			type: "donut",
-			showText: "outer",
+			type: 'donut',
+			showText: 'outer',
 			format: function(k, v) {
-				return v + " times";
+				return v + ' times';
 			},
 			size: 30,
 			axis: 0
 		}, {
-			type: "line",
-			target: [ "messi", "ronaldo" ],
-			symbol: "curve",
+			type: 'line',
+			target: [ 'messi', 'ronaldo' ],
+			symbol: 'curve',
 			axis: 1,
 			animate: true
+		}, {
+			type: 'scatter',
+			size: 8,
+			axis: 1,
+			target: ['messi', 'ronaldo']
+		}, {
+			type: 'donut',
+			showText: 'outer',
+			format: function(k, v) {
+				return v + ' times';
+			},
+			size: 30,
+			axis: 2
 		}],
 		widget: [{
-			type: "title",
-			text: "Ballon d'Or",
-			orient: "bottom",
+			type: 'title',
+			text: 'Ballon d\'Or',
+			orient: 'bottom',
 			dy: 50,
 			axis: 0
 		}, {
-			type: "tooltip",
-			orient: "left",
+			type: 'tooltip',
+			orient: 'left',
 			format: function(data, k) {
 				return {
-					key: names[k],
+					key: NAMES[k],
 					value: data[k]
 				}
 			}
 		}, {
-			type: "title",
-			text: "Average Rating",
-			orient: "bottom",
-			dy: 50,
+			type: 'title',
+			text: 'Average Rating',
+			align: 'start',
+			orient: 'center',
+			dx: -85,
 			axis: 1
-		},]
+		}, {
+			type: 'legend'
+		}, {
+			type: 'title',
+			text: 'Man of the Match',
+			orient: 'bottom',
+			dy: 50,
+			axis: 2
+		}]
+	});
+
+	var getSeasonHistoryData = function(key) {
+		var history = _.clone(data.history[key]);
+
+		history.map(function(season) {
+			for(var key in season) {
+				if (_.typeCheck('float', season[key])) season[key] = season[key].toFixed(2);
+			}
+		});
+
+		return history;
+	};
+
+	var seasonHistoryTable = xtable("#season-history", {
+		fields: data.history.fields,
+		resize: true,
+		sort: true,
+		buffer: "scroll",
+		bufferCount: 20
+	});
+
+
+	seasonHistoryTable.update(getSeasonHistoryData('messi'));
+
+	var combobox = combo('#combo', {
+		event: {
+			change: function(selectedData) {
+				var key = String.prototype.toLowerCase.call(selectedData.text);
+				seasonHistoryTable.update(getSeasonHistoryData(key));
+			}
+		}
 	});
 });
 </script>
@@ -251,41 +312,69 @@ jui.ready(["util.base", "util.time", "chart.builder"], function(_, time, builder
 <div class="row">
 	<div class="panel">
 		<div class="head">
-			<strong>Awards</strong>
+			<strong>Overall</strong>
 		</div>
 		<div class="body">
-			<div id="awards"></div>
+			<div id="overall"></div>
 		</div>
 	</div>
 </div>
 
 <div class="row">
-	<div class="panel">
+	<div class="panel" style="height: 200px;">
 		<div class="head">
-			<strong>Daily Stock Table</strong>
+			<strong>Season History</strong>
+			<div style="float: right;">
+				<div class="combo" id="combo">
+					<a class="btn small" style="width: 150px;">Select...</a>
+					<a class="btn small toggle"><i class="icon-arrow2"></i></a>
+					<ul>
+						<li value="1">Messi</li>
+						<li value="2">Ronaldo</li>
+					</ul>
+				</div>
+			</div>
 		</div>
-		<div id="stock_table" class="xtable">
+		<div id="season-history" class="xtable">
 			<table class="table classic">
 				<thead>
 				<tr>
-					<th>Date</th>
-					<th>Open</th>
-					<th>Close</th>
-					<th>Change</th>
-					<th>Volume</th>
+					<th>Season</th>
+					<th>Team</th>
+					<th>Tournament</th>
+					<th>Apps</th>
+					<th>Mins</th>
+					<th>Goals</th>
+					<th>Assists</th>
+					<th>Yel</th>
+					<th>Red</th>
+					<th>SpG</th>
+					<th>PS%</th>
+					<th>AerialsWon</th>
+					<th>MotM</th>
+					<th>Rating</th>
 				</tr>
 				</thead>
 				<tbody></tbody>
 			</table>
 		</div>
 
-		<script data-jui="#stock_table" data-tpl="row" type="text/template">
+		<script data-jui="#season-history" data-tpl="row" type="text/template">
 			<tr>
-				<td><!= date !></td>
-				<td><!= open !></td>
-				<td><!= close !></td>
-				<td><!= change !></td>
-				<td><!= volume !></td>
+				<td><!= seasonName !></td>
+				<td><!= teamName !></td>
+				<td><!= tournamentName !></td>
+				<td><!= apps !></td>
+				<td><!= minsPlayed !></td>
+				<td><!= goal !></td>
+				<td><!= assistTotal !></td>
+				<td><!= yellowCard !></td>
+				<td><!= redCard !></td>
+				<td><!= shotsPerGame !></td>
+				<td><!= passSuccess !></td>
+				<td><!= aerialWonPerGame !></td>
+				<td><!= manOfTheMatch !></td>
+				<td><!= rating !></td>
 			</tr>
 		</script>
 	</div>
