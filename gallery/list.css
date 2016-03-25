@@ -69,6 +69,7 @@
     bottom:60px;
     left:0px;
     right:0px;
+	overflow:hidden;
 }
 
 .gallery-list .item .body iframe {
