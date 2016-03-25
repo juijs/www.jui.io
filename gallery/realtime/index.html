@@ -12,16 +12,6 @@
 <link rel="stylesheet" href="/gallery/realtime/index.css" />
 
 <script>
-function windowResize() {
-    var $panel = $(".panel > .body"),
-        h = $(window).height() - 160;
-
-    $($panel.get(0)).height(h);
-    $($panel.get(1)).height(h - 160 - 60);
-    $($panel.get(2)).height(160);
-    $($panel.get(2)).parent().css("top", 5);
-}
-
 function randomValue(start, limit) {
     return Math.floor(Math.random() * limit) + start;
 }
@@ -36,8 +26,40 @@ function getTimeToIndex() {
     return now.getHours() * 60 + now.getMinutes();
 }
 
-jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" ], function(_, time, builder, combo, tooltip) {
-    windowResize();
+jui.ready([ "util.base", "util.time", "chart.builder" ], function(_, time, builder) {
+	var dashboard_style = {
+		colors: [ "#38c3ff", "#00ceae", "#ff474c", "#ffb500", "#e8e8e8", "#1bbe64", "#98dc08", "#cf0073", "#cf0073", "#576f83" ],
+		backgroundColor: "#051220",
+		axisBorderColor: "#1c2b3b",
+		axisBorderWidth: 1,
+		axisBorderRadius: 5,
+		gridXFontColor: "#7b8b9c",
+		gridYFontColor: "#7b8b9c",
+		gridXAxisBorderColor: "#7b8b9c",
+		gridYAxisBorderColor: "#7b8b9c",
+		gridBorderColor: "#1c2b3b",
+		titleFontSize: 11,
+		titleFontColor: "#fff",
+		tooltipPointFontColor: "#fff",
+		tooltipPointFontWeight: "normal",
+		mapPathBackgroundColor: "#1c2b3b",
+		mapPathBorderColor: "#051220",
+		mapSelectorHoverColor: "#253a50",
+		mapSelectorActiveColor: "#768998",
+		mapBubbleBackgroundOpacity: 0.1,
+		mapBubbleBorderWidth: 2,
+		mapBubbleFontColor: "#fff",
+		mapControlButtonColor: "#00a78d",
+		gaugeBackgroundColor: "#1c2b3b",
+		gaugeFontSize: 36,
+		gaugeFontWeight: "normal",
+		gaugeTitleFontSize: 10,
+		gaugeTitleFontColor: null,
+		focusBackgroundColor: "#ffb500",
+		focusBorderColor: "#ffb500",
+		pinBorderColor: "#ffb500",
+		pinFontColor: "#ffb500"
+	}
 
     // Top left of the dashboard charts
     window.dashboard_top = builder("#dashboard_top", {
@@ -136,7 +158,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             innerPadding : 1,
             outerPadding : 20,
             unit : 20,
-            colors : [ "#7BBAE7", "#FFC000", "#FF0000" ],
+            colors : [ 0, 1, 4 ],
             axis : 0
         }, {
             type : "line",
@@ -169,14 +191,14 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
         }],
         widget : [{
             type : "title",
-            text : "Active service",
+            text : "ACTIVE SERVICE",
             dx : -10,
             dy : -7,
             axis : 0,
             align : "start"
         }, {
             type : "title",
-            text : "Response time",
+            text : "RESPONSE TIME",
             dx : -10,
             dy : -7,
             axis : 1,
@@ -190,14 +212,14 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             align : "start"
         }, {
             type : "title",
-            text : "Today's TPS",
+            text : "TODAY'S TPS",
             dx : -10,
             dy : -7,
             axis : 3,
             align : "start"
         }, {
             type : "title",
-            text : "Today's concurrent users",
+            text : "TODAY'S CONCURRENT USERS",
             dx : -10,
             dy : -7,
             axis : 4,
@@ -224,13 +246,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             },
             axis : 2
         }],
-        style : {
-            axisBorderColor : "#dcdcdc",
-            axisBorderWidth : 1.5,
-            axisBorderRadius : 5,
-            titleFontSize : 12,
-            titleFontWeight : 700
-        },
+        style : dashboard_style,
         render : false
     });
 
@@ -305,7 +321,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             target : [ "callcount" ],
             display : "max",
             colors : function(d) {
-                return (d.today) ? 0 : "#929292";
+                return (d.today) ? 0 : "#1c2b3b";
             },
             axis : 0
         }, {
@@ -318,7 +334,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             target : [ "visitor" ],
             display : "max",
             colors : function(d) {
-                return (d.today) ? 0 : "#929292";
+                return (d.today) ? 0 : "#1c2b3b";
             },
             axis : 1
         }, {
@@ -333,33 +349,33 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             size : 5,
             colors : function(d) {
                 if(d.level == "fatal") {
-                    return "#ff0000"
+                    return 2
                 } else if(d.level == "warning") {
-                    return "#f2ab14";
+                    return 3;
                 }
 
-                return "#4692ca";
+                return 0;
             },
             clip : true,
             axis : 2
         }],
         widget : [{
             type : "title",
-            text : "Hourly call count",
+            text : "HOURLY CALL COUNT",
             dx : -10,
             dy : -7,
             axis : 0,
             align : "start"
         }, {
             type : "title",
-            text : "Hourly visitor",
+            text : "HOURLY VISITOR",
             dx : -10,
             dy : -7,
             axis : 1,
             align : "start"
         }, {
             type : "title",
-            text : "Transaction view",
+            text : "TRANSACTION VIEW",
             dx : -10,
             dy : -7,
             axis : 2,
@@ -380,13 +396,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             },
             axis : 1
         }],
-        style : {
-            axisBorderColor : "#dcdcdc",
-            axisBorderWidth : 1.5,
-            axisBorderRadius : 5,
-            titleFontSize : 12,
-            titleFontWeight : 700
-        },
+        style : dashboard_style,
         event : {
             "dragselect.end": function(data) {
                 alert(data.length);
@@ -415,53 +425,40 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
             showText : true,
             colors : function(d) {
                 if(d.value > 5000) {
-                    return "linear(top) #ff686c,0.9 #fa5559";
+                    return 2;
                 } else if(d.value > 3000) {
-                    return "linear(top) #ff9d46,0.9 #ff7800";
-                } else if(d.value > 1000) {
-                    return "linear(top) #b76fef,0.9 #9228e4";
+                    return 1;
                 }
 
-                return "linear(top) #9694e0,0.9 #7977C2";
+                return 0;
             }
         }, {
             type : "map.selector",
-            activeEvent : "map.click"
+            activeEvent : "map.click",
+			active : [ "RU" ]
         }],
         widget : [{
             type : "map.control",
             align : "start",
             orient : "top",
             dx : 10,
-            dy : 10
-        }, {
-            type : "map.tooltip",
-            format : function(obj) {
-                if(obj.data.id == "KR") {
-                    return "Korea";
-                }
-
-                return obj.data.id;
-            }
+            dy : 60
         }],
-        style: {
-            mapPathBackgroundColor: "#a9a9a9",
-            mapPathBorderWidth: 0.3,
-            mapSelectorHoverColor: "#dcdcdc",
-            mapControlButtonColor: "#a9a9a9"
-        },
+        style : _.extend({
+			axisBorderWidth: 0
+		}, dashboard_style, true),
         render: false
     });
 
     // Bottom right of the gauge charts
     window.visitor_type = builder("#status", {
-        padding : {
-            top : 25,
-            bottom : 25,
-            right : 25,
-            left : 50
-        },
+        padding : 0,
+		height : 213,
         axis : [{
+			padding : {
+				top : 35,
+				bottom : 25
+			},
             c : {
                 type : "table",
                 rows : 1,
@@ -472,8 +469,9 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
         }],
         brush : [{
             type : "fullgauge",
-            size : 10,
-            titleX : -55,
+            size : 7,
+			titleY : 86,
+			colors : [ 0, 1, 4 ],
             format : function(value, index) {
                 if(index == 0) {
                     return Math.round(value / 1000) + "K";
@@ -482,42 +480,15 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
                 return value + "%";
             }
         }],
+		widget : [{
+			type : "title",
+			text : "VISITOR TYPE",
+			dx : 8,
+			dy : -2,
+			align : "start"
+		}],
+		style : dashboard_style,
         render: false
-    });
-
-    // Choose a theme for the UI
-    combo("#combo_theme", {
-        width: 150,
-        event: {
-            change: function(data) {
-                var theme = data.text.toLowerCase();
-
-                // change chart-theme
-                dashboard_top.setTheme(theme);
-                dashboard_bottom.setTheme(theme);
-                visitor_map.setTheme(theme);
-                visitor_type.setTheme(theme);
-
-                // change ui-theme
-                if(theme == "dark") {
-                    $("#ui_theme").attr("href", "../../lib/jui/css/ui-dark.min.css");
-                    $("body").css("background", "#191919");
-                } else {
-                    $("#ui_theme").attr("href", "../../lib/jui/css/ui-jennifer.min.css");
-                    $("body").css("background", "white");
-                }
-            }
-        }
-    });
-
-    // Help tooltip UI
-    tooltip("#btn_help", {
-        position: "left",
-        width: 400,
-        showType: "click",
-        tpl: {
-            item: $("#tpl_popover").html()
-        }
     });
 
     _.resize(windowResize, 100);
@@ -529,69 +500,26 @@ jui.ready([ "util.base", "util.time", "chart.builder", "ui.combo", "ui.tooltip" 
 <!-- Real-time data update -->
 <script type="text/javascript" src="/gallery/realtime/data.js" ></script>
 
-<!-- Template for tooltip -->
-<script id="tpl_popover" type="text/template">
-    <div class="popover <!= position !>">
-        <div class="head">Help tooltip</div>
-        <div class="body">
-            <div class="image"><i class="icon-caution"></i></div>
-            <div class="message"><!= message !></div>
-        </div>
-    </div>
-</script>
-
-<div class="navbar">
-    <div class="inline">
-        Theme
-        <div id="combo_theme" class="combo">
-            <a class="btn small">Select...</a>
-            <a class="btn small toggle"><i class="icon-arrow2"></i></a>
-            <ul>
-                <li>Jennifer</li>
-                <li>Dark</li>
-                <li>Pastel</li>
-                <li>Gradient</li>
-                <li>Pattern</li>
-            </ul>
-        </div>
-    </div>
-    <div class="inline right">
-        <a class="btn small" id="btn_help" title="You can change the theme through the left combo box."><i class="icon-help"></i></a>
-    </div>
+<div class="header">
+	REALTIME MONITORING DASHBOARD
+	<i class="icon-menu"></i>
 </div>
+
 <div class="row">
-    <div class="col" style="width: 49%;">
-        <div class="panel">
-            <div class="head">
-                <strong>System dashboard</strong>
-            </div>
-            <div class="body">
-                <div id="dashboard_top"></div>
-                <div id="dashboard_bottom"></div>
-            </div>
+    <div class="col left" style="width: 49%;">
+        <div>
+			<div id="dashboard_top"></div>
+			<div id="dashboard_bottom"></div>
         </div>
     </div>
-    <div class="col" style="left: 1%; width: 50%;">
-        <div class="row">
-            <div class="panel">
-                <div class="head">
-                    <strong>Visitor location map</strong>
-                </div>
-                <div class="body">
-                    <div id="map"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="panel">
-                <div class="head">
-                    <strong>Visitor type</strong>
-                </div>
-                <div class="body">
-                    <div id="status"></div>
-                </div>
-            </div>
-        </div>
+    <div class="col right" style="width: 50%;">
+		<div class="card">
+			<strong>VISITOR LOCATION MAP</strong>
+			<div class="head"></div>
+			<div id="map"></div>
+		</div>
+
+		<div id="status"></div>
     </div>
 </div>
 

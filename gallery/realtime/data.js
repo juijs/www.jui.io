@@ -112,9 +112,9 @@ function getDataForVisitor() {
         visits = randomValue(10000, 5000);
 
     return [
-        { title : "Overall Visits", value : visits, max : 15000, min : 0 },
-        { title : "Mobile Rate", value : 100 - desktopRate, max : 100, min : 0 },
-        { title : "Desktop Rate", value : desktopRate, max : 100, min : 0 }
+        { title : "OVERALL VISITS", value : visits, max : 15000, min : 0 },
+        { title : "MOBILE RATE", value : 100 - desktopRate, max : 100, min : 0 },
+        { title : "DESKTOP RATE", value : desktopRate, max : 100, min : 0 }
     ];
 }
 

@@ -1,30 +1,75 @@
 body {
-    padding: 10px;
+	margin: 0px;
+    padding: 0px;
+	background: #051220;
+	font-family: arial,Tahoma,verdana,jennifer;
 }
 
-.col-7 {
-    padding-left: 15px;
+.header {
+	height: 40px;
+	background: #00a78d;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+.header > i {
+	float: right;
+	font-size: 20px;
+	margin-right: 18px;
+	cursor: pointer;
 }
 
-.navbar {
-    margin-bottom: 15px;
+.row > .left > div {
+	height: 900px;
+	padding: 20px;
 }
 
-.panel > .body {
-    padding: 7px !important;
+.row > .left #dashboard_top {
+	width: 100%;
+	height: 60%;
 }
 
-#map, #status {
-    width: 100%;
-    height: 100%;
+.row > .left #dashboard_bottom {
+	width: 100%;
+	height: 40%;
 }
 
-#dashboard_top {
-    width: 100%;
-    height: 60%;
+.row > .right {
+	padding: 25px 20px 20px 0px;
 }
 
-#dashboard_bottom {
-    width: 100%;
-    height: 40%;
+.row > .right > .card {
+	position: relative;
+	border: 1px solid #1c2b3b;
+	border-radius: 5px;
+	height: 650px;
+}
+.row > .right > .card > * {
+	position: absolute;
+}
+.row > .right > .card > .head {
+	width: 100%;
+	height: 40px;
+	background: #fff;
+	opacity: 0.15;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	z-index: 1;
+}
+.row > .right > .card > #map {
+	top: 3px;
+	height: 99%;
+}
+.row > .right > .card > strong {
+	font-size: 11px;
+	font-weight: bold;
+	z-index: 2;
+	color: #fff;
+	top: 13px;
+	left: 13px;
+}
+.row > .right > #status {
+	margin-top: 20px;
 }
