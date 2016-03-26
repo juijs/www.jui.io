@@ -38,6 +38,19 @@ function getOutgoingDataForChart(data) {
 	return newData;
 }
 
+function getOutgoingTypes() {
+	var types = [];
+
+	for(var i = 0; i < OUTGOING_TYPES.length; i++) {
+		types.push({
+			value: i,
+			text: OUTGOING_TYPES[i]
+		});
+	}
+
+	return types;
+}
+
 var OUTGOING_TYPES = [
 	"Food",
 	"Mobile",

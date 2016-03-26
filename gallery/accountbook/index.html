@@ -29,10 +29,11 @@ function printStartToEndDate(month) {
 	$(".header .end-date").html(_.dateFormat(end, "yyyy.MM.dd"));
 }
 
-jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider" ],
-	function(builder, table, tab, datepicker, slider) {
+jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider", "ui.dropdown" ],
+	function(builder, table, tab, datepicker, slider, dropdown) {
 
-	var month = new Date().getMonth();
+	var month = 2,
+		outgoing_chart, outgoing_table, outgoing_datepicker, outgoing_dropdown;
 
 	// To display this month
 	printStartToEndDate(month);
@@ -71,23 +72,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		}
 	});
 
-	table("#table_outgoing", {
-		fields : [ null, "date", "memo", "cash", "card", "type" ],
-		resize : true,
-		scroll : true,
-		scrollHeight : 240,
-		sort : [ 1, 2, 3, 4 ],
-		data : outgoing_data
-	});
-
-	table("#table_income", {
-		fields : [ null, "date", "memo", "cash", "type" ],
-		resize : true,
-		sort : [ 1, 2, 3 ],
-		data : income_data
-	});
-
-	builder("#chart", {
+	outgoing_chart = builder("#outgoing_chart", {
 		width : "100%",
 		height : 300,
 		padding : {
@@ -128,6 +113,91 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			gridTickBorderSize : 0,
 			gridTickPadding : 7
 		}
+	});
+
+	outgoing_datepicker = datepicker("#outgoing_datepicker", {
+		format: "yyyy/MM/dd",
+		event: {
+			select: function(date, e) {
+				$($(outgoing_table.root).find("input.edit").get(0)).val(date);
+				$(this.root).hide();
+			}
+		},
+		tpl: {
+			date: "<td><!= date !></td>"
+		}
+	});
+
+	outgoing_dropdown = dropdown("#outgoing_dropdown", {
+		nodes: getOutgoingTypes(),
+		event: {
+			change: function(data) {
+				$($(outgoing_table.root).find("input.edit").get(4)).val(data.value);
+				$(this.root).hide();
+			}
+		},
+		tpl : {
+			node : "<li value='<!= value !>'><!= text !></li>"
+		}
+	});
+
+	outgoing_table = table("#outgoing_table", {
+		fields : [ null, "date", "memo", "cash", "card", "type" ],
+		editRow : true,
+		resize : true,
+		scroll : true,
+		scrollHeight : 240,
+		sort : [ 1, 2, 3, 4 ],
+		data : outgoing_data,
+		event: {
+			editstart: function(row, e) {
+				var $input = $(row.element).find("input.edit"),
+					target = $(e.target).find("input.edit")[0];
+
+				// Set datepicker event
+				$($input.get(0)).on("focus", function(e) {
+					var offset = $(e.target).offset();
+
+					$(outgoing_datepicker.root).css({
+						left: offset.left,
+						top: offset.top - 150
+					}).show();
+				});
+
+				// Set dropdown event
+				$($input.get(4)).on("focus", function(e) {
+					var offset = $(e.target).offset();
+
+					outgoing_dropdown.show(offset.left, offset.top - 190);
+				});
+
+				// Show components
+				if(target == $input.get(0)) {
+					$($input.get(0)).trigger("focus", e);
+				} else if(target == $input.get(4)) {
+					$($input.get(4)).trigger("focus", e);
+				}
+			},
+			editend: function(row, e) {
+				// Validation check
+				if(row.data["date"] == "" || row.data["memo"] == "" ||
+					isNaN(row.data["cash"]) || isNaN(row.data["card"]) || isNaN(row.data["type"])) {
+					alert("Please enter the correct value.");
+
+					return false;
+				}
+
+				outgoing_chart.axis(0).update(getOutgoingDataForChart(this.listData()));
+				$(outgoing_datepicker.root).hide();
+			}
+		}
+	});
+
+	table("#table_income", {
+		fields : [ null, "date", "memo", "cash", "type" ],
+		resize : true,
+		sort : [ 1, 2, 3 ],
+		data : income_data
 	});
 
 	datepicker("#datepicker", {
@@ -188,23 +258,23 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 
 <div class="contents">
 	<div id="tab_1">
-		<div id="chart"></div>
+		<div id="outgoing_chart"></div>
 
-		<table id="table_outgoing" class="table simple headline small stripeless" style="margin-top: 15px;">
+		<table id="outgoing_table" class="table simple headline small stripeless" style="margin-top: 15px;">
 			<thead>
 			<tr>
 				<th width="15"><input type="checkbox" /></th>
-				<th>Date</th>
-				<th>Memo</th>
+				<th width="190">Date</th>
+				<th width="40%">Memo</th>
 				<th>Cash</th>
 				<th>Card</th>
-				<th>Type</th>
+				<th width="190">Type</th>
 			</tr>
 			</thead>
 			<tbody></tbody>
 		</table>
 
-		<script data-jui="#table_outgoing" data-tpl="row" type="text/template">
+		<script data-jui="#outgoing_table" data-tpl="row" type="text/template">
 			<tr>
 				<td><input type="checkbox" /></td>
 				<td><!= date !></td>
@@ -214,6 +284,23 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				<td><!= (type === "") ? "" : OUTGOING_TYPES[type] !></td>
 			</tr>
 		</script>
+
+		<div id="outgoing_datepicker" class="datepicker" style="display: none; position: absolute;">
+			<div class="head">
+				<div class="prev"><i class="icon-chevron-left"></i></div>
+				<div class="title"></div>
+				<div class="next"><i class="icon-chevron-right"></i></div>
+			</div>
+			<table class="body">
+				<tr>
+					<th>SU</th><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th>
+				</tr>
+			</table>
+		</div>
+
+		<div id="outgoing_dropdown" class="dropdown">
+			<ul style="width: 190px;"></ul>
+		</div>
 	</div>
 	<div id="tab_2" style="display: none;">
 		<table id="table_income" class="table simple headline small stripeless" style="margin-top: 15px;">
