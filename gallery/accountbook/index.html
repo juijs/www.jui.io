@@ -29,6 +29,48 @@ function printStartToEndDate(month) {
 	$(".header .end-date").html(_.dateFormat(end, "yyyy.MM.dd"));
 }
 
+function setEditableEffect(row, e, datepicker, dropdown, isReverse) {
+	var $input = $(row.element).find("input.edit"),
+		target = $(e.target).find("input.edit")[0];
+
+	// Set datepicker event
+	$($input.get(0)).on("focus", function(e) {
+		var offset = $(e.target).offset(),
+			dy = (isReverse) ? -150 : 0;
+
+		$(datepicker.root).css({
+			left: offset.left,
+			top: offset.top + dy
+		}).show();
+	});
+
+	// Set dropdown event
+	$($input.get(4)).on("focus", function(e) {
+		var offset = $(e.target).offset(),
+			dy = (isReverse) ? -193 : 0;
+
+		dropdown.show(offset.left, offset.top + dy);
+	});
+
+	// Show components
+	if(target == $input.get(0)) {
+		$($input.get(0)).trigger("focus", e);
+	} else if(target == $input.get(4)) {
+		$($input.get(4)).trigger("focus", e);
+	}
+}
+
+function validCheckEditData(row) {
+	if(row.data["date"] == "" || row.data["memo"] == "" ||
+		isNaN(row.data["cash"]) || isNaN(row.data["card"]) || isNaN(row.data["type"])) {
+		alert("Please enter the correct value.");
+
+		return true;
+	}
+
+	return false;
+}
+
 jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider", "ui.dropdown", "ui.window" ],
 	function(builder, table, tab, datepicker, slider, dropdown, win) {
 
@@ -68,6 +110,8 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 					$("#tab_1").hide();
 					$("#tab_2").hide();
 					$("#tab_3").show();
+
+					summary_calender.reload();
 				}
 			}
 		}
@@ -146,47 +190,14 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		fields : [ "date", "memo", "cash", "card", "type" ],
 		editRow : true,
 		resize : true,
-		scroll : true,
-		scrollHeight : 240,
 		sort : [ 0, 1, 2, 3 ],
 		data : outgoing_data,
 		event: {
 			editstart: function(row, e) {
-				var $input = $(row.element).find("input.edit"),
-					target = $(e.target).find("input.edit")[0];
-
-				// Set datepicker event
-				$($input.get(0)).on("focus", function(e) {
-					var offset = $(e.target).offset();
-
-					$(outgoing_datepicker.root).css({
-						left: offset.left,
-						top: offset.top - 150
-					}).show();
-				});
-
-				// Set dropdown event
-				$($input.get(4)).on("focus", function(e) {
-					var offset = $(e.target).offset();
-
-					outgoing_dropdown.show(offset.left, offset.top - 190);
-				});
-
-				// Show components
-				if(target == $input.get(0)) {
-					$($input.get(0)).trigger("focus", e);
-				} else if(target == $input.get(4)) {
-					$($input.get(4)).trigger("focus", e);
-				}
+				setEditableEffect(row, e, outgoing_datepicker, outgoing_dropdown, true);
 			},
 			editend: function(row, e) {
-				// Validation check
-				if(row.data["date"] == "" || row.data["memo"] == "" ||
-					isNaN(row.data["cash"]) || isNaN(row.data["card"]) || isNaN(row.data["type"])) {
-					alert("Please enter the correct value.");
-
-					return false;
-				}
+				if(validCheckEditData(row)) return false;
 
 				outgoing_chart.axis(0).update(getOutgoingDataForChart(this.listData()));
 				$(outgoing_datepicker.root).hide();
@@ -197,13 +208,50 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		}
 	});
 
+	income_datepicker = datepicker("#income_datepicker", {
+		format: "yyyy/MM/dd",
+		event: {
+			select: function(date, e) {
+				$($(income_table.root).find("input.edit").get(0)).val(date);
+				$(this.root).hide();
+			}
+		},
+		tpl: {
+			date: "<td><!= date !></td>"
+		}
+	});
+
+	income_dropdown = dropdown("#income_dropdown", {
+		nodes: getIncomeTypes(),
+		event: {
+			change: function(data) {
+				$($(income_table.root).find("input.edit").get(4)).val(data.value);
+				$(this.root).hide();
+			}
+		},
+		tpl : {
+			node : "<li value='<!= value !>'><!= text !></li>"
+		}
+	});
+
 	income_table = table("#income_table", {
-		fields: [ "date", "memo", "cash", "type" ],
-		resize: true,
-		sort: [ 0, 1, 2 ],
+		fields : [ "date", "memo", "cash", "card", "type" ],
+		editRow : true,
+		resize : true,
+		sort : [ 0, 1, 2, 3 ],
 		data: income_data,
 		tpl: {
 			row: $("#tpl_income_row").html()
+		},
+		event : {
+			editstart: function(row, e) {
+				setEditableEffect(row, e, income_datepicker, income_dropdown, false);
+			},
+			editend: function(row, e) {
+				if(validCheckEditData(row)) return false;
+
+				$(income_datepicker.root).hide();
+			}
 		}
 	});
 
@@ -305,6 +353,8 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 </div>
 
 <div class="contents">
+
+	<!-- 1. Outgoing Tab -->
 	<div id="tab_1">
 		<div id="outgoing_chart"></div>
 
@@ -320,7 +370,6 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			</thead>
 			<tbody></tbody>
 		</table>
-
 		<script id="tpl_outgoing_row" type="text/template">
 			<tr>
 				<td><!= date !></td>
@@ -348,28 +397,50 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			<ul style="width: 190px;"></ul>
 		</div>
 	</div>
+
+	<!-- 2. Income Tab -->
 	<div id="tab_2" style="display: none;">
 		<table id="income_table" class="table simple headline small stripeless" style="margin-top: 15px;">
 			<thead>
 			<tr>
-				<th>Date</th>
-				<th>Memo</th>
-				<th>Income</th>
-				<th>Type</th>
+				<th width="190">Date</th>
+				<th width="40%">Memo</th>
+				<th>Cash</th>
+				<th>Card</th>
+				<th width="190">Type</th>
 			</tr>
 			</thead>
 			<tbody></tbody>
 		</table>
-
 		<script id="tpl_income_row" type="text/template">
 			<tr>
 				<td><!= date !></td>
 				<td><!= memo !></td>
 				<td align="right"><!= cash !></td>
+				<td align="right"><!= card !></td>
 				<td><!= (type === "") ? "" : income_types[type] !></td>
 			</tr>
 		</script>
+
+		<div id="income_datepicker" class="datepicker" style="display: none; position: absolute;">
+			<div class="head">
+				<div class="prev"><i class="icon-chevron-left"></i></div>
+				<div class="title"></div>
+				<div class="next"><i class="icon-chevron-right"></i></div>
+			</div>
+			<table class="body">
+				<tr>
+					<th>SU</th><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th>
+				</tr>
+			</table>
+		</div>
+
+		<div id="income_dropdown" class="dropdown">
+			<ul style="width: 190px;"></ul>
+		</div>
 	</div>
+
+	<!-- 3. Summary Tab -->
 	<div id="tab_3" style="display: none;">
 		<div id="summary_calender" class="calendar" style="height: 580px; padding-top: 0px;">
 			<table class="body">
@@ -378,7 +449,6 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				</tr>
 			</table>
 		</div>
-
 		<script id="tpl_date" type="text/template">
 			<td>
 				<div><!= date !></div>
@@ -404,49 +474,49 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				!>
 			</td>
 		</script>
-	</div>
-</div>
 
-<div id="summary_win" class="window">
-	<div class="head">
-		<div class="left">Summary</div>
-		<div class="right">
-			<a href="#" class="close"><i class="icon-exit"></i></a>
+		<div id="summary_win" class="window">
+			<div class="head">
+				<div class="left">Summary</div>
+				<div class="right">
+					<a href="#" class="close"><i class="icon-exit"></i></a>
+				</div>
+			</div>
+			<div class="body">
+				<ul id="summary_tab" class="pill top" style="margin-bottom: 10px;">
+					<li class="active"><a href="#">Outgoing</a></li>
+					<li><a href="#">Income</a></li>
+				</ul>
+
+				<table id="summary_outgoing_table" class="table simple headline small stripeless">
+					<thead>
+					<tr>
+						<th>Date</th>
+						<th width="50%">Memo</th>
+						<th>Cash</th>
+						<th>Card</th>
+						<th>Type</th>
+					</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<table id="summary_income_table" class="table simple headline small stripeless" style="display: none;">
+					<thead>
+					<tr>
+						<th>Date</th>
+						<th width="50%">Memo</th>
+						<th>Cash</th>
+						<th>Card</th>
+						<th>Type</th>
+					</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-	<div class="body">
-		<ul id="summary_tab" class="pill top" style="margin-bottom: 10px;">
-			<li class="active"><a href="#">Outgoing</a></li>
-			<li><a href="#">Income</a></li>
-		</ul>
 
-		<table id="summary_outgoing_table" class="table simple headline small stripeless">
-			<thead>
-			<tr>
-				<th>Date</th>
-				<th width="50%">Memo</th>
-				<th>Cash</th>
-				<th>Card</th>
-				<th>Type</th>
-			</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
-		<table id="summary_income_table" class="table simple headline small stripeless" style="display: none;">
-			<thead>
-			<tr>
-				<th>Date</th>
-				<th width="50%">Memo</th>
-				<th>Income</th>
-				<th>Type</th>
-			</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
-	</div>
 </div>
-
-
 
 </body>
 </html>

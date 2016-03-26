@@ -84,6 +84,7 @@ var income_data = [{
 	date: "2016/03/24",
 	memo: "Apple Corporation - salary",
 	cash: 10000000,
+	card: 0,
 	type: 0
 }];
 
@@ -134,6 +135,19 @@ function getOutgoingTypes() {
 		types.push({
 			value: i,
 			text: outgoing_types[i]
+		});
+	}
+
+	return types;
+}
+
+function getIncomeTypes() {
+	var types = [];
+
+	for(var i = 0; i < income_types.length; i++) {
+		types.push({
+			value: i,
+			text: income_types[i]
 		});
 	}
 
