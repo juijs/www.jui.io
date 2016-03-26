@@ -11,26 +11,10 @@
 <script src="/lib/jui/js/ui.min.js"></script>
 <script src="/lib/jui/js/grid.min.js"></script>
 <script src="/lib/jui/js/chart.min.js"></script>
+<script src="/gallery/accountbook/data.js"></script>
 <link href="/gallery/accountbook/index.css" rel="stylesheet" type="text/css" />
 
 <script>
-function getDefaultData(count) {
-	var data = [];
-
-	for(var i = 0; i < count; i++) {
-		data.push({
-			date: "",
-			memo: "",
-			cash: "",
-			card: "",
-			type: "",
-			income: ""
-		});
-	}
-
-	return data;
-}
-
 function printStartToEndDate(month) {
 	var _ = jui.include("util.base");
 
@@ -88,21 +72,19 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	});
 
 	table("#table_outgoing", {
-		fields: [ null, "date", "memo", "cash", "card", "type" ],
-		resize: true,
-		colshow: true,
-		scroll: true,
-		scrollHeight: 240,
-		sort: [ 1, 2, 3, 4, 5 ],
-		data : getDefaultData(11)
+		fields : [ null, "date", "memo", "cash", "card", "type" ],
+		resize : true,
+		scroll : true,
+		scrollHeight : 240,
+		sort : [ 1, 2, 3, 4 ],
+		data : outgoing_data
 	});
 
 	table("#table_income", {
-		fields: [ null, "date", "memo", "income", "type" ],
-		resize: true,
-		colshow: true,
-		sort: [ 1, 2, 3, 4 ],
-		data : getDefaultData(26)
+		fields : [ null, "date", "memo", "cash", "type" ],
+		resize : true,
+		sort : [ 1, 2, 3 ],
+		data : income_data
 	});
 
 	builder("#chart", {
@@ -116,17 +98,29 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		axis : [{
 			x : {
 				type : "block",
-				domain : [ "식비", "주거/통신", "생활용품", "의복/미용", "건강/문화", "교육/육아", "교통/차량", "경조사/회비", "세금/이자", "용돈/기타", "미분류" ],
+				domain : OUTGOING_TYPES
 			},
 			y : {
 				type : "range",
-				domain : [ 0, 100 ],
-				step : 5,
+				domain : function(d) {
+					return Math.max(d.card, d.cash) * 1.2;
+				},
+				format : function(d) {
+					return Math.floor(d / 1000) + "K";
+				},
+				step : 3,
 				line : "solid"
-			}
+			},
+			data : getOutgoingDataForChart(outgoing_data)
 		}],
 		brush : [{
-			type : "column"
+			type : "column",
+			target : [ "cash", "card" ],
+			outerPadding : 25,
+			minSize : 5
+		}],
+		widget : [{
+			type : "tooltip"
 		}],
 		style : {
 			gridXAxisBorderWidth : 1,
@@ -177,9 +171,9 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	</div>
 
 	<ul id="tab" class="tab top">
-		<li><a href="#">지출</a></li>
-		<li><a href="#">수입</a></li>
-		<li><a href="#">달력</a></li>
+		<li><a href="#">Outgoing</a></li>
+		<li><a href="#">Income</a></li>
+		<li><a href="#">Calender</a></li>
 	</ul>
 
 	<div class="toolbar">
@@ -188,7 +182,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			<a class="btn mini"><i class="icon-tool"></i></a>
 			<a class="btn mini"><i class="icon-printer"></i></a>
 		</div>
-		<a class="btn mini">항목추가</a>
+		<a class="btn mini">Add Item</a>
 	</div>
 </div>
 
@@ -200,11 +194,11 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			<thead>
 			<tr>
 				<th width="15"><input type="checkbox" /></th>
-				<th>날짜</th>
-				<th>사용내역</th>
-				<th>현금</th>
-				<th>카드</th>
-				<th>분류</th>
+				<th>Date</th>
+				<th>Memo</th>
+				<th>Cash</th>
+				<th>Card</th>
+				<th>Type</th>
 			</tr>
 			</thead>
 			<tbody></tbody>
@@ -215,9 +209,9 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				<td><input type="checkbox" /></td>
 				<td><!= date !></td>
 				<td><!= memo !></td>
-				<td><!= cash !></td>
-				<td><!= card !></td>
-				<td><!= type !></td>
+				<td align="right"><!= cash !></td>
+				<td align="right"><!= card !></td>
+				<td><!= (type === "") ? "" : OUTGOING_TYPES[type] !></td>
 			</tr>
 		</script>
 	</div>
@@ -226,10 +220,10 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			<thead>
 			<tr>
 				<th width="15"><input type="checkbox" /></th>
-				<th>날짜</th>
-				<th>내역</th>
-				<th>금액</th>
-				<th>분류</th>
+				<th>Date</th>
+				<th>Memo</th>
+				<th>Income</th>
+				<th>Type</th>
 			</tr>
 			</thead>
 			<tbody></tbody>
@@ -240,8 +234,8 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				<td><input type="checkbox" /></td>
 				<td><!= date !></td>
 				<td><!= memo !></td>
-				<td><!= income !></td>
-				<td><!= type !></td>
+				<td align="right"><!= cash !></td>
+				<td><!= (type === "") ? "" : INCOME_TYPES[type] !></td>
 			</tr>
 		</script>
 	</div>
