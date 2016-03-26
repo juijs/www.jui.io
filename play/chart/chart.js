@@ -75,6 +75,7 @@ var code_list = [
 
 	// equalizer chart
 	{ type: "morechart", title : "Sales Pyramid", code : "pyramid.js" },
+	{ type: "morechart", title : "Sales Pyramid (Reverse)", code : "pyramid_reverse.js" },
 	{ type: "morechart", title : "HUD Bar", code : "hud_bar.js" },
 	{ type: "morechart", title : "HUD Column", code : "hud_column.js" },
 	{ type: "morechart", title : "Requests done to load page", code : "timeline1.js" },

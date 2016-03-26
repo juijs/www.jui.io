@@ -6,12 +6,12 @@ body {
 }
 
 .header {
-	height: 40px;
+	height: 38px;
 	background: #00a78d;
 	color: #fff;
 	font-size: 14px;
 	font-weight: bold;
-	padding-top: 20px;
+	padding-top: 22px;
 	padding-left: 20px;
 }
 .header > i {

@@ -35,5 +35,8 @@ chart("#chart", {
 				value: data[key]
 			}
 		}
-	}]
+	}],
+	style : {
+		backgroundColor : "#1c1c1c"
+	}
 });
