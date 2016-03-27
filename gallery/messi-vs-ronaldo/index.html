@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<META charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/grid.min.css" />
+<link rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" />
+<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/core.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/grid.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
+
+<script type="text/javascript" src="/gallery/messi-vs-ronaldo/data.js" ></script>
+<link rel="stylesheet" href="/gallery/messi-vs-ronaldo/style.css" />
+
+<script>
+function windowResize() {
+    var container = $('.jui');
+
+    $(container).height(740);
+    $('#weather-map').height(670);
+}
+/**
+ * http://localhost:1111/play/chart/#fixed_imagecolumn.js
+ */
+jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo'], function(_, time, builder, xtable, combo) {
+	var NAMES = {
+		messi: 'Messi',
+		ronaldo: 'Ronaldo'
+	};
+
+	var offensePointChart = builder('#offense-point', {
+		height: 200,
+		axis: {
+			x: {
+				type: 'block',
+				domain: 'season',
+				line: true
+			},
+			y: {
+				type: 'range',
+				domain: [0, 90],
+				step: 5
+			},
+			area: {
+//				width: '47%'
+			},
+			data: data.offensePoint
+		},
+		padding: {
+			left: 55,
+			right: 25,
+			top: 15,
+			bottom: 50
+		},
+		brush: [{
+			type: 'column',
+			display: 'all',
+//			outerPadding: 20,
+			target: ['messiGoal', 'ronaldoGoal', 'messiAssist', 'ronaldoAssist'],
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
+		}],
+		widget: [
+			{
+				type: 'legend',
+				format: function(v) {
+					if (v === 'messiGoal') return 'Messi Goal';
+					else if (v === 'ronaldoGoal') return 'Ronaldo Goal';
+					else if (v === 'messiAssist') return 'Messi Assist';
+					else if (v === 'ronaldoAssist') return 'Ronaldo Assist';
+				}
+			},
+			{ type: 'tooltip', brush: 1 },
+			{
+				type: 'title',
+				text: 'Offense Point',
+				align: 'start',
+				orient: 'center',
+				dx: -60
+			}
+		]
+	});
+
+	var allTimeStatsChart = builder('#all-time-stats', {
+		height: 170,
+		axis: [{
+			x: {
+				type: 'range',
+				domain: [0, 850],
+				step: 10,
+				line: true,
+				reverse: true
+			},
+			y: {
+				type: 'block',
+				domain: 'type'
+			},
+			data: data.allTimeStats,
+			area: {
+				x: 0, y: 0, width: '50%', height: '100%'
+			}
+		}, {
+			x: {
+				reverse: false
+			},
+			y: {
+				orient: 'right'
+			},
+			area: {
+				x: '50%', y: 0, width: '50%', height: '100%'
+			},
+			extend: 0
+		}],
+		brush: [{
+			type: 'bar',
+			target: 'messi',
+			colors: [ 1 ],
+			display: 'all',
+			axis: 0,
+			colors: ['#77B0A8']
+		}, {
+			type: 'bar',
+			target: 'ronaldo',
+			display: 'all',
+			axis: 1,
+			colors: ['#E96359']
+
+		}],
+		padding: {
+			left: 100,
+			right: 100,
+			top: 15,
+			bottom: 50
+		},
+		widget: [{
+			type: 'legend',
+			brush: [ 0, 1 ],
+			format: function(k) {
+				return NAMES[k];
+			}
+		}, {
+			type: 'tooltip',
+			brush: [ 0, 1 ],
+			format: function(data, k) {
+				return {
+					key: NAMES[k],
+					value: data[k]
+				}
+			}
+		}]
+	});
+
+	var overallChart = builder('#overall', {
+		padding: {
+			left: 20,
+			top: 30,
+			bottom: 60
+		},
+		height: 220,
+		axis: [{
+			area: {
+				width: '20%'
+			},
+			data: [
+				{Messi: 5, Ronaldo: 2}
+			]
+		}, {
+			area: {
+				width: '42%',
+				x: '28%'
+			},
+			x: {
+				type: 'fullblock',
+				domain: 'season'
+			},
+			y: {
+				type: 'range',
+				domain: [ 5, 10 ],
+				step: 5,
+				line: true
+			},
+			data: data.averageRating
+		}, {
+			area: {
+				x: '78%',
+				width: '20%'
+			},
+			data: [
+				{Messi: 174, Ronaldo: 106}
+			]
+		}],
+		brush: [{
+			type: 'donut',
+			showText: 'outer',
+			format: function(k, v) {
+				return v + ' times';
+			},
+			size: 30,
+			axis: 0,
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
+		}, {
+			type: 'line',
+			target: [ 'messi', 'ronaldo' ],
+			symbol: 'curve',
+			axis: 1,
+			animate: true,
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
+		}, {
+			type: 'scatter',
+			size: 8,
+			axis: 1,
+			target: ['messi', 'ronaldo'],
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
+		}, {
+			type: 'donut',
+			showText: 'outer',
+			format: function(k, v) {
+				return v + ' times';
+			},
+			size: 30,
+			axis: 2,
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
+		}],
+		widget: [{
+			type: 'title',
+			text: 'Ballon d\'Or',
+			orient: 'bottom',
+			dy: 50,
+			axis: 0
+		}, {
+			type: 'tooltip',
+			orient: 'left',
+			format: function(data, k) {
+				return {
+					key: NAMES[k],
+					value: data[k]
+				}
+			}
+		}, {
+			type: 'title',
+			text: 'Average Rating',
+			align: 'start',
+			orient: 'center',
+			dx: -85,
+			axis: 1
+		}, {
+			type: 'legend'
+		}, {
+			type: 'title',
+			text: 'Man of the Match',
+			orient: 'bottom',
+			dy: 50,
+			axis: 2
+		}]
+	});
+
+	var getSeasonHistoryData = function(key) {
+		var history = _.clone(data.history[key]);
+
+		history.map(function(season) {
+			for(var key in season) {
+				if (_.typeCheck('float', season[key])) season[key] = season[key].toFixed(2);
+			}
+		});
+
+		return history;
+	};
+
+	var seasonHistoryTable = xtable("#season-history", {
+		fields: data.history.fields,
+		resize: true,
+		sort: true,
+		buffer: "scroll",
+		bufferCount: 20
+	});
+
+
+	seasonHistoryTable.update(getSeasonHistoryData('messi'));
+
+	var combobox = combo('#combo', {
+		event: {
+			change: function(selectedData) {
+				var key = String.prototype.toLowerCase.call(selectedData.text);
+				seasonHistoryTable.update(getSeasonHistoryData(key));
+			}
+		}
+	});
+});
+</script>
+</head>
+<body class="jui">
+
+<div class="row">
+	<div class="panel">
+		<div class="head">
+			<strong>Offense Point</strong>
+		</div>
+		<div class="body">
+			<div id="offense-point"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel">
+		<div class="head">
+			<strong>All Time Stats</strong>
+		</div>
+		<div class="body">
+			<div id="all-time-stats"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel">
+		<div class="head">
+			<strong>Overall</strong>
+		</div>
+		<div class="body">
+			<div id="overall"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel" style="height: 200px;">
+		<div class="head">
+			<strong>Season History</strong>
+			<div style="float: right;">
+				<div class="combo" id="combo">
+					<a class="btn small" style="width: 150px;">Select...</a>
+					<a class="btn small toggle"><i class="icon-arrow2"></i></a>
+					<ul>
+						<li value="1">Messi</li>
+						<li value="2">Ronaldo</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="season-history" class="xtable">
+			<table class="table classic">
+				<thead>
+				<tr>
+					<th>Season</th>
+					<th>Team</th>
+					<th>Tournament</th>
+					<th>Apps</th>
+					<th>Mins</th>
+					<th>Goals</th>
+					<th>Assists</th>
+					<th>Yel</th>
+					<th>Red</th>
+					<th>SpG</th>
+					<th>PS%</th>
+					<th>AerialsWon</th>
+					<th>MotM</th>
+					<th>Rating</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<script data-jui="#season-history" data-tpl="row" type="text/template">
+			<tr>
+				<td><!= seasonName !></td>
+				<td><!= teamName !></td>
+				<td><!= tournamentName !></td>
+				<td><!= apps !></td>
+				<td><!= minsPlayed !></td>
+				<td><!= goal !></td>
+				<td><!= assistTotal !></td>
+				<td><!= yellowCard !></td>
+				<td><!= redCard !></td>
+				<td><!= shotsPerGame !></td>
+				<td><!= passSuccess !></td>
+				<td><!= aerialWonPerGame !></td>
+				<td><!= manOfTheMatch !></td>
+				<td><!= rating !></td>
+			</tr>
+		</script>
+	</div>
+</div>
+</body>
+</html>
