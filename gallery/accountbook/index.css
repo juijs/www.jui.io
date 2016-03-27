@@ -38,3 +38,11 @@
 .jui .slider.horizontal .track .handle {
 	margin-top: -6px;
 }
+.jui .calendar>table.body td.active {
+	background-color: transparent;
+}
+.jui .table.simple.footer>thead th {
+	border-top-width: 0px !important;
+	border-bottom-width: 0px !important;
+	text-align: right !important;
+}

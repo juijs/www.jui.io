@@ -1,4 +1,4 @@
-var common_month = 2;
+var common_month = 3;
 
 var outgoing_types = [
 	"Food",
@@ -156,7 +156,7 @@ function getIncomeTypes() {
 
 function getOutgoingAndIncomeData(date) {
 	var _ = jui.include("util.base"),
-		date = _.dateFormat(new Date(2016, common_month, date), "yyyy/MM/dd"),
+		date = _.dateFormat(new Date(2016, common_month - 1, date), "yyyy/MM/dd"),
 		obj = {
 			outgoing: { count: 0, total: 0, list: [] },
 			income: { count: 0, total: 0, list: [] }
@@ -177,7 +177,7 @@ function getOutgoingAndIncomeData(date) {
 
 		if(d.date == date) {
 			obj.income.count += 1;
-			obj.income.total += d.cash;
+			obj.income.total += (d.card + d.cash);
 			obj.income.list.push(d);
 		}
 	}
@@ -185,5 +185,28 @@ function getOutgoingAndIncomeData(date) {
 	return (obj.outgoing.count == 0 && obj.income.count == 0) ? null : obj;
 }
 
-addDefaultData(outgoing_data, 1);
-addDefaultData(income_data, 25);
+function getOutgoingAndIncomeSum() {
+	var obj = {
+		outgoing: { cash: 0, card: 0 },
+		income: { cash: 0, card: 0 }
+	};
+
+	for(var i = 0; i < outgoing_data.length; i++) {
+		var d = outgoing_data[i];
+
+		obj.outgoing.cash += d.cash;
+		obj.outgoing.card += d.card;
+	}
+
+	for(var i = 0; i < income_data.length; i++) {
+		var d = income_data[i];
+
+		obj.income.cash += d.cash;
+		obj.income.card += d.card;
+	}
+
+	return obj;
+}
+
+addDefaultData(outgoing_data, 40);
+addDefaultData(income_data, 49);

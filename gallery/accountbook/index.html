@@ -19,7 +19,7 @@ function printStartToEndDate(month) {
 	var _ = jui.include("util.base");
 
 	var now = new Date(),
-		start = new Date(now.getFullYear(), month || now.getMonth(), 1),
+		start = new Date(now.getFullYear(), (_.typeCheck("integer", month)) ? month : now.getMonth(), 1),
 		end = new Date(start.getFullYear(), start.getMonth() + 1, 1);
 
 	start.setDate(1);
@@ -27,6 +27,17 @@ function printStartToEndDate(month) {
 
 	$(".header .start-date").html(_.dateFormat(start, "yyyy.MM.dd"));
 	$(".header .end-date").html(_.dateFormat(end, "yyyy.MM.dd"));
+
+	return start;
+}
+
+function printOutgoingAndIncomeSum() {
+	var obj = getOutgoingAndIncomeSum();
+
+	$("#outgoing_total_cash").html(obj.outgoing.cash);
+	$("#outgoing_total_card").html(obj.outgoing.card);
+	$("#income_total_cash").html(obj.income.cash);
+	$("#income_total_card").html(obj.income.card);
 }
 
 function setEditableEffect(row, e, datepicker, dropdown, isReverse) {
@@ -71,19 +82,31 @@ function validCheckEditData(row) {
 	return false;
 }
 
-jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider", "ui.dropdown", "ui.window" ],
-	function(builder, table, tab, datepicker, slider, dropdown, win) {
+jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider", "ui.dropdown", "ui.window", "ui.tooltip" ],
+	function(builder, table, tab, datepicker, slider, dropdown, win, tooltip) {
 
-	var outgoing_chart, outgoing_table, outgoing_datepicker, outgoing_dropdown,
-		income_table, income_datepicker, income_dropdown,
+	var top_slider, top_tab, common_datepicker, common_dropdown,
+		outgoing_chart, outgoing_table, income_table,
 		summary_calender, summary_win, summary_tab, summary_outgoing_table, summary_income_table;
 
 	// To display this month
-	printStartToEndDate(common_month);
+	var now = printStartToEndDate(common_month - 1);
 
-	slider("#slider", {
+	// To display
+	printOutgoingAndIncomeSum();
+
+	top_help = tooltip("#help", {
+		position: "left",
+		width: 400,
+		showType: "click",
+		tpl: {
+			item: $("#tpl_popover").html()
+		}
+	})
+
+	top_slider = slider("#slider", {
 		type: "single",
-		from: common_month + 1,
+		from: common_month,
 		min: 1,
 		max: 12,
 		step: 1,
@@ -95,25 +118,56 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		}
 	});
 
-	tab("#tab", {
+	top_tab = tab("#tab", {
 		event: {
 			change: function(data) {
 				if(data.index == 0) {
 					$("#tab_1").show();
-					$("#tab_2").hide();
-					$("#tab_3").hide();
+					$("#tab_2,#tab_3").hide();
+
+					outgoing_table.resize();
 				} else if(data.index == 1) {
-					$("#tab_1").hide();
 					$("#tab_2").show();
-					$("#tab_3").hide();
+					$("#tab_1,#tab_3").hide();
+
+					income_table.resize();
 				} else {
-					$("#tab_1").hide();
-					$("#tab_2").hide();
+					$("#tab_1,#tab_2").hide();
 					$("#tab_3").show();
 
 					summary_calender.reload();
 				}
 			}
+		}
+	});
+
+	common_datepicker = datepicker("#common_datepicker", {
+		format: "yyyy/MM/dd",
+		date: now,
+		event: {
+			select: function(date, e) {
+				var table = (top_tab.activeIndex() == 0) ? outgoing_table : income_table;
+
+				$($(table.root).find("input.edit").get(0)).val(date);
+				$(this.root).hide();
+			}
+		},
+		tpl: {
+			date: "<td><!= date !></td>"
+		}
+	});
+
+	common_dropdown = dropdown("#common_dropdown", {
+		event: {
+			change: function(data) {
+				var table = (top_tab.activeIndex() == 0) ? outgoing_table : income_table;
+
+				$($(table.root).find("input.edit").get(4)).val(data.value);
+				$(this.root).hide();
+			}
+		},
+		tpl : {
+			node : "<li value='<!= value !>'><!= text !></li>"
 		}
 	});
 
@@ -160,47 +214,24 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		}
 	});
 
-	outgoing_datepicker = datepicker("#outgoing_datepicker", {
-		format: "yyyy/MM/dd",
-		event: {
-			select: function(date, e) {
-				$($(outgoing_table.root).find("input.edit").get(0)).val(date);
-				$(this.root).hide();
-			}
-		},
-		tpl: {
-			date: "<td><!= date !></td>"
-		}
-	});
-
-	outgoing_dropdown = dropdown("#outgoing_dropdown", {
-		nodes: getOutgoingTypes(),
-		event: {
-			change: function(data) {
-				$($(outgoing_table.root).find("input.edit").get(4)).val(data.value);
-				$(this.root).hide();
-			}
-		},
-		tpl : {
-			node : "<li value='<!= value !>'><!= text !></li>"
-		}
-	});
-
 	outgoing_table = table("#outgoing_table", {
 		fields : [ "date", "memo", "cash", "card", "type" ],
 		editRow : true,
-		resize : true,
-		sort : [ 0, 1, 2, 3 ],
+		scroll : true,
+		scrollHeight : 220,
 		data : outgoing_data,
 		event: {
 			editstart: function(row, e) {
-				setEditableEffect(row, e, outgoing_datepicker, outgoing_dropdown, true);
+				common_dropdown.update(getOutgoingTypes());
+				setEditableEffect(row, e, common_datepicker, common_dropdown, true);
 			},
 			editend: function(row, e) {
 				if(validCheckEditData(row)) return false;
 
 				outgoing_chart.axis(0).update(getOutgoingDataForChart(this.listData()));
-				$(outgoing_datepicker.root).hide();
+				$(common_datepicker.root).hide();
+
+				printOutgoingAndIncomeSum();
 			}
 		},
 		tpl: {
@@ -208,55 +239,33 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		}
 	});
 
-	income_datepicker = datepicker("#income_datepicker", {
-		format: "yyyy/MM/dd",
-		event: {
-			select: function(date, e) {
-				$($(income_table.root).find("input.edit").get(0)).val(date);
-				$(this.root).hide();
-			}
-		},
-		tpl: {
-			date: "<td><!= date !></td>"
-		}
-	});
-
-	income_dropdown = dropdown("#income_dropdown", {
-		nodes: getIncomeTypes(),
-		event: {
-			change: function(data) {
-				$($(income_table.root).find("input.edit").get(4)).val(data.value);
-				$(this.root).hide();
-			}
-		},
-		tpl : {
-			node : "<li value='<!= value !>'><!= text !></li>"
-		}
-	});
-
 	income_table = table("#income_table", {
 		fields : [ "date", "memo", "cash", "card", "type" ],
 		editRow : true,
-		resize : true,
-		sort : [ 0, 1, 2, 3 ],
+		scroll : true,
+		scrollHeight : 540,
 		data: income_data,
 		tpl: {
 			row: $("#tpl_income_row").html()
 		},
 		event : {
 			editstart: function(row, e) {
-				setEditableEffect(row, e, income_datepicker, income_dropdown, false);
+				common_dropdown.update(getIncomeTypes());
+				setEditableEffect(row, e, common_datepicker, common_dropdown, false);
 			},
 			editend: function(row, e) {
 				if(validCheckEditData(row)) return false;
 
-				$(income_datepicker.root).hide();
+				$(common_datepicker.root).hide();
+
+				printOutgoingAndIncomeSum();
 			}
 		}
 	});
 
 	summary_calender = datepicker("#summary_calender", {
 		format: "yyyy/MM/dd",
+		date: now,
 		event: {
 			select: function(date, e) {
 				var data = getOutgoingAndIncomeData(this.getDate().getDate());
@@ -348,11 +357,39 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			<a class="btn mini"><i class="icon-tool"></i></a>
 			<a class="btn mini"><i class="icon-printer"></i></a>
 		</div>
-		<a class="btn mini">Add Item</a>
+
+		<a class="btn mini" id="help">Help</a>
+
+		<script id="tpl_popover" type="text/template">
+			<div class="popover left" style="top: 0px; left: 10px; z-index: 1;">
+				<div class="head">Help</div>
+				<div class="body">
+					<div class="image"><i class="icon-help"></i></div>
+					<div class="message">Toolbar buttons are not working.</div>
+				</div>
+			</div>
+		</script>
 	</div>
 </div>
 
 <div class="contents">
+
+	<!-- 0. Common Components -->
+	<div id="common_datepicker" class="datepicker" style="display: none; position: absolute; z-index: 1;">
+		<div class="head">
+			<div class="prev"><i class="icon-chevron-left"></i></div>
+			<div class="title"></div>
+			<div class="next"><i class="icon-chevron-right"></i></div>
+		</div>
+		<table class="body">
+			<tr>
+				<th>SU</th><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th>
+			</tr>
+		</table>
+	</div>
+	<div id="common_dropdown" class="dropdown">
+		<ul style="width: 190px;"></ul>
+	</div>
 
 	<!-- 1. Outgoing Tab -->
 	<div id="tab_1">
@@ -370,6 +407,19 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			</thead>
 			<tbody></tbody>
 		</table>
+
+		<table class="table simple small headline footer">
+			<thead>
+			<tr>
+				<th width="190"></th>
+				<th width="40%">Total</th>
+				<th id="outgoing_total_cash">0</th>
+				<th id="outgoing_total_card">0</th>
+				<th width="190"></th>
+			</tr>
+			</thead>
+		</table>
+
 		<script id="tpl_outgoing_row" type="text/template">
 			<tr>
 				<td><!= date !></td>
@@ -379,23 +429,6 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				<td><!= (type === "") ? "" : outgoing_types[type] !></td>
 			</tr>
 		</script>
-
-		<div id="outgoing_datepicker" class="datepicker" style="display: none; position: absolute;">
-			<div class="head">
-				<div class="prev"><i class="icon-chevron-left"></i></div>
-				<div class="title"></div>
-				<div class="next"><i class="icon-chevron-right"></i></div>
-			</div>
-			<table class="body">
-				<tr>
-					<th>SU</th><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th>
-				</tr>
-			</table>
-		</div>
-
-		<div id="outgoing_dropdown" class="dropdown">
-			<ul style="width: 190px;"></ul>
-		</div>
 	</div>
 
 	<!-- 2. Income Tab -->
@@ -412,6 +445,19 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			</thead>
 			<tbody></tbody>
 		</table>
+
+		<table class="table simple small headline footer">
+			<thead>
+			<tr>
+				<th width="190"></th>
+				<th width="40%">Total</th>
+				<th id="income_total_cash">0</th>
+				<th id="income_total_card">0</th>
+				<th width="190"></th>
+			</tr>
+			</thead>
+		</table>
+
 		<script id="tpl_income_row" type="text/template">
 			<tr>
 				<td><!= date !></td>
@@ -421,23 +467,6 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				<td><!= (type === "") ? "" : income_types[type] !></td>
 			</tr>
 		</script>
-
-		<div id="income_datepicker" class="datepicker" style="display: none; position: absolute;">
-			<div class="head">
-				<div class="prev"><i class="icon-chevron-left"></i></div>
-				<div class="title"></div>
-				<div class="next"><i class="icon-chevron-right"></i></div>
-			</div>
-			<table class="body">
-				<tr>
-					<th>SU</th><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th>
-				</tr>
-			</table>
-		</div>
-
-		<div id="income_dropdown" class="dropdown">
-			<ul style="width: 190px;"></ul>
-		</div>
 	</div>
 
 	<!-- 3. Summary Tab -->
