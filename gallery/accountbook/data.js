@@ -93,8 +93,8 @@ function addDefaultData(data, count) {
 		data.push({
 			date: "",
 			memo: "",
-			cash: "",
-			card: "",
+			cash: 0,
+			card: 0,
 			type: ""
 		});
 	}

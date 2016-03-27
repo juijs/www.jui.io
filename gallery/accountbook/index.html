@@ -40,6 +40,23 @@ function printOutgoingAndIncomeSum() {
 	$("#income_total_card").html(obj.income.card);
 }
 
+function removeOutgoingAndIncomeData(table, data) {
+	$(table.root).find("input[type=checkbox]:checked").each(function(i) {
+		var index = $(this).val();
+
+		data[index] = {
+			date: "",
+			memo: "",
+			cash: 0,
+			card: 0,
+			type: ""
+		};
+	});
+
+	table.update(data);
+	printOutgoingAndIncomeSum();
+}
+
 function setEditableEffect(row, e, datepicker, dropdown, isReverse) {
 	var $input = $(row.element).find("input.edit"),
 		target = $(e.target).find("input.edit")[0];
@@ -95,12 +112,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	// To display this month income / expenses
 	printOutgoingAndIncomeSum();
 
-	$("#help").on("click", function(e) {
-		top_notify.add({
-			type: "warning",
-			message: "Toolbar buttons are not working."
-		});
-	});
+	// Initialize JUI Components
 
 	slider("#slider", {
 		type: "single",
@@ -226,7 +238,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	});
 
 	outgoing_table = table("#outgoing_table", {
-		fields : [ "date", "memo", "cash", "card", "type" ],
+		fields : [ null, "date", "memo", "cash", "card", "type" ],
 		editRow : true,
 		scroll : true,
 		scrollHeight : 220,
@@ -251,7 +263,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	});
 
 	income_table = table("#income_table", {
-		fields : [ "date", "memo", "cash", "card", "type" ],
+		fields : [ null, "date", "memo", "cash", "card", "type" ],
 		editRow : true,
 		scroll : true,
 		scrollHeight : 540,
@@ -317,15 +329,36 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	});
 
 	summary_outgoing_table = table("#summary_outgoing_table", {
+		fields : [ null, "date", "memo", "cash", "card", "type" ],
+		colshow : [ 1, 2, 3, 4, 5 ],
 		tpl: {
 			row: $("#tpl_outgoing_row").html()
 		}
 	});
 
 	summary_income_table = table("#summary_income_table", {
+		fields : [ null, "date", "memo", "cash", "card", "type" ],
+		colshow : [ 1, 2, 3, 4, 5 ],
 		tpl: {
 			row: $("#tpl_income_row").html()
 		}
+	});
+
+	// Set markup events
+
+	$("#help").on("click", function(e) {
+		top_notify.add({
+			type: "warning",
+			message: "Toolbar buttons are not working."
+		});
+	});
+
+	$("#outgoing_delbtn").on("click", function(e) {
+		removeOutgoingAndIncomeData(outgoing_table, outgoing_data);
+		outgoing_chart.axis(0).update(getOutgoingDataForChart(outgoing_table.listData()));
+	});
+	$("#income_delbtn").on("click", function(e) {
+		removeOutgoingAndIncomeData(income_table, income_data);
 	});
 });
 </script>
@@ -357,7 +390,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 
 		<script id="tpl_alarm" type="text/template">
 			<div class="notify <!= type !>">
-				<div class="title">Help</div>
+				<div class="title">Notice</div>
 				<div class="message"><!= message !></div>
 			</div>
 		</script>
@@ -406,6 +439,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		<table id="outgoing_table" class="table simple headline small stripeless" style="margin-top: 15px;">
 			<thead>
 			<tr>
+				<th width="20"></th>
 				<th width="190">Date</th>
 				<th width="40%">Memo</th>
 				<th>Cash</th>
@@ -419,6 +453,9 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		<table class="table simple small headline footer">
 			<thead>
 			<tr>
+				<th width="20">
+					<i id="outgoing_delbtn" class="icon-trashcan" title="Remove selected data" style="cursor: pointer;"></i>&nbsp;
+				</th>
 				<th width="190"></th>
 				<th width="40%">Total</th>
 				<th id="outgoing_total_cash">0</th>
@@ -430,10 +467,11 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 
 		<script id="tpl_outgoing_row" type="text/template">
 			<tr>
+				<td align="center"><input type="checkbox" value="<!= row.index !>" /></td>
 				<td><!= date !></td>
 				<td><!= memo !></td>
-				<td align="right"><!= cash !></td>
-				<td align="right"><!= card !></td>
+				<td align="right"><!= (cash === 0) ? "" : cash !></td>
+				<td align="right"><!= (card === 0) ? "" : card !></td>
 				<td><!= (type === "") ? "" : outgoing_types[type] !></td>
 			</tr>
 		</script>
@@ -444,6 +482,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		<table id="income_table" class="table simple headline small stripeless" style="margin-top: 15px;">
 			<thead>
 			<tr>
+				<th width="20"></th>
 				<th width="190">Date</th>
 				<th width="40%">Memo</th>
 				<th>Cash</th>
@@ -457,6 +496,9 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		<table class="table simple small headline footer">
 			<thead>
 			<tr>
+				<th width="20">
+					<i id="income_delbtn" class="icon-trashcan" title="Remove selected data" style="cursor: pointer;"></i>&nbsp;
+				</th>
 				<th width="190"></th>
 				<th width="40%">Total</th>
 				<th id="income_total_cash">0</th>
@@ -468,10 +510,11 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 
 		<script id="tpl_income_row" type="text/template">
 			<tr>
+				<td align="center"><input type="checkbox" value="<!= row.index !>" /></td>
 				<td><!= date !></td>
 				<td><!= memo !></td>
-				<td align="right"><!= cash !></td>
-				<td align="right"><!= card !></td>
+				<td align="right"><!= (cash === 0) ? "" : cash !></td>
+				<td align="right"><!= (card === 0) ? "" : card !></td>
 				<td><!= (type === "") ? "" : income_types[type] !></td>
 			</tr>
 		</script>
@@ -528,6 +571,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				<table id="summary_outgoing_table" class="table simple headline small stripeless">
 					<thead>
 					<tr>
+						<th></th>
 						<th>Date</th>
 						<th width="50%">Memo</th>
 						<th>Cash</th>
@@ -540,6 +584,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				<table id="summary_income_table" class="table simple headline small stripeless" style="display: none;">
 					<thead>
 					<tr>
+						<th></th>
 						<th>Date</th>
 						<th width="50%">Memo</th>
 						<th>Cash</th>
