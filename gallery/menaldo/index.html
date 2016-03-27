@@ -61,7 +61,8 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 			type: 'column',
 			display: 'all',
 //			outerPadding: 20,
-			target: ['messiGoal', 'ronaldoGoal', 'messiAssist', 'ronaldoAssist']
+			target: ['messiGoal', 'ronaldoGoal', 'messiAssist', 'ronaldoAssist'],
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
 		}],
 		widget: [
 			{
@@ -119,13 +120,15 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 			target: 'messi',
 			colors: [ 1 ],
 			display: 'all',
-			axis: 0
+			axis: 0,
+			colors: ['#77B0A8']
 		}, {
 			type: 'bar',
 			target: 'ronaldo',
-			colors: [ 2 ],
 			display: 'all',
-			axis: 1
+			axis: 1,
+			colors: ['#E96359']
+
 		}],
 		padding: {
 			left: 100,
@@ -197,18 +200,21 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 				return v + ' times';
 			},
 			size: 30,
-			axis: 0
+			axis: 0,
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
 		}, {
 			type: 'line',
 			target: [ 'messi', 'ronaldo' ],
 			symbol: 'curve',
 			axis: 1,
-			animate: true
+			animate: true,
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
 		}, {
 			type: 'scatter',
 			size: 8,
 			axis: 1,
-			target: ['messi', 'ronaldo']
+			target: ['messi', 'ronaldo'],
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
 		}, {
 			type: 'donut',
 			showText: 'outer',
@@ -216,7 +222,8 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 				return v + ' times';
 			},
 			size: 30,
-			axis: 2
+			axis: 2,
+			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
 		}],
 		widget: [{
 			type: 'title',
