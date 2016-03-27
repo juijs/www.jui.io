@@ -12,7 +12,7 @@
 
 .gallery-list .item {
     position: relative;
-    flex: 1 0 50%;
+    flex: 0 0 50%;
     height: 350px;
     padding: 10px;
     box-sizing: border-box;

@@ -122,17 +122,21 @@ function getDataForVisitor() {
 function initTransactionData(domain) {
 	var ten_minutes = 1000 * 60 * 10;
 
-	for(var i = 0; i < 1000; i++) {
+	for(var i = 0; i < ten_minutes; i++) {
 		var type = Math.floor(Math.random() * 6),
-			data = {
-				delay: Math.floor(Math.random() * 10000),
-				level: "normal",
-				time: new Date(domain[0].getTime() + Math.floor(Math.random() * ten_minutes))
-			};
+			seq = Math.floor(Math.random() * 500);
 
-		if(type > 2 && type < 5) {
+		if(seq !== 0) continue;
+
+		var data = {
+			delay: Math.floor(Math.random() * 10000),
+			level: "normal",
+			time: new Date(domain[0].getTime() + i)
+		};
+
+		if (type > 2 && type < 5) {
 			data.level = "warning";
-		} else if(type > 4) {
+		} else if (type > 4) {
 			data.level = "fatal";
 		}
 
@@ -250,8 +254,9 @@ setInterval(function() {
     // Transaction view
     if(txData.length == 0) {
 		initTransactionData(domain);
+	} else {
+		addTransactionData(domain);
 	}
-	addTransactionData(domain);
 
     dashboard_bottom.axis(2).update(txData);
     dashboard_bottom.axis(2).set("x", { domain: domain });
