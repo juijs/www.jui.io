@@ -1,6 +1,6 @@
 var common_month = 3;
 
-var outgoing_types = [
+var expense_types = [
 	"Food",
 	"Mobile",
 	"Provision",
@@ -18,7 +18,7 @@ var income_types = [
 	"Bonus"
 ];
 
-var outgoing_data = [{
+var expense_data = [{
 	date: "2016/03/04",
 	memo: "Mcdonald - lunch",
 	cash: 0,
@@ -100,7 +100,7 @@ function addDefaultData(data, count) {
 	}
 }
 
-function getOutgoingDataForChart(data) {
+function getExpenseDataForChart(data) {
 	var newData = [];
 
 	for(var i = 0; i < data.length; i++) {
@@ -119,7 +119,7 @@ function getOutgoingDataForChart(data) {
 		}
 	}
 
-	for(var i = 0; i < outgoing_types.length; i++) {
+	for(var i = 0; i < expense_types.length; i++) {
 		if(!newData[i]) {
 			newData[i] = { cash: 0, card: 0 };
 		}
@@ -128,13 +128,13 @@ function getOutgoingDataForChart(data) {
 	return newData;
 }
 
-function getOutgoingTypes() {
+function getExpenseTypes() {
 	var types = [];
 
-	for(var i = 0; i < outgoing_types.length; i++) {
+	for(var i = 0; i < expense_types.length; i++) {
 		types.push({
 			value: i,
-			text: outgoing_types[i]
+			text: expense_types[i]
 		});
 	}
 
@@ -154,21 +154,21 @@ function getIncomeTypes() {
 	return types;
 }
 
-function getOutgoingAndIncomeData(date) {
+function getExpenseAndIncomeData(date) {
 	var _ = jui.include("util.base"),
 		date = _.dateFormat(new Date(2016, common_month - 1, date), "yyyy/MM/dd"),
 		obj = {
-			outgoing: { count: 0, total: 0, list: [] },
+			expense: { count: 0, total: 0, list: [] },
 			income: { count: 0, total: 0, list: [] }
 		};
 
-	for(var i = 0; i < outgoing_data.length; i++) {
-		var d = outgoing_data[i];
+	for(var i = 0; i < expense_data.length; i++) {
+		var d = expense_data[i];
 
 		if(d.date == date) {
-			obj.outgoing.count += 1;
-			obj.outgoing.total += (d.card + d.cash);
-			obj.outgoing.list.push(d);
+			obj.expense.count += 1;
+			obj.expense.total += (d.card + d.cash);
+			obj.expense.list.push(d);
 		}
 	}
 
@@ -182,20 +182,20 @@ function getOutgoingAndIncomeData(date) {
 		}
 	}
 
-	return (obj.outgoing.count == 0 && obj.income.count == 0) ? null : obj;
+	return (obj.expense.count == 0 && obj.income.count == 0) ? null : obj;
 }
 
-function getOutgoingAndIncomeSum() {
+function getExpenseAndIncomeSum() {
 	var obj = {
-		outgoing: { cash: 0, card: 0 },
+		expense: { cash: 0, card: 0 },
 		income: { cash: 0, card: 0 }
 	};
 
-	for(var i = 0; i < outgoing_data.length; i++) {
-		var d = outgoing_data[i];
+	for(var i = 0; i < expense_data.length; i++) {
+		var d = expense_data[i];
 
-		obj.outgoing.cash += d.cash;
-		obj.outgoing.card += d.card;
+		obj.expense.cash += d.cash;
+		obj.expense.card += d.card;
 	}
 
 	for(var i = 0; i < income_data.length; i++) {
@@ -208,5 +208,5 @@ function getOutgoingAndIncomeSum() {
 	return obj;
 }
 
-addDefaultData(outgoing_data, 40);
+addDefaultData(expense_data, 40);
 addDefaultData(income_data, 49);

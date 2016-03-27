@@ -31,16 +31,16 @@ function printStartToEndDate(month) {
 	return start;
 }
 
-function printOutgoingAndIncomeSum() {
-	var obj = getOutgoingAndIncomeSum();
+function printExpenseAndIncomeSum() {
+	var obj = getExpenseAndIncomeSum();
 
-	$("#outgoing_total_cash").html(obj.outgoing.cash);
-	$("#outgoing_total_card").html(obj.outgoing.card);
+	$("#expense_total_cash").html(obj.expense.cash);
+	$("#expense_total_card").html(obj.expense.card);
 	$("#income_total_cash").html(obj.income.cash);
 	$("#income_total_card").html(obj.income.card);
 }
 
-function removeOutgoingAndIncomeData(table, data) {
+function removeExpenseAndIncomeData(table, data) {
 	$(table.root).find("input[type=checkbox]:checked").each(function(i) {
 		var index = $(this).val();
 
@@ -54,7 +54,7 @@ function removeOutgoingAndIncomeData(table, data) {
 	});
 
 	table.update(data);
-	printOutgoingAndIncomeSum();
+	printExpenseAndIncomeSum();
 }
 
 function setEditableEffect(row, e, datepicker, dropdown, isReverse) {
@@ -103,14 +103,14 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	function(builder, table, tab, datepicker, slider, dropdown, win, notify) {
 
 	var top_notify, top_tab, common_datepicker, common_dropdown,
-		outgoing_chart, outgoing_table, income_table,
-		summary_calender, summary_win, summary_tab, summary_outgoing_table, summary_income_table;
+		expense_chart, expense_table, income_table,
+		summary_calender, summary_win, summary_tab, summary_expense_table, summary_income_table;
 
 	// To display this month Period
 	var now = printStartToEndDate(common_month - 1);
 
 	// To display this month income / expenses
-	printOutgoingAndIncomeSum();
+	printExpenseAndIncomeSum();
 
 	// Initialize JUI Components
 
@@ -148,7 +148,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 					$("#tab_1").show();
 					$("#tab_2,#tab_3").hide();
 
-					outgoing_table.resize();
+					expense_table.resize();
 				} else if(data.index == 1) {
 					$("#tab_2").show();
 					$("#tab_1,#tab_3").hide();
@@ -169,7 +169,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		date: now,
 		event: {
 			select: function(date, e) {
-				var table = (top_tab.activeIndex() == 0) ? outgoing_table : income_table;
+				var table = (top_tab.activeIndex() == 0) ? expense_table : income_table;
 
 				$($(table.root).find("input.edit").get(0)).val(date);
 				$(this.root).hide();
@@ -183,7 +183,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	common_dropdown = dropdown("#common_dropdown", {
 		event: {
 			change: function(data) {
-				var table = (top_tab.activeIndex() == 0) ? outgoing_table : income_table;
+				var table = (top_tab.activeIndex() == 0) ? expense_table : income_table;
 
 				$($(table.root).find("input.edit").get(4)).val(data.value);
 				$(this.root).hide();
@@ -194,7 +194,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		}
 	});
 
-	outgoing_chart = builder("#outgoing_chart", {
+	expense_chart = builder("#expense_chart", {
 		width : "100%",
 		height : 300,
 		padding : {
@@ -205,7 +205,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		axis : [{
 			x : {
 				type : "block",
-				domain : outgoing_types
+				domain : expense_types
 			},
 			y : {
 				type : "range",
@@ -218,13 +218,14 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 				step : 3,
 				line : "solid"
 			},
-			data : getOutgoingDataForChart(outgoing_data)
+			data : getExpenseDataForChart(expense_data)
 		}],
 		brush : [{
 			type : "column",
 			target : [ "cash", "card" ],
 			outerPadding : 25,
-			minSize : 5
+			minSize : 5,
+			colors : [ 8, 9 ]
 		}],
 		widget : [{
 			type : "tooltip"
@@ -237,28 +238,28 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		}
 	});
 
-	outgoing_table = table("#outgoing_table", {
+	expense_table = table("#expense_table", {
 		fields : [ null, "date", "memo", "cash", "card", "type" ],
 		editRow : true,
 		scroll : true,
 		scrollHeight : 220,
-		data : outgoing_data,
+		data : expense_data,
 		event: {
 			editstart: function(row, e) {
-				common_dropdown.update(getOutgoingTypes());
+				common_dropdown.update(getExpenseTypes());
 				setEditableEffect(row, e, common_datepicker, common_dropdown, true);
 			},
 			editend: function(row, e) {
 				if(validCheckEditData(row)) return false;
 
-				outgoing_chart.axis(0).update(getOutgoingDataForChart(this.listData()));
+				expense_chart.axis(0).update(getExpenseDataForChart(this.listData()));
 				$(common_datepicker.root).hide();
 
-				printOutgoingAndIncomeSum();
+				printExpenseAndIncomeSum();
 			}
 		},
 		tpl: {
-			row: $("#tpl_outgoing_row").html()
+			row: $("#tpl_expense_row").html()
 		}
 	});
 
@@ -281,7 +282,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 
 				$(common_datepicker.root).hide();
 
-				printOutgoingAndIncomeSum();
+				printExpenseAndIncomeSum();
 			}
 		}
 	});
@@ -291,10 +292,10 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		date: now,
 		event: {
 			select: function(date, e) {
-				var data = getOutgoingAndIncomeData(this.getDate().getDate());
+				var data = getExpenseAndIncomeData(this.getDate().getDate());
 
 				if(data != null) {
-					summary_outgoing_table.update(data.outgoing.list);
+					summary_expense_table.update(data.expense.list);
 					summary_income_table.update(data.income.list);
 					summary_tab.show(0);
 					summary_win.show();
@@ -328,11 +329,11 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		height: 400
 	});
 
-	summary_outgoing_table = table("#summary_outgoing_table", {
+	summary_expense_table = table("#summary_expense_table", {
 		fields : [ null, "date", "memo", "cash", "card", "type" ],
 		colshow : [ 1, 2, 3, 4, 5 ],
 		tpl: {
-			row: $("#tpl_outgoing_row").html()
+			row: $("#tpl_expense_row").html()
 		}
 	});
 
@@ -353,12 +354,12 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		});
 	});
 
-	$("#outgoing_delbtn").on("click", function(e) {
-		removeOutgoingAndIncomeData(outgoing_table, outgoing_data);
-		outgoing_chart.axis(0).update(getOutgoingDataForChart(outgoing_table.listData()));
+	$("#expense_delbtn").on("click", function(e) {
+		removeExpenseAndIncomeData(expense_table, expense_data);
+		expense_chart.axis(0).update(getExpenseDataForChart(expense_table.listData()));
 	});
 	$("#income_delbtn").on("click", function(e) {
-		removeOutgoingAndIncomeData(income_table, income_data);
+		removeExpenseAndIncomeData(income_table, income_data);
 	});
 });
 </script>
@@ -397,7 +398,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 	</div>
 
 	<ul id="tab" class="tab top">
-		<li><a href="#">Outgoing</a></li>
+		<li><a href="#">Expense</a></li>
 		<li><a href="#">Income</a></li>
 		<li><a href="#">Calender</a></li>
 	</ul>
@@ -432,11 +433,11 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		<ul style="width: 190px;"></ul>
 	</div>
 
-	<!-- 1. Outgoing Tab -->
+	<!-- 1. Expense Tab -->
 	<div id="tab_1">
-		<div id="outgoing_chart"></div>
+		<div id="expense_chart"></div>
 
-		<table id="outgoing_table" class="table simple headline small stripeless" style="margin-top: 15px;">
+		<table id="expense_table" class="table simple headline small stripeless" style="margin-top: 15px;">
 			<thead>
 			<tr>
 				<th width="20"></th>
@@ -454,25 +455,25 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			<thead>
 			<tr>
 				<th width="20">
-					<i id="outgoing_delbtn" class="icon-trashcan" title="Remove selected data" style="cursor: pointer;"></i>&nbsp;
+					<i id="expense_delbtn" class="icon-trashcan" title="Remove selected data" style="cursor: pointer;"></i>&nbsp;
 				</th>
 				<th width="190"></th>
 				<th width="40%">Total</th>
-				<th id="outgoing_total_cash">0</th>
-				<th id="outgoing_total_card">0</th>
+				<th id="expense_total_cash">0</th>
+				<th id="expense_total_card">0</th>
 				<th width="190"></th>
 			</tr>
 			</thead>
 		</table>
 
-		<script id="tpl_outgoing_row" type="text/template">
+		<script id="tpl_expense_row" type="text/template">
 			<tr>
 				<td align="center"><input type="checkbox" value="<!= row.index !>" /></td>
 				<td><!= date !></td>
 				<td><!= memo !></td>
 				<td align="right"><!= (cash === 0) ? "" : cash !></td>
 				<td align="right"><!= (card === 0) ? "" : card !></td>
-				<td><!= (type === "") ? "" : outgoing_types[type] !></td>
+				<td><!= (type === "") ? "" : expense_types[type] !></td>
 			</tr>
 		</script>
 	</div>
@@ -533,7 +534,7 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			<td>
 				<div><!= date !></div>
 				<!
-					var data = getOutgoingAndIncomeData(date);
+					var data = getExpenseAndIncomeData(date);
 
 					if(type != "none" && data != null) { !>
 					<div class="task" style="cursor: pointer;">
@@ -543,10 +544,10 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 							<span style="float: right;"><!= data.income.total !></span>
 						</span>
 						<! } !>
-						<! if(data.outgoing.count > 0) { !>
+						<! if(data.expense.count > 0) { !>
 						<span style="background: #ff847c;">
-							<i class="icon-minus"></i> (<!= data.outgoing.count !> calls)
-							<span style="float: right;"><!= data.outgoing.total !></span>
+							<i class="icon-minus"></i> (<!= data.expense.count !> calls)
+							<span style="float: right;"><!= data.expense.total !></span>
 						</span>
 						<! } !>
 					</div>
@@ -564,11 +565,11 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			</div>
 			<div class="body">
 				<ul id="summary_tab" class="pill top" style="margin-bottom: 10px;">
-					<li class="active"><a href="#">Outgoing</a></li>
+					<li class="active"><a href="#">Expense</a></li>
 					<li><a href="#">Income</a></li>
 				</ul>
 
-				<table id="summary_outgoing_table" class="table simple headline small stripeless">
+				<table id="summary_expense_table" class="table simple headline small stripeless">
 					<thead>
 					<tr>
 						<th></th>
