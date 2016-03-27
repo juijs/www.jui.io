@@ -1,15 +1,16 @@
 {
-  "name": "messi-vs-ronaldo",
-  "version": "1.0.0",
-  "title": "Messi vs Ronaldo",
-  "description": "Here's the staistics of their records. which player do you like? I like Messi more :) ",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "messi", "ronaldo", "soccer"
-  ],
-  "author": "hyeonsu",
-  "license": "MIT",
-  "height" : "1100px"
+  	"name": "messi-vs-ronaldo",
+  	"version": "1.0.0",
+  	"title": "Messi vs Ronaldo",
+  	"description": "Here's the staistics of their records. which player do you like? I like Messi more :) ",
+  	"scripts": {
+    	"test": "echo \"Error: no test specified\" && exit 1"
+  		},
+  	"keywords": [
+    	"messi", "ronaldo", "soccer"
+  	],
+  	"name": "hyoensu",
+  	"author": "incleaf@gmail.com",
+  	"license": "MIT",
+  	"height" : "1100px"
 }
