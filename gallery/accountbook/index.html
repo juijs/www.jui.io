@@ -82,29 +82,27 @@ function validCheckEditData(row) {
 	return false;
 }
 
-jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider", "ui.dropdown", "ui.window", "ui.tooltip" ],
-	function(builder, table, tab, datepicker, slider, dropdown, win, tooltip) {
+jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider", "ui.dropdown", "ui.window", "ui.notify" ],
+	function(builder, table, tab, datepicker, slider, dropdown, win, notify) {
 
-	var top_slider, top_tab, common_datepicker, common_dropdown,
+	var top_notify, top_tab, common_datepicker, common_dropdown,
 		outgoing_chart, outgoing_table, income_table,
 		summary_calender, summary_win, summary_tab, summary_outgoing_table, summary_income_table;
 
-	// To display this month
+	// To display this month Period
 	var now = printStartToEndDate(common_month - 1);
 
-	// To display
+	// To display this month income / expenses
 	printOutgoingAndIncomeSum();
 
-	top_help = tooltip("#help", {
-		position: "left",
-		width: 400,
-		showType: "click",
-		tpl: {
-			item: $("#tpl_popover").html()
-		}
-	})
+	$("#help").on("click", function(e) {
+		top_notify.add({
+			type: "warning",
+			message: "Toolbar buttons are not working."
+		});
+	});
 
-	top_slider = slider("#slider", {
+	slider("#slider", {
 		type: "single",
 		from: common_month,
 		min: 1,
@@ -114,7 +112,20 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		event: {
 			change: function(d) {
 				printStartToEndDate(d.from - 1);
+
+				top_notify.add({
+					type: "danger",
+					message: "Monthly data filtering does not work."
+				});
 			}
+		}
+	});
+
+	top_notify = notify("body", {
+		position: "top-right",
+		timeout: 1000,
+		tpl: {
+			item: $("#tpl_alarm").html()
 		}
 	});
 
@@ -343,6 +354,13 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 			<span>11</span>
 			<span>12</span>
 		</div>
+
+		<script id="tpl_alarm" type="text/template">
+			<div class="notify <!= type !>">
+				<div class="title">Help</div>
+				<div class="message"><!= message !></div>
+			</div>
+		</script>
 	</div>
 
 	<ul id="tab" class="tab top">
@@ -359,16 +377,6 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 		</div>
 
 		<a class="btn mini" id="help">Help</a>
-
-		<script id="tpl_popover" type="text/template">
-			<div class="popover left" style="top: 0px; left: 10px; z-index: 1;">
-				<div class="head">Help</div>
-				<div class="body">
-					<div class="image"><i class="icon-help"></i></div>
-					<div class="message">Toolbar buttons are not working.</div>
-				</div>
-			</div>
-		</script>
 	</div>
 </div>
 
