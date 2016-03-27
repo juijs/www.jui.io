@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="../../lib/jui/js/grid.min.js"></script>
 	<script type="text/javascript" src="../../lib/jui/js/chart.min.js"></script>
 
-	<link rel="stylesheet" href="/gallery/facebookgroup/index.css"/>
+	<link rel="stylesheet" href="../../gallery/facebookgroup/index.css"/>
 
 
 </head>
@@ -66,7 +66,7 @@
 					<table id="status" class="table simple stripeless">
 						<thead>
 						<tr>
-							<th>Attribute</th>
+							<th width="30%">Attribute</th>
 							<th>Value</th>
 						</tr>
 						</thead>
@@ -176,7 +176,7 @@
 			height: 768,
 			icon: {
 				type: "jennifer",
-				path: "/gallery/facebookgroup//icon/icomoon.ttf"
+				path: "../../gallery/facebookgroup//icon/icomoon.ttf"
 			},
 			theme: "jennifer",
 			padding: 5,
@@ -499,7 +499,7 @@
 
 	function getJSON(name) {
 		return JSON.parse($.ajax({
-			url: "/gallery/facebookgroup/data/" + name + ".json",
+			url: "../../gallery/facebookgroup/data/" + name + ".json",
 			async: false
 		}).responseText);
 	}

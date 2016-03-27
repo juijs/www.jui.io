@@ -27,3 +27,19 @@
 	text-decoration: none;
 	color: #353030;
 }
+
+.gallery-view-info .link {
+	position: absolute;
+	right: 0px;
+	top: 5px;
+	cursor: pointer;
+	font-size: 12px;
+	color: #333;
+	text-decoration: none;
+}
+
+.gallery-view-info .link > i {
+	position: absolute;
+	top: 2px;
+	right: 72px;
+}

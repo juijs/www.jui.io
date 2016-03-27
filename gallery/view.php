@@ -17,6 +17,9 @@
 			<a href="mailto:<?php echo $json->email ?>"><small>(<?php echo $json->email ?>)</small></a>
 			<?php } ?>
 		</p>
+		<a class="link" target="_blank" href="https://github.com/juijs/www.jui.io/tree/master/gallery/<?php echo $json->name ?>">
+			<i class="icon-edit"></i> View source
+		</a>
     </div>
     <iframe src="/gallery/<?php echo $id ?>" width="100%" height="<?php echo $json->height ?>"></iframe>
 </div>

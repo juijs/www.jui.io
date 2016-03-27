@@ -2,18 +2,18 @@
 <html>
 <head>
 <title>JENNIFER UI: AdminTool Sample</title>
-<link rel="stylesheet" href="/lib/jui/css/ui.min.css"/>
-<link id="ui_theme" rel="stylesheet" href="/lib/jui/css/ui-jennifer.min.css"/>
-<link rel="stylesheet" href="/lib/jui/css/grid.min.css"/>
-<link id="grid_theme" rel="stylesheet" href="/lib/jui/css/grid-jennifer.min.css"/>
-<script src="/lib/jquery-1.8.0.min.js"></script>
-<script src="/lib/jui/js/core.min.js"></script>
-<script src="/lib/jui/js/ui.min.js"></script>
-<script src="/lib/jui/js/grid.min.js"></script>
-<script src="/lib/jui/js/chart.min.js"></script>
+<link rel="stylesheet" href="../../lib/jui/css/ui.min.css"/>
+<link id="ui_theme" rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css"/>
+<link rel="stylesheet" href="../../lib/jui/css/grid.min.css"/>
+<link id="grid_theme" rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css"/>
+<script src="../../lib/jquery-1.8.0.min.js"></script>
+<script src="../../lib/jui/js/core.min.js"></script>
+<script src="../../lib/jui/js/ui.min.js"></script>
+<script src="../../lib/jui/js/grid.min.js"></script>
+<script src="../../lib/jui/js/chart.min.js"></script>
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-<link href="/gallery/admintool/index.css" rel="stylesheet" type="text/css" />
-<link id="index_theme" href="/gallery/admintool/index-jennifer.css" rel="stylesheet" type="text/css" />
+<link href="../../gallery/admintool/index.css" rel="stylesheet" type="text/css" />
+<link id="index_theme" href="../../gallery/admintool/index-jennifer.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="jui">
 
@@ -615,9 +615,9 @@ chart_list[chart_list.length] = chart("#bar_gauge_sample_chart_2", {
 });
 
 function changeTheme(theme) {
-  $("#ui_theme").attr("href", "/lib/jui/css/ui-" + theme + ".min.css");
-  $("#grid_theme").attr("href", "/lib/jui/css/grid-" + theme + ".min.css");
-  $("#index_theme").attr("href", "/gallery/admintool/index-" + theme + ".css");
+  $("#ui_theme").attr("href", "../../lib/jui/css/ui-" + theme + ".min.css");
+  $("#grid_theme").attr("href", "../../lib/jui/css/grid-" + theme + ".min.css");
+  $("#index_theme").attr("href", "../../gallery/admintool/index-" + theme + ".css");
 
   for(var i = 0, len = chart_list.length; i < len; i++) {
 
