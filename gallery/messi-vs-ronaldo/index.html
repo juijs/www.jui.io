@@ -35,7 +35,7 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 
 	var offensePointChart = builder('#offense-point', {
 		height: 200,
-		axis: {
+		axis: [{
 			x: {
 				type: 'block',
 				domain: 'season',
@@ -50,7 +50,19 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 //				width: '47%'
 			},
 			data: data.offensePoint
-		},
+		}, {
+			x: {
+				hide: true,
+				type: 'fullblock'
+			},
+			y: {
+				type: 'range',
+				domain: [0, 50],
+				orient : 'right',
+				step: 5
+			},
+			extend: 0
+		}],
 		padding: {
 			left: 55,
 			right: 25,
@@ -60,9 +72,16 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 		brush: [{
 			type: 'column',
 			display: 'all',
-//			outerPadding: 20,
-			target: ['messiGoal', 'ronaldoGoal', 'messiAssist', 'ronaldoAssist'],
+			axis: 0,
+			target: ['messiGoal', 'ronaldoGoal'],
+			size : 30,
 			colors: ['#77B0A8', '#E96359', '#EEBF6E', '#F2EFC6']
+		}, {
+			type: 'line',
+			axis: 1,
+			symbol: 'curve',
+			target: ['messiAssist', 'ronaldoAssist'],
+			colors: ['#EEBF6E', '#F2EFC6']
 		}],
 		widget: [
 			{
@@ -74,7 +93,7 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 					else if (v === 'ronaldoAssist') return 'Ronaldo Assist';
 				}
 			},
-			{ type: 'tooltip', brush: 1 },
+			{ type: 'tooltip', brush: [0, 1]},
 			{
 				type: 'title',
 				text: 'Offense Point',
