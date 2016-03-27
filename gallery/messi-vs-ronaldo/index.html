@@ -43,8 +43,8 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 			},
 			y: {
 				type: 'range',
-				domain: [0, 90],
-				step: 5
+				domain: [ 0, 100 ],
+				step: 4
 			},
 			area: {
 //				width: '47%'
@@ -57,9 +57,9 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 			},
 			y: {
 				type: 'range',
-				domain: [0, 50],
+				domain: [ 0, 50 ] ,
 				orient : 'right',
-				step: 5
+				step: 2
 			},
 			extend: 0
 		}],
@@ -79,7 +79,6 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 		}, {
 			type: 'line',
 			axis: 1,
-			symbol: 'curve',
 			target: ['messiAssist', 'ronaldoAssist'],
 			colors: ['#EEBF6E', '#F2EFC6']
 		}],
@@ -93,7 +92,7 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 					else if (v === 'ronaldoAssist') return 'Ronaldo Assist';
 				}
 			},
-			{ type: 'tooltip', brush: [0, 1]},
+			{ type: 'tooltip', brush: [ 0, 1 ] },
 			{
 				type: 'title',
 				text: 'Offense Point',
@@ -251,15 +250,6 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 			dy: 50,
 			axis: 0
 		}, {
-			type: 'tooltip',
-			orient: 'left',
-			format: function(data, k) {
-				return {
-					key: NAMES[k],
-					value: data[k]
-				}
-			}
-		}, {
 			type: 'title',
 			text: 'Average Rating',
 			align: 'start',
@@ -367,7 +357,7 @@ jui.ready(['util.base', 'util.time', 'chart.builder', 'grid.xtable', 'ui.combo']
 				<tr>
 					<th>Season</th>
 					<th>Team</th>
-					<th>Tournament</th>
+					<th width="25%">Tournament</th>
 					<th>Apps</th>
 					<th>Mins</th>
 					<th>Goals</th>

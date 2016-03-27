@@ -2,6 +2,11 @@
 	padding: 10px;
 	margin: 0px;
 }
+
+.panel > .xtable {
+	border-bottom: 1px solid #dcdcdc;
+}
+
 body {
 	font-family: sans-serif;
 }
