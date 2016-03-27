@@ -119,8 +119,29 @@ function getDataForVisitor() {
 }
 
 // Transaction view
-function setTransactionData(domain) {
-    var count = Math.floor(Math.random() * 200);
+function initTransactionData(domain) {
+	var ten_minutes = 1000 * 60 * 10;
+
+	for(var i = 0; i < 1000; i++) {
+		var type = Math.floor(Math.random() * 6),
+			data = {
+				delay: Math.floor(Math.random() * 10000),
+				level: "normal",
+				time: new Date(domain[0].getTime() + Math.floor(Math.random() * ten_minutes))
+			};
+
+		if(type > 2 && type < 5) {
+			data.level = "warning";
+		} else if(type > 4) {
+			data.level = "fatal";
+		}
+
+		txData.push(data);
+	}
+}
+
+function addTransactionData(domain) {
+    var count = Math.floor(Math.random() * 10);
 
     for(var i = 0; i < txData.length; i++) {
         if(txData[i].time.getTime() < domain[0].getTime()) {
@@ -227,7 +248,11 @@ setInterval(function() {
     }
 
     // Transaction view
-    setTransactionData(domain);
+    if(txData.length == 0) {
+		initTransactionData(domain);
+	}
+	addTransactionData(domain);
+
     dashboard_bottom.axis(2).update(txData);
     dashboard_bottom.axis(2).set("x", { domain: domain });
 
