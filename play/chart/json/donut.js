@@ -16,7 +16,7 @@ chart("#chart", {
     },
     brush : {
         type : "donut",
-        showText : "inner",
+        showText : "inside",
         format : function(k, v) {
             return v + "%";
         }
