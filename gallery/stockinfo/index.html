@@ -202,7 +202,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 		}],
 		brush : [{
 			type : "pie",
-			showText : "inner",
+			showText : "inside",
 			format : function(k, v) {
 				var res = "";
 
@@ -214,7 +214,7 @@ jui.ready([ "util.base", "util.time", "chart.builder", "grid.xtable" ], function
 			axis : 0
 		}, {
 			type : "donut",
-			showText : "inner",
+			showText : "inside",
 			format : function(k, v) {
 				if(k == 1) return "Q1";
 				else if(k == 2) return "Q2";
