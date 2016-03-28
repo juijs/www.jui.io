@@ -37,6 +37,7 @@ chart("#chart", {
 		}
 	}],
 	style : {
-		backgroundColor : "#1c1c1c"
+		backgroundColor : "#1c1c1c",
+		axisBackgroundColor : "#1c1c1c"
 	}
 });
