@@ -3,6 +3,7 @@
     $contents = file_get_contents("gallery/".$id."/package.json");
     $contents = utf8_encode($contents);
     $json = json_decode($contents);
+	$isThumbnail = file_exists("gallery/".$id."/thumbnail.png");
 ?>
 
 <title>JENNIFER Gallery: <?php echo $json->title ?></title>
@@ -14,6 +15,6 @@
 <meta property="og:description" content="<?php echo $json->description ?>" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://jui.io/?p=gallery.<?php echo $json->name ?>" />
-<?php if(isset($json->image)) { ?>
-<meta property="og:image" content="<?php echo $json->image ?>" />
+<?php if($isThumbnail) { ?>
+<meta property="og:image" content="http://jui.io/gallery/<?php echo $id ?>/thumbnail.png" />
 <?php } ?>

@@ -19,7 +19,6 @@ function directoryList($path, $omit = '') {
             );
 
             $infofile = $real_path.DIRECTORY_SEPARATOR.'package.json';
-
             $dir['info'] = json_decode(@file_get_contents($infofile));
 
             $list[] = $dir;
@@ -47,15 +46,17 @@ $list = directoryList("./gallery", "");
 <div class="gallery-container">
     <div class="gallery-list">
         <?php for($i = 0; $i < sizeof($list); $i++) {
-            $isIframe = !isset($list[$i]["info"]->thumbnail);
+			$thumbnail = "gallery/".$list[$i]["info"]->name."/thumbnail.png";
+			$link = "gallery/".$list[$i]["info"]->name."/index.html";
+			$isThumbnail = file_exists($thumbnail);
         ?>
-        <div class="item <?php if($isIframe) { ?>iframe<?php } ?>">
+        <div class="item <?php if(!$isThumbnail) { ?>iframe<?php } ?>">
             <div class="wrap">
                 <div class="body">
-                    <?php if(!$isIframe) { ?>
-                    <img src="<?php echo $list[$i]["info"]->thumbnail ?>" onclick="/gallery/<?php echo $list[$i]["info"]->name ?>/index.html" />
+                    <?php if($isThumbnail) { ?>
+                    <img src="<?php echo $thumbnail ?>" onclick="<?php echo $link ?>" />
                     <?php } else { ?>
-                    <iframe border="0" frameborder="0" src="/gallery/<?php echo $list[$i]["info"]->name ?>/index.html" scrolling="no"></iframe>
+                    <iframe border="0" frameborder="0" src="<?php echo $link ?>" scrolling="no"></iframe>
                     <?php } ?>
                     <a href="/?p=gallery.<?php echo $list[$i]["info"]->name ?>"></a>
                 </div>
