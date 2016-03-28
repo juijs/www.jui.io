@@ -22,52 +22,97 @@ body {
 	z-index: 1;
 }
 
+.title {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	z-index: 2;
+	color: #fff;
+	padding-top: 60px;
+}
+.title > .date {
+	font-size: 16px;
+	opacity: 0.5
+}
+.title > .time {
+	font-size: 60px;
+	font-weight: 100;
+	margin-top: -10px;
+}
+
 .card {
 	background: #fff;
 	opacity: 0.05;
 }
-
-.left-1, .left-2, .left-3, .left-4 {
+.layer {
 	position: absolute;
-	left: 20px;
 	width: 300px;
 	z-index: 2;
+	text-align: left;
 }
+
 .left-1 {
+	left: 20px;
 	top: 60px;
 	height: 254px;
+	padding-left: 20px;
 }
+.left-1 > .city {
+	font-size: 32px;
+	font-weight: 100;
+	color: #fff;
+}
+.left-1 > .city > .weather {
+	width: 24px;
+	height: 24px;
+	color: #fff;
+	margin-top: 5px;
+}
+.left-1 > .location {
+	font-size: 14px;
+	color: #fff;
+	opacity: 0.5;
+	margin-top: 5px;
+}
+.left-1 > .temp {
+	font-size: 60px;
+	font-weight: 100;
+	color: #fff;
+	margin-top: 30px;
+}
+
 .left-2 {
+	left: 20px;
 	bottom: 510px;
 	height: 57px;
 }
 .left-3 {
+	left: 20px;
 	bottom: 229px;
 	height: 273px;
 }
 .left-4 {
+	left: 20px;
 	bottom: 20px;
 	height: 201px;
 }
 
-.right-1, .right-2, .right-3 {
-	position: absolute;
-	right: 20px;
-	width: 300px;
-	z-index: 2;
-}
-
 .right-1 {
+	right: 20px;
 	height: 168px;
 	bottom: 648px;
 }
 
 .right-2 {
+	right: 20px;
 	height: 138px;
 	bottom: 502px;
 }
 
 .right-3 {
+	right: 20px;
 	height: 474px;
 	bottom: 20px;
 }

@@ -166,16 +166,24 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 <div class="background"></div>
 
-<div class="left-1"></div>
-<div class="left-2 card"></div>
-<div class="left-3 card"></div>
-<div class="left-4 card"></div>
+<div class="left-1 layer">
+	<div class="city">Paju <img src="../../gallery/gps/resources/image/weather.svg" class="weather" /></div>
+	<div class="location">Kyeongki-Do, South Korea</div>
+	<div class="temp">20℃</div>
+</div>
+<div class="left-2 layer card"></div>
+<div class="left-3 layer card"></div>
+<div class="left-4 layer card"></div>
 
+<div class="title">
+	<div class="date">Friday, March 25</div>
+	<div class="time">14:26:15</div>
+</div>
 <div id="radar"></div>
 
-<div class="right-1 card"></div>
-<div class="right-2 card"></div>
-<div class="right-3 card"></div>
+<div class="right-1 layer card"></div>
+<div class="right-2 layer card"></div>
+<div class="right-3 layer card"></div>
 
 <script>
     jui.ready(function() {
