@@ -22,6 +22,11 @@ body {
 	z-index: 1;
 }
 
+#radar {
+	margin-top: -60px;
+	z-index: 3;
+}
+
 .title {
 	position: absolute;
 	left: 0px;
@@ -43,14 +48,14 @@ body {
 }
 
 .card {
-	background: #fff;
-	opacity: 0.05;
+	background: rgba(255, 255, 255, 0.05);
 }
 .layer {
 	position: absolute;
 	width: 300px;
 	z-index: 2;
 	text-align: left;
+	color: #fff;
 }
 
 .left-1 {
@@ -62,57 +67,103 @@ body {
 .left-1 > .city {
 	font-size: 32px;
 	font-weight: 100;
-	color: #fff;
 }
 .left-1 > .city > .weather {
 	width: 24px;
 	height: 24px;
-	color: #fff;
 	margin-top: 5px;
 }
 .left-1 > .location {
 	font-size: 14px;
-	color: #fff;
 	opacity: 0.5;
 	margin-top: 5px;
 }
 .left-1 > .temp {
 	font-size: 60px;
 	font-weight: 100;
-	color: #fff;
 	margin-top: 30px;
 }
 
 .left-2 {
+	position: relative;
 	left: 20px;
-	bottom: 510px;
+	top: 270px;
 	height: 57px;
 }
+.left-2 > div {
+	position: absolute;
+	top: 18px;
+}
+.left-2 > div > img {
+	width: 23px;
+	height: 23px;
+	margin-bottom: -5px;
+}
+.left-2 > div > span {
+	font-size: 14px;
+	margin-top: -10px;
+}
+.left-2 > div.sunrise {
+	left: 20px;
+}
+.left-2 > div.sunset {
+	left: 122px;
+}
+.left-2 > div.drop {
+	left: 226px;
+}
+
 .left-3 {
 	left: 20px;
-	bottom: 229px;
+	top: 334px;
 	height: 273px;
 }
 .left-4 {
 	left: 20px;
-	bottom: 20px;
+	top: 614px;
 	height: 201px;
 }
 
 .right-1 {
 	right: 20px;
 	height: 168px;
-	bottom: 648px;
+	top: 20px;
 }
 
 .right-2 {
 	right: 20px;
 	height: 138px;
-	bottom: 502px;
+	top: 195px;
 }
 
 .right-3 {
 	right: 20px;
 	height: 474px;
-	bottom: 20px;
+	top: 341px;
+}
+.right-3 > #flight_name {
+	position: absolute;
+	font-size: 24px;
+	left: 10px;
+	top: 25px;
+}
+.right-3 > .info {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.right-3 > .info > div {
+	margin: 7px 0;
+}
+.right-3 > .info > div.line {
+	height: 1px;
+	background: #fff;
+	opacity: 0.2;
+}
+.right-3 > .info > div > .type {
+	font-size: 12px;
+}
+.right-3 > .info > div > .value {
+	float: right;
+	font-size: 14px;
+	font-weight: bold;
 }

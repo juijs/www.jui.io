@@ -423,11 +423,15 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 <div class="background"></div>
 
 <div class="left-1 layer">
-	<div class="city">Paju <img src="../../gallery/gps/resources/image/weather.svg" class="weather" /></div>
+	<div class="city">Paju <img src="../../gallery/gps/resources/image/icon-weather.svg" class="weather" /></div>
 	<div class="location">Kyeongki-Do, South Korea</div>
 	<div class="temp">20℃</div>
 </div>
-<div class="left-2 layer card"></div>
+<div class="left-2 layer card">
+	<div class="sunrise"><img src="../../gallery/gps/resources/image/icon-sunrise.svg" /> <span>06:19</span></div>
+	<div class="sunset"><img src="../../gallery/gps/resources/image/icon-sunset.svg" /> <span>17:23</span></div>
+	<div class="drop"><img src="../../gallery/gps/resources/image/icon-drop.svg" /> <span>56%</span></div>
+</div>
 <div class="left-3 layer card"></div>
 <div class="left-4 layer card"></div>
 
@@ -438,50 +442,27 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 <div id="radar"></div>
 
 <div class="right-1 layer card"></div>
-<div class="right-2 layer card"></div>
-<div class="right-3 layer card"></div>
+<div class="right-2 layer card">
+
+</div>
+<div class="right-3 layer card">
+	<div id="flight_model"></div>
+	<div id="flight_name">CX105</div>
+	<div id="flight_status"></div>
+
+	<div class="info">
+		<div><span class="type">SPEED</span> <span class="value">486Km/h</span></div>
+		<div class="line"></div>
+		<div><span class="type">ALTITUDE(FT)</span> <span class="value">11582 ft</span></div>
+		<div class="line"></div>
+		<div><span class="type">DESTINATION</span> <span class="value">Honolulu</span></div>
+	</div>
+</div>
 
 <script>
     jui.ready(function() {
-
-		var color = jui.include('util.color');
-		var c = color.scale().domain('rgb(38,173,32)', 'rgb(0,25,0)');
-
-
-		// 맵 적용
-		var names = {
-			KR: "Korea",
-			CN: "China",
-			JP: "Japan"
-		}
-
-		var data = [{
-			id: "KR",
-			value: 50220000,
-			texts: [
-				"50.22 million people in 2013",
-				"47.01 million people in 2000",
-				"45.95 million people in 1997"
-			]
-		}, {
-			id: "CN",
-			value: 1357000000,
-			texts: [
-				"13.57 billion people in 2013",
-				"12.63 billion people in 2000",
-				"12.3 billion people in 1997"
-			]
-		}, {
-			id: "JP",
-			value: 127300000,
-			texts: [
-				"1.273 billion people in 2013",
-				"1.269 billion people in 2000",
-				"1.261 billion people in 1997"
-			]
-		}];
-
-		var colors = c.ticks(3);
+		var color = jui.include("util.color"),
+			time = jui.include("util.time");
 
 		var style = {
 			backgroundColor: "transparent",
@@ -622,11 +603,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 					mapClip();
 				}
 			}
-
         });
 
 		mapClip();
-
 
 		function mapClip() {
 			var clipPath = mainChart.svg.clipPath({
@@ -636,15 +615,12 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			var area = mainChart.axis(0).area();
 			var size = Math.min(area.width, area.height);
 
-
 			var clipCircle = mainChart.svg.circle({
 				cx : area.width/2,
 				cy : area.height/2,
 				r  : size/2,
 				fill : 'black'
 			});
-
-
 
 			var defs = mainChart.svg.root.element.children[0].children[0];
 
@@ -654,8 +630,6 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			mainChart.appendDefs(clipPath);
 			defs.appendChild(clipPath.element);
 
-
-
 			mainChart.axis(0).map.root.attr({
 				'clip-path' : 'url(#map-clip)'
 			});
@@ -664,25 +638,27 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			g.setAttribute('clip-path', 'url(#map-clip)');
 		}
 
-
-		function create (max) {
-			return Math.floor(Math.random() * max % 100);
-		}
-
 		// modeling 객체 렌더링
-		var f16 = chart("#chart6 .container", {
-			width:300,
-			height:200,
-			padding : 0,
+		var f16Y = 0;
+
+		var f16 = chart("#flight_model", {
+			width : 300,
+			height : 190,
+			padding : {
+				top : 50,
+				left : 0,
+				right : 0,
+				bottom : 10
+			},
 			axis : {
 				x : {
 					type : "range",
-					domain : [ -5, 20 ],
+					domain : [ -5, 18 ],
 					hide : true
 				},
 				y : {
 					type : "range",
-					domain : [ -3, 5 ],
+					domain : [ -2, 3 ],
 					hide : true
 				},
 				z : {
@@ -695,27 +671,27 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 					y: 0,
 					z: 0
 				},
-				depth : 400,
+				depth : 240,
 				perspective : 0.8
 			},
-			brush : {
+			brush : [{
 				type : "canvas.model3d",
-				model : "f16"
-			},
-			widget : {
-				type : "polygon.rotate3d"
-			},
+				model : "f16",
+				colors : [ "#fff" ]
+			}],
+			widget : [{
+				type : "title",
+				text : "AIRCRAFT INFORMATION",
+				align : "start",
+				dx : 10
+			}],
 			style : {
-				backgroundColor: 'transparent',
-				gridXAxisBorderWidth: 1,
-				gridYAxisBorderWidth: 1,
-				gridZAxisBorderWidth: 1
+				backgroundColor : "transparent",
+				titleFontColor : "#fff",
+				titleFontSize : 11
 			},
 			canvas : true
 		});
-
-
-		var f16Y = 0;
 
 		function startF16() {
 			stopF16();
@@ -726,7 +702,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				}
 
 
-				f16.axis(0).set('degree', {
+				f16.axis(0).set("degree", {
 					y : f16Y
 				});
 			}, 200);
@@ -736,170 +712,73 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			clearInterval(f16.timer);
 		}
 
-		//startF16();
+		startF16();
 
-		// modeling 객체 렌더링
-		var hind = chart("#chart7 .container", {
-			width:300,
-			height:200,
+		chart("#flight_status", {
+			width : 300,
+			height : 160,
 			padding : 0,
-			axis : {
+			axis : [{
 				x : {
+					type : "date",
+					domain : [ new Date(new Date() - time.MINUTE * 5), new Date() ],
+					interval : 1,
+					realtime : "minutes",
+					format : "hh:mm",
+					key : "time"
+				},
+				y : {
 					type : "range",
-					domain : [ -10, 10 ],
-					hide : true
+					domain : [ 0, 25000 ],
+					step : 2
 				},
-	            y : {
-					type : "range",
-					domain : [ -5, 20 ],
-					hide : true
-				},
-				z : {
-					type : "range",
-					domain : [ -7, 7 ],
-					hide : true
-				},
-				degree : {
-					x: 180,
-					y: 0,
-					z: 90
-				},
-				depth : 400,
-				perspective : 0.8
-			},
-			brush : {
-				type : "canvas.model3d",
-				model : "hind" ,
-				colors : ['green']
-			},
-			widget : {
-				type : "polygon.rotate3d"
-			},
-			style : {
-				backgroundColor: 'transparent',
-				gridXAxisBorderWidth: 1,
-				gridYAxisBorderWidth: 1,
-				gridZAxisBorderWidth: 1
-			},
-			canvas : true,
-			render : false
-		});
-
-		var hindY = 0;
-
-		function startHind() {
-			stopHind();
-			hind.timer = setInterval(function() {
-				(hindY += 10);
-				if (hindY > 360) {
-					hindY = 0;
+				padding : {
+					top : 40,
+					bottom : 30,
+					left : 40,
+					right : 40
 				}
-
-
-				hind.axis(0).set('degree', {
-					y : hindY
-				});
-			}, 200);
-		}
-
-		function stopHind() {
-			clearInterval(hind.timer);
-		}
-
-		//startHind();
-
-		// modeling 객체 렌더링
-		var dodge = chart("#chart8 .container", {
-			width:300,
-			height:200,
-			padding : 0,
-			axis : {
+			}, {
+				extend : 0,
 				x : {
-					type : "range",
-                domain : [ -10, 10 ],
 					hide : true
 				},
-	            y : {
-					type : "range",
-	                domain : [ -5, 5 ],
-					hide : true
-				},
-				z : {
-					type : "range",
-	                domain : [ -7, 7 ],
-					hide : true
-				},
-				degree : {
-					x: 0,
-					y: 0,
-					z: 0
-				},
-				depth : 400,
-				perspective : 0.8,
-			},
-			brush : {
-				type : "canvas.model3d",
-				model : "dodge"
-			},
-			widget : {
-				type : "polygon.rotate3d"
-			},
-			style : {
-				backgroundColor: 'transparent',
-				gridXAxisBorderWidth: 1,
-				gridYAxisBorderWidth: 1,
-				gridZAxisBorderWidth: 1
-			},
-			canvas : true,
-			render : false
-		});
-		var dodgeY = 0;
-
-		function startDodge() {
-			stopDodge();
-			dodge.timer = setInterval(function() {
-				(dodgeY += 10);
-				if (dodgeY > 360) {
-					dodgeY = 0;
+				y : {
+					domain : [ 0, 500 ],
+					orient : "right"
 				}
-
-
-				dodge.axis(0).set('degree', {
-					y : dodgeY
-				});
-			}, 200);
-		}
-
-		function stopDodge() {
-			clearInterval(dodge.timer);
-		}
-
-		//startDodge();
-
-
-		var start_list = [ startF16, startHind, startDodge];
-		var end_list = [ stopF16, stopHind, stopDodge];
-		var id_list = [ '#chart6', '#chart7', '#chart8'];
-		var chart_list = [f16, hind, dodge];
-
-
-		function nextModeling() {
-			var i = create(3);
-
-			$("#chart6,#chart7,#chart8").removeClass('on');
-			$(id_list[i]).addClass('on');
-
-			chart_list[i].render();
-			start_list[i].call();
-
-			setTimeout(function() {
-				end_list[i].call();
-
-				nextModeling();
-			}, 10000);
-		}
-
-		//setTimeout(nextModeling, 1000);
+			}],
+			brush : [{
+				type : "line",
+				target : [ "KNOT", "FT" ],
+				colors : [ "#fff", "#ff484c" ]
+			}],
+			widget : [{
+				type : "title",
+				text : "GS(KNOT) / ALTITUDE(FT)",
+				align : "start",
+				dx : 10,
+				dy : -10
+			}, {
+				type : "legend",
+				orient : "top",
+				align : "end"
+			}],
+			style : {
+				backgroundColor : "transparent",
+				titleFontColor : "#fff",
+				titleFontSize : 11,
+				gridTickBorderSize : 0,
+				gridXFontColor : "#dcdcdc",
+				gridXFontSize : 10,
+				gridYFontColor : "#dcdcdc",
+				gridYFontSize : 10,
+				gridXAxisBorderWidth : 1,
+				gridYAxisBorderWidth : 1,
+				legendFontSize : 10,
+				legendFontColor : "#fff"
+			}
+		});
     });
 </script>
 </body>
