@@ -85,34 +85,34 @@ body {
 
 .left-2 {
 	left: 20px;
-	bottom: 510px;
+	top: 269px;
 	height: 57px;
 }
 .left-3 {
 	left: 20px;
-	bottom: 229px;
+	top: 333px;
 	height: 273px;
 }
 .left-4 {
 	left: 20px;
-	bottom: 20px;
+	top: 613px;
 	height: 201px;
 }
 
 .right-1 {
 	right: 20px;
 	height: 168px;
-	bottom: 648px;
+	top: 20px;
 }
 
 .right-2 {
 	right: 20px;
 	height: 138px;
-	bottom: 502px;
+	top: 195px;
 }
 
 .right-3 {
 	right: 20px;
 	height: 474px;
-	bottom: 20px;
+	top: 341px;
 }
