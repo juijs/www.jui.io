@@ -1,6 +1,8 @@
 {
-  "name": "gps",
-  "title" : "GPS Radar",
-  "description" : "gps radar chart",
-  "version": "1.0.0"
+	"name": "gps",
+	"title" : "GPS Radar",
+	"description" : "You can see information on the current weather. Also, the radar can observe the passing flying objects.",
+	"version": "1.0.0",
+	"height": 835,
+	"author": "yoha"
 }

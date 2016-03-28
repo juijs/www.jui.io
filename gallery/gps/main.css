@@ -1,95 +1,73 @@
 body {
-    background-color:black;
-	  margin: 0;
-	  padding: 0;
-	  height: 100%;
-	  background-image:linear-gradient(black, #282828);
+    background-color: black;
+	margin: 0;
+	padding: 0;
+	text-align: center;
 }
 
-.chart-line {
-    border-color: rgb(18, 109, 18) !important;
-	z-index: 100;
-	background-color:black;
-	margin-bottom: 20px;
-	width:100%;
-	height:150px;
+.background {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 40%),
+		linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0) 40%),
+		url("../../gallery/gps/resources/image/bg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	opacity: 0.5;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
 }
 
-.chart-panel.panel-left {
-    position:absolute;
-    left:10px;
-    top:10px;
-	bottom:10px;
-    width: 20%;
-    max-width:250px;
-    min-width:200px;
+.card {
+	background: #fff;
+	opacity: 0.05;
 }
 
-.chart-panel.panel-right {
-    position:absolute;
-    right:10px;
-    top:10px;
-	bottom:10px;
-    width: 30%;
-    max-width:300px;
-    min-width:200px;
+.left-1, .left-2, .left-3, .left-4 {
+	position: absolute;
+	left: 20px;
+	width: 300px;
+	z-index: 2;
+}
+.left-1 {
+	top: 60px;
+	height: 254px;
+}
+.left-2 {
+	bottom: 510px;
+	height: 57px;
+}
+.left-3 {
+	bottom: 229px;
+	height: 273px;
+}
+.left-4 {
+	bottom: 20px;
+	height: 201px;
 }
 
-#chart1 {
-    border: 1px solid black;
+.right-1, .right-2, .right-3 {
+	position: absolute;
+	right: 20px;
+	width: 300px;
+	z-index: 2;
 }
 
-#chart2 {
-    border: 1px solid black;
+.right-1 {
+	height: 168px;
+	bottom: 648px;
 }
 
-#chart3 {
-    border: 1px solid black;
+.right-2 {
+	height: 138px;
+	bottom: 502px;
 }
 
-#chart4 {
-    border: 1px solid black;
-}
-
-
-#chart5 {
-	position:absolute;
-    left:10%;
-    bottom:10%;
-	top:10%;
-	right:10%;
-	z-index: 100;
-
-	background-color: transparent;
-    background-image:       linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
-	background-size:50px 50px;
-}
-
-#chart6,#chart7,#chart8 {
-	position:absolute;
-	bottom:0px;
-	right:0px;
-	left:0px;
-	display:none;
-	width: 30%;
-	max-width:300px;
-	min-width:200px;
-}
-
-#chart6.on,#chart7.on,#chart8.on {
-	display:block;
-}
-
-#chart9 {
-	position:absolute;
-	left:10%;
-	bottom:10%;
-	top:10%;
-	right:10%;
-	z-index:1;
-}
-
-.container {
-	width:100%;
-	height:100%;
+.right-3 {
+	height: 474px;
+	bottom: 20px;
 }

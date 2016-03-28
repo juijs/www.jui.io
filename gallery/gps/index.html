@@ -9,10 +9,10 @@
 <script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
 <script type="text/javascript" src="../../lib/jui/js/chart.js" ></script>
-<link rel="stylesheet" href="main.css" />
-<script src="resources/model/f16.js"></script>
-<script src="resources/model/dodge.js"></script>
-<script src="resources/model/hind.js"></script>
+<link rel="stylesheet" href="../../gallery/gps/main.css" />
+<script src="../../gallery/gps/resources/model/f16.js"></script>
+<script src="../../gallery/gps/resources/model/dodge.js"></script>
+<script src="../../gallery/gps/resources/model/hind.js"></script>
 <script>
 jui.define("chart.widget.radar", ["util.math"], function(math) {
 
@@ -37,13 +37,13 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 			line = this.svg.path({
 				'stroke-width' : 2,
-				'stroke' : '#26AD20'
+				'stroke' : '#fff'
 			});
 
 			guide.append(line)
 
 			tail = this.svg.path({
-				'fill' : this.chart.color('linear(left) #26AD20,20% #26AD20,100% black'),
+				'fill' : this.chart.color('linear(left) #fff,20% #fff,100% black'),
 				'fill-opacity' : 0.1,
 				'filter' : 'url(#blurFilter)',
 				'stroke-width' : 0,
@@ -53,8 +53,9 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			guide.append(tail);
 
 			circle = this.svg.circle({
-				fill : 'black',
-				stroke : 'rgb(24, 159, 130)',
+				fill : "#fff",
+				"fill-opacity": 0.7,
+				stroke : '#fff',
 				cx : 0,
 				cy : 0,
 				r : 10
@@ -63,7 +64,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			guide.append(circle);
 
 			circle2 = this.svg.circle({
-				fill : 'rgb(24, 159, 130)',
+				fill : "#fff",
 				cx : 0,
 				cy : 0,
 				r : 4
@@ -163,37 +164,18 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 </head>
 <body class="jui">
 
-<div class="chart-panel panel-left">
-	<div id="chart1" class="chart-line">
-		<div class="container"></div>
-	</div>
-	<div id="chart2" class="chart-line">
-		<div class="container"></div>
-	</div>
-	<div id="chart3">
-		<div class="container"></div>
-	</div>
-	<div id="chart4">
-		<div class="container"></div>
-	</div>
-</div>
+<div class="background"></div>
 
-<div class="chart-panel panel-right">
-	<div id="chart6" class="chart-line">
-		<div class="container"></div>
-	</div>
-	<div id="chart7" class="chart-line">
-		<div class="container"></div>
-	</div>
+<div class="left-1"></div>
+<div class="left-2 card"></div>
+<div class="left-3 card"></div>
+<div class="left-4 card"></div>
 
-	<div id="chart8" class="chart-line">
-		<div class="container"></div>
-	</div>
-</div>
+<div id="radar"></div>
 
-<div id="chart5">
-	<div class="container"></div>
-</div>
+<div class="right-1 card"></div>
+<div class="right-2 card"></div>
+<div class="right-3 card"></div>
 
 <script>
     jui.ready(function() {
@@ -238,23 +220,22 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 		var colors = c.ticks(3);
 
 		var style = {
-				backgroundColor: 'transparent',
-				gridAxisBorderColor : 'rgb(24, 159, 130)',
-				gridBorderColor : 'rgb(24, 159, 130)',
-				gridBorderWidth: 0.5,
-				mapPathBackgroundColor: colors[3],
-				mapPathBorderColor: colors[1],
-				mapPathBorderWidth: 0.5,
-				mapControlButtonColor: "#ffcb2b",
-				mapSelectorHoverColor: colors[2],
-				mapSelectorActiveColor: colors[2],
-				mapMinimapPathBackgroundColor: "#fff",
-				mapMinimapPathBackgroundOpacity: 1,
-				mapMinimapDragBackgroundColor: "#BEAB1E",
-				mapMinimapDragBorderColor: "#A88007",
-				mapMinimapBorderWidth : 0.5,
-				mapMinimapPathBorderWidth : 0.1
-			}
+			backgroundColor: "transparent",
+			gridAxisBorderColor : "#fff",
+			gridBorderColor : "#fff",
+			gridBorderWidth: 1,
+			mapPathBackgroundColor: "#fff",
+			mapPathBackgroundOpacity: 0.1,
+			mapPathBorderColor: "#fff",
+			mapPathBorderWidth: 0.5,
+			mapControlButtonColor: "#ffcb2b",
+			mapMinimapPathBackgroundColor: "#fff",
+			mapMinimapPathBackgroundOpacity: 0.5,
+			mapMinimapDragBackgroundColor: "transparent",
+			mapMinimapDragBorderColor: "transparent",
+			mapMinimapBorderWidth : 0.5,
+			mapMinimapPathBorderWidth : 0.1
+		}
 
 		var domain = [];
 
@@ -313,23 +294,24 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			airport: "small"
 		}];
 
-        var mainChart = chart("#chart5 .container", {
-
+        var mainChart = chart("#radar", {
 			theme : "dark",
+			width: "100%",
+			height: 830,
 			padding : {
+				top : 180,
+				bottom : 60,
 				left : 0,
-				right :0,
-				top: 20,
-				bottom: 20
+				right : 0
 			},
             axis : [
 			{
 				map : {
 					path : "../../lib/jui/img/map/world-1040x660.svg",
-					width : 900,
-					height : 630,
+					width : 1040,
+					height : 660,
 					scale : 4,
-					viewX : -300,
+					viewX : -700,
 					viewY : 100
 				},
 				data : map_data
@@ -354,7 +336,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				scale : 0.2,
 				align : "end",
 				orient : "top",
-				dx : -50
+				dx : -65,
+				dy : 38
 			}],
 			style : style,
 			event : {
@@ -408,111 +391,6 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 		function create (max) {
 			return Math.floor(Math.random() * max % 100);
 		}
-
-		function get_random_data () {
-			return [
-					{ normal : create(5), warning : create(15), fatal : create(5) },
-					{ normal : create(25), warning : create(8), fatal : create(5) },
-					{ normal : create(3), warning : create(4), fatal : create(10) },
-					{ normal : create(18), warning : create(5), fatal : create(7) },
-					{ normal : create(5), warning : create(15), fatal : create(5) },
-					{ normal : create(25), warning : create(8), fatal : create(5) },
-					{ normal : create(12), warning : create(4), fatal : create(10) },
-					{ normal : create(18), warning : create(50), fatal : create(7) },
-					{ normal : create(5), warning : create(15), fatal : create(5) },
-					{ normal : create(5), warning : create(8), fatal : create(50) },
-					{ normal : create(12), warning : create(2), fatal : create(80) },
-					{ normal : create(18), warning : create(5), fatal : create(7) }
-				]
-		}
-
-		function get_random_data_2() {
-			var max1 = create(1000);
-			var max2 = create(1000);
-
-			return [
-				{ value : create(max1), min : 0, max : max1 },
-				{ value : create(max2), min : 0, max : max2 }
-			]
-		}
-
-		var list = chart("#chart1 .container,#chart2 .container", {
-			padding: {
-				top : 0,
-				left : 0,
-				right: 0,
-				bottom : 30
-			},
-			axis : [{
-				x : {
-					domain : [ "0", "1", "2", "3", "4 ", "5", "6", "7", "8", "9", "10", "11" ],		// 임의의 배열을 생성하는게 필요할지도 모르겠군.
-					line : true,
-					hide : true
-				},
-				y : {
-					type : "range",
-					domain : function(d) {
-						return Math.max(d.normal, d.warning, d.fatal);
-					},
-					step : 5,
-					line : true,
-					hide : true
-				},
-				data : get_random_data()
-			}],
-			brush : {
-				type : "equalizercolumn",
-				target : [ "normal", "warning", "fatal" ],
-				unit : 10,
-				innerPadding: 1,
-				outerPadding: 2,
-				colors : c.ticks(3)
-			},
-			widget : {
-				type : 'title',
-				orient : 'bottom',
-				text : 'Monitoring',
-				size : '15px',
-				color : 'rgb(38,173,32)',
-				dy : 10
-			},
-			style : style
-		});
-
-		var list2 = chart("#chart3 .container,#chart4 .container", {
-			padding: 0,
-			axis : [{
-				c : {
-					type : 'table',
-					rows : 1,
-					columns : 2
-				},
-				data : get_random_data_2()
-			}],
-			brush : {
-				type : "circle",
-				size : 10,
-				externalSize: 1,
-				colors : c.ticks(2)
-			},
-			style : style
-		});
-
-		setInterval(function() {
-			list2[1].get('axis', 0).update(get_random_data_2());
-		}, 3000);
-
-		setInterval(function() {
-			list2[0].get('axis', 0).update(get_random_data_2());
-		}, 2000);
-
-		setInterval(function() {
-				list[1].get('axis', 0).update(get_random_data());
-		}, 1000);
-
-		setInterval(function() {
-				list[0].get('axis', 0).update(get_random_data());
-		}, 500);
 
 		// modeling 객체 렌더링
 		var f16 = chart("#chart6 .container", {
@@ -583,7 +461,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 		//startF16();
 
-// modeling 객체 렌더링
+		// modeling 객체 렌더링
 		var hind = chart("#chart7 .container", {
 			width:300,
 			height:200,
@@ -610,7 +488,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 					z: 90
 				},
 				depth : 400,
-				perspective : 0.8,
+				perspective : 0.8
 			},
 			brush : {
 				type : "canvas.model3d",
@@ -626,7 +504,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				gridYAxisBorderWidth: 1,
 				gridZAxisBorderWidth: 1
 			},
-			canvas : true
+			canvas : true,
+			render : false
 		});
 
 		var hindY = 0;
@@ -652,7 +531,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 		//startHind();
 
-// modeling 객체 렌더링
+		// modeling 객체 렌더링
 		var dodge = chart("#chart8 .container", {
 			width:300,
 			height:200,
@@ -694,7 +573,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				gridYAxisBorderWidth: 1,
 				gridZAxisBorderWidth: 1
 			},
-			canvas : true
+			canvas : true,
+			render : false
 		});
 		var dodgeY = 0;
 
@@ -742,10 +622,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			}, 10000);
 		}
 
-
-		setTimeout(nextModeling, 1000);
-
-    })
+		//setTimeout(nextModeling, 1000);
+    });
 </script>
 </body>
 </html>
