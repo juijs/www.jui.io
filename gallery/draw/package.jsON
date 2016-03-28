@@ -1,0 +1,10 @@
+{
+    "name": "draw",
+    "version": "1.0.0",
+    "title" : "Drawing Tool",
+    "description": "SVG Drawing Tool for SVG",
+    "keywords": [ "draw", "line", "path", "tool" ],
+    "author": "easylogic",
+    "license": "MIT",
+    "height" : "1000px"
+}
