@@ -1,0 +1,110 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<META charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
+	<link rel="stylesheet" href="../../lib/jui/css/ui-dark.min.css" />
+	<link rel="stylesheet" href="../../lib/jui/css/grid.min.css" />
+	<link rel="stylesheet" href="../../lib/jui/css/grid-dark.min.css" />
+	<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
+	<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
+	<script type="text/javascript" src="../../lib/jui/js/ui.js" ></script>
+	<script type="text/javascript" src="../../lib/jui/js/grid.js" ></script>
+	<script type="text/javascript" src="../../lib/jui/js/chart.js" ></script>
+	<link rel="stylesheet" type="text/css" href="less/draw.css" />
+	<script type="text/javascript" src="util/PathParser.js" ></script>
+	<script type="text/javascript" src="widget/drawing.core.js" ></script>
+	<script type="text/javascript" src="widget/drawing.mode.pointer.js" ></script>
+	<script type="text/javascript" src="widget/drawing.mode.move.js" ></script>
+	<script type="text/javascript" src="widget/drawing.mode.pen.js" ></script>
+	<script type="text/javascript" src="widget/drawing.mode.pen2.js" ></script>
+	<script type="text/javascript" src="widget/drawing.mode.shape.js" ></script>
+	<script type="text/javascript" src="widget/drawing.render.canvas.js" ></script>
+	<script type="text/javascript" src="widget/drawing.render.rule.js" ></script>
+	<script type="text/javascript" src="widget/drawing.canvas.js" ></script>
+</head>
+<body class="jui">
+<div class="drawing">
+	<div class="drawing-menu">
+		<ul class="drawing-menu-bar">
+			<li class="menu-item">
+				<a  class="menu-item-link" data-target="jui-menu">JUI</a>
+				<div id="jui-menu" class="dropdown large">
+					<ul style="width: 150px;">
+						<li value="1">About Drawing Tool</li>
+					</ul>
+				</div>
+			</li>
+			<li class="menu-item">File</li>
+			<li class="menu-item">Edit</li>
+			<li class="menu-item">Object</li>
+			<li class="menu-item">View</li>
+			</u>
+	</div>
+	<div class="drawing-left-toolbar">
+		<div class="buttons">
+			<a class="drawing-btn select" data-mode="pointer"><i class="icon-arrow4 white"></i></a>
+			<a class="drawing-btn" data-mode="pen"><i class="icon-edit white"></i></a>
+			<!-- <a class="drawing-btn" data-mode="pen2"><i class="icon-edit white"></i>2</a> -->
+			<a class="drawing-btn" data-mode="move"><i class="icon-minus white"></i></a>
+			<!-- <a class="drawing-btn" data-mode="shape"><i class="icon-stop white"></i></a> -->
+			<!-- <a class="drawing-btn"><i class="icon-text white"></i></a> -->
+		</div>
+	</div>
+	<div class="drawing-right-toolbar">
+		<div class="toolbar-row">
+			<div class="toolbar-item">
+				<small>width</small>
+				<div>560</div>
+			</div>
+			<div class="toolbar-item">
+				<small>height</small>
+				<div>480</div>
+			</div>
+		</div>
+	</div>
+	<div class="drawing-bottom-toolbar">reference by http://editor.method.ac/</div>
+	<div class="drawing-canvas">
+		<div class="drawing-root"></div>
+	</div>
+</div>
+
+
+
+<script>
+	jui.ready([ "ui.dropdown", "chart.builder" ], function(dropdown, builder) {
+
+		$("[data-target=jui-menu]").click(function(e) {
+			jui_menu.show();
+			console.log(jui_menu);
+		});
+
+
+		window.jui_menu = dropdown("#jui-menu");
+
+		var b = builder(".drawing-root", {
+			width: '100%',
+			height: '100%',
+			padding : 0,
+			widget : [
+				{ type : 'drawing.canvas'}
+			],
+			style : {
+				backgroundColor: 'transparent'
+			}
+		});
+
+		$("[data-mode]").on('click', function () {
+			$("[data-mode].select").removeClass('select');
+			$(this).addClass('select');
+			b.emit('drawing.canvas.change.mode', [ $(this).data('mode') ]);
+		});
+
+	});
+</script>
+
+</body>
+</html>
