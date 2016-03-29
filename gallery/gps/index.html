@@ -3,151 +3,16 @@
 <head>
 <META charset="UTF-8">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="../../lib/jui/css/ui.min.css" />
-<link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" id="ui_theme" />
-<script type="text/javascript" src="../../lib/jquery-1.8.0.min.js" ></script>
-<script type="text/javascript" src="../../lib/jui/js/core.js" ></script>
-<script type="text/javascript" src="../../lib/jui/js/ui.min.js" ></script>
-<script type="text/javascript" src="../../lib/jui/js/chart.js" ></script>
-<link rel="stylesheet" href="../../gallery/gps/main.css" />
+<link rel="stylesheet" href="../../gallery/gps/index.css" />
+<script type="text/javascript" src="../../lib/jui/js/core.min.js" ></script>
+<script type="text/javascript" src="../../lib/jui/js/chart.min.js" ></script>
 <script src="../../gallery/gps/resources/model/f16.js"></script>
-<script src="../../gallery/gps/resources/model/dodge.js"></script>
-<script src="../../gallery/gps/resources/model/hind.js"></script>
 <script src="../../gallery/gps/resources/moment.js"></script>
 <script src="../../gallery/gps/widget/radar.js"></script>
 <script src="../../gallery/gps/widget/compass.js"></script>
+<script src="../../gallery/gps/util.js"></script>
 
 <script>
-function getTimeToIndex() {
-	return new Date().getHours() * 6;
-}
-
-function getRandomValue(start, limit) {
-	return Math.floor(Math.random() * limit) + start;
-}
-
-function setRadarClip(chart) {
-	var clipPath = chart.svg.clipPath({
-		id : 'map-clip'
-	});
-
-	var area = chart.axis(0).area();
-	var size = Math.min(area.width, area.height);
-
-	var clipCircle = chart.svg.circle({
-		cx : area.width/2,
-		cy : area.height/2,
-		r  : size/2,
-		fill : 'black'
-	});
-
-	var defs = chart.svg.root.element.children[0].children[0];
-
-	clipPath.append(clipCircle);
-	clipPath.element.appendChild(clipCircle.element);
-
-	chart.appendDefs(clipPath);
-	defs.appendChild(clipPath.element);
-
-	chart.axis(0).map.root.attr({
-		'clip-path' : 'url(#map-clip)'
-	});
-
-	var g = chart.svg.root.element.children[0].children[6];
-	g.setAttribute('clip-path', 'url(#map-clip)');
-}
-
-function getRadarDomain() {
-	var domain = [];
-
-	for(var i = 0; i < 360; i += 30) {
-		domain.push(i);
-	}
-
-	return domain;
-}
-
-function startRotateF16(f16, f16Y) {
-	setInterval(function() {
-		(f16Y += 10);
-		if (f16Y > 360) {
-			f16Y = 0;
-		}
-
-		f16.axis(0).set("degree", {
-			y : f16Y
-		});
-	}, 200);
-}
-
-function startDateRender() {
-	setInterval(function() {
-		var d = new Date();
-
-		var h = d.getHours();
-		var m = d.getMinutes();
-		var s = d.getSeconds();
-
-		if (h < 10) h = "0" + h;
-		if (m < 10) m = "0" + m;
-		if (s < 10) s = "0" + s;
-
-		$(".title .date").html(moment().format('LL'));
-		$(".title .time").html([h, m, s].join(":"))
-	}, 200);
-}
-
-function getCompassData() {
-	var u = "mph",
-		d = Math.floor(Math.random() * 360),
-		dStr = "NE";
-
-	if(d > 270) dStr = "SE";
-	else if(d > 180) dStr = "SW";
-	else if(d > 90) dStr = "NW";
-
-	return {
-		type : "compass",
-		degree : d,
-		title : "10." + Math.floor(Math.random() * 9),
-		topText : d + "° " + dStr,
-		supText : u,
-		bottomText : "WIND GUST 10." + Math.floor(Math.random() * 9) + u
-	}
-}
-
-function getWindData() {
-	var data = [],
-		values = [ 3, 2, 4, 1, 18, 10, 12, 9, 10, 9, 3, 5, 4, 3, 16, 10, 12, 11, 8, 9, 3, 2, 4, 3, 4 ];
-
-	for(var i = 0; i <= 25; i++) {
-		data.push({ second: i, speed: values[i] });
-	}
-
-	return data;
-}
-
-function getTPSData() {
-	var data = [];
-
-	for(var i = 0; i < 144; i++) {
-		var randoms = [
-			getRandomValue(10, 25), getRandomValue(10, 20), getRandomValue(10, 15),
-			getRandomValue(10, 15), getRandomValue(10, 10), getRandomValue(10, 10),
-			getRandomValue(10, 10), getRandomValue(20, 20), getRandomValue(30, 30),
-			getRandomValue(40, 30), getRandomValue(50, 35), getRandomValue(60, 40),
-			getRandomValue(45, 35), getRandomValue(40, 35), getRandomValue(35, 40),
-			getRandomValue(35, 45), getRandomValue(45, 40), getRandomValue(40, 35),
-			getRandomValue(40, 35), getRandomValue(35, 30), getRandomValue(30, 30),
-			getRandomValue(25, 20), getRandomValue(20, 20), getRandomValue(15, 20)
-		];
-
-		data.push({ tps: randoms[Math.floor(i / 6)] });
-	}
-
-	return data;
-}
-
 var radarStyle = {
 	backgroundColor: "transparent",
 	gridAxisBorderColor: "rgba(255, 255, 255, 0.4)",
@@ -400,12 +265,10 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 		padding : 0,
 		axis : [{
 			x : {
-				type : "date",
+				type : "dateblock",
 				domain : [ new Date(new Date() - time.MINUTE * 5), new Date() ],
-				interval : 1,
-				realtime : "minutes",
-				format : "hh:mm",
-				key : "time"
+				interval : 1000 * 60,
+				format : "hh:mm"
 			},
 			y : {
 				type : "range",
@@ -417,7 +280,8 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 				bottom : 30,
 				left : 40,
 				right : 40
-			}
+			},
+			data : getKNOTDataForFlight()
 		}, {
 			extend : 0,
 			x : {
@@ -426,12 +290,19 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 			y : {
 				domain : [ 0, 500 ],
 				orient : "right"
-			}
+			},
+			data : getFTDataForFlight()
 		}],
 		brush : [{
 			type : "line",
-			target : [ "KNOT", "FT" ],
-			colors : [ "#fff", "#ff484c" ]
+			target : [ "KNOT" ],
+			colors : [ "#fff" ],
+			axis : 0
+		}, {
+			type : "line",
+			target : [ "FT" ],
+			colors : [ "#ff484c" ],
+			axis : 1
 		}],
 		widget : [{
 			type : "title",
@@ -442,7 +313,8 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 		}, {
 			type : "legend",
 			orient : "top",
-			align : "end"
+			align : "end",
+			brush : [ 0, 1 ]
 		}],
 		style : normalStyle
 	});
