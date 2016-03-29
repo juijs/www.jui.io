@@ -159,21 +159,26 @@
                 }
             });
 
-            _.resize(function() {
-                var h = $(window).height() - $(c.root).offset().top,
-                    s = h / 660,
-                    w = 1060 * s,
-                    p = 100;
+			var resizeMap = function() {
+				var h = $(window).height() - $(c.root).offset().top,
+					s = h / 660,
+					w = 1060 * s,
+					p = 100;
 
-                $(c.root).width(w).height(h);
-                c.axis(0).updateGrid("map", {
-                    scale: h / (660 + p),
-                    viewX: (1060 + p - w) / 2,
-                    viewY: (660 + p - h) / 2
-                });
-            });
+				$(c.root).width(w).height(h);
+				c.axis(0).updateGrid("map", {
+					scale: h / (660 + p),
+					viewX: (1060 + p - w) / 2,
+					viewY: (660 + p - h) / 2
+				});
+			};
+			_.resize(resizeMap);
 
-            $(window).resize();
+			if(_.browser.mozilla) {
+				resizeMap();
+			} else {
+				$(window).resize();
+			}
         });
     </script>
 </head>

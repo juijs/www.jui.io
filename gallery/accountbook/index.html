@@ -541,13 +541,13 @@ jui.ready([ "chart.builder", "grid.table", "ui.tab", "ui.datepicker", "ui.slider
 						<! if(data.income.count > 0) { !>
 						<span style="background: #28a7db;">
 							<i class="icon-plus"></i> (<!= data.income.count !> calls)
-							<span style="float: right;"><!= data.income.total !></span>
+							<span class="num"><!= data.income.total !></span>
 						</span>
 						<! } !>
 						<! if(data.expense.count > 0) { !>
 						<span style="background: #ff847c;">
 							<i class="icon-minus"></i> (<!= data.expense.count !> calls)
-							<span style="float: right;"><!= data.expense.total !></span>
+							<span class="num"><!= data.expense.total !></span>
 						</span>
 						<! } !>
 					</div>

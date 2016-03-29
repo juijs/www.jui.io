@@ -52,20 +52,25 @@
                 }
             });
 
-            _.resize(function() {
-                var h = $(window).height() - $(c.root).offset().top,
-                    s = h / 660,
-                    w = 1060 * s;
+			var resizeMap = function() {
+				var h = $(window).height() - $(c.root).offset().top,
+					s = h / 660,
+					w = 1060 * s;
 
-                $(c.root).width(w).height(h);
-                c.axis(0).updateGrid("map", {
-                    scale: s,
-                    viewX: (1060 - w) / 2,
-                    viewY: (660 - h) / 2
-                });
-            });
+				$(c.root).width(w).height(h);
+				c.axis(0).updateGrid("map", {
+					scale: s,
+					viewX: (1060 - w) / 2,
+					viewY: (660 - h) / 2
+				});
+			}
+            _.resize(resizeMap);
 
-            $(window).resize();
+			if(_.browser.mozilla) {
+				resizeMap();
+			} else {
+				$(window).resize();
+			}
         });
     </script>
 </head>

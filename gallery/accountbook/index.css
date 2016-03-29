@@ -20,11 +20,19 @@
 
 .header > .center > .slider-scale {
 	margin-top: -9px;
-	font-size: 1px;
+	font-size: 10px;
 	color: #a9a9a9;
 }
 .header > .center > .slider-scale > span {
 	margin-right: 9px;
+}
+
+#summary_calender .task {
+	position: relative;
+}
+#summary_calender .task .num {
+	position: absolute;
+	right: 8px;
 }
 
 /* JUI Components */
