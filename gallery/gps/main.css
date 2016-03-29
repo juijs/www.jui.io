@@ -47,6 +47,16 @@ body {
 	margin-top: -10px;
 }
 
+.copyright {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 20px;
+	z-index: 2;
+	color: #888;
+	font-size: 12px;
+}
+
 .card {
 	background: rgba(255, 255, 255, 0.05);
 }
