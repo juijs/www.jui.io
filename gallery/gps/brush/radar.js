@@ -2,7 +2,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 	var Radar = function () {
 		var g, guide, line, tail;
-		var circle, circle2;
+		var circle, circle2, circle3;
 		var angle = 0;
 		var tail_length = 50;
 		var tail_size = 5;
@@ -52,7 +52,6 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			tail = this.svg.path({
 				'fill' : this.chart.color('linear(left) #fff,20% #fff,100% black'),
 				'fill-opacity' : 0.1,
-				'filter' : 'url(#blurFilter)',
 				'stroke-width' : 0,
 				'stroke' : 'transparent'
 			});
@@ -79,18 +78,16 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 			guide.append(circle2);
 
-			var filter = this.svg.filter({
-				id : "blurFilter",
-				x : 0,
-				y : 0
+			circle3 = this.svg.circle({
+				stroke : "#fff",
+				"stroke-width" : 2,
+				fill : 'transparent',
+				cx : 0,
+				cy : 0,
 			});
 
-			filter.append(this.svg.feGaussianBlur({
-				in : "SourceGraphic",
-				stdDeviation: 7
-			}));
+			g.append(circle3);
 
-			this.chart.appendDefs(filter);
 		}
 
 		this.updateGuide = function () {
@@ -112,7 +109,6 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 			// arc 그림
 			line.Arc(r, r, 0, 0, 1, obj.x, obj.y);
-
 			line.join();
 		}
 
@@ -129,6 +125,12 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			guide.translate(startPosX, startPosY);
 
 			self.updateTail();
+
+			circle3.attr({
+				r : r,
+				cx : startPosX,
+				cy : startPosY
+			})
 
 			clearInterval(window.timer);
 			window.timer = setInterval(function() {
