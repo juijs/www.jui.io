@@ -1,8 +1,15 @@
 {
 	"name": "gps",
+	"version": "1.0.0",
 	"title" : "GPS Radar",
 	"description" : "You can see information on the current weather. Also, the radar can observe the passing flying objects.",
-	"version": "1.0.0",
-	"height": 835,
-	"author": "yoha"
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"gps", "dashboard", "worldmap", "flight", "aircraft", "realtime", "chart"
+	],
+	"author": "jayden and yoha",
+	"license": "MIT",
+	"height": "835px"
 }
