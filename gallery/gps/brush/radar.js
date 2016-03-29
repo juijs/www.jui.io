@@ -6,6 +6,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 		var angle = 0;
 		var tail_length = 50;
 		var tail_size = 5;
+		var linear;
 		var self = this;
 
 		this.drawBefore = function () {
@@ -21,7 +22,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			g.append(guide);
 
 
-			var linear = this.svg.linearGradient({
+			linear = this.svg.linearGradient({
 				id : "grad1",
 				x1 : "0%",
 				y1 : "0%",
@@ -38,8 +39,6 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 				'stop-color' : 'rgba(255, 255, 255, 0.01)',
 				'stop-opacity' : 1
 			}));
-
-			this.chart.appendDefs(linear);
 
 			line = this.svg.path({
 				'stroke-width' : 0,
@@ -79,7 +78,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			guide.append(circle2);
 
 			circle3 = this.svg.circle({
-				stroke : "#fff",
+				stroke : "rgba(255, 255, 255, 0.5)",
 				"stroke-width" : 2,
 				fill : 'transparent',
 				cx : 0,
@@ -118,6 +117,8 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 			var h = this.axis.area('height');
 
 			var r = Math.min(w, h)/2;
+
+			this.chart.appendDefs(linear);
 
 			var startPosX = w/2 + this.chart.padding('left');
 			var startPosY = h/2 + this.chart.padding('top');

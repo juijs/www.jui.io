@@ -148,13 +148,13 @@ jui.define("chart.widget.radar2", ["util.math"], function (math) {
 			var startPosX = w/2 + this.chart.padding('left');
 			var startPosY = h/2 + this.chart.padding('top');
 
-			guide.translate(startPosX, startPosY);
+			guide.translate(startPosX, startPosY).rotate(235  - 210);
 
 			line.MoveTo(0, 0);
 			line.lineTo(0, r);
 
 			// outer arc 에 대한 지점 설정
-			var obj = math.rotate(0, r, math.radian(30));
+			var obj = math.rotate(0, r, math.radian(40));
 
 			// arc 그림
 			line.Arc(r, r, 0, 0, 1, obj.x, obj.y);
@@ -189,7 +189,7 @@ jui.define("chart.widget.radar2", ["util.math"], function (math) {
 			g.append(this.chart.text({  'font-size': '42px', 'font-weight' : 'bold', fill : '#ffffff', x : centerX + 30, y : centerY, 'text-anchor' : 'end' ,'alignment-baseline' :"central" }, '10.2'));
 			g.append(this.chart.text({  'font-size': '12px', fill : '#ffffff', x : centerX + 30, y : centerY - 15, 'text-anchor' : 'start' ,'alignment-baseline' :"central" }, 'mph'));
 
-			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY - 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, '255 WSW'));
+			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY - 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, '255° WSW'));
 
 			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY + 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, 'WIND GUST 10.4mph'));
 
