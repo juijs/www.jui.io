@@ -112,7 +112,6 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 		}
 
 		this.draw = function () {
-
 			var w= this.axis.area('width');
 			var h = this.axis.area('height');
 

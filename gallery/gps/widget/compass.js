@@ -1,9 +1,10 @@
-jui.define("chart.widget.radar2", ["util.math"], function (math) {
+jui.define("chart.widget.compass", [ "util.math" ], function(math) {
 
-	var Radar2 = function () {
+	var CompassWidget = function () {
 		var g, guide, line, tail, line2;
-		var circle, circle2;
+		var circle;
 		var angle = 0;
+
 		this.drawBefore = function () {
 			g = this.svg.g({
 				'class' : 'radar2'
@@ -148,7 +149,7 @@ jui.define("chart.widget.radar2", ["util.math"], function (math) {
 			var startPosX = w/2 + this.chart.padding('left');
 			var startPosY = h/2 + this.chart.padding('top');
 
-			guide.translate(startPosX, startPosY).rotate(235  - 210);
+			guide.translate(startPosX, startPosY).rotate(-this.widget.degree + 250);
 
 			line.MoveTo(0, 0);
 			line.lineTo(0, r);
@@ -186,15 +187,10 @@ jui.define("chart.widget.radar2", ["util.math"], function (math) {
 			g.append(this.chart.text({  'font-size': '14px', fill : '#ffffff', x : right + dist, y : centerY, 'text-anchor' : 'start' ,'alignment-baseline' :"central" }, 'E'));
 			g.append(this.chart.text({  'font-size': '14px', fill : '#ffffff', x : left - dist, y : centerY, 'text-anchor' : 'end' ,'alignment-baseline' :"central" }, 'W'));
 
-			g.append(this.chart.text({  'font-size': '42px', 'font-weight' : 'bold', fill : '#ffffff', x : centerX + 30, y : centerY, 'text-anchor' : 'end' ,'alignment-baseline' :"central" }, '10.2'));
-			g.append(this.chart.text({  'font-size': '12px', fill : '#ffffff', x : centerX + 30, y : centerY - 15, 'text-anchor' : 'start' ,'alignment-baseline' :"central" }, 'mph'));
-
-			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY - 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, '255° WSW'));
-
-			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY + 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, 'WIND GUST 10.4mph'));
-
-
-
+			g.append(this.chart.text({  'font-size': '42px', fill : '#ffffff', x : centerX + 30, y : centerY, 'text-anchor' : 'end' ,'alignment-baseline' :"central" }, this.widget.title));
+			g.append(this.chart.text({  'font-size': '12px', fill : '#ffffff', x : centerX + 30, y : centerY - 15, 'text-anchor' : 'start' ,'alignment-baseline' :"central" }, this.widget.supText));
+			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY - 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, this.widget.topText));
+			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY + 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, this.widget.bottomText));
 		}
 
 		this.drawArrow = function () {
@@ -231,11 +227,20 @@ jui.define("chart.widget.radar2", ["util.math"], function (math) {
 			this.drawText();
 			this.drawArrow();
 
-
 			return g;
 		}
 	}
 
-	return Radar2;
+	CompassWidget.setup = function() {
+		return {
+			degree : 255,
+			title : "10.2",
+			topText : "255° WSW",
+			supText : "mph",
+			bottomText : "WIND GUST 10.4mph"
+		}
+	}
+
+	return CompassWidget;
 
 }, "chart.widget.core");

@@ -13,9 +13,9 @@
 <script src="../../gallery/gps/resources/model/f16.js"></script>
 <script src="../../gallery/gps/resources/model/dodge.js"></script>
 <script src="../../gallery/gps/resources/model/hind.js"></script>
-<script src="../../gallery/gps/brush/radar.js"></script>
-<script src="../../gallery/gps/brush/radar2.js"></script>
-<script src="http://momentjs.com/downloads/moment.js"></script>
+<script src="../../gallery/gps/resources/moment.js"></script>
+<script src="../../gallery/gps/widget/radar.js"></script>
+<script src="../../gallery/gps/widget/compass.js"></script>
 
 <script>
 function setRadarClip(chart) {
@@ -60,9 +60,7 @@ function getRadarDomain() {
 }
 
 function startRotateF16(f16, f16Y) {
-	stopRotateF16(f16);
-
-	f16.timer = setInterval(function() {
+	setInterval(function() {
 		(f16Y += 10);
 		if (f16Y > 360) {
 			f16Y = 0;
@@ -74,8 +72,51 @@ function startRotateF16(f16, f16Y) {
 	}, 200);
 }
 
-function stopRotateF16(f16) {
-	clearInterval(f16.timer);
+function startDateRender() {
+	setInterval(function() {
+		var d = new Date();
+
+		var h = d.getHours();
+		var m = d.getMinutes();
+		var s = d.getSeconds();
+
+		if (h < 10) h = "0" + h;
+		if (m < 10) m = "0" + m;
+		if (s < 10) s = "0" + s;
+
+		$(".title .date").html(moment().format('LL'));
+		$(".title .time").html([h, m, s].join(":"))
+	}, 200);
+}
+
+function getCompassData() {
+	var u = "mph",
+		d = Math.floor(Math.random() * 360),
+		dStr = "NE";
+
+	if(d > 270) dStr = "SE";
+	else if(d > 180) dStr = "SW";
+	else if(d > 90) dStr = "NW";
+
+	return {
+		type : "compass",
+		degree : d,
+		title : "10." + Math.floor(Math.random() * 9),
+		topText : d + "° " + dStr,
+		supText : u,
+		bottomText : "WIND GUST 10." + Math.floor(Math.random() * 9) + u
+	}
+}
+
+function getWindData() {
+	var data = [],
+		values = [ 3, 2, 4, 1, 18, 10, 12, 9, 10, 9, 3, 5, 4, 3, 16, 10, 12, 11, 8, 9, 3, 2, 4, 3, 4 ];
+
+	for(var i = 0; i <= 25; i++) {
+		data.push({ second: i, speed: values[i] });
+	}
+
+	return data;
 }
 
 var radarStyle = {
@@ -185,7 +226,8 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 			colors : jui.include("util.color").map.jet(2)
 		}],
 		widget : [{
-			type : 'radar'
+			type : "radar",
+			render : true
 		}, {
 			type : "map.minimap",
 			scale : 0.2,
@@ -207,9 +249,7 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 		width : 300,
 		height : 273,
 		padding : 0,
-		widget : [{
-			type : "radar2"
-		}],
+		widget : getCompassData(),
 		style : radarStyle
 	});
 
@@ -226,14 +266,21 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 			x : {
 				type : "range",
 				domain : [ 0, 25 ],
-				step : 5
+				step : 5,
+				key : "second"
 			},
 			y : {
 				type : "range",
 				domain : [ 0, 20 ],
 				step : 2,
 				line : "solid"
-			}
+			},
+			data : getWindData()
+		}],
+		brush : [{
+			type : "line",
+			target : "speed",
+			colors : [ "#fff" ]
 		}],
 		widget : [{
 			type : "title",
@@ -396,6 +443,7 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 
 	setRadarClip(radar);
 	startRotateF16(flight_model, 0);
+	startDateRender();
 });
 </script>
 
@@ -444,28 +492,6 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 		<div><span class="type">DESTINATION</span> <span class="value">Honolulu</span></div>
 	</div>
 </div>
-
-<script>
-
-	function renderTime () {
-		var d = new Date();
-
-		var h = d.getHours();
-		var m = d.getMinutes();
-		var s = d.getSeconds();
-
-		if (h < 10) h = "0" + h;
-		if (m < 10) m = "0" + m;
-		if (s < 10) s = "0" + s;
-
-		$(".title .date").html(moment().format('LL'));
-		$(".title .time").html([h, m, s].join(":"))
-
-	}
-
-	setInterval(renderTime, 100);
-
-</script>
 
 <div class="copyright">ⓒ Carlos A. Aviles on flickr</div>
 </body>
