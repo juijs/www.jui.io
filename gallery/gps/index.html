@@ -13,410 +13,390 @@
 <script src="../../gallery/gps/resources/model/f16.js"></script>
 <script src="../../gallery/gps/resources/model/dodge.js"></script>
 <script src="../../gallery/gps/resources/model/hind.js"></script>
+<script src="../../gallery/gps/brush/radar.js"></script>
+<script src="../../gallery/gps/brush/radar2.js"></script>
+
 <script>
+function setRadarClip(chart) {
+	var clipPath = chart.svg.clipPath({
+		id : 'map-clip'
+	});
 
-jui.define("chart.widget.radar2", ["util.math"], function (math) {
+	var area = chart.axis(0).area();
+	var size = Math.min(area.width, area.height);
 
-	var Radar2 = function () {
-		var g, guide, line, tail, line2;
-		var circle, circle2;
-		var angle = 0;
-		this.drawBefore = function () {
-			g = this.svg.g({
-				'class' : 'radar2'
-			});
+	var clipCircle = chart.svg.circle({
+		cx : area.width/2,
+		cy : area.height/2,
+		r  : size/2,
+		fill : 'black'
+	});
 
+	var defs = chart.svg.root.element.children[0].children[0];
 
-			guide = this.svg.g({
-				'class' : 'radar-guide'
-			});
+	clipPath.append(clipCircle);
+	clipPath.element.appendChild(clipCircle.element);
 
-			g.append(guide);
+	chart.appendDefs(clipPath);
+	defs.appendChild(clipPath.element);
 
+	chart.axis(0).map.root.attr({
+		'clip-path' : 'url(#map-clip)'
+	});
 
-			var linear = this.svg.linearGradient({
-				id : "grad2",
-				x1 : "0%",
-				y1 : "100%",
-				x2 : "0%",
-				y2 : "0%"
-			});
-			linear.append(this.svg.stop({
-				offset : "0%",
-				'stop-color' : 'rgba(255, 255, 255, 0.2)',
-				'stop-opacity' : 1
-			}));
-			linear.append(this.svg.stop({
-				offset : "100%",
-				'stop-color' : 'rgba(255, 255, 255, 0.01)',
-				'stop-opacity' : 1
-			}));
+	var g = chart.svg.root.element.children[0].children[6];
+	g.setAttribute('clip-path', 'url(#map-clip)');
+}
 
-			this.chart.appendDefs(linear);
+function getRadarDomain() {
+	var domain = [];
 
-			line = this.svg.path({
-				'stroke-width' : 0,
-				'stroke' : '#fff',
-				'fill' : 'url(#grad2)'
-			});
+	for(var i = 0; i < 360; i += 30) {
+		domain.push(i);
+	}
 
-			guide.append(line)
+	return domain;
+}
 
-			line2 = this.svg.path({
-				'stroke-width' : 1,
-				'stroke' : '#fff',
-				'stroke-opacity': 0.5,
-				'fill' : 'transparent'
-			});
+function startRotateF16(f16, f16Y) {
+	stopRotateF16(f16);
 
-			guide.append(line2)
-
-			tail = this.svg.path({
-				'fill' : this.chart.color('linear(left) #fff,20% #fff,100% black'),
-				'fill-opacity' : 0.1,
-				'filter' : 'url(#blurFilter)',
-				'stroke-width' : 0,
-				'stroke' : 'transparent'
-			});
-
-			//guide.append(tail);
-
-			circle = this.svg.circle({
-				fill : "transparent",
-				stroke : '#fff',
-				'stroke-width' : 12
-			});
-
-			g.append(circle);
-
+	f16.timer = setInterval(function() {
+		(f16Y += 10);
+		if (f16Y > 360) {
+			f16Y = 0;
 		}
 
-		this.updateGuide = function () {
+		f16.axis(0).set("degree", {
+			y : f16Y
+		});
+	}, 200);
+}
 
-			guide.rotate(angle);
+function stopRotateF16(f16) {
+	clearInterval(f16.timer);
+}
 
-		}
+var radarStyle = {
+	backgroundColor: "transparent",
+	gridAxisBorderColor: "#fff",
+	gridBorderColor: "#fff",
+	gridBorderWidth: 1,
+	gridCFontColor: "#868686",
+	mapPathBackgroundColor: "#fff",
+	mapPathBackgroundOpacity: 0.1,
+	mapPathBorderColor: "#eee",
+	mapPathBorderWidth: 0.5,
+	mapControlButtonColor: "#ffcb2b",
+	mapMinimapPathBackgroundColor: "#fff",
+	mapMinimapPathBackgroundOpacity: 0.5,
+	mapMinimapDragBackgroundColor: "transparent",
+	mapMinimapDragBorderColor: "transparent",
+	mapMinimapBorderWidth : 0.5,
+	mapMinimapPathBorderWidth : 0.1
+};
 
-		this.updateTail = function () {
+var normalStyle = {
+	backgroundColor : "transparent",
+	titleFontColor : "#fff",
+	titleFontSize : 11,
+	gridTickBorderSize : 0,
+	gridXFontColor : "#dcdcdc",
+	gridXFontSize : 10,
+	gridYFontColor : "#dcdcdc",
+	gridYFontSize : 10,
+	gridXAxisBorderWidth : 1,
+	gridYAxisBorderWidth : 1,
+	gridBorderWidth : 0.5,
+	legendFontSize : 10,
+	legendFontColor : "#fff"
+};
 
-			var w= this.axis.area('width');
-			var h = this.axis.area('height');
-
-			var r = Math.min(w, h)/2;
-
-			line.MoveTo(0, 0);
-			line.lineTo(0, r);
-
-			// outer arc 에 대한 지점 설정
-			var obj = math.rotate(0, r, math.radian(30));
-
-			// arc 그림
-			line.Arc(r, r, 0, 0, 1, obj.x, obj.y);
-
-			line.join();
-		}
-
-		this.drawCircle = function () {
-			var w= this.chart.area('width');
-			var h = this.chart.area('height');
-
-			var r = Math.min(w, h)/2 - 40;
-
-			var len = 2 * Math.PI * r;
-			var unitLength = len/8;
-
-			var lineCount = 6;
-			var firstLine = 3;
-			var secondLine = 1;
-			var emptyLength = (unitLength - (secondLine * (lineCount-1) + firstLine)) /lineCount;
-
-
-
-			var arr = [ firstLine,emptyLength];
-
-			for(var i = 1; i < lineCount; i++) {
-				arr.push(secondLine)
-				arr.push(emptyLength);
+jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color, time) {
+	var radar = chart("#radar", {
+		width: "100%",
+		height: 830,
+		padding : {
+			top : 180,
+			bottom : 60,
+			left : 0,
+			right : 0
+		},
+		axis : [{
+			map : {
+				path : "../../lib/jui/img/map/world-1040x660.svg",
+				width : 1040,
+				height : 660,
+				scale : 4,
+				viewX : -700,
+				viewY : 100
+			},
+			data : [{
+				id: "KR",
+				airport: "small"
+			}, {
+				id: "GB",
+				airport: "small"
+			}, {
+				id: "IE",
+				airport: "small"
+			}, {
+				id: "PT",
+				airport: "small"
+			}, {
+				id: "ES",
+				airport: "small"
+			}, {
+				id: "FR",
+				airport: "small"
+			}, {
+				id: "SE",
+				airport: "small"
+			}, {
+				id: "UA",
+				airport: "small"
+			}, {
+				id: "IT",
+				airport: "small"
+			}, {
+				id: "IE",
+				airport: "small"
+			}, {
+				id: "NO",
+				airport: "small"
+			}, {
+				id: "GR",
+				airport: "small"
+			}, {
+				id: "LT",
+				airport: "small"
+			}]
+		},{
+			c : {
+				type : "radar",
+				shape : "circle",
+				domain : getRadarDomain(),
+				line : true
 			}
-
-			arr = arr.join(" ")
-
-			circle.attr({
-				r : r,
-				cx : w / 2,
-				cy : h / 2,
-				'stroke-dasharray': arr
-			}).rotate(-((firstLine+secondLine)/2)/ len * 360, w/2, h/2);
-
-
-
+		}],
+		brush : [{
+			type : "map.flightroute",
+			colors : jui.include("util.color").map.jet(2)
+		}],
+		widget : [{
+			type : 'radar'
+		}, {
+			type : "map.minimap",
+			scale : 0.2,
+			align : "end",
+			orient : "top",
+			dx : -65,
+			dy : 38
+		}],
+		style : radarStyle,
+		event : {
+			render : function() {
+				setRadarClip(this);
+			}
 		}
-
-		this.drawRange = function () {
-			var w= this.chart.area('width');
-			var h = this.chart.area('height');
-
-			var r = Math.min(w, h)/2 - 50;
-
-			var centerX = w/2;
-			var centerY = h/2;
-
-
-			var startPosX = w/2 + this.chart.padding('left');
-			var startPosY = h/2 + this.chart.padding('top');
-
-			guide.translate(startPosX, startPosY);
-
-			line.MoveTo(0, 0);
-			line.lineTo(0, r);
-
-			// outer arc 에 대한 지점 설정
-			var obj = math.rotate(0, r, math.radian(30));
-
-			// arc 그림
-			line.Arc(r, r, 0, 0, 1, obj.x, obj.y);
-			line.join();
-
-			line2.MoveTo(0, 0);
-			line2.moveTo(0, r);
-			line2.Arc(r, r, 0, 0, 1, obj.x, obj.y);
-			line2.join();
-		}
-
-		this.drawText = function () {
-			var w= this.chart.area('width');
-			var h = this.chart.area('height');
-
-			var r = Math.min(w, h)/2 - 40;
-
-			var centerX = w/2;
-			var centerY = h/2;
-			var left = centerX - r;
-			var right = centerX + r;
-			var top = centerY  - r;
-			var bottom = centerY + r;
-
-			var dist = 25;
-
-			g.append(this.chart.text({  'font-size': '14px', fill : '#ffffff', x : centerX, y : top - dist-5, 'text-anchor' : 'middle' ,'alignment-baseline' :"central"  }, 'N'));
-			g.append(this.chart.text({  'font-size': '14px', fill : '#ffffff', x : centerX, y : bottom + dist+5, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, 'S'));
-			g.append(this.chart.text({  'font-size': '14px', fill : '#ffffff', x : right + dist, y : centerY, 'text-anchor' : 'start' ,'alignment-baseline' :"central" }, 'E'));
-			g.append(this.chart.text({  'font-size': '14px', fill : '#ffffff', x : left - dist, y : centerY, 'text-anchor' : 'end' ,'alignment-baseline' :"central" }, 'W'));
-
-			g.append(this.chart.text({  'font-size': '42px', 'font-weight' : 'bold', fill : '#ffffff', x : centerX + 30, y : centerY, 'text-anchor' : 'end' ,'alignment-baseline' :"central" }, '10.2'));
-			g.append(this.chart.text({  'font-size': '12px', fill : '#ffffff', x : centerX + 30, y : centerY - 15, 'text-anchor' : 'start' ,'alignment-baseline' :"central" }, 'mph'));
-
-			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY - 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, '255 WSW'));
-
-			g.append(this.chart.text({  'font-size': '11px', fill : '#ffffff', x : centerX, y : centerY + 40, 'text-anchor' : 'middle' ,'alignment-baseline' :"central" }, 'WIND GUST 10.4mph'));
-
-
-
-		}
-
-		this.drawArrow = function () {
-			var w= this.chart.area('width');
-			var h = this.chart.area('height');
-
-			var r = Math.min(w, h)/2 - 40;
-
-			var centerX = w/2;
-			var centerY = h/2;
-			var left = centerX - r;
-			var right = centerX + r;
-			var top = centerY  - r;
-			var bottom = centerY + r;
-
-
-			var triangle = this.svg.path({
-				fill : 'red'
-			});
-
-			var height = 8;
-			var width = 8;
-
-			// FIXME: pathSymbol 내부구조를 고쳐야함
-			triangle.MoveTo(centerX, top -14).moveTo(0, -height/2).lineTo(width/2,height).lineTo(-width, 0).lineTo(width/2, -height);
-			triangle.join();
-
-			g.append(triangle);
-		}
-
-		this.draw = function () {
-			this.drawCircle();
-			this.drawRange();
-			this.drawText();
-			this.drawArrow();
-
-
-			return g;
-		}
-	}
-
-
-	return Radar2;
-
-}, "chart.widget.core");
-
-jui.define("chart.widget.radar", ["util.math"], function(math) {
-
-	var Radar = function () {
-		var g, guid, line, tail;
-		var circle, circle2;
-		var angle = 0;
-		var tail_length = 50;
-		var tail_size = 5;
-		var self = this;
-		this.drawBefore = function () {
-			g = this.svg.g({
-				'class' : 'radar'
-			});
-
-
-			guide = this.svg.g({
-				'class' : 'radar-guide'
-			});
-
-			g.append(guide);
-
-
-			var linear = this.svg.linearGradient({
-				id : "grad1",
-				x1 : "0%",
-				y1 : "0%",
-				x2 : "100%",
-				y2 : "0%"
-			});
-			linear.append(this.svg.stop({
-				offset : "0%",
-				'stop-color' : 'rgba(255, 255, 255, 0.5)',
-				'stop-opacity' : 1
-			}));
-			linear.append(this.svg.stop({
-				offset : "100%",
-				'stop-color' : 'rgba(255, 255, 255, 0.01)',
-				'stop-opacity' : 1
-			}));
-
-			this.chart.appendDefs(linear);
-
-			line = this.svg.path({
-				'stroke-width' : 0,
-				'stroke' : '#fff',
-				'fill' : 'url(#grad1)'
-			});
-
-			guide.append(line)
-
-			tail = this.svg.path({
-				'fill' : this.chart.color('linear(left) #fff,20% #fff,100% black'),
-				'fill-opacity' : 0.1,
-				'filter' : 'url(#blurFilter)',
-				'stroke-width' : 0,
-				'stroke' : 'transparent'
-			});
-
-			//guide.append(tail);
-
-			circle = this.svg.circle({
-				fill : "#fff",
-				"fill-opacity": 0.7,
-				stroke : '#fff',
-				cx : 0,
-				cy : 0,
-				r : 10
-			});
-
-			guide.append(circle);
-
-			circle2 = this.svg.circle({
-				fill : "#fff",
-				cx : 0,
-				cy : 0,
-				r : 4
-			});
-
-			guide.append(circle2);
-
-			var filter = this.svg.filter({
-				id : "blurFilter",
-				x : 0,
-				y : 0
-			});
-
-			filter.append(this.svg.feGaussianBlur({
-				in : "SourceGraphic",
-				stdDeviation: 7
-			}));
-
-			this.chart.appendDefs(filter);
-		}
-
-		this.updateGuide = function () {
-
-
-
-			guide.rotate(angle);
-
-		}
-
-		this.updateTail = function () {
-
-			var w= this.axis.area('width');
-			var h = this.axis.area('height');
-
-			var r = Math.min(w, h)/2;
-
-			line.MoveTo(0, 0);
-			line.lineTo(0, r);
-
-			// outer arc 에 대한 지점 설정
-			var obj = math.rotate(0, r, math.radian(30));
-
-			// arc 그림
-			line.Arc(r, r, 0, 0, 1, obj.x, obj.y);
-
-			line.join();
-		}
-
-		this.draw = function () {
-
-			var w= this.axis.area('width');
-			var h = this.axis.area('height');
-
-			var r = Math.min(w, h)/2;
-
-			var startPosX = w/2 + this.chart.padding('left');
-			var startPosY = h/2 + this.chart.padding('top');
-
-			guide.translate(startPosX, startPosY);
-
-			self.updateTail();
-
-			clearInterval(window.timer);
-			window.timer = setInterval(function() {
-
-				angle = angle + 0.7;
-
-				if (angle >= 360)
-				{
-					angle = 0;
+	});
+
+	var compass = chart("#compass", {
+		width : 300,
+		height : 273,
+		padding : 0,
+		widget : [{
+			type : "radar2"
+		}],
+		style : radarStyle
+	});
+
+	var wind = chart("#wind", {
+		width : 300,
+		height : 201,
+		padding : {
+			top : 60,
+			bottom : 40,
+			left : 40,
+			right : 20
+		},
+		axis : [{
+			x : {
+				type : "range",
+				domain : [ 0, 25 ],
+				step : 5
+			},
+			y : {
+				type : "range",
+				domain : [ 0, 20 ],
+				step : 2,
+				line : "solid"
+			}
+		}],
+		widget : [{
+			type : "title",
+			text : "REAL-TIME WIND SPEED",
+			align : "start",
+			dx : -30,
+			dy : 0
+		}, {
+			type : "title",
+			text : "DYNAMIC (100ms)",
+			align : "center",
+			dy : 30
+		}, {
+			type : "title",
+			text : "SECONDS",
+			align : "center",
+			orient : "bottom",
+			dy : 10
+		}],
+		style : normalStyle
+	});
+
+	var tps = chart("#tps", {
+		width : 300,
+		height : 138,
+		padding : {
+			top : 40,
+			bottom : 20,
+			left : 40,
+			right : 20
+		},
+		axis : [{
+			x : {
+				type : "dateblock",
+				domain : [ new Date("2016/01/01"), new Date("2016/01/02") ],
+				interval : time.HOUR, // Only milliseconds
+				format : function(d, i) {
+					return (i % 2) ? "" : i;
 				}
+			},
+			y : {
+				type : "range",
+				domain : [ 0, 100 ],
+				step : 2,
+				format : function(d, i) {
+					return d + "%";
+				}
+			}
+		}],
+		widget : [{
+			type : "title",
+			text : "TODAY'S TPS",
+			align : "start",
+			dx : -30,
+			dy : 0
+		}],
+		style : normalStyle
+	});
 
-				self.updateGuide();
+	var flight_model = chart("#flight_model", {
+		width : 300,
+		height : 190,
+		padding : {
+			top : 50,
+			left : 0,
+			right : 0,
+			bottom : 10
+		},
+		axis : {
+			x : {
+				type : "range",
+				domain : [ -5, 18 ],
+				hide : true
+			},
+			y : {
+				type : "range",
+				domain : [ -2, 3 ],
+				hide : true
+			},
+			z : {
+				type : "range",
+				domain : [ -7, 7 ],
+				hide : true
+			},
+			degree : {
+				x: 0,
+				y: 0,
+				z: 0
+			},
+			depth : 240,
+			perspective : 0.8
+		},
+		brush : [{
+			type : "canvas.model3d",
+			model : "f16",
+			colors : [ "#fff" ]
+		}],
+		widget : [{
+			type : "title",
+			text : "AIRCRAFT INFORMATION",
+			align : "start",
+			dx : 10
+		}],
+		style : normalStyle,
+		canvas : true
+	});
 
-			}, 1000/60);
+	var flight_status = chart("#flight_status", {
+		width : 300,
+		height : 160,
+		padding : 0,
+		axis : [{
+			x : {
+				type : "date",
+				domain : [ new Date(new Date() - time.MINUTE * 5), new Date() ],
+				interval : 1,
+				realtime : "minutes",
+				format : "hh:mm",
+				key : "time"
+			},
+			y : {
+				type : "range",
+				domain : [ 0, 25000 ],
+				step : 2
+			},
+			padding : {
+				top : 40,
+				bottom : 30,
+				left : 40,
+				right : 40
+			}
+		}, {
+			extend : 0,
+			x : {
+				hide : true
+			},
+			y : {
+				domain : [ 0, 500 ],
+				orient : "right"
+			}
+		}],
+		brush : [{
+			type : "line",
+			target : [ "KNOT", "FT" ],
+			colors : [ "#fff", "#ff484c" ]
+		}],
+		widget : [{
+			type : "title",
+			text : "GS(KNOT) / ALTITUDE(FT)",
+			align : "start",
+			dx : 10,
+			dy : -10
+		}, {
+			type : "legend",
+			orient : "top",
+			align : "end"
+		}],
+		style : normalStyle
+	});
 
-
-			return g;
-		}
-	}
-
-
-	return Radar;
-
-}, "chart.widget.core");
+	setRadarClip(radar);
+	startRotateF16(flight_model, 0);
+});
 </script>
+
 </head>
 <body class="jui">
 
@@ -425,15 +405,19 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 <div class="left-1 layer">
 	<div class="city">Paju <img src="../../gallery/gps/resources/image/icon-weather.svg" class="weather" /></div>
 	<div class="location">Kyeongki-Do, South Korea</div>
-	<div class="temp">20℃</div>
+	<div class="temp">20<sup>℃</sup></div>
 </div>
 <div class="left-2 layer card">
 	<div class="sunrise"><img src="../../gallery/gps/resources/image/icon-sunrise.svg" /> <span>06:19</span></div>
 	<div class="sunset"><img src="../../gallery/gps/resources/image/icon-sunset.svg" /> <span>17:23</span></div>
 	<div class="drop"><img src="../../gallery/gps/resources/image/icon-drop.svg" /> <span>56%</span></div>
 </div>
-<div class="left-3 layer card"></div>
-<div class="left-4 layer card"></div>
+<div class="left-3 layer card">
+	<div id="compass"></div>
+</div>
+<div class="left-4 layer card">
+	<div id="wind"></div>
+</div>
 
 <div class="title">
 	<div class="date">Friday, March 25</div>
@@ -443,7 +427,7 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 
 <div class="right-1 layer card"></div>
 <div class="right-2 layer card">
-
+	<div id="tps"></div>
 </div>
 <div class="right-3 layer card">
 	<div id="flight_model"></div>
@@ -458,328 +442,5 @@ jui.define("chart.widget.radar", ["util.math"], function(math) {
 		<div><span class="type">DESTINATION</span> <span class="value">Honolulu</span></div>
 	</div>
 </div>
-
-<script>
-    jui.ready(function() {
-		var color = jui.include("util.color"),
-			time = jui.include("util.time");
-
-		var style = {
-			backgroundColor: "transparent",
-			gridAxisBorderColor : "#fff",
-			gridBorderColor : "#fff",
-			gridBorderWidth: 1,
-			mapPathBackgroundColor: "#fff",
-			mapPathBackgroundOpacity: 0.1,
-			mapPathBorderColor: "#fff",
-			mapPathBorderWidth: 0.5,
-			mapControlButtonColor: "#ffcb2b",
-			mapMinimapPathBackgroundColor: "#fff",
-			mapMinimapPathBackgroundOpacity: 0.5,
-			mapMinimapDragBackgroundColor: "transparent",
-			mapMinimapDragBorderColor: "transparent",
-			mapMinimapBorderWidth : 0.5,
-			mapMinimapPathBorderWidth : 0.1
-		}
-
-		var domain = [];
-
-		for(var i = 0; i < 360; i += 30) {
-			domain.push(i);
-		}
-
-        var chart = jui.include("chart.builder");
-
-
-
-		var mainChart2 = chart(".left-3", {
-			theme : "dark",
-			padding : 0,
-			widget : [{
-				type : 'radar2'
-			}],
-			style : style
-		});
-
-
-        var data = [
-            { type : "STR", warrior : 100, wizard : 30, archer : 35 },
-            { type : "VIT", warrior : 80, wizard : 50, archer : 70 },
-            { type : "DEX", warrior : 50, wizard : 70, archer : 95 },
-            { type : "AGI", warrior : 70, wizard : 60, archer : 75 },
-            { type : "INT", warrior : 30, wizard : 100, archer : 30 },
-            { type : "WIS", warrior : 50, wizard : 90, archer : 40 }
-        ];
-
-		var map_data = [{
-			id: "KR",
-			airport: "small"
-		}, {
-			id: "GB",
-			airport: "small"
-		}, {
-			id: "IE",
-			airport: "small"
-		}, {
-			id: "PT",
-			airport: "small"
-		}, {
-			id: "ES",
-			airport: "small"
-		}, {
-			id: "FR",
-			airport: "small"
-		}, {
-			id: "SE",
-			airport: "small"
-		}, {
-			id: "UA",
-			airport: "small"
-		}, {
-			id: "IT",
-			airport: "small"
-		}, {
-			id: "IE",
-			airport: "small"
-		}, {
-			id: "NO",
-			airport: "small"
-		}, {
-			id: "GR",
-			airport: "small"
-		}, {
-			id: "LT",
-			airport: "small"
-		}];
-
-        var mainChart = chart("#radar", {
-			theme : "dark",
-			width: "100%",
-			height: 830,
-			padding : {
-				top : 180,
-				bottom : 60,
-				left : 0,
-				right : 0
-			},
-            axis : [
-			{
-				map : {
-					path : "../../lib/jui/img/map/world-1040x660.svg",
-					width : 1040,
-					height : 660,
-					scale : 4,
-					viewX : -700,
-					viewY : 100
-				},
-				data : map_data
-			},{
-				c : {
-					type : "radar",
-					shape : "circle",
-					domain : domain,
-					line : true
-				},
-				data : data
-			}],
-			brush : [{
-				type : "map.flightroute",
-				colors : jui.include("util.color").map.jet(2)
-			}],
-			widget : [{
-				type : 'radar'
-			},
-			{
-				type : "map.minimap",
-				scale : 0.2,
-				align : "end",
-				orient : "top",
-				dx : -65,
-				dy : 38
-			}],
-			style : style,
-			event : {
-				render : function () {
-					mapClip();
-				}
-			}
-        });
-
-		mapClip();
-
-		function mapClip() {
-			var clipPath = mainChart.svg.clipPath({
-				id : 'map-clip'
-			});
-
-			var area = mainChart.axis(0).area();
-			var size = Math.min(area.width, area.height);
-
-			var clipCircle = mainChart.svg.circle({
-				cx : area.width/2,
-				cy : area.height/2,
-				r  : size/2,
-				fill : 'black'
-			});
-
-			var defs = mainChart.svg.root.element.children[0].children[0];
-
-			clipPath.append(clipCircle);
-			clipPath.element.appendChild(clipCircle.element);
-
-			mainChart.appendDefs(clipPath);
-			defs.appendChild(clipPath.element);
-
-			mainChart.axis(0).map.root.attr({
-				'clip-path' : 'url(#map-clip)'
-			});
-
-			var g = mainChart.svg.root.element.children[0].children[6];
-			g.setAttribute('clip-path', 'url(#map-clip)');
-		}
-
-		// modeling 객체 렌더링
-		var f16Y = 0;
-
-		var f16 = chart("#flight_model", {
-			width : 300,
-			height : 190,
-			padding : {
-				top : 50,
-				left : 0,
-				right : 0,
-				bottom : 10
-			},
-			axis : {
-				x : {
-					type : "range",
-					domain : [ -5, 18 ],
-					hide : true
-				},
-				y : {
-					type : "range",
-					domain : [ -2, 3 ],
-					hide : true
-				},
-				z : {
-					type : "range",
-					domain : [ -7, 7 ],
-					hide : true
-				},
-				degree : {
-					x: 0,
-					y: 0,
-					z: 0
-				},
-				depth : 240,
-				perspective : 0.8
-			},
-			brush : [{
-				type : "canvas.model3d",
-				model : "f16",
-				colors : [ "#fff" ]
-			}],
-			widget : [{
-				type : "title",
-				text : "AIRCRAFT INFORMATION",
-				align : "start",
-				dx : 10
-			}],
-			style : {
-				backgroundColor : "transparent",
-				titleFontColor : "#fff",
-				titleFontSize : 11
-			},
-			canvas : true
-		});
-
-		function startF16() {
-			stopF16();
-			f16.timer = setInterval(function() {
-				(f16Y += 10);
-				if (f16Y > 360) {
-					f16Y = 0;
-				}
-
-
-				f16.axis(0).set("degree", {
-					y : f16Y
-				});
-			}, 200);
-		}
-
-		function stopF16() {
-			clearInterval(f16.timer);
-		}
-
-		startF16();
-
-		chart("#flight_status", {
-			width : 300,
-			height : 160,
-			padding : 0,
-			axis : [{
-				x : {
-					type : "date",
-					domain : [ new Date(new Date() - time.MINUTE * 5), new Date() ],
-					interval : 1,
-					realtime : "minutes",
-					format : "hh:mm",
-					key : "time"
-				},
-				y : {
-					type : "range",
-					domain : [ 0, 25000 ],
-					step : 2
-				},
-				padding : {
-					top : 40,
-					bottom : 30,
-					left : 40,
-					right : 40
-				}
-			}, {
-				extend : 0,
-				x : {
-					hide : true
-				},
-				y : {
-					domain : [ 0, 500 ],
-					orient : "right"
-				}
-			}],
-			brush : [{
-				type : "line",
-				target : [ "KNOT", "FT" ],
-				colors : [ "#fff", "#ff484c" ]
-			}],
-			widget : [{
-				type : "title",
-				text : "GS(KNOT) / ALTITUDE(FT)",
-				align : "start",
-				dx : 10,
-				dy : -10
-			}, {
-				type : "legend",
-				orient : "top",
-				align : "end"
-			}],
-			style : {
-				backgroundColor : "transparent",
-				titleFontColor : "#fff",
-				titleFontSize : 11,
-				gridTickBorderSize : 0,
-				gridXFontColor : "#dcdcdc",
-				gridXFontSize : 10,
-				gridYFontColor : "#dcdcdc",
-				gridYFontSize : 10,
-				gridXAxisBorderWidth : 1,
-				gridYAxisBorderWidth : 1,
-				legendFontSize : 10,
-				legendFontColor : "#fff"
-			}
-		});
-    });
-</script>
 </body>
 </html>
