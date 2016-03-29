@@ -18,6 +18,14 @@
 <script src="../../gallery/gps/widget/compass.js"></script>
 
 <script>
+function getTimeToIndex() {
+	return new Date().getHours() * 6;
+}
+
+function getRandomValue(start, limit) {
+	return Math.floor(Math.random() * limit) + start;
+}
+
 function setRadarClip(chart) {
 	var clipPath = chart.svg.clipPath({
 		id : 'map-clip'
@@ -119,6 +127,27 @@ function getWindData() {
 	return data;
 }
 
+function getTPSData() {
+	var data = [];
+
+	for(var i = 0; i < 144; i++) {
+		var randoms = [
+			getRandomValue(10, 25), getRandomValue(10, 20), getRandomValue(10, 15),
+			getRandomValue(10, 15), getRandomValue(10, 10), getRandomValue(10, 10),
+			getRandomValue(10, 10), getRandomValue(20, 20), getRandomValue(30, 30),
+			getRandomValue(40, 30), getRandomValue(50, 35), getRandomValue(60, 40),
+			getRandomValue(45, 35), getRandomValue(40, 35), getRandomValue(35, 40),
+			getRandomValue(35, 45), getRandomValue(45, 40), getRandomValue(40, 35),
+			getRandomValue(40, 35), getRandomValue(35, 30), getRandomValue(30, 30),
+			getRandomValue(25, 20), getRandomValue(20, 20), getRandomValue(15, 20)
+		];
+
+		data.push({ tps: randoms[Math.floor(i / 6)] });
+	}
+
+	return data;
+}
+
 var radarStyle = {
 	backgroundColor: "transparent",
 	gridAxisBorderColor: "rgba(255, 255, 255, 0.4)",
@@ -175,42 +204,6 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 			},
 			data : [{
 				id: "KR",
-				airport: "small"
-			}, {
-				id: "GB",
-				airport: "small"
-			}, {
-				id: "IE",
-				airport: "small"
-			}, {
-				id: "PT",
-				airport: "small"
-			}, {
-				id: "ES",
-				airport: "small"
-			}, {
-				id: "FR",
-				airport: "small"
-			}, {
-				id: "SE",
-				airport: "small"
-			}, {
-				id: "UA",
-				airport: "small"
-			}, {
-				id: "IT",
-				airport: "small"
-			}, {
-				id: "IE",
-				airport: "small"
-			}, {
-				id: "NO",
-				airport: "small"
-			}, {
-				id: "GR",
-				airport: "small"
-			}, {
-				id: "LT",
 				airport: "small"
 			}]
 		},{
@@ -328,7 +321,20 @@ jui.ready([ "chart.builder", "util.color", "util.time" ], function(chart, color,
 				format : function(d, i) {
 					return d + "%";
 				}
-			}
+			},
+			data : getTPSData()
+		}],
+		brush : [{
+			type : "splitarea",
+			target : [ "tps" ],
+			colors : [ "#fff" ],
+			split : getTimeToIndex()
+		}, {
+			type : "pin",
+			format : function(d) {
+				return time.format(d, "HH:mm");
+			},
+			split : getTimeToIndex()
 		}],
 		widget : [{
 			type : "title",
