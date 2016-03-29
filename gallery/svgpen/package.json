@@ -2,7 +2,7 @@
 	"name": "svgpen",
 	"version": "1.0.0",
 	"title" : "SVG Pen Tool",
-	"description": "Simple tool to draw a path element.",
+	"description": "The tool is easy to draw SVG path elements.",
 	"keywords": [ "draw", "line", "path", "tool", "svg" ],
 	"author": "easylogic",
 	"email": "cyberuls@gmail.com",
