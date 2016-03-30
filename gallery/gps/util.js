@@ -62,18 +62,19 @@ function startRotateF16(f16, f16Y) {
 
 function startDateRender() {
 	setInterval(function() {
-		var d = new Date();
-
-		var h = d.getHours();
-		var m = d.getMinutes();
-		var s = d.getSeconds();
+		var d = new Date(),
+			h = d.getHours(),
+			m = d.getMinutes(),
+			s = d.getSeconds(),
+			dateElem = document.getElementById("date"),
+			timeElem = document.getElementById("time");
 
 		if (h < 10) h = "0" + h;
 		if (m < 10) m = "0" + m;
 		if (s < 10) s = "0" + s;
 
-		$(".title .date").html(moment().format('LL'));
-		$(".title .time").html([h, m, s].join(":"))
+		dateElem.innerHTML = moment().format("LL");
+		timeElem.innerHTML = [ h, m, s ].join(":");
 	}, 200);
 }
 
