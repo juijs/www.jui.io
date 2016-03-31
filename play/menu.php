@@ -10,12 +10,12 @@
 
 <div class="vmenu rect">
 <?php for ($i = 0; $i < sizeof($group); $i++) { ?>
-	<a class="chart-<?php echo $group[$i]->type ?>"><?php echo $group[$i]->title ?></a>
+	<a data-type="<?php echo $group[$i]->type ?>"><?php echo $group[$i]->title ?></a>
 	<ul class="submenu">
 		<?php for ($j = 0; $j < sizeof($list); $j++) { ?>
 			<?php if($group[$i]->type == $list[$j]->type) { ?>
 				<?php if($page == $list[$j]->code) { ?>
-				<li class="active">
+				<li class="active" data-parent="<?php echo $list[$j]->type ?>">
 				<?php } else { ?>
 				<li>
 				<?php } ?>
