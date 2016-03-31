@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include("../header_play.html"); ?>
+    <?php include("../header.html"); ?>
     <?php include("metadata.html"); ?>
 
     <link rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
@@ -35,7 +35,9 @@
     </div>
 </div>
 <div class="container">
-    <div class="menu"></div>
+    <div class="menu">
+		<?php include("../menu.php"); ?>
+	</div>
     <div class="content">
         <div class="chart_data">
             <div class="chart_data_main">
@@ -73,7 +75,13 @@
 
                 <div id="tab_contents_1" class="tab-contents">
                     <div id="chart-code">
-                        <textarea id="chart-code-text"></textarea>
+                        <textarea id="chart-code-text">
+							<?php
+								if(file_exists("json/".$page)) {
+									echo file_get_contents("json/".$page);
+								}
+							?>
+						</textarea>
                     </div>
                     <div id="chart-data">
                         <table id="table_1" class="table simple nowrap">
@@ -157,7 +165,7 @@
 </tr>
 </script>
 
-<?php include("../footer_play.html"); ?>
+<?php include("../footer.html"); ?>
 
 </body>
 </html>

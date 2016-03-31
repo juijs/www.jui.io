@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include("../header_play.html"); ?>
+    <?php include("../header.html"); ?>
     <?php include("metadata.html"); ?>
 
     <link rel="stylesheet" href="../chart/chart.css">
@@ -81,7 +81,7 @@
 
 <link id="jui_theme_ui" rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
 <link id="jui_theme_grid" rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" />
-<?php include("../footer_play.html"); ?>
+<?php include("../footer.html"); ?>
 
 </body>
 </html>

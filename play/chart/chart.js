@@ -829,7 +829,7 @@ jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table", "ui.colorpicker
     function(_, uiWin, uiNotify, gridTable, uiColor) {
     editor = null;
 
-    loadChartList();
+    //loadChartList();
     setFunctions();
     createTab();
 
