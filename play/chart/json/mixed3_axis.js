@@ -69,7 +69,7 @@ var data = [
     { date: new Date(1994,4,28), l: 25.75, h: 28.25, o: 28.00, c: 27.25, v: 1909200 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : [{
         x : {
             type : "fullblock",

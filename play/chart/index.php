@@ -36,7 +36,10 @@
 </div>
 <div class="container">
     <div class="menu">
-		<?php include("../menu.php"); ?>
+		<?php
+			include("../menu.php");
+			$csv = isset($data->csv) ? $data->csv : true;
+		?>
 	</div>
     <div class="content">
         <div class="chart_data">
@@ -45,9 +48,11 @@
                     <li>
                         <a href="#chart-code">Code</a>
                     </li>
+					<?php if($csv) { ?>
                     <li>
                         <a href="#chart-data">Data</a>
                     </li>
+					<?php } ?>
                     <li>
                         <a href="#chart-style">Style</a>
                     </li>
@@ -60,12 +65,13 @@
                     </div>
 
                     <a class="btn small" id="save_btn" title="Save source code"><i class="icon-save"></i></a>
-
+					<?php if($csv) { ?>
                     <div class="group csv">
                         <a class="btn small" id="export_csv_btn" title="Export CSV file"><i class="icon-download"></i></a>
                         <input type="file" id="import_csv_input" />
                         <a class="btn small" id="import_csv_btn" title="Import CSV file"><i class="icon-upload"></i></a>
                     </div>
+					<?php } ?>
                     <div class="group theme">
                         <a class="btn small" id="export_theme_btn" title="Export Theme file"><i class="icon-download"></i></a>
                         <input type="file" id="import_theme_input" />
@@ -75,13 +81,7 @@
 
                 <div id="tab_contents_1" class="tab-contents">
                     <div id="chart-code">
-                        <textarea id="chart-code-text">
-							<?php
-								if(file_exists("json/".$page)) {
-									echo file_get_contents("json/".$page);
-								}
-							?>
-						</textarea>
+                        <textarea id="chart-code-text"><?php echo file_get_contents("json/".$data->code); ?></textarea>
                     </div>
                     <div id="chart-data">
                         <table id="table_1" class="table simple nowrap">
@@ -119,13 +119,13 @@
                         </div>
                     </h2>
                 </div>
-                <div id="chart-content"></div>
+                <div id="result"></div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="colors_win" class="msgbox">
+<div id="colors_win" class="msgbox" style="display: none;">
     <div class="head">
         Edit Colors
         <a href="#" class="close"><i class="icon-exit"></i></a>
@@ -166,6 +166,21 @@
 </script>
 
 <?php include("../footer.html"); ?>
+<script>
+	function getChartKey() {
+		return "<?php echo $data->code ?>";
+	}
+
+	jui.ready(function() {
+		viewCodeEditor($("#chart-code-text").val());
+
+		var $target = $(".menu").find("li.active"),
+			$parent = $("[data-type=" + $target.data("parent") + "]");
+
+		$parent.addClass("active");
+		$(".menu").scrollTop($target.offset().top - 100);
+	});
+</script>
 
 </body>
 </html>

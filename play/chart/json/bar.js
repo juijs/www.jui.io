@@ -1,6 +1,6 @@
 var chart = jui.include("chart.builder");
 
-chart("#chart-content", {
+chart("#result", {
     axis : {
         x : {
             type : "range",
@@ -11,7 +11,7 @@ chart("#chart-content", {
         y : {
             type : "block",
             domain : "quarter",
-            line : true 
+            line : true
         },
         data : [
             { quarter : "1Q", sales : 50, profit : 35 },

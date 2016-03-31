@@ -2,7 +2,7 @@ var builder = jui.include("chart.builder"),
     time = jui.include("util.time"),
     txData = [];
 
-var chart = builder("#chart", {
+var chart = builder("#result", {
     padding : {
         top : 50,
         bottom : 100,

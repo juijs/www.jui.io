@@ -4,7 +4,7 @@ var builder = jui.include("chart.builder"),
     tpsIndex = getTimeToIndex(),
     memoryData = getMemoryData(300);
 
-var chart = builder("#chart", {
+var chart = builder("#result", {
     height : 600,
     axis : [{
         x : {

@@ -22,7 +22,7 @@ var dataSource2 = [
     { title : "Desktop Visits", value : 25, max : 100, min : 0 }
 ];
 
-chart("#chart", {
+chart("#result", {
     height : 400,
     axis : [{
         x : {

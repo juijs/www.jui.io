@@ -10,7 +10,7 @@ var data = [
     { server : "W8", cpu : 3 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "block",

@@ -41,7 +41,7 @@ var data = [
 	{ x: 6, y: 4, value: 100 }
 ];
 
-chart("#chart", {
+chart("#result", {
 	axis : [
 		{
 			x : {

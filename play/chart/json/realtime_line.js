@@ -1,7 +1,7 @@
 var chart = jui.include("chartx.realtime");
 var time = jui.include("util.time");
 
-var c = chart("#chart", {
+var c = chart("#result", {
     axis : {
         data : getRealtimeData(5)
     },

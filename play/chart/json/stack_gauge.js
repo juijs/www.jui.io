@@ -1,6 +1,6 @@
 var chart = jui.include("chart.builder");
 
-chart("#chart", {
+chart("#result", {
     axis : {
         data : [
             { title : "OPTION 1", value : 75 },

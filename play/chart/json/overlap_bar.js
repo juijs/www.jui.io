@@ -6,7 +6,7 @@ var data = [
     { quarter : "4Q", samsung : 260, apple : 470, google : 350, facebook: 340 }
 ];
 
-chart("#chart-content", {
+chart("#result", {
     axis : {
         x : {
             type : "range",

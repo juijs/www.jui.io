@@ -18,7 +18,7 @@ for(var i = 0; i < 30; i++) {
     });
 }
 
-chart("#chart", {
+chart("#result", {
     padding : {
         left : 70
     },

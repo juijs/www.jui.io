@@ -2,7 +2,7 @@ var chart = jui.include("chart.builder"),
     time = jui.include("util.time");
 var today = getTodayData();
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "date",

@@ -1,6 +1,6 @@
 var chart = jui.include("chart.builder");
 
-chart("#chart", {
+chart("#result", {
     axis : [{
         data : [
             { quarter : "1Q", twitter : 50, facebook : 70 },

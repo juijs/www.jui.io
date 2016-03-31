@@ -13,7 +13,7 @@ for(var i = 0; i < 1000; i++) {
     });
 }
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "date",

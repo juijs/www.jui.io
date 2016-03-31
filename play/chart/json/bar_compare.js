@@ -1,6 +1,6 @@
 var chart = jui.include("chart.builder"),
     theme = jui.include("chart.theme.pastel"),
-    height = $("#chart-content").find(".row").height();
+    height = $("#result").find(".row").height();
 
 var data = [
     { age : "80+",   female : 6.0,  male : 5.3 },

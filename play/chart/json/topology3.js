@@ -17,7 +17,7 @@ var edgeData = [
 	{ key: "1000_4:1_2_3_4", count: 3, time: 2000 }
 ];
 
-chart("#chart", {
+chart("#result", {
     theme: "dark",
     padding: 5,
     axis: {

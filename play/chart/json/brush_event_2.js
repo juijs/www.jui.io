@@ -16,7 +16,7 @@ var tpl_tooltip =
     '</div>' +
 '</div>';
 
-var c = chart("#chart", {
+var c = chart("#result", {
     axis : [{
         x : {
             type : "block",

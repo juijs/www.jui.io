@@ -27,7 +27,7 @@ var data = [
     { date: new Date(1994,2,31), l: 24.75, h: 27.00, o: 26.50, c: 25.25 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "block",  // default type is block

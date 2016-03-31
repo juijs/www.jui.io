@@ -1,7 +1,7 @@
 var chart = jui.include("chart.builder");
 var time = jui.include("util.time");
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "date",

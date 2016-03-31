@@ -17,7 +17,7 @@ for(var i = 0; i < stocks.visitor.length; i++) {
     });
 }
 
-chart("#chart", {
+chart("#result", {
     axis : [{
         x : {
             type : "date",

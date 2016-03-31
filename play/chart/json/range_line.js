@@ -19,7 +19,7 @@ for(var i = 0; i < stocks.apple.length; i++) {
     });
 }
 
-chart("#chart", {
+chart("#result", {
 	axis : [{
 		x : {
 			type : "date",
@@ -28,13 +28,13 @@ chart("#chart", {
 			format : "yyyy",
 		    key: "date"
 		},
-		y : { 
+		y : {
 			type : "range",
 			domain : function(d) {
 				return Math.max(d.apple, d.microsoft, d.oracle);
 			},
 			step : 10,
-			line : true 
+			line : true
 		},
 		data : data
 	}],

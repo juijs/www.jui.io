@@ -72,7 +72,7 @@ var dataSource = [
 var start = 10,
     end = 30;
 
-var c = chart("#chart", {
+var c = chart("#result", {
 	padding : {
 		bottom : 60
 	},

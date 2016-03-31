@@ -1,7 +1,7 @@
 var chart = jui.include("chartx.realtime");
 var time = jui.include('util.time');
 
-var c = chart("#chart", {
+var c = chart("#result", {
     axis : {
         domain: function(d) {
             return d.s20 * 2;

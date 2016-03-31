@@ -31,7 +31,7 @@ var data = [
     { key: "cb=gapi.loaded_0", stime: 1061, etime: 1064, kind: "receive" }
 ];
 
-var chart = builder("#chart", {
+var chart = builder("#result", {
     height : 300,
     padding : {
         top : 0,

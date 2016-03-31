@@ -37,7 +37,7 @@ function generateChartData() {
 
 generateChartData();
 
-chart("#chart", {
+chart("#result", {
     axis : [{
         x : {
             type : "block",

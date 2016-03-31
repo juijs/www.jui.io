@@ -32,7 +32,7 @@ var data = [{
     value: 64100000
 }];
 
-chart("#chart", {
+chart("#result", {
     padding : 0,
     axis : [{
         map : {

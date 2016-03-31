@@ -6,7 +6,7 @@ var data = [
     { sales : 10, profit : 5, sales2 : -2, profit2 : -6 }
 ];
 
-chart("#chart-content", {
+chart("#result", {
     axis : {
         x : {
             type : "fullblock",

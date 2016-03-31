@@ -8,7 +8,7 @@ var data = [
     { type : "WIS", warrior : 50, wizard : 90, archer : 40 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : {
         c : {
             type : "radar",

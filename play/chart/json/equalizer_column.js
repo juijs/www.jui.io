@@ -1,6 +1,6 @@
 var chart = jui.include("chart.builder");
 
-chart("#chart-content", {
+chart("#result", {
     axis : [{
         x : {
             domain : [ "1 year ago", "1 month ago", "Yesterday", "Today" ],

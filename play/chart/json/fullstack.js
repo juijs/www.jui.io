@@ -6,7 +6,7 @@ var data = [
     { quarter : "4Q", samsung : 30, lg : 25, sony: 15 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "block",

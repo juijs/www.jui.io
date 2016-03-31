@@ -18,7 +18,7 @@ for(var i = 0; i < 30; i++) {
     });
 }
 
-chart("#chart", {
+chart("#result", {
     series : {
         sales : { symbol : "rectangle" },
         profit : { symbol : "cross" },

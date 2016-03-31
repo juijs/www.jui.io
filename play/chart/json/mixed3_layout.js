@@ -71,7 +71,7 @@ var dataSource = [
 
 var day_cnt = 0;
 
-chart("#chart", {
+chart("#result", {
     data : dataSource,
     axis : [{
         x : {

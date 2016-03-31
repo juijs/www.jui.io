@@ -7,7 +7,7 @@ var names = {
     other: "Others"
 };
 
-chart("#chart", {
+chart("#result", {
     padding : 150,
     axis : {
         data : [

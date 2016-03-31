@@ -1,6 +1,6 @@
 var chart = jui.include("chart.builder");
 
-var c = chart("#chart", {
+var c = chart("#result", {
     axis : [{
         x : {
             type : "block",

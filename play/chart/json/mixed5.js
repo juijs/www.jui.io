@@ -24,7 +24,7 @@ var dataSource2 = [
     { mr : "MR 12", value1 : 5100, value2 : 4100 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : [{
         x : {
             domain : "date",

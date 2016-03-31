@@ -5,7 +5,7 @@ for(var i = 1; i <= 30; i++) {
     data.push({ date : i, value : Math.floor(Math.random() * 100) + 1 });
 }
 
-c = chart("#chart-content", {
+c = chart("#result", {
     axis : [{
         x : {
             type : "block",

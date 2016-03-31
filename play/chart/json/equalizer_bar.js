@@ -1,6 +1,6 @@
 var chart = jui.include("chart.builder");
 
-chart("#chart-content", {
+chart("#result", {
     padding : {
         left: 75
     },

@@ -8,7 +8,7 @@ var names = {
 };
 
 // The SVG icon of style components can be used in chart
-chart("#chart", {
+chart("#result", {
     /* When no load is 'jui.css' or Icon file of the other libraries /
     icon: {
         type: "jennifer",

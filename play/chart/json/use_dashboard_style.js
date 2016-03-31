@@ -12,7 +12,7 @@ var chart = jui.include("chart.builder"),
         { title : "Overall Visits", value : 192, max : 200, min : 0 }
     ];
 
-chart("#chart", {
+chart("#result", {
     padding : 10,
     axis : [{
         x : {

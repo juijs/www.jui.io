@@ -55,7 +55,7 @@ var data = [{
     dy: -20
 }];
 
-chart("#chart", {
+chart("#result", {
     padding : 0,
     axis : [{
         map : {

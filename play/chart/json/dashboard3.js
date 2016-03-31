@@ -22,7 +22,7 @@ var dataSource2 = [
     { date: "Dec", nike: 24, adidas: 38, converse: 48, puma: 69 }
 ];
 
-chart("#chart", {
+chart("#result", {
     padding : {
         top : 100
     },

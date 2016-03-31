@@ -14,7 +14,7 @@ var data = [
     { quarter : "12", sales : 25 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : [{
         x : {
             type : "block",

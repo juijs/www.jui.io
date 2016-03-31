@@ -6,7 +6,7 @@ var data = [
     { apple : 72.95, microsoft : 25.39, oracle : 32.78 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "fullblock",

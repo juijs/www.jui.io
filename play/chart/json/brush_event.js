@@ -11,7 +11,7 @@ var showEventMessage = function(obj) {
         obj.dataKey + "=" + obj.data[obj.dataKey]);
 }
 
-var c = chart("#chart", {
+var c = chart("#result", {
     axis : [{
         x : {
             type : "block",

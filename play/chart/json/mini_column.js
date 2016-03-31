@@ -6,7 +6,7 @@ var data = [
     { quarter : "4Q", sales : 30, profit : 25 }
 ];
 
-chart("#chart", {
+chart("#result", {
     width : 100,
     height : 50,
     padding : "empty",

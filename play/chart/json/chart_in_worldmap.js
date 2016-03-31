@@ -23,7 +23,7 @@ var data = [{
     value: 40
 }];
 
-chart("#chart", {
+chart("#result", {
     padding : {
         top : 0,
         bottom : 0

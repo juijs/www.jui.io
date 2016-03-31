@@ -8,7 +8,7 @@ var data = [
     { quarter : "4Q", sales : 10322200, profit : 1123213200 }
 ];
 
-chart("#chart", {
+chart("#result", {
     padding : { left : 100 },
     axis : [{
         x : {

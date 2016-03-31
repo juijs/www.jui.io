@@ -14,7 +14,7 @@ var data = [
     { month :  "Dec", rainfall : 54.4, sealevel : 1016.7, temperature : 9.6}
 ];
 
-chart("#chart", {
+chart("#result", {
     padding : {
         right : 120
     },

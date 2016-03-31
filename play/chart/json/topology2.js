@@ -8,7 +8,7 @@ var data = [
     { key: "1_2_3_4", name: "Oracle", type: "db", outgoing: [] }
 ];
 
-chart("#chart", {
+chart("#result", {
     padding: 5,
     axis: {
         c: {

@@ -11,7 +11,7 @@ var data = [
     { name : "end", value : 168 }
 ];
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "block",

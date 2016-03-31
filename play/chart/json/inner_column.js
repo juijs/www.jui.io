@@ -6,18 +6,18 @@ var data = [
     { quarter : "4Q", sales : 60, profit : 55 }
 ];
 
-chart("#chart-content", {
+chart("#result", {
     axis : {
         x : {
             type : "block",
             domain : "quarter",
-            line : true 
+            line : true
         },
         y : {
             type : "range",
             domain: "sales",
             step : 10,
-      		line : true 
+      		line : true
         },
         data : data
     },

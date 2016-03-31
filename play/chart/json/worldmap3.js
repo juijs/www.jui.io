@@ -28,7 +28,7 @@ var data = [{
     id: "LT"
 }];
 
-chart("#chart", {
+chart("#result", {
     padding : 0,
     axis : [{
         map : {

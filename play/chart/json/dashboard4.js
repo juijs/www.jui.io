@@ -34,7 +34,7 @@ var dataSource3 = [
     { date: "Dec", sales1: 17500, sales2: 14300, sales3: 16000 }
 ];
 
-chart("#chart", {
+chart("#result", {
     padding : {
         left : 60
     },

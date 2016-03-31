@@ -15,7 +15,7 @@ var data = [
 	{ date : "2016/12", sales : 5, profit : 0 }
 ];
 
-chart("#chart", {
+chart("#result", {
 	axis : [{
 		x : {
 			type : "fullblock",

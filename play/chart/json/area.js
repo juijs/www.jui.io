@@ -16,7 +16,7 @@ for (var i = 1; i < 3650; i++) {
 	});
 }
 
-chart("#chart-content", {
+chart("#result", {
 	axis : [{
 		x : {
 			type : "date",

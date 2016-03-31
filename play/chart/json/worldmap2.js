@@ -42,7 +42,7 @@ var data = [{
     airport: "large"
 }];
 
-chart("#chart", {
+chart("#result", {
     padding : 0,
     axis : [{
         map : {

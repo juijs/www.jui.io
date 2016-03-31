@@ -25,7 +25,7 @@ var names = {
     female : "Female"
 };
 
-chart("#chart-content", {
+chart("#result", {
     axis : [{
         x : {
             type : "range",

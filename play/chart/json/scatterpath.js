@@ -5,7 +5,7 @@ var start = new Date(),
     end = time.add(start, time.hours, 5),
     data = getRandomData();
 
-chart("#chart", {
+chart("#result", {
     axis : {
         x : {
             type : "date",  // default type is block
@@ -17,7 +17,7 @@ chart("#chart", {
         },
         y : {
             type : "range",
-            domain : function(d) { 
+            domain : function(d) {
                 return Math.max(d.q1, d.q2, d.q3);
             },
             step : 10,
@@ -33,7 +33,7 @@ chart("#chart", {
         colors : [ 0 ],
         size : 3
     }, {
-        type : "scatterpath",   
+        type : "scatterpath",
         target : "q2",
         symbol : "triangle",
         colors : [ 1 ],
