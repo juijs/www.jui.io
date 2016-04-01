@@ -1,3 +1,15 @@
+<?php
+	session_start();
+
+	$page = (isset($_GET["p"])) ? $_GET["p"] : null;
+	$contents = file_get_contents("menu.json");
+	$contents = utf8_encode($contents);
+	$json = json_decode($contents);
+
+	$group = $json->group;
+	$list = $json->list;
+?>
+
 <META charset="UTF-8">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 <link rel="shortcut icon" href="../../res/img/favicon.ico" type="image/x-icon">

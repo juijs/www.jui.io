@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include("../header.html"); ?>
-    <?php include("metadata.html"); ?>
+    <?php include("../header.php"); ?>
+    <?php include("metadata.php"); ?>
 
     <link rel="stylesheet" href="../chart/chart.css">
     <link rel="stylesheet" href="../chart/responsive.css">
