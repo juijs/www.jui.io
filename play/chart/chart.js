@@ -449,8 +449,6 @@ function showTableColorPick(row, e) {
 
 jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table", "ui.colorpicker" ],
     function(_, uiWin, uiNotify, gridTable, uiColor) {
-    editor = null;
-
     setFunctions();
     createTab();
 
@@ -511,12 +509,13 @@ jui.ready([ "util.base", "ui.window", "ui.notify", "grid.table", "ui.colorpicker
 
     // CSV 내보내기
     $("#export_csv_btn").on("click", function (e) {
-        var csv = table_1.getCsv();
+        var csv = table_1.getCsv(),
+			code = getChartKey();
 
-        exportTextFile(code.code.split(".").join("_") + ".csv", csv);
+        exportTextFile(code.split(".").join("_") + ".csv", csv);
 
         // 로컬 스토리지에 저장
-        localStorage.setItem("jui.chartplay.data." + getChartKey(), getCsvToObject(csv));
+        localStorage.setItem("jui.chartplay.data." + code, getCsvToObject(csv));
     });
 
     // CSV 가져오기

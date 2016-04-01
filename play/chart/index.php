@@ -174,10 +174,15 @@
 	jui.ready(function() {
 		viewCodeEditor($("#chart-code-text").val());
 
-		var $target = $(".menu").find("li.active"),
-			$parent = $("[data-type=" + $target.data("parent") + "]");
+		var $target = $(".menu").find("li.active");
 
-		$parent.addClass("active");
+		if($target.size() == 0) { // 메뉴 매개변수가 없을 때
+			$target = $(".menu").find("li:first-child").addClass("active");
+			$("a[data-type=basic]").addClass("active");
+		} else {
+			$("[data-type=" + $target.data("parent") + "]").addClass("active");
+		}
+
 		$(".menu").scrollTop($target.offset().top - 100);
 	});
 </script>

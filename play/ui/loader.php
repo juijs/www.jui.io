@@ -23,8 +23,6 @@
     </script>
 </head>
 <body class="jui <?php echo $_POST["theme"] ?>">
-<?php
-    echo $_POST["html"];
-?>
+<?php echo $_POST["html"]; ?>
 </body>
 </html>

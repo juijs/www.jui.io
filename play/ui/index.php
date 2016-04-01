@@ -30,25 +30,27 @@
     </div>
 </div>
 <div class="container">
-    <div class="menu"></div>
+    <div class="menu">
+		<?php include("../menu.php"); ?>
+	</div>
     <div class="content">
         <div class="chart_data">
             <div class="chart_data_main">
                 <ul id="types" class="tab top">
-                    <li>
+                    <li <?php if($data->type == "style") { ?>style="display: none;"<?php } ?>>
                         <a href="#chart-code">Code</a>
                     </li>
-                    <li>
+                    <li <?php if($data->type == "style") { ?>class="active"<?php } ?>>
                         <a href="#chart-html">HTML</a>
                     </li>
                 </ul>
 
                 <div id="types_contents" class="tab-contents">
-                    <div id="chart-code">
-                        <textarea id="chart-code-text"></textarea>
+                    <div id="chart-code" <?php if($data->type == "style") { ?>style="display: none;"<?php } ?>>
+                        <textarea id="chart-code-text"><?php if($data->type != "style") { echo file_get_contents("json/".$data->code.".js"); } ?></textarea>
                     </div>
                     <div id="chart-html">
-                        <textarea id="chart-html-text"></textarea>
+                        <textarea id="chart-html-text"><?php if($data->type != "style") { echo file_get_contents("html/".$data->code.".html"); } else { echo file_get_contents("html.style/".$data->code.".html"); } ?></textarea>
                     </div>
                 </div>
             </div>
@@ -81,7 +83,24 @@
 
 <link id="jui_theme_ui" rel="stylesheet" href="../../lib/jui/css/ui-jennifer.min.css" />
 <link id="jui_theme_grid" rel="stylesheet" href="../../lib/jui/css/grid-jennifer.min.css" />
+
 <?php include("../footer.html"); ?>
+<script>
+	jui.ready(function() {
+		viewCodeEditor($("#chart-code-text").val(), $("#chart-html-text").val());
+
+		var $target = $(".menu").find("li.active");
+
+		if($target.size() == 0) { // 메뉴 매개변수가 없을 때
+			$target = $(".menu").find("li:first-child").addClass("active");
+			$("a[data-type=style]").addClass("active");
+		} else {
+			$("[data-type=" + $target.data("parent") + "]").addClass("active");
+		}
+
+		$(".menu").scrollTop($target.offset().top - 100);
+	});
+</script>
 
 </body>
 </html>

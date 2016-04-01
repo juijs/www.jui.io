@@ -40,3 +40,13 @@
 .chart_view.dark h2 {
     color: #d5d5d5 !important;
 }
+
+#chart-content {
+	position: absolute;
+	left: 20px;
+	right: 20px;
+	top: 80px;
+	bottom: 20px;
+	width: 95%;
+	height: 85%;
+}
