@@ -81,7 +81,7 @@
 
                 <div id="tab_contents_1" class="tab-contents">
                     <div id="chart-code">
-                        <textarea id="chart-code-text"><?php echo file_get_contents("json/".$data->code); ?></textarea>
+                        <textarea id="chart-code-text"><?php echo file_get_contents("json/".$data->code.".js"); ?></textarea>
                     </div>
                     <div id="chart-data">
                         <table id="table_1" class="table simple nowrap">
