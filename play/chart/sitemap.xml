@@ -119,6 +119,7 @@
 <url><loc>http://chartplay.jui.io/?p=area</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=stack_step_area</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=split_area</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
+<url><loc>http://chartplay.jui.io/?p=split_area_advanced</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=reverse_area</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=radar</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=circle_radar</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
@@ -128,6 +129,7 @@
 <url><loc>http://chartplay.jui.io/?p=stack_line</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=line2</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=split_line</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
+<url><loc>http://chartplay.jui.io/?p=split_line_advanced</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=circle_gauge</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=full_gauge</loc><changefreq>daily</changefreq><priority>0.85</priority></url>
 <url><loc>http://chartplay.jui.io/?p=bar_gauge</loc><changefreq>daily</changefreq><priority>0.85</priority></url>

@@ -177,7 +177,7 @@
 		var $target = $(".menu").find("li.active");
 
 		if($target.size() == 0) { // 메뉴 매개변수가 없을 때
-			$target = $(".menu").find("li:first-child").addClass("active");
+			$target = $($(".menu").find("li")[0]).addClass("active");
 			$("a[data-type=basic]").addClass("active");
 		} else {
 			$("[data-type=" + $target.data("parent") + "]").addClass("active");
