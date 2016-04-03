@@ -71,6 +71,11 @@ body > .container > .content {
     bottom:0px;
 }
 
+textarea {
+	width: 100%;
+	height: 100%;
+}
+
 .menu > .vmenu > a > i {
     display: inline-block !important;
     font-size: 14px;

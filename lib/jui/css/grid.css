@@ -245,7 +245,7 @@
   -moz-border-radius-bottomright: 0px;
   border-bottom-right-radius: 0px;
 }
-.jui .xtable.nowrap > .body > table > tbody td {
+.jui .xtable.nowrap > .body table > tbody td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
