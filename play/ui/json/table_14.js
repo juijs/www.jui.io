@@ -6,7 +6,7 @@ jui.ready([ "grid.table" ], function(table) {
             { name: "Jung", age: "30", location: "Seoul" },
             { name: "Park", age: "15", location: "Yeosu" }
         ],
-        colshow: true,
+        colshow: [ 0, 1 ],
         sort: true,
         resize: true,
         event: {

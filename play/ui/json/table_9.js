@@ -27,7 +27,7 @@ jui.ready([ "ui.dropdown", "grid.table" ], function(dropdown, table) {
             { name: "Kim", age: "33", location: "Busan" },
             { name: "Hwang", age: "21", location: "Seoul" }
         ],
-        editRow: true,
+        editRow: [ 1, 2, 3 ],
         editEvent: false,
         event: {
             rowmenu: function(row, e) {

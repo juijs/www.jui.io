@@ -12,7 +12,7 @@ jui.ready([ "grid.table" ], function(table) {
             { name: "Hwang", age: "21", location: "Seoul" }
         ],
         resize: true,
-        sort: [ 0, 1, 2 ],
+        sort: [ "name", 1, 2 ],
         scroll: true,
         scrollHeight: 150,
         event: {

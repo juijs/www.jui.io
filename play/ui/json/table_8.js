@@ -11,7 +11,7 @@ jui.ready([ "grid.table" ], function(table) {
             { name: "Kim", age: "33", location: "Busan" },
             { name: "Hwang", age: "21", location: "Seoul" }
         ],
-        editRow: true,
+        editRow: [ "name", "age" ],
         resize: true,
         sort: true,
         event: {
