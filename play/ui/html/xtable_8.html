@@ -1,0 +1,35 @@
+<div id="xtable_8" class="xtable" style="margin-top: 7px;">
+    <table class="table simple headline">
+        <thead>
+        <tr>
+            <th width="70%">URL</th>
+            <th>Count</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script id="tpl_row" type="text/template">
+    <tr>
+        <td>
+			<span style="padding-left: <!= row.depth * 15 !>px; cursor: pointer;">
+			<! if(row.children.length > 0) { !>
+				<! if(row.type == "fold") { !>
+				<i class="icon-left"></i>
+				<! } else { !>
+				<i class="icon-right"></i>
+				<! } !>
+			<! } !>
+			</span>
+			<!= url !>
+		</td>
+        <td><!= count !></td>
+    </tr>
+</script>
+
+<script id="tpl_none" type="text/template">
+    <tr>
+        <td colspan="2" class="none" align="center">Data does not exist.</td>
+    </tr>
+</script>

@@ -1,0 +1,37 @@
+<button class="btn small" onclick="xtable_7_submit()">
+	<i class="icon-play"></i> Run
+</button>
+
+<div id="xtable_7" class="xtable scroll" style="margin-top: 7px;">
+    <table class="table classic">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script id="tpl_row" type="text/template">
+	<tr>
+		<td>
+			<span style="padding-left: <!= row.depth * 20 !>px; cursor: pointer;">
+			<! if(row.children.length > 0) { !>
+				<! if(row.type == "fold") { !>+<! } else { !>-<! } !>
+			<! } !>
+			</span>
+			<!= name !>
+		</td>
+		<td><!= age !></td>
+		<td><!= location !></td>
+	</tr>
+</script>
+
+<script id="tpl_none" type="text/template">
+	<tr>
+		<td colspan='3' class='none' align='center'>Data does not exist.</td>
+	</tr>
+</script>
