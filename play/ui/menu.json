@@ -32,7 +32,7 @@
 		{ "type": "style", "title": "Slider", "code": "slider" },
 		{ "type": "style", "title": "Vertical Menu", "code": "vmenu" },
 		{ "type": "style", "title": "Dropdown Menu", "code": "dropdown" },
-		{ "type": "style", "title": "Navgation Bar", "code": "navbar" },
+		{ "type": "style", "title": "Navigation Bar", "code": "navbar" },
 		{ "type": "style", "title": "Tables", "code": "tables" },
 		{ "type": "style", "title": "Tabs", "code": "tabs" },
 		{ "type": "style", "title": "Window", "code": "window" },
