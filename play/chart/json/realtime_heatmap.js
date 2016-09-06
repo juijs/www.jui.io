@@ -27,7 +27,6 @@ var chart = builder("#result", {
 		target : [ "delay" ],
 		yInterval : 250,
 		xInterval : 5000,
-		activeEvent : "click",
 		colors : function(d) {
 			if(d.level == 0) {
 				return "#ff0000"
@@ -39,9 +38,6 @@ var chart = builder("#result", {
 		}
 	},
 	event : {
-		"heatmapscatter.select": function(data, e) {
-			console.log(data.length);
-		},
 		"dragselect.end": function(data) {
 			console.log(data.length);
 		}
