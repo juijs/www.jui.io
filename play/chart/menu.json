@@ -66,6 +66,7 @@
 		{ "type": "realtime", "title" : "3D Transaction View", "code" : "realtime3", "csv" : false },
 		{ "type": "realtime", "title" : "Transaction View (Canvas)", "code" : "realtime_canvas1", "csv" : false },
 		{ "type": "realtime", "title" : "3D Transaction View (Canvas)", "code" : "realtime_canvas2", "csv" : false },
+		{ "type": "realtime", "title" : "Heat-Map Transaction View", "code" : "realtime_heatmap", "csv" : false },
 		{ "type": "map", "title" : "Population Status",  "code" : "worldmap1", "csv" : false },
 		{ "type": "map", "title" : "Population growth rate",  "code" : "worldmap6", "csv" : false },
 		{ "type": "map", "title" : "Population growth rate (Mini Map)",  "code" : "worldmap7", "csv" : false },

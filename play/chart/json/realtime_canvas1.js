@@ -113,10 +113,10 @@ window.interval = setInterval(function() {
 
     appendTxData(txData, domain);
     chart.axis(0).update(txData);
-    chart.axis(0).updateGrid("x", { domain : domain });
+    chart.axis(0).set("x", { domain : domain });
 
     chart.axis(1).update(getStatusData());
-    chart.axis(1).updateGrid("x", { domain : domain });
+    chart.axis(1).set("x", { domain : domain });
 
     chart.axis(2).update(getLevelData());
     chart.render();

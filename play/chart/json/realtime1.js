@@ -136,7 +136,7 @@ function updateMemory() {
         axis.update(memoryData);
     }
 
-    axis.updateGrid("x", {
+    axis.set("x", {
         domain : [ new Date() - time.MINUTE * 5, new Date() ]
     });
 }

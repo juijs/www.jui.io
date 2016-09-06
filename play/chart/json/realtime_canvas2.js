@@ -73,7 +73,7 @@ window.interval = setInterval(function() {
 
     appendTxData(txData, domain);
     chart.axis(0).update(txData);
-    chart.axis(0).updateGrid("x", { domain : domain });
+    chart.axis(0).set("x", { domain : domain });
     chart.updateWidget(0, { text: "3D Transaction View (+" + txData.length + ")" });
 
     chart.render(true);
