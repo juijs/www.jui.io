@@ -66,7 +66,7 @@ setInterval(function() {
 
 	chart.updateWidget(0, { text: "Heat-Map Transaction View (+" + txData.length + ")" });
 	chart.render(true);
-}, 10000);
+}, 7000);
 
 function appendTxData(list, domain) {
 	var count = Math.floor(Math.random() * 1000);
