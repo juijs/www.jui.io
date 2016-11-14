@@ -2,26 +2,67 @@ var chart = jui.include("chart.builder");
 
 chart("#result", {
 	axis : [{
-		data : [
-			{ index : "0", text: "Korea" },
-			{ index : "0.0", text: "Seoul", value : 1000 },
-			{ index : "0.1", text: "Busan" },
-			{ index : "0.1.0", text: "Dongrae1", value : 2000 },
-			{ index : "0.1.1", text: "Dongrae2", value : 1400 },
-			{ index : "1", text: "Japan" },
-			{ index : "1.0", text: "Tokyo", value : 700 },
-			{ index : "2", text: "China", value : 500 }
-		]
+		data : [{
+			index: "0",
+			text: "Apples"
+		}, {
+			index: "0.0",
+			text: "Anne",
+			value: 5
+		}, {
+			index: "0.1",
+			text: "Rick",
+			value: 3
+		}, {
+			index: "0.2",
+			text: "Peter",
+			value: 4
+		}, {
+			index: "1",
+			text: "Bananas"
+		}, {
+			index: "1.0",
+			text: "Anne",
+			value: 4
+		}, {
+			index: "1.1",
+			text: "Rick",
+			value: 10
+		}, {
+			index: "1.2",
+			text: "Peter",
+			value: 1
+		}, {
+			index: "2",
+			text: "Oranges"
+		}, {
+			index: "2.0",
+			text: "Anne",
+			value: 1
+		}, {
+			index: "2.1",
+			text: "Rick",
+			value: 3
+		}, {
+			index: "2.2",
+			text: "Peter",
+			value: 3
+		}, {
+			index: "3",
+			text: "Susanne",
+			value: 2
+		}]
 	}],
 	brush : [{
 		type : "treemap",
-		orient : "top",
-		align : "end",
-	 	nodeColor : function(d) {
-			if(d.text == "Seoul") return 0;
-			else if(d.text == "Dongrae1" || d.text == "Dongrae2") return 1;
-			return 2;
+		textOrient : "bottom",
+		textAlign : "end",
+		titleDepth : 1,
+		colors : [ "#EC2500", "#ECE100", "#EC9800", "#9EDE00" ]
+		/*/
+		nodeColor: function(node) {
 		}
+		/**/
 	}],
 	event : {
 		click: function(d, e) {
