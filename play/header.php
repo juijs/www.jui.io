@@ -8,6 +8,23 @@
 
 	$group = $json->group;
 	$list = $json->list;
+
+	function list_filter ($list, $type) {
+		$arr = array();
+		foreach($list as $item) {
+			if ($item->type == $type) {
+				$arr[] = $item;
+			}
+		}
+
+		return $arr;
+	}
+
+
+	foreach($group as $g) {
+		$g->list = list_filter($list, $g->type);
+	}
+
 ?>
 
 <META charset="UTF-8">

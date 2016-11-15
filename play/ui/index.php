@@ -32,25 +32,27 @@
 <div class="container">
     <div class="menu">
 		<?php include("../menu.php"); ?>
+		<?php $code_content = file_get_contents("json/".$data->code.".js");
+		?>
 	</div>
     <div class="content">
         <div class="chart_data">
             <div class="chart_data_main">
                 <ul id="types" class="tab top">
-                    <li <?php if($data->type == "style") { ?>style="display: none;"<?php } ?>>
+                    <li <?php if(!$code_content) { ?>style="display: none;"<?php } ?>>
                         <a href="#chart-code">Code</a>
                     </li>
-                    <li <?php if($data->type == "style") { ?>class="active"<?php } ?>>
+                    <li <?php if(!$code_content) { ?>class="active"<?php } ?>>
                         <a href="#chart-html">HTML</a>
                     </li>
                 </ul>
 
                 <div id="types_contents" class="tab-contents">
-                    <div id="chart-code" <?php if($data->type == "style") { ?>style="display: none;"<?php } ?>>
-                        <textarea id="chart-code-text"><?php if($data->type != "style") { echo file_get_contents("json/".$data->code.".js"); } ?></textarea>
+                    <div id="chart-code" <?php if(!$code_content) { ?>style="display: none;"<?php } ?>>
+                        <textarea id="chart-code-text"><?php echo $code_content ?></textarea>
                     </div>
                     <div id="chart-html">
-                        <textarea id="chart-html-text"><?php if($data->type != "style") { echo file_get_contents("html/".$data->code.".html"); } else { echo file_get_contents("html.style/".$data->code.".html"); } ?></textarea>
+                        <textarea id="chart-html-text"><?php echo file_get_contents("html/".$data->code.".html"); ?></textarea>
                     </div>
                 </div>
             </div>
@@ -99,6 +101,7 @@
 		}
 
 		$(".menu").scrollTop($target.offset().top - 100);
+
 	});
 </script>
 
