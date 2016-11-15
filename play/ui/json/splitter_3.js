@@ -8,12 +8,11 @@ jui.ready([ "ui.splitter" ], function(Splitter) {
 		direction: 'horizontal'
 	});
 
-	/*
 	new Splitter('.layout-main-group', {
 		items : [ '.main', '.bottom' ],
 		minSize : [ 100, 50],
 		direction: 'horizontal'
-	}); */
+	});
 
 	new Splitter('.layout-center-group', {
 		items : [ '.left', '.center-group' ],
