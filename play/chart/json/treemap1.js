@@ -58,11 +58,21 @@ chart("#result", {
 		textOrient : "bottom",
 		textAlign : "end",
 		titleDepth : 1,
-		colors : [ "#EC2500", "#ECE100", "#EC9800", "#9EDE00" ]
+		colors : [ "#EC2500", "#ECE100", "#EC9800", "#9EDE00" ],
+		target : [ "value" ]
 		/*/
 		nodeColor: function(node) {
 		}
 		/**/
+	}],
+	widget : [{
+		type : "tooltip",
+		format : function(data) {
+			return {
+				key: data.text,
+				value: data.value
+			}
+		}
 	}],
 	event : {
 		click: function(d, e) {

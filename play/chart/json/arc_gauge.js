@@ -13,15 +13,15 @@ chart("#result", {
         }]
     }],
     brush : [{
-        type : "fullgauge",
-        size : 20,
-        titleY : 40,
+        type : "arcgauge",
+        size : 10,
+        titleY : 50,
         showText : true,
         format : function(value) {
             return value + "k";
         }
     }],
 	style : {
-    	gaugeFontSize : 30
+    	gaugeFontSize : 40
 	}
 });

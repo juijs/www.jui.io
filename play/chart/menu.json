@@ -177,6 +177,8 @@
 		{ "type": "gauge", "title" : "Circle Gauge", "code" : "circle_gauge" },
 		{ "type": "gauge", "title" : "Fill Gauge", "code" : "fill_gauge", "hide" : true },
 		{ "type": "gauge", "title" : "Full Gauge", "code" : "full_gauge" },
+		{ "type": "gauge", "title" : "Full Gauge (Round)", "code" : "full_gauge_round" },
+		{ "type": "gauge", "title" : "Arc Gauge", "code" : "arc_gauge" },
 		{ "type": "gauge", "title" : "Stacked Gauge", "code" : "stack_gauge", "hide" : true },
 		{ "type": "gauge", "title" : "Bar Gauge", "code" : "bar_gauge" },
 		{ "type": "gauge", "title" : "Fill Custom Gauge", "code" : "fill_custom_gauge", "hide" : true },

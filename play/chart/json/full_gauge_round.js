@@ -2,8 +2,8 @@ var chart = jui.include("chart.builder");
 
 chart("#result", {
     axis : [{
-    	c : {
-    		type : "panel",
+		c : {
+			type : "panel",
 		},
         data : [{
             title : "Overall Visits",
@@ -14,6 +14,8 @@ chart("#result", {
     }],
     brush : [{
         type : "fullgauge",
+		symbol : "round",
+        startAngle : 270,
         size : 20,
         titleY : 40,
         showText : true,
@@ -22,6 +24,6 @@ chart("#result", {
         }
     }],
 	style : {
-    	gaugeFontSize : 30
+		gaugeFontSize : 30
 	}
 });
