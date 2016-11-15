@@ -1,10 +1,20 @@
 <?php
 	$data = $list[0];
 	$dataIndex = 0;
+
+	$common_style = array_shift($group);
+
+	usort($group, function ($a, $b) {
+		return $a->title > $b->title;
+	});
+
+	array_unshift($group, $common_style);
 ?>
 
 <div class="vmenu rect">
-<?php for ($i = 0; $i < sizeof($group); $i++) { ?>
+<?php for ($i = 0; $i < sizeof($group); $i++) {
+		$list = $group[$i]->list;
+	?>
 	<a data-type="<?php echo $group[$i]->type ?>"><?php echo $group[$i]->title ?></a>
 	<ul class="submenu">
 		<?php for ($j = 0; $j < sizeof($list); $j++) {

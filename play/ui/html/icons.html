@@ -1,0 +1,284 @@
+﻿<style type='text/css'>
+
+    .dark ul.icon-list {
+        color:white;
+    }
+
+    ul.icon-list {
+        width:100%;
+        margin:0px;
+        padding:0px;
+        list-style:none;
+    }
+
+    ul.icon-list li {
+        float:left;
+        width:20%;
+        min-height:100px;
+        text-align:center;
+    }
+
+    ul.icon-list li > div {
+        border:1px solid gray;
+        padding:10px;
+        margin:2px;
+    }
+
+    .dark ul.icon-list li > div {
+        border:1px solid gray;
+    }
+
+    ul.icon-list li > div:hover {
+        background: #a57ff2;
+        color:white;
+    }
+
+    ul.icon-list li .icon {
+        font-size:2em;
+        margin-top:20px;
+    }
+
+    ul.icon-list li .icon-name {
+        display:block;
+        margin-top:2px;
+        margin-bottom: 20px;
+    }
+
+</style>
+
+<section>
+    <h2>Default</h2>
+    <p>
+        The icon component has the same properties as font, and the user can select the size and the color of an icon using the code shown below.
+        <i class="icon-gear" style="font-size: 12px; color: red;"></i>
+        <i class="icon-gear" style="font-size: 15px; color: blue;"></i>
+        <i class="icon-gear" style="font-size: 18px; color: green;"></i>
+        <i class="icon-gear" style="font-size: 21px; color: black;"></i>
+    </p>
+
+    <p class="br">
+        The JUI library provides a number of icons. See reference table below.
+
+    <ul class='icon-list'>
+
+    </ul>
+
+    <script>
+        var arr = [
+            'new-window',
+            'gear',
+            'calendar',
+            'download',
+            'upload',
+            'hide',
+            'refresh',
+            'printer',
+            'search',
+            'home',
+            'pause',
+            'play',
+            'check',
+            'chevron-right',
+            'chevron-left',
+            'plus',
+            'minus',
+            'trashcan',
+            'edit',
+            'help',
+            'return',
+            'dashboardlist',
+            'realtime',
+            'arrow1',
+            'arrow2',
+            'arrow3',
+            'arrow4',
+            'close',
+            'left',
+            'right',
+            'resize',
+            'exit',
+            'more',
+            'chart',
+            'link',
+            'image',
+            'table',
+            'html',
+            'align-left',
+            'align-center',
+            'align-right',
+            'orderedlist',
+            'unorderedlist',
+            'textcolor',
+            'underline',
+            'italic',
+            'bold',
+            'text',
+            'preview',
+            'document',
+            'refresh2',
+            'add-dir',
+            'add-dir2',
+            'save',
+            'stop',
+            'loading',
+            'caution',
+            'caution2',
+            'stoppage',
+            'checkmark',
+            'label',
+            'ws',
+            'was',
+            'db',
+            'report-link',
+            'report-build',
+            'tool',
+            'device',
+            'monitoring',
+            'profile',
+            'rule',
+            'user',
+            'server',
+            'jennifer-server',
+            'menu',
+            'dashboard',
+            'analysis',
+            'analysis2',
+            'statistics',
+            'info-message',
+            'info',
+            'report',
+            'report2',
+            'message',
+            'chart-bar',
+            'chart-column',
+            'chart-candle',
+            'chart-gauge',
+            'chart-line',
+            'chart-radar',
+            'chart-scatter',
+            'chart-area',
+            'etc',
+            'connection',
+            'facebook',
+            'twitter',
+            'googleplus',
+            'github',
+            'bell',
+            'blogger',
+            'like',
+            'share',
+            'share2',
+            'indent',
+            'outdent',
+            'line-height',
+            'template',
+            'pin',
+            'lock',
+            'domain',
+            'script',
+            'business',
+            'build',
+            'themes',
+            'themes2',
+            'caution3',
+            'mail',
+            'share',
+            'tablet',
+            'mobile',
+            'zip',
+            'link2',
+            'slider',
+            'checkbox',
+            'checkbox2',
+            'cloud',
+            'wireless',
+            'minus2',
+            '3d',
+            'cursor',
+            'feed',
+            'filter',
+            'column',
+			'server1',
+			'server2',
+			'unhappy',
+			'layout1',
+			'layout2',
+			'tag',
+			'all',
+			'grip1',
+			'grip2',
+			'grip3',
+			'cursor1',
+			'clip',
+			'scissors',
+			'topology',
+			'equalizer',
+			'idea',
+			'screenshot',
+			'close2',
+			'facebook2',
+			'github2',
+			'googleplus2',
+			'hierarchy',
+			'kakao',
+			'loveit',
+			'return2',
+			'theme',
+			'tumblr',
+			'roundsquare',
+			'paintbucket',
+			'square',
+			'circle',
+			'eraser',
+			'paintbrush',
+			'pen',
+			'eyedropper',
+			'x-mark',
+			'line-merge',
+			'line-separate',
+			'enter',
+			'layout3',
+			'network'
+        ];
+
+        var $list = $(".icon-list");
+        for(var i = 0, len = arr.length; i < len; i++) {
+            $list.append("<li><div><span class='icon icon-"+arr[i]+"'></span><span class='icon-name'>"+arr[i]+"</div></td></li>");
+        }
+    </script>
+    </p>
+
+    <h2>Animation</h2>
+    <p>
+        The icon component can optionally use various animation effects.
+    </p>
+
+    <table>
+        <tr>
+            <td width="20%">Spin</td>
+            <td width="20%">Flash</td>
+            <td width="20%">Bounce</td>
+            <td width="20%">Float</td>
+            <td width="20%">Pulse</td>
+        </tr>
+        <tr>
+            <td>
+                <a class="btn small"><i class="icon-gear spin"></i></a>
+            </td>
+            <td>
+                <a class="btn small"><i class="icon-gear flash"></i></a>
+            </td>
+
+            <td>
+                <a class="btn small"><i class="icon-gear bounce"></i></a>
+            </td>
+            <td>
+                <a class="btn small"><i class="icon-gear float"></i></a>
+            </td>
+            <td>
+                <a class="btn small"><i class="icon-gear pulse"></i></a>
+            </td>
+        </tr>
+    </table>
+    </p>
+</section>

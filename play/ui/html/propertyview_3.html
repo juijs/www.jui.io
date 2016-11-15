@@ -1,0 +1,35 @@
+<style type="text/css">
+	.property-container {
+		width:500px;
+		height:500px;
+		overflow:auto;
+		border:1px solid #ececec;
+	}
+
+	.property-container h1 {
+		color:#333;
+		margin-top:10px;
+		margin-bottom:10px;
+		border-bottom:0px;
+	}
+</style>
+
+<button class="btn large" onclick="modal_1.show();">Show property view with window</button>
+
+<div class="window" style="width: 500px;" id="modal_1">
+	<div class="head">
+		<div class="left">Property view inner window </div>
+		<div class="right">
+			<a href="javascript:alert('plus');"><i class="icon-plus"></i></a>
+			<a href="javascript:alert('search');"><i class="icon-search"></i></a>
+			<a href="#" class='close'><i class='icon-close'></i></a>
+		</div>
+	</div>
+	<div class="body has-property" style="height:300px;">
+		<div id="complex-settings-for-window" class="property"></div>
+	</div>
+	<div class="foot">
+		<a href="#" class="btn focus">Save</a>
+		<a href="#" class="btn">Close</a>
+	</div>
+</div>
