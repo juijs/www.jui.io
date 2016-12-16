@@ -32,7 +32,10 @@
 <div class="container">
     <div class="menu">
 		<?php include("../menu.php"); ?>
-		<?php $code_content = file_get_contents("json/".$data->code.".js");
+		<?php
+			if (file_exists("json/".$data->code.".js")) {
+				$code_content = file_get_contents("json/".$data->code.".js");
+			}
 		?>
 	</div>
     <div class="content">
