@@ -94,10 +94,10 @@
 .jui .dropdown ul > li {
   color: #333;
 }
-.jui .dropup ul > li:hover:not(.divider):not(.title),
-.jui .dropdown ul > li:hover:not(.divider):not(.title),
-.jui .dropup ul > li:focus:not(.divider):not(.title),
-.jui .dropdown ul > li:focus:not(.divider):not(.title),
+.jui .dropup ul > li:hover:not(.divider):not(.title):not(.disabled),
+.jui .dropdown ul > li:hover:not(.divider):not(.title):not(.disabled),
+.jui .dropup ul > li:focus:not(.divider):not(.title):not(.disabled),
+.jui .dropdown ul > li:focus:not(.divider):not(.title):not(.disabled),
 .jui .dropup ul > li.active,
 .jui .dropdown ul > li.active {
   background-color: #865de1;
@@ -119,6 +119,11 @@
   overflow: hidden;
   background-color: #e5e5e5;
   border-bottom: 1px solid #fff;
+}
+.jui .dropup ul > li.disabled,
+.jui .dropdown ul > li.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 .jui .dropup ul::-webkit-scrollbar,
 .jui .dropdown ul::-webkit-scrollbar {
@@ -190,7 +195,9 @@
   background: #fff;
 }
 .jui .datepicker > .head > .prev,
-.jui .datepicker > .head .next {
+.jui .datepicker > .head .next,
+.jui .datepicker > .head .prev-year,
+.jui .datepicker > .head .next-year {
   color: #dcdcdc;
 }
 .jui .datepicker > .head > .title {
@@ -229,7 +236,9 @@
   border-bottom-color: #ebebeb;
 }
 .jui .calendar > .head > .prev,
-.jui .calendar > .head .next {
+.jui .calendar > .head .next,
+.jui .calendar > .head .prev-year,
+.jui .calendar > .head .next-year {
   color: #dcdcdc;
 }
 .jui .calendar > .head > .title {
@@ -487,6 +496,11 @@
 .jui ul.tree li.active > div {
   color: #740CD2;
   font-weight: bold;
+}
+.jui ul.tree li.hover > a,
+.jui ul.tree li.hover > span,
+.jui ul.tree li.hover > div {
+  background: #e9def5;
 }
 .jui ul.tree .drag.on {
   background: #dcdcdc;
@@ -1147,6 +1161,28 @@
   -webkit-box-shadow: 0 0 6px #f8b9b7;
   -moz-box-shadow: 0 0 6px #f8b9b7;
   box-shadow: 0 0 6px #f8b9b7;
+}
+.jui .checkbox > input + i,
+.jui .radio > input + i {
+  border-color: #8c8c8c;
+}
+.jui .checkbox > input:checked + i,
+.jui .radio > input:checked + i {
+  border-color: #9971e8;
+  background: #9971e8;
+}
+.jui .checkbox > input:checked + i:before,
+.jui .radio > input:checked + i:before {
+  color: #fff;
+}
+.jui .checkbox > input:disabled + i,
+.jui .radio > input:disabled + i {
+  border-color: #ccc;
+  background: #ccc;
+}
+.jui .checkbox > input:disabled + i:before,
+.jui .radio > input:disabled + i:before {
+  color: #fff;
 }
 .jui .label {
   -webkit-border-radius: 4px;
