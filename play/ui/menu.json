@@ -126,6 +126,7 @@
 		{ "type": "layout", "title": "Split Screens", "code": "layout_1" },
 		{ "type": "accordion", "title": "Default accordion", "code": "accordion_1" },
 		{ "type": "accordion", "title": "Close accordion", "code": "accordion_2" },
+		{ "type": "accordion", "title": "Multi Panel", "code": "accordion_3" },
 		{ "type": "propertyview", "title": "Simple Property View", "code": "propertyview_1" },
 		{ "type": "propertyview", "title": "Complex Property View", "code": "propertyview_2" },
 		{ "type": "propertyview", "title": "Property View in Window", "code": "propertyview_3" },
