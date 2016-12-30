@@ -8,7 +8,10 @@ jui.ready([ "ui.accordion" ], function(accordion) {
             open: function(index, e) {
                 $(this.root).find("i").attr("class", "icon-arrow1");
                 $(e.target).find("i").attr("class", "icon-arrow3");
-            }
+            },
+			fold: function(index, e) {
+				$(e.target).find("i").attr("class", "icon-arrow1");
+			}
         },
         index: 0,
         autoFold: true
