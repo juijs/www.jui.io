@@ -55,7 +55,7 @@
                         <textarea id="chart-code-text"><?php echo $code_content ?></textarea>
                     </div>
                     <div id="chart-html">
-                        <textarea id="chart-html-text"><?php echo file_get_contents("html/".$data->code.".html"); ?></textarea>
+                        <textarea id="chart-html-text"><?php echo htmlentities(file_get_contents("html/".$data->code.".html")); ?></textarea>
                     </div>
                 </div>
             </div>
