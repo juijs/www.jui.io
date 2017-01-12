@@ -33,6 +33,7 @@
     <div class="menu">
 		<?php include("../menu.php"); ?>
 		<?php
+			$code_content = '';
 			if (file_exists("json/".$data->code.".js")) {
 				$code_content = file_get_contents("json/".$data->code.".js");
 			}
