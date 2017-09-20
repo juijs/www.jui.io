@@ -284,7 +284,7 @@
   cursor: default;
 }
 .jui .paging > .prev {
-  background-image: url("../img/theme/jennifer/paging-list.png");
+  background-image: url("../img/theme/classic/paging-list.png");
   -webkit-border-top-left-radius: 5px;
   -moz-border-radius-topleft: 5px;
   border-top-left-radius: 5px;
@@ -293,7 +293,7 @@
   border-bottom-left-radius: 5px;
 }
 .jui .paging > .next {
-  background-image: url("../img/theme/jennifer/paging-list.png");
+  background-image: url("../img/theme/classic/paging-list.png");
   -webkit-border-top-right-radius: 5px;
   -moz-border-radius-topright: 5px;
   border-top-right-radius: 5px;
@@ -512,7 +512,7 @@
   background-position: -13px -130px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.arrow-file li.fold > i:first-child {
   width: 15px;
@@ -521,7 +521,7 @@
   background-position: 0px -130px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.arrow-file li.leaf > i:first-child {
   width: 15px;
@@ -530,10 +530,10 @@
   background-position: 0 0;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.line-file li {
-  background: url("../img/theme/jennifer/tree-line.gif") 0 0 no-repeat;
+  background: url("../img/theme/classic/tree-line.gif") 0 0 no-repeat;
 }
 .jui ul.tree.line-file li.open > i:first-child {
   width: 16px;
@@ -542,7 +542,7 @@
   background-position: 0px -111px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.line-file li.open.root > i:first-child {
   width: 16px;
@@ -551,7 +551,7 @@
   background-position: -16px -89px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.line-file li.fold > i:first-child {
   width: 16px;
@@ -560,7 +560,7 @@
   background-position: -32px -67px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.line-file li.fold.root > i:first-child {
   width: 16px;
@@ -569,7 +569,7 @@
   background-position: -48px -45px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.arrow li.open > i:first-child {
   width: 15px;
@@ -578,7 +578,7 @@
   background-position: -13px -130px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.arrow li.fold > i:first-child {
   width: 15px;
@@ -587,7 +587,7 @@
   background-position: 0px -130px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.arrow li.leaf > i:first-child {
   width: 15px;
@@ -596,10 +596,10 @@
   background-position: 0 0;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.line li {
-  background: url("../img/theme/jennifer/tree-line.gif") 0 0 no-repeat;
+  background: url("../img/theme/classic/tree-line.gif") 0 0 no-repeat;
 }
 .jui ul.tree.line li.open > i:first-child {
   width: 16px;
@@ -608,7 +608,7 @@
   background-position: 0px -111px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.line li.open.root > i:first-child {
   width: 16px;
@@ -617,7 +617,7 @@
   background-position: -16px -89px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.line li.fold > i:first-child {
   width: 16px;
@@ -626,7 +626,7 @@
   background-position: -32px -67px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.line li.fold.root > i:first-child {
   width: 16px;
@@ -635,7 +635,7 @@
   background-position: -48px -45px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.arrow-file li.open > a > i:first-child,
 .jui ul.tree.line-file li.open > a > i:first-child,
@@ -649,7 +649,7 @@
   background-position: -17px -165px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.arrow-file li.fold > a > i:first-child,
 .jui ul.tree.line-file li.fold > a > i:first-child,
@@ -663,7 +663,7 @@
   background-position: 0px -165px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui ul.tree.arrow-file li.leaf > a > i:first-child,
 .jui ul.tree.line-file li.leaf > a > i:first-child,
@@ -677,7 +677,7 @@
   background-position: -36px -165px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-image: url("../img/theme/jennifer/tree-list.png");
+  background-image: url("../img/theme/classic/tree-list.png");
 }
 .jui .panel {
   color: #333;
